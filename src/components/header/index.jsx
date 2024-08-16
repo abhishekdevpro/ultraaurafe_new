@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { logo } from "../imagepath";
+import logo2 from "./logo2.png"
+import logo3 from './logo3.png'
 import DarkMode from "../common/darkMode";
+import menu_data from "./menu-data";
 
 const Header = () => {
   useEffect(() => {
@@ -97,7 +100,9 @@ const Header = () => {
                 </span>
               </Link>
               <Link to="/home" className="navbar-brand logo">
-                <img src={logo} className="img-fluid" alt="Logo" />
+                {/* <img src={logo} className="img-fluid" alt="Logo" />
+                 */}
+                 <p>UltraAura</p>
               </Link>
             </div>
             <div className="main-menu-wrapper">
@@ -114,7 +119,7 @@ const Header = () => {
                   <i className="fas fa-times" />
                 </Link>
               </div>
-              <ul className="main-nav">
+              {/* <ul className="main-nav">
                 <li className="has-submenu active">
                   <Link
                     className={mobileSubMenu ? "submenu" : ""}
@@ -428,7 +433,23 @@ const Header = () => {
                 <li className="login-link">
                   <Link to="/login">Login / Signup</Link>
                 </li>
-              </ul>
+              </ul> */}
+             <ul className="main-nav">
+  {menu_data.map((item) => (
+    <li key={item.id} className="has-submenu">
+      <Link to={item.link}>{item.title}</Link>
+      {item.sub_menus.length > 0 && (
+        <ul className="submenu">
+          {item.sub_menus.map((sub, i) => (
+            <li key={i}>
+              <Link to={sub.link}>{sub.title}</Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </li>
+  ))}
+</ul>
             </div>
             <ul className="nav header-navbar-rht">
               <DarkMode/>
