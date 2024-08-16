@@ -30154,3 +30154,58 @@ color: #B9B7C0 ;
     width: 100%;
   }
 }
+.main-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.main-nav > li {
+  position: relative;
+}
+
+.main-nav > li > a {
+  padding: 15px;
+  display: block;
+  color: #333;
+  text-decoration: none;
+}
+
+.info-box {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  padding: 15px;
+  width: 100px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  /* max-height: 150px;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%); */
+}
+
+.info-box p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+  /* display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis; */
+}
+
+.has-submenu:hover .info-box {
+  opacity: 1;
+  visibility: visible;
+}
