@@ -1,0 +1,93 @@
+.stickybar {
+  position: sticky;
+  top: 0;
+}
+.chat-wrapper .content .sidebar-group .sidebar {
+  border-radius: 10px;
+}
+.slick-slider.swiper-wrapper button {
+  display: none !important;
+}
+#chats.left-sidebar-wrap > div {
+  border: 1px solid #cdcdcd;
+  border-radius: 10px;
+}
+table.table td i.bx.bxs-adjust,
+table.table td i.bx.bx-check-double {
+  margin-right: 5px;
+}
+.mob-scrn {
+  height: 313px !important;
+}
+.ticket-select {
+  z-index: 1000;
+}
+.ticket-select .css-10t8cs9-control {
+  background: none;
+}
+.customticket .form-select {
+  padding: 0px;
+}
+.css-b62m3t-container {
+  width: 100%;
+}
+.dropdown-item.night-mode span svg {
+  color: #ff875a;
+}
+.dark .css-1gtpy4b-control {
+  background: #2b2838;
+}
+.dark .css-13cymwt-control ,
+.dark .css-t3ipsp-control{
+  background: #2b2838;
+  /* background-color: #2b2838; */
+}
+.dark .css-u6ao79-control {
+  background: #2b2838;
+}
+.dark .css-1dimb5e-singleValue {
+  color: #efeff2;
+}
+.dark .css-1jizb4d-menu {
+  background-color: #2b2838 !important;
+  color: #efeff2;
+}
+.dark .react-select__option {
+  background-color: #b43838 !important; /* Default background color */
+  color: #000000; /* Default text color */
+  font-size: 14px;
+}
+
+.dark .react-select__option--is-selected {
+  background-color: #FFDEDA; /* Background color when selected */
+  color: #000000; /* Text color when selected */
+}
+
+.dark .react-select__option--is-focused {
+  background-color: #602424; /* Background color when focused */
+}
+
+/* Optional: Styling the control (dropdown) */
+.dark .react-select__control {
+  background-color: #FFFFFF;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.swiper-pagination-bullet {
+  display: none !important;
+}
+.dark .css-1m7qa7h-control {
+  border-color: rgba(199, 199, 199, 0.25);
+}
+.dark #chats.left-sidebar-wrap > div {
+  border: none;
+}
+.dark .loginbox .btn-primary {
+  color: #efeff2;
+}
+.dark .settings-inner-blk .country-select {
+  border: 1px solid #000;
+}
+.dark .form-select {
+  background: #000;
+}
