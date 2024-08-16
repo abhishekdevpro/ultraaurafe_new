@@ -257,6 +257,31 @@ const Login = () => {
     setPasswordType(passwordType === "password" ? "text" : "password");
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const apiUrl = role === "student"
+  //     ? "https://api.novajobs.us/api/students/login"
+  //     : "https://api.novajobs.us/api/trainers/login";
+
+  //   try {
+  //     const response = await axios.post(apiUrl, {
+  //       email: email,
+  //       password: passwordInput
+  //     });
+  //     console.log(response)
+      
+  //     if (response.data) {
+  //       // Handle successful login
+  //       console.log("Login successful", response.data);
+  //       // Redirect based on role
+  //       navigate(role === "student" ? "/" : "/");
+  //     }
+  //   } catch (error) {
+  //     console.error("Login failed", error);
+  //     // Handle login error (e.g., show error message)
+  //   }
+  // };
+    
   const handleSubmit = async (e) => {
     e.preventDefault();
     const apiUrl = role === "student"
@@ -264,22 +289,24 @@ const Login = () => {
       : "https://api.novajobs.us/api/trainers/login";
 
     try {
-      const response = await axios.post(apiUrl, {
-        email: email,
-        password: passwordInput
-      });
-      
-      if (response.data) {
-        // Handle successful login
-        console.log("Login successful", response.data);
-        // Redirect based on role
-        navigate(role === "student" ? "/" : "/");
-      }
+        const response = await axios.post(apiUrl, {
+            email: email,
+            password: passwordInput
+        });
+        console.log(response.data.data.token);
+
+        if (response.data) {
+            const tokenKey = role === "student" ? "token" : "trainerToken";
+            localStorage.setItem(tokenKey, response.data.data.token);
+
+            console.log("Login successful", response.data);
+            navigate(role === "student" ? "/setting-edit-profile" : "/instructor/instructor-dashboard");
+        }
     } catch (error) {
-      console.error("Login failed", error);
-      // Handle login error (e.g., show error message)
+        console.error("Login failed", error);
+        // Handle login error (e.g., show error message)
     }
-  };
+};
 
   var settings = {
     items: 1,
