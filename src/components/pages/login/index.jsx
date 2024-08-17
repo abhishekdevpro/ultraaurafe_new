@@ -233,7 +233,7 @@ import React, { useState } from "react";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import OwlCarousel from "react-owl-carousel";
-import { LoginImg, logo, NetIcon1, NetIcon2 } from "../../imagepath";
+import { LoginImg } from "../../imagepath";
 import FeatherIcon from "feather-icons-react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -343,7 +343,7 @@ const Login = () => {
             {/* </OwlCarousel> */}
           {/* </div>  */}
           <div className="col-md-6 login-bg">
-//             <OwlCarousel 
+             <OwlCarousel 
             {...settings}
             className="owl-carousel login-slide owl-theme">
               <div className="welcome-login">

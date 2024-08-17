@@ -897,7 +897,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import OwlCarousel from "react-owl-carousel";
-import { LoginImg, logo, NetIcon1, NetIcon2 } from "../../imagepath";
+import { LoginImg, NetIcon1, NetIcon2 } from "../../imagepath";
 import axios from "axios";
 
 const hasNumber = (value) => {

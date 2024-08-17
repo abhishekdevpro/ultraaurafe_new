@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { logo } from "../imagepath";
-import logo2 from "./logo2.png"
-import logo3 from './logo3.png'
+
 import DarkMode from "../common/darkMode";
 import menu_data from "./menu-data";
 
@@ -17,7 +16,8 @@ const Header = () => {
   // change header background on scroll
   const [navbar, setNavbar] = useState(false);
   // Mobile Menu toggle
-  const [mobileSubMenu, setMobileSubMenu] = useState(false);
+  {/*
+    const [mobileSubMenu, setMobileSubMenu] = useState(false);
   const [mobileSubMenu2, setMobileSubMenu2] = useState(false);
   const [mobileSubMenu22, setMobileSubMenu22] = useState(false);
   const [mobileSubMenu3, setMobileSubMenu3] = useState(false);
@@ -26,6 +26,7 @@ const Header = () => {
   const [mobileSubMenu42, setMobileSubMenu42] = useState(false);
   const [mobileSubMenu43, setMobileSubMenu43] = useState(false);
   const [mobileSubMenu5, setMobileSubMenu5] = useState(false);
+    */}
 
   const openMobileMenu = () => {
     document.body?.classList?.add("menu-opened");
@@ -34,7 +35,8 @@ const Header = () => {
     document.body?.classList?.remove("menu-opened");
   };
 
-  const openMobileSubMenu = (e) => {
+ {/*
+   const openMobileSubMenu = (e) => {
     e.preventDefault();
     setMobileSubMenu(!mobileSubMenu);
   };
@@ -71,6 +73,7 @@ const Header = () => {
     setMobileSubMenu5(!mobileSubMenu5);
   };
 
+  */}
   const changeHeaderBackground = () => {
     if (window.scrollY >= 90) {
       setNavbar(true);
