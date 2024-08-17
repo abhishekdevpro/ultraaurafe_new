@@ -184,9 +184,9 @@ export const Home3 = () => {
             >
               <div className="home-three-slide-face">
                 <div className="home-three-slide-text">
-                  <h5>The Leader in Online Learning</h5>
+                  <h5>Empowering Futures: Anytime,Anywhere</h5>
                   <h1>
-                    Engaging <span>&</span> Accessible Online Courses For All
+                  Ultra Aura is now Live, with Technology Enabled Lear
                   </h1>
                   <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -4611,7 +4611,7 @@ export const Home3 = () => {
             {/* Col */}
             <div className="col-xl-3 col-lg-12 col-md-12" data-aos="fade-down">
               <div className="acheive-goals-main">
-                <h2>Acheive you Goals with DreamsLMS</h2>
+                <h2>Acheive you Goals with Ultraaura</h2>
               </div>
             </div>
             {/* Col */}
@@ -5210,7 +5210,7 @@ export const Home3 = () => {
                 <h2>Become An Instructor</h2>
                 <p>
                   Top instructors from around the world teach millions of
-                  students on DreamsLMS.
+                  students on Ultraaura.
                 </p>
               </div>
             </div>

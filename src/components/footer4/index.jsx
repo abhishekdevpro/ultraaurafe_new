@@ -150,7 +150,7 @@ export const Footer4 = () => {
               </div>
               <div className="col-md-4">
                 <div className="copyright-text">
-                  <p>&copy; 2023 DreamsLMS. All rights reserved.</p>
+                  <p>&copy; 2023 Ultraaura. All rights reserved.</p>
                 </div>
               </div>
               <div className="col-md-4">

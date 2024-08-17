@@ -185,8 +185,8 @@ export const Home4 = () => {
               <div className="home-slide-five-face" data-aos="fade-down">
                 {/* Banner Text */}
                 <div className="home-slide-five-text">
-                  <h5>The Leader in Online Learning</h5>
-                  <h1>Engaging & Accessible Online Courses For All</h1>
+                  <h5>Empowering Futures: Anytime,Anywhere</h5>
+                  <h1>Ultra Aura is now Live, with Technology Enabled Learning</h1>
                   <p>Trusted by over 15K Users worldwide since 2024</p>
                 </div>
                 {/* Banner Text */}
@@ -4293,7 +4293,7 @@ export const Home4 = () => {
               data-aos="fade-down"
             >
               <div className="header-five-title mb-0">
-                <h2 className="mb-0">Achieve your Goals with DreamsLMS</h2>
+                <h2 className="mb-0">Achieve your Goals with Ultraaura</h2>
               </div>
             </div>
             <div className="col-x-8 col-lg-9 col-md-12 col-sm-12">

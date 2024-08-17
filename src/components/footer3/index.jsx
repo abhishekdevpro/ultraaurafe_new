@@ -165,7 +165,7 @@ export const Footer3 = () => {
                 </div>
                 <div className="copyright-text-three">
                   <p className="mb-0">
-                    &copy; 2023 DreamsLMS. All rights reserved.
+                    &copy; 2023 Ultraaura. All rights reserved.
                   </p>
                 </div>
               </div>

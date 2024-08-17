@@ -103,9 +103,9 @@ const Header = () => {
                 </span>
               </Link>
               <Link to="/home" className="navbar-brand logo">
-                {/* <img src={logo} className="img-fluid" alt="Logo" />
-                 */}
-                 <p>UltraAura</p>
+                 <img src={logo} className="img-fluid" alt="Logo" />
+                 
+                 
               </Link>
             </div>
             <div className="main-menu-wrapper">

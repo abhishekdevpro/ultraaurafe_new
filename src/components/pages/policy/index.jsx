@@ -118,7 +118,7 @@ const PrivacyPolicy = () => {
                     </p>
                     <p>
                       Questions? Please email us at{" "}
-                      <Link to="#">dreamslms@example.com</Link>
+                      <Link to="#">Ultraaura@example.com</Link>
                     </p>
                   </div>
                 </div>

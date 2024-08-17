@@ -101,7 +101,7 @@ export default function FooterOrders() {
                   </div>
                   <p>
                     <img src={Icon19} alt="" className="img-fluid" />
-                    dreamslms@example.com
+                    Ultraaura@example.com
                   </p>
                   <p className="mb-0">
                     <img src={Icon21} alt="" className="img-fluid" />
@@ -140,7 +140,7 @@ export default function FooterOrders() {
               <div className="col-md-6">
                 <div className="copyright-text">
                   <p className="mb-0">
-                    &copy; 2023 DreamsLMS. All rights reserved.
+                    &copy; 2023 Ultraaura. All rights reserved.
                   </p>
                 </div>
               </div>

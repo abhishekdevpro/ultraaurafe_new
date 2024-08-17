@@ -143,8 +143,8 @@ export const Home2 = () => {
               <div className="col-lg-8 col-12" data-aos="fade-up">
                 <div className="home-slide-face">
                   <div className="home-slide-text ">
-                    <h5>The Leader in Online Learning</h5>
-                    <h1>Engaging & Accessible Online Courses For All</h1>
+                    <h5>Empowering Futures: Anytime,Anywhere</h5>
+                    <h1>Ultra Aura is now Live, with Technology Enabled Learning</h1>
                   </div>
                   <div className="banner-content">
                     <form

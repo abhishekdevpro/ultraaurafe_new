@@ -149,8 +149,8 @@ export function InstructorHeader({ activeMenu }) {
                   <span></span>
                 </span>
               </Link>
-              <Link to="/home" className="navbar-brand logo">
-                <img src={logo} className="img-fluid" alt="Logo" />
+              <Link to="/home" className=" ">
+                <img src={logo} className="rounded-3" alt="Logo" style={{height:"50px" ,width:"200px"}} />
               </Link>
             </div>
             <div className="main-menu-wrapper">
