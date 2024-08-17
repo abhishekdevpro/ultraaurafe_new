@@ -111,7 +111,7 @@ const InstructorReferral = () => {
                               <input
                                 type="text"
                                 className="form-control"
-                                defaultValue="https://dreamslmscourse.com/reffer/?refid=345re667877k9"
+                                defaultValue="https://Ultraauracourse.com/reffer/?refid=345re667877k9"
                               />
                             </div>
                             <Link to="#">Copy link</Link>
@@ -190,7 +190,7 @@ const InstructorReferral = () => {
                             </td>
                             <td>
                               <span className="text-wrap">
-                                https://dreamslmscourse.com/reffer/?refid=345re667877k9
+                                https://Ultraauracourse.com/reffer/?refid=345re667877k9
                               </span>
                             </td>
                             <td>
@@ -228,7 +228,7 @@ const InstructorReferral = () => {
                             </td>
                             <td>
                               <span className="text-wrap">
-                                https://dreamslmscourse.com/reffer/?refid=345re667877k9
+                                https://Ultraauracourse.com/reffer/?refid=345re667877k9
                               </span>
                             </td>
                             <td>
@@ -264,7 +264,7 @@ const InstructorReferral = () => {
                             </td>
                             <td>
                               <span className="text-wrap">
-                                https://dreamslmscourse.com/reffer/?refid=345re667877k9
+                                https://Ultraauracourse.com/reffer/?refid=345re667877k9
                               </span>
                             </td>
                             <td>
@@ -301,7 +301,7 @@ const InstructorReferral = () => {
                             </td>
                             <td>
                               <span className="text-wrap">
-                                https://dreamslmscourse.com/reffer/?refid=345re667877k9
+                                https://Ultraauracourse.com/reffer/?refid=345re667877k9
                               </span>
                             </td>
                             <td>
@@ -339,7 +339,7 @@ const InstructorReferral = () => {
                             </td>
                             <td>
                               <span className="text-wrap">
-                                https://dreamslmscourse.com/reffer/?refid=345re667877k9
+                                https://Ultraauracourse.com/reffer/?refid=345re667877k9
                               </span>
                             </td>
                             <td>
@@ -375,7 +375,7 @@ const InstructorReferral = () => {
                             </td>
                             <td>
                               <span className="text-wrap">
-                                https://dreamslmscourse.com/reffer/?refid=345re667877k9
+                                https://Ultraauracourse.com/reffer/?refid=345re667877k9
                               </span>
                             </td>
                             <td>
@@ -411,7 +411,7 @@ const InstructorReferral = () => {
                             </td>
                             <td>
                               <span className="text-wrap">
-                                https://dreamslmscourse.com/reffer/?refid=345re667877k9
+                                https://Ultraauracourse.com/reffer/?refid=345re667877k9
                               </span>
                             </td>
                             <td>
@@ -448,7 +448,7 @@ const InstructorReferral = () => {
                             </td>
                             <td>
                               <span className="text-wrap">
-                                https://dreamslmscourse.com/reffer/?refid=345re667877k9
+                                https://Ultraauracourse.com/reffer/?refid=345re667877k9
                               </span>
                             </td>
                             <td>
@@ -485,7 +485,7 @@ const InstructorReferral = () => {
                             </td>
                             <td>
                               <span className="text-wrap">
-                                https://dreamslmscourse.com/reffer/?refid=345re667877k9
+                                https://Ultraauracourse.com/reffer/?refid=345re667877k9
                               </span>
                             </td>
                             <td>
@@ -522,7 +522,7 @@ const InstructorReferral = () => {
                             </td>
                             <td>
                               <span className="text-wrap">
-                                https://dreamslmscourse.com/reffer/?refid=345re667877k9
+                                https://Ultraauracourse.com/reffer/?refid=345re667877k9
                               </span>
                             </td>
                             <td>

@@ -109,8 +109,8 @@ export const Footer2 = () => {
 
                   <h6>Email Address</h6>
                   <p>
-                    <Link to="mailto:dreamslms@example.com">
-                      dreamslms@example.com
+                    <Link to="mailto:Ultraaura@example.com">
+                      Ultraaura@example.com
                     </Link>
                   </p>
 
@@ -131,7 +131,7 @@ export const Footer2 = () => {
               <div className="col-md-6 col-sm-12">
                 <div className="copyright-text">
                   <p className="mb-0">
-                    &copy; 2023 DreamsLMS. All rights reserved.
+                    &copy; 2023 Ultraaura. All rights reserved.
                   </p>
                 </div>
               </div>

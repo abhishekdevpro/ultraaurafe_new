@@ -169,7 +169,7 @@
 // //                 <div className="mentor-course text-center">
 // //                   <h2>
 // //                     Welcome to <br />
-// //                     DreamsLMS Courses.
+// //                     Ultraaura Courses.
 // //                   </h2>
 // //                   <p>
 // //                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
@@ -185,7 +185,7 @@
 // //                 <div className="mentor-course text-center">
 // //                   <h2>
 // //                     Welcome to <br />
-// //                     DreamsLMS Courses.
+// //                     Ultraaura Courses.
 // //                   </h2>
 // //                   <p>
 // //                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
@@ -201,7 +201,7 @@
 // //                 <div className="mentor-course text-center">
 // //                   <h2>
 // //                     Welcome to <br />
-// //                     DreamsLMS Courses.
+// //                     Ultraaura Courses.
 // //                   </h2>
 // //                   <p>
 // //                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
@@ -611,7 +611,7 @@
 //                 <div className="mentor-course text-center">
 //                   <h2>
 //                     Welcome to <br />
-//                     DreamsLMS Courses.
+//                     Ultraaura Courses.
 //                   </h2>
 //                   <p>
 //                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
@@ -627,7 +627,7 @@
 //                 <div className="mentor-course text-center">
 //                   <h2>
 //                     Welcome to <br />
-//                     DreamsLMS Courses.
+//                     Ultraaura Courses.
 //                   </h2>
 //                   <p>
 //                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
@@ -643,7 +643,7 @@
 //                 <div className="mentor-course text-center">
 //                   <h2>
 //                     Welcome to <br />
-//                     DreamsLMS Courses.
+//                     Ultraaura Courses.
 //                   </h2>
 //                   <p>
 //                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed

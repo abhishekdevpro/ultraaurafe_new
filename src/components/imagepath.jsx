@@ -1,5 +1,5 @@
 export { default as headlogo } from "../assets/img/logo.png";
-export { default as logo } from "../assets/img/logo.svg";
+export { default as logo } from "../assets/img/logo02.png";
 export { default as logoPng } from "../assets/img/logo/logo.png";
 export { default as logoSvg } from "../assets/img/logo/logo.svg";
 export { default as logoFivePng } from "../assets/img/logo/logo-five.png";

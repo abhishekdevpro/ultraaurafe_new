@@ -126,7 +126,7 @@ export default function StudentViewTickets() {
                       </ul>
                       <p className="mb-0">Regards,</p>
                       <p>Admin</p>
-                      <p className="mb-0">DreamsLMS Courses. Support</p>
+                      <p className="mb-0">Ultraaura Courses. Support</p>
                     </div>
                   </div>
                   <div className="comman-space-ticket ">
