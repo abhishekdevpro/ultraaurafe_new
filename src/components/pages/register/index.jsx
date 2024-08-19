@@ -4,7 +4,7 @@
 // // import { LoginImg, logo, NetIcon1, NetIcon2 } from "../../imagepath";
 // // import { useState } from "react";
 
-// // const hasNumber = (value) => {
+// // // const hasNumber = (value) => {
 // //   return new RegExp(/[0-9]/).test(value);
 // // };
 // // const hasMixed = (value) => {
@@ -895,7 +895,7 @@
 
 
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import OwlCarousel from "react-owl-carousel";
 import { LoginImg, NetIcon1, NetIcon2 } from "../../imagepath";
 import axios from "axios";
@@ -928,24 +928,37 @@ const Register = () => {
   const [cities, setCities] = useState([]);
   const [qualifications, setQualifications] = useState([]);
   const [formData, setFormData] = useState({
-    fullName: "",
+    first_name: "",
+    last_name: "",
+    phone: "",
     email: "",
     password: "",
-    country_id: "",
-    state_id: "",
-    city_id: "",
-    qualification_id: "",
+    country_id: 0,
+    state_id: 0,
+    city_id: 0,
+    qualification_id: 0,
   });
-
+  const navigate = useNavigate(); // Initialize useNavigate
   const onEyeClick = () => {
     seteye(!eye);
   };
-
+ 
+  
   const handlePasswordChange = (event) => {
     const newPassword = event.target.value;
     setPassword(newPassword);
     validatePassword(newPassword);
+  
+    const { name, value } = event.target;
+  
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: ["country_id", "state_id", "city_id", "qualification_id"].includes(name)
+        ? parseInt(value, 10) || "" // Convert to integer, default to "" if NaN
+        : value,
+    }));
   };
+  
 
   const validatePassword = (value) => {
     if (!value) {
@@ -1070,16 +1083,27 @@ const Register = () => {
     const apiUrl = userType === "student"
       ? "https://api.novajobs.us/api/students/register"
       : "https://api.novajobs.us/api/trainers/register";
-
+  
+    // Convert IDs to integers
+    const dataToSubmit = {
+      ...formData,
+      country_id: parseInt(formData.country_id, 10) || 0,
+      state_id: parseInt(formData.state_id, 10) || 0,
+      city_id: parseInt(formData.city_id, 10) || 0,
+      qualification_id: parseInt(formData.qualification_id, 10) || 0,
+    };
+  
     try {
-      const response = await axios.post(apiUrl, formData);
+      const response = await axios.post(apiUrl, dataToSubmit);
       console.log("Registration successful:", response.data);
+      navigate('/login');
       // Handle successful registration (e.g., show success message, redirect)
     } catch (error) {
       console.error("Registration failed:", error);
       // Handle registration error (e.g., show error message)
     }
   };
+  
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -1238,13 +1262,35 @@ const Register = () => {
                     </select>
                   </div>
                   <div className="input-block">
-                    <label className="form-control-label">Full Name</label>
+                    <label className="form-control-label">First Name</label>
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Enter your Full Name"
-                      name="fullName"
-                      value={formData.fullName}
+                      placeholder="Enter your First Name"
+                      name="first_name"
+                      value={formData.first_name}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <div className="input-block">
+                    <label className="form-control-label">Last Name</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Enter your Last Name"
+                      name="last_name"
+                      value={formData.last_name}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <div className="input-block">
+                    <label className="form-control-label">Phone</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Enter your phone number"
+                      name="phone"
+                      value={formData.phone}
                       onChange={handleInputChange}
                     />
                   </div>
