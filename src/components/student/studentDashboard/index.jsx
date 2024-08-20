@@ -1,26 +1,109 @@
-import React, { useState } from 'react'
-import StudentHeader from '../header'
-import StudentSidebar from '../sidebar'
-import { Icon1, Icon2, User1, User2, User3, User4, User5, User6, course02, course03, course04, course05, course07, course08 } from '../../imagepath'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import StudentHeader from '../header';
+import StudentSidebar from '../sidebar';
+import { Icon1, Icon2, User6 } from '../../imagepath';
 
 const StudentDashboard = () => {
-
+    const [student, setStudent] = useState({});
+    const [allCourses, setAllCourses] = useState([]);
+    const [enrolledCourses, setEnrolledCourses] = useState([]);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
     const [isClassAdded, setIsClassAdded] = useState([false]);
 
     const toggleClass = (index) => {
-      const updatedClasses = [...isClassAdded];
-      updatedClasses[index] = !updatedClasses[index];
-      setIsClassAdded(updatedClasses);
+        const updatedClasses = [...isClassAdded];
+        updatedClasses[index] = !updatedClasses[index];
+        setIsClassAdded(updatedClasses);
     };
+
+    useEffect(() => {
+        const fetchStudentData = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                if (!token) throw new Error("No token found");
+
+                const response = await axios.get(
+                    "https://api.novajobs.us/api/students/profile",
+                    {
+                        headers: {
+                            Authorization: token,
+                        },
+                    }
+                );
+                setStudent(response.data.data);
+            } catch (error) {
+                console.error("Error fetching student data:", error);
+                setError("Error fetching student data.");
+            }
+        };
+
+        const fetchAllCourses = async () => {
+            try {
+                const response = await axios.get(
+                    "https://api.novajobs.us/api/trainers/all-courses",
+                    {
+                        headers: {
+                            Authorization: localStorage.getItem("token"),
+                        },
+                    }
+                );
+                setAllCourses(response.data.data);
+            } catch (error) {
+                console.error("Error fetching all courses:", error);
+                setError("Error fetching all courses.");
+            }
+        };
+
+        const fetchEnrolledCourses = async () => {
+            try {
+                const response = await axios.get(
+                    "https://api.novajobs.us/api/students/mycourse-lists",
+                    {
+                        headers: {
+                            Authorization: localStorage.getItem("token"),
+                        },
+                    }
+                );
+                setEnrolledCourses(response.data.data);
+            } catch (error) {
+                console.error("Error fetching enrolled courses:", error);
+                setError("Error fetching enrolled courses.");
+            }
+        };
+
+        fetchStudentData();
+        fetchAllCourses();
+        fetchEnrolledCourses();
+    }, []);
+
+    const fetchCourseDetails = async (courseId) => {
+        try {
+            const response = await axios.get(
+                `https://api.novajobs.us/api/trainers/course-details/${courseId}`,
+                {
+                    headers: {
+                        Authorization: localStorage.getItem("token"),
+                    },
+                }
+            );
+            console.log(response.data);
+            navigate(`/course-details/${courseId}`, { state: { courseData: response.data.data } });
+        } catch (error) {
+            console.error("Error fetching course details:", error);
+        }
+    };
+
+    if (error) {
+        return <div className="alert alert-danger">{error}</div>;
+    }
+
     return (
         <>
-            {/* Main Wrapper */}
             <div className="main-wrapper">
-                {/* Header */}
                 <StudentHeader activeMenu={"Dashboard"} />
-                {/* /Header */}
-                {/* Breadcrumb */}
                 <div className="breadcrumb-bar breadcrumb-bar-info">
                     <div className="container">
                         <div className="row">
@@ -42,508 +125,131 @@ const StudentDashboard = () => {
                         </div>
                     </div>
                 </div>
-                {/* /Breadcrumb */}
-                {/* Page Content */}
                 <div className="page-content">
                     <div className="container">
                         <div className="row">
-                            {/* sidebar */}
                             <StudentSidebar />
-                            {/* /Sidebar */}
-                            {/* Student Dashboard */}
                             <div className="col-xl-9 col-lg-9">
-                                {/* Dashboard Grid */}
-                                <div className="row justify-content-center">
-                                    <div className="col-lg-4 col-md-6 d-flex">
-                                        <div className="card dash-info flex-fill">
-                                            <div className="card-body">
-                                                <h5>Enrolled Courses</h5>
-                                                <h2>12</h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-4 col-md-6 d-flex">
-                                        <div className="card dash-info flex-fill">
-                                            <div className="card-body">
-                                                <h5>Active Courses</h5>
-                                                <h2>03</h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-4 col-md-6 d-flex">
-                                        <div className="card dash-info flex-fill">
-                                            <div className="card-body">
-                                                <h5>Completed Courses</h5>
-                                                <h2>13</h2>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div className="welcome-message">
+                                    <img
+                                        src={`https://api.novajobs.us${student.photo}` || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4YreOWfDX3kK-QLAbAL4ufCPc84ol2MA8Xg&s"}
+                                        alt={student.name}
+                                        className="student-image"
+                                    />
+                                    <h2>Welcome back, {student.first_name} {student.last_name}</h2>
                                 </div>
-                                {/* /Dashboard Grid */}
-                                <div className="dashboard-title">
-                                    <h4>Recently Enrolled Courses</h4>
+                                <div className="section">
+                                    <h3 className="mb-4">Enrolled Courses</h3>
+                                    {enrolledCourses.length > 0 ? (
+                                        <div className="row">
+                                            {enrolledCourses.map((course) => (
+                                                <div className="col-md-4" key={course.id}>
+                                                    <div className="card course-card" onClick={() => fetchCourseDetails(course.id)}>
+                                                        <img
+                                                            className="card-img-top"
+                                                            src={`https://api.novajobs.us${course.course_banner_image}`}
+                                                            alt={course.course_title}
+                                                        />
+                                                        <div className="card-body">
+                                                            <h5 className="card-title">
+                                                                {course.course_title}
+                                                            </h5>
+                                                            <p className="card-text">
+                                                                {course.course_description}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <p>No enrolled courses available</p>
+                                    )}
                                 </div>
-                                <div className="row">
-                                    {/* Course Grid */}
-                                    <div className="col-xxl-4 col-md-6 d-flex">
-                                        <div className="course-box flex-fill">
-                                            <div className="product">
-                                                <div className="product-img">
-                                                    <Link to="/course-details">
-                                                        <img
-                                                            className="img-fluid"
-                                                            alt="Img"
-                                                            src={course02}
-                                                        />
-                                                    </Link>
-                                                    <div className="price">
-                                                        <h3>
-                                                            $80 <span>$99.00</span>
-                                                        </h3>
-                                                    </div>
-                                                </div>
-                                                <div className="product-content">
-                                                    <div className="course-group d-flex">
-                                                        <div className="course-group-img d-flex">
-                                                            <Link to="/instructor/instructor-profile">
-                                                                <img
-                                                                    src={User2}
-                                                                    alt="Img"
-                                                                    className="img-fluid"
-                                                                />
-                                                            </Link>
-                                                            <div className="course-name">
-                                                                <h4>
-                                                                    <Link to="/instructor/instructor-profile">Cooper</Link>
-                                                                </h4>
-                                                                <p>Instructor</p>
+                                <div className="section">
+                                    <h3 className="mb-4">All Courses</h3>
+                                    {allCourses.length > 0 ? (
+                                        <div className="row">
+                                            {allCourses.map((course) => (
+                                                <div className="col-md-4" key={course.id}>
+                                                    <div className="course-box flex-fill">
+                                                        <div className="product">
+                                                            <div className="product-img">
+                                                                <Link to={`/course-details/${course.id}`} >
+                                                                    <img
+                                                                        className="img-fluid"
+                                                                        src={`https://api.novajobs.us${course.course_banner_image}`}
+                                                                        alt={course.course_title}
+                                                                    />
+                                                                </Link>
+                                                                <div className="price">
+                                                                    <h3>
+                                                                        $0 <span>$0.00</span>
+                                                                    </h3>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div className="course-share d-flex align-items-center justify-content-center">
-                                                        <Link to="#" onClick={() => toggleClass(1)}>
-                                                        <i className={`fa-regular fa-heart ${isClassAdded[1] ? 'color-active' : ''}`} />
-                                                      </Link>
-                                                        </div>
-                                                    </div>
-                                                    <h3 className="title instructor-text">
-                                                        <Link to="/course-details">
-                                                            Wordpress for Beginners - Master Wordpress Quickly
-                                                        </Link>
-                                                    </h3>
-                                                    <div className="course-info d-flex align-items-center">
-                                                        <div className="rating-img d-flex align-items-center">
-                                                            <img src={Icon1} alt="Img" />
-                                                            <p>12+ Lesson</p>
-                                                        </div>
-                                                        <div className="course-view d-flex align-items-center">
-                                                            <img src={Icon2} alt="Img" />
-                                                            <p>70hr 30min</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="rating mb-0">
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <span className="d-inline-block average-rating">
-                                                            <span>5.0</span> (20)
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* /Course Grid */}
-                                    {/* Course Grid */}
-                                    <div className="col-xxl-4 col-md-6 d-flex">
-                                        <div className="course-box flex-fill">
-                                            <div className="product">
-                                                <div className="product-img">
-                                                    <Link to="/course-details">
-                                                        <img
-                                                            className="img-fluid"
-                                                            alt="Img"
-                                                            src={course03}
-                                                        />
-                                                    </Link>
-                                                    <div className="price combo">
-                                                        <h3>FREE</h3>
-                                                    </div>
-                                                </div>
-                                                <div className="product-content">
-                                                    <div className="course-group d-flex">
-                                                        <div className="course-group-img d-flex">
-                                                            <Link to="/instructor/instructor-profile">
-                                                                <img
-                                                                    src={User5}
-                                                                    alt="Img"
-                                                                    className="img-fluid"
-                                                                />
-                                                            </Link>
-                                                            <div className="course-name">
-                                                                <h4>
-                                                                    <Link to="/instructor/instructor-profile">Jenny</Link>
-                                                                </h4>
-                                                                <p>Instructor</p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="course-share d-flex align-items-center justify-content-center">
-                                                        <Link to="#" onClick={() => toggleClass(2)}>
-                                                        <i className={`fa-regular fa-heart ${isClassAdded[2] ? 'color-active' : ''}`} />
-                                                      </Link>
-                                                        </div>
-                                                    </div>
-                                                    <h3 className="title instructor-text">
-                                                        <Link to="/course-details">
-                                                            Sketch from A to Z (2024): Become an app designer
-                                                        </Link>
-                                                    </h3>
-                                                    <div className="course-info d-flex align-items-center">
-                                                        <div className="rating-img d-flex align-items-center">
-                                                            <img src={Icon1} alt="Img" />
-                                                            <p>10+ Lesson</p>
-                                                        </div>
-                                                        <div className="course-view d-flex align-items-center">
-                                                            <img src={Icon2} alt="Img" />
-                                                            <p>40hr 10min</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="rating mb-0">
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star me-1" />
-                                                        <i className="fas fa-star me-1" />
-                                                        <span className="d-inline-block average-rating">
-                                                            <span>3.0</span> (18)
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* /Course Grid */}
-                                    {/* Course Grid */}
-                                    <div className="col-xxl-4 col-md-6 d-flex">
-                                        <div className="course-box flex-fill">
-                                            <div className="product">
-                                                <div className="product-img">
-                                                    <Link to="/course-details">
-                                                        <img
-                                                            className="img-fluid"
-                                                            alt="Img"
-                                                            src={course04}
-                                                        />
-                                                    </Link>
-                                                    <div className="price">
-                                                        <h3>
-                                                            $65 <span>$70.00</span>
-                                                        </h3>
-                                                    </div>
-                                                </div>
-                                                <div className="product-content">
-                                                    <div className="course-group d-flex">
-                                                        <div className="course-group-img d-flex">
-                                                            <Link to="/instructor/instructor-profile">
-                                                                <img
-                                                                    src={User4}
-                                                                    alt="Img"
-                                                                    className="img-fluid"
-                                                                />
-                                                            </Link>
-                                                            <div className="course-name">
-                                                                <h4>
-                                                                    <Link to="/instructor/instructor-profile">Nicole Brown</Link>
-                                                                </h4>
-                                                                <p>Instructor</p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="course-share d-flex align-items-center justify-content-center">
-                                                        <Link to="#" onClick={() => toggleClass(3)}>
-                                                        <i className={`fa-regular fa-heart ${isClassAdded[3] ? 'color-active' : ''}`} />
-                                                      </Link>
-                                                        </div>
-                                                    </div>
-                                                    <h3 className="title instructor-text">
-                                                        <Link to="/course-details">
-                                                            Learn Angular Fundamentals From beginning to advance
-                                                            lavel
-                                                        </Link>
-                                                    </h3>
-                                                    <div className="course-info d-flex align-items-center">
-                                                        <div className="rating-img d-flex align-items-center">
-                                                            <img src={Icon1} alt="Img" />
-                                                            <p>15+ Lesson</p>
-                                                        </div>
-                                                        <div className="course-view d-flex align-items-center">
-                                                            <img src={Icon2} alt="Img" />
-                                                            <p>80hr 40min</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="rating mb-0">
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star me-1" />
-                                                        <span className="d-inline-block average-rating">
-                                                            <span>4.0</span> (10)
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* /Course Grid */}
-                                    {/* Course Grid */}
-                                    <div className="col-xxl-4 col-md-6 d-flex">
-                                        <div className="course-box flex-fill">
-                                            <div className="product">
-                                                <div className="product-img">
-                                                    <Link to="/course-details">
-                                                        <img
-                                                            className="img-fluid"
-                                                            alt="Img"
-                                                            src={course05}
-                                                        />
-                                                    </Link>
-                                                    <div className="price combo">
-                                                        <h3>FREE</h3>
-                                                    </div>
-                                                </div>
-                                                <div className="product-content">
-                                                    <div className="course-group d-flex">
-                                                        <div className="course-group-img d-flex">
-                                                            <Link to="/instructor/instructor-profile">
-                                                                <img
-                                                                    src={User3}
-                                                                    alt="Img"
-                                                                    className="img-fluid"
-                                                                />
-                                                            </Link>
-                                                            <div className="course-name">
-                                                                <h4>
-                                                                    <Link to="/instructor/instructor-profile">John Smith</Link>
-                                                                </h4>
-                                                                <p>Instructor</p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="course-share d-flex align-items-center justify-content-center">
-                                                        <Link to="#" onClick={() => toggleClass(4)}>
-                                                        <i className={`fa-regular fa-heart ${isClassAdded[4] ? 'color-active' : ''}`} />
-                                                      </Link>
-                                                        </div>
-                                                    </div>
-                                                    <h3 className="title instructor-text">
-                                                        <Link to="/course-details">
-                                                            Build Responsive Real World Websites with Crash Course
-                                                        </Link>
-                                                    </h3>
-                                                    <div className="course-info d-flex align-items-center">
-                                                        <div className="rating-img d-flex align-items-center">
-                                                            <img src={Icon1} alt="Img" />
-                                                            <p>12+ Lesson</p>
-                                                        </div>
-                                                        <div className="course-view d-flex align-items-center">
-                                                            <img src={Icon2} alt="Img" />
-                                                            <p>70hr 30min</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="rating mb-0">
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star me-1" />
-                                                        <span className="d-inline-block average-rating">
-                                                            <span>4.0</span> (15)
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* /Course Grid */}
-                                    {/* Course Grid */}
-                                    <div className="col-xxl-4 col-md-6 d-flex">
-                                        <div className="course-box flex-fill">
-                                            <div className="product">
-                                                <div className="product-img">
-                                                    <Link to="/course-details">
-                                                        <img
-                                                            className="img-fluid"
-                                                            alt="Img"
-                                                            src={course07}
-                                                        />
-                                                    </Link>
-                                                    <div className="price">
-                                                        <h3>
-                                                            $70 <span>$80.00</span>
-                                                        </h3>
-                                                    </div>
-                                                </div>
-                                                <div className="product-content">
-                                                    <div className="course-group d-flex">
-                                                        <div className="course-group-img d-flex">
-                                                            <Link to="/instructor/instructor-profile">
-                                                                <img
-                                                                    src={User6}
-                                                                    alt="Img"
-                                                                    className="img-fluid"
-                                                                />
-                                                            </Link>
-                                                            <div className="course-name">
-                                                                <h4>
-                                                                    <Link to="/instructor/instructor-profile">
-                                                                        Stella Johnson
+                                                            <div className="product-content">
+                                                                <div className="course-group d-flex">
+                                                                    <div className="course-group-img d-flex">
+                                                                        <Link to="/instructor/instructor-profile">
+                                                                            <img
+                                                                                src={User6}
+                                                                                alt="Img"
+                                                                                className="img-fluid"
+                                                                            />
+                                                                        </Link>
+                                                                        <div className="course-name">
+                                                                            {/* Instructor details */}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="course-share d-flex align-items-center justify-content-center">
+                                                                        <Link to="#" onClick={() => toggleClass(5)}>
+                                                                            <i className={`fa-regular fa-heart ${isClassAdded[5] ? 'color-active' : ''}`} />
+                                                                        </Link>
+                                                                    </div>
+                                                                </div>
+                                                                <h3 className="title instructor-text">
+                                                                    <Link to="#" onClick={() => fetchCourseDetails(course.id)}>
+                                                                        {course.course_title}
                                                                     </Link>
-                                                                </h4>
-                                                                <p>Instructor</p>
+                                                                </h3>
+                                                                <div className="course-info d-flex align-items-center">
+                                                                    <div className="rating-img d-flex align-items-center">
+                                                                        <img src={Icon1} alt="Img" />
+                                                                        <p>15+ Lesson</p>
+                                                                    </div>
+                                                                    <div className="course-view d-flex align-items-center">
+                                                                        <img src={Icon2} alt="Img" />
+                                                                        <p>70hr 30min</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="rating mb-0">
+                                                                    <i className="fas fa-star filled me-1" />
+                                                                    <i className="fas fa-star filled me-1" />
+                                                                    <i className="fas fa-star filled me-1" />
+                                                                    <i className="fas fa-star filled me-1" />
+                                                                    <i className="fas fa-star me-1" />
+                                                                    <span className="d-inline-block average-rating">
+                                                                        <span>4.6</span> (15)
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div className="course-share d-flex align-items-center justify-content-center">
-                                                        <Link to="#" onClick={() => toggleClass(5)}>
-                                                        <i className={`fa-regular fa-heart ${isClassAdded[5] ? 'color-active' : ''}`} />
-                                                      </Link>
-                                                        </div>
-                                                    </div>
-                                                    <h3 className="title instructor-text">
-                                                        <Link to="/course-details">
-                                                            Learn JavaScript and Express to become a Expert
-                                                        </Link>
-                                                    </h3>
-                                                    <div className="course-info d-flex align-items-center">
-                                                        <div className="rating-img d-flex align-items-center">
-                                                            <img src={Icon1} alt="Img" />
-                                                            <p>15+ Lesson</p>
-                                                        </div>
-                                                        <div className="course-view d-flex align-items-center">
-                                                            <img src={Icon2} alt="Img" />
-                                                            <p>70hr 30min</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="rating mb-0">
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star me-1" />
-                                                        <span className="d-inline-block average-rating">
-                                                            <span>4.6</span> (15)
-                                                        </span>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            ))}
                                         </div>
-                                    </div>
-                                    {/* /Course Grid */}
-                                    {/* Course Grid */}
-                                    <div className="col-xxl-4 col-md-6 d-flex">
-                                        <div className="course-box flex-fill">
-                                            <div className="product">
-                                                <div className="product-img">
-                                                    <Link to="/course-details">
-                                                        <img
-                                                            className="img-fluid"
-                                                            alt="Img"
-                                                            src={course08}
-                                                        />
-                                                    </Link>
-                                                    <div className="price combo">
-                                                        <h3>FREE</h3>
-                                                    </div>
-                                                </div>
-                                                <div className="product-content">
-                                                    <div className="course-group d-flex">
-                                                        <div className="course-group-img d-flex">
-                                                            <Link to="/instructor/instructor-profile">
-                                                                <img
-                                                                    src={User1}
-                                                                    alt="Img"
-                                                                    className="img-fluid"
-                                                                />
-                                                            </Link>
-                                                            <div className="course-name">
-                                                                <h4>
-                                                                    <Link to="/instructor/instructor-profile">Nicole Brown</Link>
-                                                                </h4>
-                                                                <p>Instructor</p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="course-share d-flex align-items-center justify-content-center">
-                                                        <Link to="#" onClick={() => toggleClass(6)}>
-                                                        <i className={`fa-regular fa-heart ${isClassAdded[6] ? 'color-active' : ''}`} />
-                                                      </Link>
-                                                        </div>
-                                                    </div>
-                                                    <h3 className="title instructor-text">
-                                                        <Link to="/course-details">
-                                                            Introduction to Programming- Python &amp; Java
-                                                        </Link>
-                                                    </h3>
-                                                    <div className="course-info d-flex align-items-center">
-                                                        <div className="rating-img d-flex align-items-center">
-                                                            <img src={Icon1} alt="Img" />
-                                                            <p>10+ Lesson</p>
-                                                        </div>
-                                                        <div className="course-view d-flex align-items-center">
-                                                            <img src={Icon2} alt="Img" />
-                                                            <p>70hr 30min</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="rating mb-0">
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <i className="fas fa-star filled me-1" />
-                                                        <span className="d-inline-block average-rating">
-                                                            <span>5.0</span> (13)
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* /Course Grid */}
-                                </div>
-                                <div className="dash-pagination">
-                                    <div className="row align-items-center">
-                                        <div className="col-6">
-                                            <p>Page 1 of 2</p>
-                                        </div>
-                                        <div className="col-6">
-                                            <ul className="pagination">
-                                                <li className="active">
-                                                    <Link to="#">1</Link>
-                                                </li>
-                                                <li>
-                                                    <Link to="#">2</Link>
-                                                </li>
-                                                <li>
-                                                    <Link to="#">
-                                                        <i className="bx bx-chevron-right" />
-                                                    </Link>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                    ) : (
+                                        <p>No courses available</p>
+                                    )}
                                 </div>
                             </div>
-                            {/* Student Dashboard */}
                         </div>
                     </div>
                 </div>
-                {/* /Page Content */}
-                {/* Footer */}
-
-                {/* /Footer */}
             </div>
-            {/* /Main Wrapper */}
         </>
+    );
+};
 
-    )
-}
-
-export default StudentDashboard
+export default StudentDashboard;
