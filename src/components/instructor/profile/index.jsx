@@ -111,7 +111,7 @@ export default function InstructorProfile() {
                     and bulk the card&apos;s content Moltin gives you platform.
                   </p>
                   <p className="mb-0">
-                    As a highly skilled and successfull product development and
+                    ssAs a highly skilled and successfull product development and
                     design specialist with more than 4 Years of My experience
                     lies in successfully conceptualizing, designing, and
                     modifying consumer products specific to interior design and
