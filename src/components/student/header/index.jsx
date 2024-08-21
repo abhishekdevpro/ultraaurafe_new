@@ -2,6 +2,8 @@
 import React, { useRef, useState } from "react";
 import { Home, LogOut, Moon, Star, User } from "react-feather";
 import { Link } from "react-router-dom";
+import logo5 from "../../../assets/logo5.png"
+
 import useOnClickOutside from "../../../hooks/useOnClickOutside";
 import {
   
@@ -15,6 +17,7 @@ import {
   
 } from "../../imagepath";
 import DarkMode from "../../common/darkMode";
+import menu_data from "../../header/menu-data";
 // eslint-disable-next-line react/prop-types
 export default function StudentHeader({ activeMenu }) {
   const [navbar, setNavbar] = useState(false);
@@ -150,13 +153,13 @@ export default function StudentHeader({ activeMenu }) {
                 </span>
               </Link>
               <Link to="/home" className="navbar-brand logo">
-                <img src={logo} className="img-fluid" alt="Logo" />
+                <img src={logo5} className="img-fluid" alt="Logo" />
               </Link>
             </div>
             <div className="main-menu-wrapper">
               <div className="menu-header">
                 <Link to="/home" className="menu-logo">
-                  <img src={logo} className="img-fluid" alt="Logo" />
+                  <img src={logo5} className="img-fluid" alt="Logo" />
                 </Link>
                 <Link
                   id="menu_close"
@@ -167,7 +170,7 @@ export default function StudentHeader({ activeMenu }) {
                   <i className="fas fa-times"></i>
                 </Link>
               </div>
-              <ul className="main-nav">
+              {/* <ul className="main-nav">
                 <li className="has-submenu">
                   <Link to="/home" className={mobileSubMenu ? "submenu" : ""}>
                     Home{" "}
@@ -653,8 +656,24 @@ export default function StudentHeader({ activeMenu }) {
                 <li className="login-link">
                   <Link to="/login">Login / Signup</Link>
                 </li>
-              </ul>
+              </ul> */}
             </div>
+            <ul className="main-nav">
+  {menu_data.map((item) => (
+    <li key={item.id} className="has-submenu">
+      <Link to={item.link}>{item.title}</Link>
+      {item.sub_menus.length > 0 && (
+        <ul className="submenu">
+          {item.sub_menus.map((sub, i) => (
+            <li key={i}>
+              <Link to={sub.link}>{sub.title}</Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </li>
+  ))}
+</ul>
             <ul className="nav header-navbar-rht">
             <DarkMode/>
               <li className="nav-item cart-nav">

@@ -128,6 +128,7 @@ import StudentSetting from "./components/student/setting/studentSetting.jsx";
 import StudentTicket from "./components/student/studentTicket/index.jsx";
 import InstructorQuizDetails from "./components/instructor/instructorQuiz/instructorQuizDetails.jsx";
 import StudentQuizDetails from "./components/student/studentQuiz/studentQuizDetails.jsx";
+import NewPassword2 from "./components/pages/newPassword2.jsx/index.jsx";
 
 const Approuter = () => {
   return (
@@ -168,7 +169,8 @@ const Approuter = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/new-password" element={<NewPassword />} />
+        <Route path="/students/new-password/:token" element={<NewPassword />} />
+        <Route path="/trainers/new-password/:token" element={<NewPassword2 />} />
         <Route path="/register" element={<Register />} />
         <Route path="/register1" element={<RegisterOne />} />
         <Route path="/register2" element={<RegisterTwo />} />
