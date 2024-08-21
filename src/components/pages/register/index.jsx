@@ -897,9 +897,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OwlCarousel from "react-owl-carousel";
-import { LoginImg, NetIcon1, NetIcon2 } from "../../imagepath";
+import {NetIcon1, NetIcon2 } from "../../imagepath";
 import axios from "axios";
-
+import logo5 from '../../../assets/logo5.png'
 const hasNumber = (value) => {
   return new RegExp(/[0-9]/).test(value);
 };
@@ -1188,7 +1188,7 @@ const Register = () => {
             >
               <div className="welcome-login">
                 <div className="login-banner">
-                  <img src={LoginImg} className="img-fluid" alt="Logo" />
+                  <img src={logo5} className="img-fluid" alt="Logo" />
                 </div>
                 <div className="mentor-course text-center">
                   <h2>
@@ -1204,7 +1204,7 @@ const Register = () => {
               </div>
               <div className="welcome-login">
                 <div className="login-banner">
-                  <img src={LoginImg} className="img-fluid" alt="Logo" />
+                  <img src={logo5} className="img-fluid" alt="Logo" />
                 </div>
                 <div className="mentor-course text-center">
                   <h2>
@@ -1220,7 +1220,7 @@ const Register = () => {
               </div>
               <div className="welcome-login">
                 <div className="login-banner">
-                  <img src={LoginImg} className="img-fluid" alt="Logo" />
+                  <img src={logo5} className="img-fluid" alt="Logo" />
                 </div>
                 <div className="mentor-course text-center">
                   <h2>
@@ -1242,8 +1242,7 @@ const Register = () => {
             <div className="login-wrapper">
               <div className="loginbox">
                 <div className="img-logo">
-                  <p>UltraAura</p>
-                  {/* <img src={logo} className="img-fluid" alt="Logo" /> */}
+                  <img src={logo5} className="img-fluid" alt="Logo" />
                   <div className="back-home">
                     <Link to="/home">Back to Home</Link>
                   </div>

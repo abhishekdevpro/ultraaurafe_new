@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import Footer from "../../footer";
 import { InstructorHeader } from "../../instructor/header";
-import { Icon1, Icon2, User1, User2, User3, User4, User5, User6, course02, course03, course04, course05, course07, course08, instructortabel01, instructortabel02, instructortabel03, instructortabel04, instructortabel05 } from "../../imagepath";
+import { Icon1, Icon2, User1, User2, User3, User4, User5, User6, course02, course03, course04, course05, course07, course08, } from "../../imagepath";
 import InstructorSidebar from "../sidebar";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import CourseTable from "./CourseList";
 
 export const Dashboard = () => {
+  const {id} =useParams()
+  console.log(id,"trainer id")
   const [isClassAdded, setIsClassAdded] = useState([false]);
 
   const toggleClass = (index) => {
@@ -100,12 +103,11 @@ export const Dashboard = () => {
                 </div>
               </div>
               {/* /Dashboard Grid */}
-              <div className="instructor-course-table">
+              {/* <div className="instructor-course-table">
                 <div className="dashboard-title">
                   <h4>Recently Created Courses</h4>
                 </div>
                 <div className="table-responsive custom-table">
-                  {/* Referred Users*/}
                   <table className="table table-nowrap mb-0">
                     <thead>
                       <tr>
@@ -203,12 +205,12 @@ export const Dashboard = () => {
                     </tbody>
                   </table>
                 </div>
-              </div>
+              </div> */}
+              <CourseTable />
               <div className="dashboard-title">
                 <h4>Recently Enrolled Courses</h4>
               </div>
               <div className="row">
-                {/* Course Grid */}
                 <div className="col-xxl-4 col-md-6 d-flex">
                   <div className="course-box flex-fill">
                     <div className="product">
@@ -278,8 +280,7 @@ export const Dashboard = () => {
                     </div>
                   </div>
                 </div>
-                {/* /Course Grid */}
-                {/* Course Grid */}
+                
                 <div className="col-xxl-4 col-md-6 d-flex">
                   <div className="course-box flex-fill">
                     <div className="product">
@@ -347,8 +348,7 @@ export const Dashboard = () => {
                     </div>
                   </div>
                 </div>
-                {/* /Course Grid */}
-                {/* Course Grid */}
+            
                 <div className="col-xxl-4 col-md-6 d-flex">
                   <div className="course-box flex-fill">
                     <div className="product">
@@ -419,8 +419,7 @@ export const Dashboard = () => {
                     </div>
                   </div>
                 </div>
-                {/* /Course Grid */}
-                {/* Course Grid */}
+                
                 <div className="col-xxl-4 col-md-6 d-flex">
                   <div className="course-box flex-fill">
                     <div className="product">
@@ -488,8 +487,7 @@ export const Dashboard = () => {
                     </div>
                   </div>
                 </div>
-                {/* /Course Grid */}
-                {/* Course Grid */}
+               
                 <div className="col-xxl-4 col-md-6 d-flex">
                   <div className="course-box flex-fill">
                     <div className="product">
@@ -559,8 +557,7 @@ export const Dashboard = () => {
                     </div>
                   </div>
                 </div>
-                {/* /Course Grid */}
-                {/* Course Grid */}
+                
                 <div className="col-xxl-4 col-md-6 d-flex">
                   <div className="course-box flex-fill">
                     <div className="product">
@@ -628,7 +625,6 @@ export const Dashboard = () => {
                     </div>
                   </div>
                 </div>
-                {/* /Course Grid */}
               </div>
               <div className="dash-pagination">
                 <div className="row align-items-center">
