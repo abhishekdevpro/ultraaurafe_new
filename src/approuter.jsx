@@ -129,6 +129,10 @@ import StudentTicket from "./components/student/studentTicket/index.jsx";
 import InstructorQuizDetails from "./components/instructor/instructorQuiz/instructorQuizDetails.jsx";
 import StudentQuizDetails from "./components/student/studentQuiz/studentQuizDetails.jsx";
 import NewPassword2 from "./components/pages/newPassword2.jsx/index.jsx";
+import AddSection from "./components/pages/course/Section/AddSection.jsx";
+import AddLecture from "./components/pages/course/Lecture/AddLecture.jsx";
+import EditCourse from "./components/pages/course/EditCourse/EditCourse.jsx";
+import SectionsList from "./components/pages/course/Section/SectionList.jsx";
 
 const Approuter = () => {
   return (
@@ -139,6 +143,12 @@ const Approuter = () => {
         <Route path="/home2" element={<Home2 />} />
         <Route path="/home3" element={<Home3 />} />
         <Route path="/home4" element={<Home4 />} />
+        {/* routes added by me  */}
+        <Route path="/add-section/:id" element={<AddSection />} />
+        <Route path="/add-lecture/:courseid/:sectionid" element={<AddLecture />} />
+        <Route path="/edit-course/:id" element={<EditCourse />} />
+        <Route path="/course-details/:id" element={<SectionsList />} />
+
 
         {/* Blog */}
         <Route path="/blog-list" element={<BlogList />} />
