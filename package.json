@@ -4,8 +4,8 @@
   "homepage": "https://ultraaurafe-new.vercel.app",
   "private": true,
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^41.2.1",
-    "@ckeditor/ckeditor5-react": "^6.1.0",
+    "@ckeditor/ckeditor5-build-classic": "^41.4.2",
+    "@ckeditor/ckeditor5-react": "^6.3.0",
     "@popperjs/core": "^2.11.8",
     "@reduxjs/toolkit": "^2.2.7",
     "@types/react-redux": "^7.1.33",

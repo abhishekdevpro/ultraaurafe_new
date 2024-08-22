@@ -1,225 +1,54 @@
-//  import React from "react";
-// import { useState } from "react";
-// import { Link } from "react-router-dom";
-// import Footer from "../../../footer";
-//  import Basic from "./basic";
-//  import CourseMedia from "./courseMedia";
-//  import Curriculum from "./curriculum";
-//  import Settings from "./settings";
-// import Success from "./success";
-// import CourseHeader from "../header";
-
-
-//  const AddCourse = () => {
-//    const [TabChange, setTabChange] = useState(false);
-//    const [TabChange1, setTabChange1] = useState(false);
-//   const [TabChange2, setTabChange2] = useState(false);
-//    const [TabChange3, setTabChange3] = useState(false);
-//   const [PageChange, setPageChange] = useState("basic");
-
-//    const nextTab = () => {
-//      setTabChange(true);
-//      setPageChange("courseMedia");
-//    };
-
-//    const prevTab1 = () => {
-//      setTabChange(false);
-//      setPageChange("basic");
-//    };
-
-//   const nextTab2 = () => {
-//     setTabChange1(true);
-//     setTabChange(true);
-//     setPageChange("curriculum");
-//   };
-
-//   const prevTab2 = () => {
-//     setTabChange1(false);
-//     setPageChange("courseMedia");
-//   };
-
-//   const nextTab3 = () => {
-//     setTabChange2(true);
-//     setTabChange(true);
-//     setPageChange("settings");
-//   };
-
-//   const prevTab3 = () => {
-//     setTabChange2(false);
-//     setPageChange("curriculum");
-//   };
-
-//   const nextTab4 = () => {
-//     setTabChange3(true);
-//     setTabChange(true);
-//     setPageChange("success");
-//   };
-
-
-//   return (
-//     <>
-//       <div className="main-wrapper">
-//         <CourseHeader activeMenu={"AddCourse"} />
-
-//         <section className="page-content course-sec">
-//           <div className="container">
-//             <div className="row align-items-center">
-//               <div className="col-md-12">
-//                 <div className="add-course-header">
-//                   <h2>Add New Course</h2>
-//                   <div className="add-course-btns">
-//                     <ul className="nav">
-//                       <li>
-//                         <Link
-//                           to="/instructor/instructor-dashboard"
-//                           className="btn btn-black"
-//                         >
-//                           Back to Course
-//                         </Link>
-//                       </li>
-//                       <li>
-//                         <Link to="#" className="btn btn-success-dark">
-//                           Save
-//                         </Link>
-//                       </li>
-//                     </ul>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//             <div className="row">
-//               <div className="col-md-12">
-//                 <div className="card">
-//                   <div className="widget-set">
-//                     <div className="widget-setcount">
-//                       <ul id="progressbar">
-//                         <li
-//                           className={
-//                             TabChange ? "progress-activated" : "progress-active"
-//                           }
-//                         >
-//                           <p>
-//                             <span></span> Basic Information
-//                           </p>
-//                         </li>
-//                         <li
-//                           className={
-//                             TabChange1
-//                               ? "progress-activated"
-//                               : "" || TabChange
-//                               ? "progress-active"
-//                               : ""
-//                           }
-//                         >
-//                           <p>
-//                             <span></span> Courses Media
-//                           </p>
-//                         </li>
-//                         <li
-//                           className={
-//                             TabChange2
-//                               ? "progress-activated"
-//                               : "" || TabChange1
-//                               ? "progress-active"
-//                               : ""
-//                           }
-//                         >
-//                           <p>
-//                             <span></span> Curriculum
-//                           </p>
-//                         </li>
-//                         <li
-//                           className={
-//                             TabChange3
-//                               ? "progress-activated"
-//                               : "" || TabChange2
-//                               ? "progress-active"
-//                               : ""
-//                           }
-//                         >
-//                           <p>
-//                             <span /> Settings
-//                           </p>
-//                         </li>
-//                       </ul>
-//                     </div>
-
-//                     <div className="widget-content multistep-form">
-//                       {PageChange === "basic" ? (
-//                         <Basic nextTab={nextTab} />
-//                       ) : (
-//                         ""
-//                       )}
-//                       {PageChange === "courseMedia" ? (
-//                         <CourseMedia nextTab2={nextTab2} prevTab1={prevTab1} />
-//                       ) : (
-//                         ""
-//                       )}
-//                       {PageChange === "curriculum" ? (
-//                         <Curriculum nextTab3={nextTab3} prevTab2={prevTab2} />
-//                       ) : (
-//                         ""
-//                       )}
-//                       {PageChange === "settings" ? (
-//                         <Settings nextTab4={nextTab4} prevTab3={prevTab3}/>
-//                       ) : (
-//                         ""
-//                       )}
-//                       {PageChange === "success" ? (
-//                         <Success />
-//                       ) : (
-//                         ""
-//                       )}
-
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </section>
-
-//         <Footer />
-//       </div>
-//     </>
-//   );
-// };
-
-// export default AddCourse;
-
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Footer from "../../../footer";
 import CourseHeader from "../header";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Select from "react-select";
 import { useSelector } from "react-redux";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
-const AddCourse = () => {
+
+const EditCourse = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const mobileSidebar = useSelector((state) => state.sidebarSlice.expandMenu);
   const [activeTab, setActiveTab] = useState("basic");
   const [courseData, setCourseData] = useState({
-    course_title: "Web development",
-    category: "Hardware",
-    level: "Level 02",
-    course_description: "<p>Dummy course</p>",
+    course_title: "",
+    category: "",
+    level: "",
+    course_description: "",
     course_banner_image: null,
     course_intro_video: null,
-    requirements: "laptop",
+    requirements: "",
     course_price: 0,
     after_discount_price: 0,
-    coupon_code: "summy",
-    course_language: "English",
+    coupon_code: "",
+    course_language: "",
     discount_percent: 0,
-    learning_objectives: "dummy",
-    target_audience: "students",
-    time_spent_on_course: "10 hours",
+    learning_objectives: "",
+    target_audience: "",
+    time_spent_on_course: "",
   });
+
+  useEffect(() => {
+    fetchCourseData();
+  }, [id]);
+
+  const fetchCourseData = async () => {
+    try {
+      const token = localStorage.getItem("trainerToken");
+      const response = await axios.get(`https://api.novajobs.us/api/trainers/course-details/${id}`, {
+        headers: { Authorization: `${token}` },
+      });
+      setCourseData(prev => ({
+        ...prev,
+        ...response.data.data,
+        course_description: response.data.data.course_description || ''
+      }));
+    } catch (error) {
+      console.error("Error fetching course data:", error);
+    }
+  };
 
   const handleInputChange = (e) => {
     setCourseData({ ...courseData, [e.target.name]: e.target.value });
@@ -227,11 +56,6 @@ const AddCourse = () => {
 
   const handleSelectChange = (name) => (selectedOption) => {
     setCourseData({ ...courseData, [name]: selectedOption.value });
-  };
-
-  const handleEditorChange = (event, editor) => {
-    const data = editor.getData();
-    setCourseData({ ...courseData, course_description: data });
   };
 
   const handleFileChange = (e) => {
@@ -243,28 +67,35 @@ const AddCourse = () => {
     try {
       const formData = new FormData();
       for (const key in courseData) {
-        if (key === "course_banner_image" || key === "course_intro_video") {
-          formData.append(key, courseData[key], courseData[key]?.name);
-        } else {
-          formData.append(key, courseData[key]);
+        if (courseData[key] !== undefined && courseData[key] !== null) {
+          if (key === "course_banner_image" || key === "course_intro_video") {
+            if (courseData[key] instanceof File) {
+              formData.append(key, courseData[key], courseData[key].name);
+            }
+          } else {
+            formData.append(key, courseData[key]);
+          }
         }
       }
-        const token = localStorage.getItem("trainerToken")
-      const response = await axios.post("https://api.novajobs.us/api/trainers/create-course", formData, {
-        headers: { "Content-Type": "multipart/form-data",
-          Authorization: `${token}`
-         },
+      const token = localStorage.getItem("trainerToken");
+      const response = await axios.patch(`https://api.novajobs.us/api/trainers/update-course/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `${token}`,
+        },
       });
-      console.log("Course saved successfully:", response.data);
-      toast.success('Course created successfully!');
-      setTimeout(() => {
-        navigate(`/instructor/instructor-dashboard`);
-      }, 2000)
+      console.log("Course updated successfully:", response.data.data);
+      alert("Course updated successfully!");
     } catch (error) {
-      console.error("Error saving course:", error);
-      toast.error('Failed to create section. Please try again.');
+      console.error("Error updating course:", error);
+      alert("Error updating course. Please try again.");
     }
   };
+
+  const handleAddSection = () => {
+    navigate(`/add-section/${id}`);
+  };
+
   const categoryOptions = [
     { label: "Hardware", value: "Hardware" },
     { label: "Category 02", value: "Category 02" },
@@ -313,14 +144,14 @@ const AddCourse = () => {
 
   return (
     <div className="main-wrapper">
-      <CourseHeader activeMenu={"AddCourse"} />
+      <CourseHeader activeMenu={"EditCourse"} />
 
       <section className="page-content course-sec">
         <div className="container">
           <div className="row align-items-center">
             <div className="col-md-12">
               <div className="add-course-header">
-                <h2>Add New Course</h2>
+                <h2>Edit Course</h2>
                 <div className="add-course-btns">
                   <ul className="nav">
                     <li>
@@ -330,7 +161,12 @@ const AddCourse = () => {
                     </li>
                     <li>
                       <button onClick={handleSave} className="btn btn-success-dark">
-                        Save
+                        Save Changes
+                      </button>
+                    </li>
+                    <li>
+                      <button onClick={handleAddSection} className="btn btn-info-dark">
+                        Add Section
                       </button>
                     </li>
                   </ul>
@@ -380,6 +216,7 @@ const AddCourse = () => {
                               <Select
                                 options={categoryOptions}
                                 onChange={handleSelectChange("category")}
+                                value={categoryOptions.find(option => option.value === courseData.category)}
                                 placeholder="Select Category"
                                 styles={selectStyle}
                               />
@@ -389,6 +226,7 @@ const AddCourse = () => {
                               <Select
                                 options={levelOptions}
                                 onChange={handleSelectChange("level")}
+                                value={levelOptions.find(option => option.value === courseData.level)}
                                 placeholder="Select Level"
                                 styles={selectStyle}
                               />
@@ -398,18 +236,20 @@ const AddCourse = () => {
                               <Select
                                 options={languageOptions}
                                 onChange={handleSelectChange("course_language")}
+                                value={languageOptions.find(option => option.value === courseData.course_language)}
                                 placeholder="Select Language"
                                 styles={selectStyle}
                               />
                             </div>
                             <div className="input-block mb-0">
                               <label className="add-course-label">Course Description</label>
-                              <div id="editor">
-                                <CKEditor
-                                  editor={ClassicEditor}
-                                  onChange={handleEditorChange}
-                                />
-                              </div>
+                              <textarea
+                                className="form-control"
+                                name="course_description"
+                                value={courseData.course_description}
+                                onChange={handleInputChange}
+                                rows="4"
+                              ></textarea>
                             </div>
                             <div className="input-block">
                               <label className="add-course-label">Learning Objectives</label>
@@ -450,7 +290,7 @@ const AddCourse = () => {
                       </div>
                     )}
 
-                    {/* {activeTab === "media" && (
+                    {activeTab === "media" && (
                       <div className="add-course-info">
                         <div className="add-course-inner-header">
                           <h4>Courses Media</h4>
@@ -460,80 +300,19 @@ const AddCourse = () => {
                             <div className="input-block">
                               <label className="add-course-label">Course cover image</label>
                               <div className="relative-form">
-                                <span>{courseData.course_banner_image ? courseData.course_banner_image.name : "No File Selected"}</span>
-                                <label className="relative-file-upload">
-                                  Upload File <input type="file" onChange={handleFileChange} />
-                                </label>
-                              </div>
-                            </div>
-                            <div className="input-block">
-                              <div className="add-image-box">
-                                <Link to="#">
-                                  <i className="far fa-image" />
-                                </Link>
-                              </div>
-                            </div>
-                            <div className="input-block">
-                              <label className="add-course-label">Course Intro Video </label>
-                              <div className="relative-form">
-                                <span>{courseData.course_intro_video ? courseData.course_intro_video.name : "No File Selected"}</span>
-                                <label className="relative-file-upload">
-                                  Upload File <input type="file" name="course_intro_video" onChange={handleFileChange} accept=".mp4" />
-                                </label>
-                              </div>
-                              </div>
-                            <div className="input-block">
-                              <div className="add-image-box add-video-box">
-                                <Link to="#">
-                                  <i className="fas fa-circle-play" />
-                                </Link>
-                              </div>
-                            </div>
-                          </form>
-                        </div>
-                        <div className="widget-btn">
-                          <Link className="btn btn-black prev_btn" onClick={() => setActiveTab("basic")}>Previous</Link>
-                          <Link className="btn btn-info-light next_btn" onClick={() => setActiveTab("settings")}>Continue</Link>
-                        </div>
-                      </div>
-                    )} */}
- {activeTab === "media" && (
-                      <div className="add-course-info">
-                        <div className="add-course-inner-header">
-                          <h4>Courses Media</h4>
-                        </div>
-                        <div className="add-course-form">
-                          <form action="#">
-                            <div className="input-block">
-                              <label className="add-course-label">Course cover image</label>
-                              <div className="relative-form">
-                                <span>{courseData.course_banner_image ? courseData.course_banner_image.name : "No File Selected"}</span>
+                                <span>{courseData.course_banner_image instanceof File ? courseData.course_banner_image.name : "Current image"}</span>
                                 <label className="relative-file-upload">
                                   Upload File <input type="file" name="course_banner_image" onChange={handleFileChange} />
                                 </label>
                               </div>
                             </div>
                             <div className="input-block">
-                              <div className="add-image-box">
-                                <Link to="#">
-                                  <i className="far fa-image" />
-                                </Link>
-                              </div>
-                            </div>
-                            <div className="input-block">
                               <label className="add-course-label">Course Intro Video (MP4)</label>
                               <div className="relative-form">
-                                <span>{courseData.course_intro_video ? courseData.course_intro_video.name : "No File Selected"}</span>
+                                <span>{courseData.course_intro_video instanceof File ? courseData.course_intro_video.name : "Current video"}</span>
                                 <label className="relative-file-upload">
                                   Upload File <input type="file" name="course_intro_video" onChange={handleFileChange} accept=".mp4" />
                                 </label>
-                              </div>
-                            </div>
-                            <div className="input-block">
-                              <div className="add-image-box add-video-box">
-                                <Link to="#">
-                                  <i className="fas fa-circle-play" />
-                                </Link>
                               </div>
                             </div>
                           </form>
@@ -544,6 +323,7 @@ const AddCourse = () => {
                         </div>
                       </div>
                     )}
+
                     {activeTab === "settings" && (
                       <div className="add-course-info">
                         <div className="add-course-inner-header">
@@ -611,7 +391,7 @@ const AddCourse = () => {
                             Previous
                           </Link>
                           <Link className="btn btn-info-light next_btn" onClick={handleSave}>
-                            Save Course
+                            Save Changes
                           </Link>
                         </div>
                       </div>
@@ -629,4 +409,4 @@ const AddCourse = () => {
   );
 };
 
-export default AddCourse;
+export default EditCourse;
