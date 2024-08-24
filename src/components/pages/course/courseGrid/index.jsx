@@ -437,7 +437,6 @@ import React, { useState, useEffect } from "react";
 import CourseHeader from "../header";
 import GridInnerPage from "./gridInnerPage";
 import FeatherIcon from "feather-icons-react";
-import { Blog1, Blog2, Blog3 } from "../../../imagepath";
 import Select from "react-select";
 import { Link } from "react-router-dom";
 import Footer from "../../../footer";

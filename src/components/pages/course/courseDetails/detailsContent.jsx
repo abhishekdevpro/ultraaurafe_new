@@ -814,11 +814,7 @@ const DetailsContent = () => {
                   <h6>Course Description</h6>
                   <p>{courseData.course_title}</p>
                   <p>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown
-                    printer took a galley of type and scrambled it to make a
-                    type specimen book.
+                  
                   </p>
                   <h6>What you'll learn</h6>
                   <div className="row">
@@ -977,8 +973,8 @@ const DetailsContent = () => {
                     </div>
                   </div>
                   <p className="rev-info">
-                    " This is the second Photoshop course I have completed with Cristian. Worth every penny and recommend it highly. To get the most out of this course, its best to to take the Beginner to Advanced course first. The sound and video quality is of a good standard. Thank you Cristian. "
-                  </p>
+  &quot; This is the second Photoshop course I have completed with Cristian. Worth every penny and recommend it highly. To get the most out of this course, its best to to take the Beginner to Advanced course first. The sound and video quality is of a good standard. Thank you Cristian. &quot;
+</p>
                   <Link to="#" className=" btn-reply">
                     <FeatherIcon icon="corner-up-left"/> Reply
                   </Link>
