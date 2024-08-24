@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.bacb21fe.css",
-    "main.js": "/static/js/main.b3d98357.js",
+    "main.css": "/static/css/main.622cc20a.css",
+    "main.js": "/static/js/main.cba9605c.js",
     "static/media/bg-banner-01.png": "/static/media/bg-banner-01.045cff2668ecf6414bf5.png",
     "static/media/boxicons.svg": "/static/media/boxicons.61829f134e586c0c9e89.svg",
     "static/media/banner.png": "/static/media/banner.ba79756fb5c8dafa5b90.png",
@@ -34,6 +34,7 @@
     "static/media/feather.eot?t=1525787366991": "/static/media/feather.ba142c9a3d0f5747c347.eot",
     "static/media/feather.ttf?t=1525787366991": "/static/media/feather.aaacbaee6c14b4207d39.ttf",
     "static/media/map-user.png": "/static/media/map-user.49627ca98b07ca4053b0.png",
+    "static/media/logo5.png": "/static/media/logo5.43c058bc9ffc574683f2.png",
     "static/media/award-01.png": "/static/media/award-01.32a80aa13dc166528369.png",
     "static/media/certification.png": "/static/media/certification.53adb002556c3829193b.png",
     "static/media/education.png": "/static/media/education.e686a662004703ddf830.png",
@@ -50,9 +51,7 @@
     "static/media/google-icon.svg": "/static/media/google-icon.457c40f5ae9494f90e6923039178ac3b.svg",
     "static/media/home-right.png": "/static/media/home-right.75d9a5f9e564f6b3e2a0.png",
     "static/media/client-03.svg": "/static/media/client-03.3a830948292652dfc593125c818724c4.svg",
-    "static/media/logo2.png": "/static/media/logo2.dbd3fc3b9da3343a7a7c.png",
     "static/media/feather.woff?t=1525787366991": "/static/media/feather.3fa166a56aa3839c5d12.woff",
-    "static/media/logo3.png": "/static/media/logo3.51a6a83d2ffa5ef60b2e.png",
     "static/media/like.svg": "/static/media/like.fcb67481c74cb10b3da62653f116a348.svg",
     "static/media/github-icon.svg": "/static/media/github-icon.4d0a1bc9cb045850acb9ac270f53a1a8.svg",
     "static/media/fb-icon.svg": "/static/media/fb-icon.d4b65685b3f17901f79032e5148c41e1.svg",
@@ -65,10 +64,10 @@
     "static/media/error-01.png": "/static/media/error-01.d7e1a6bb0d00b1c10f20.png",
     "static/media/logo-five.svg": "/static/media/logo-five.f48c768bc820875e6a9588a39525a463.svg",
     "static/media/client-02.svg": "/static/media/client-02.6cfb2caf93879385b27d8b262f3f4348.svg",
-    "static/media/logo.svg": "/static/media/logo.0383f6f00b111fc7ff0b139df80d4948.svg",
     "static/media/ban-bg.png": "/static/media/ban-bg.dcca01f53a8a575d9b34.png",
     "static/media/instructor-bg-banner.png": "/static/media/instructor-bg-banner.728b984fb6f50d455514.png",
     "static/media/bg-3.png": "/static/media/bg-3.d37f46fb0dab23ca3fc6.png",
+    "static/media/logo02.png": "/static/media/logo02.e18b392c2ed3816d3fc3.png",
     "static/media/error-02.png": "/static/media/error-02.3d893a48a6b776ac6b18.png",
     "static/media/error.png": "/static/media/error.a602004bff058e339ae3.png",
     "static/media/student-bg-banner.png": "/static/media/student-bg-banner.abcaa5a1fc11da1fec5d.png",
@@ -86,6 +85,7 @@
     "static/media/video-bg.jpg": "/static/media/video-bg.baaebd68110a9dc76188.jpg",
     "static/media/icon-3.svg": "/static/media/icon-3.355259edbd43f1db87d440fe3ac68231.svg",
     "static/media/video-img-01.jpg": "/static/media/video-img-01.d70d3f02774c12b1c807.jpg",
+    "static/media/logo.svg": "/static/media/logo.0383f6f00b111fc7ff0b139df80d4948.svg",
     "static/media/client-05.svg": "/static/media/client-05.281e18329ce0ce0f3878cdb08bbfacd9.svg",
     "static/media/icon-17.svg": "/static/media/icon-17.cac518f2cc8788f62ebe474012ceb2e7.svg",
     "static/media/course-02.svg": "/static/media/course-02.9ad400615063fa5250c918600f4f1fd1.svg",
@@ -208,11 +208,11 @@
     "static/media/ellipse-1.svg": "/static/media/ellipse-1.52953ac63f780fbbb7a508369ac94f62.svg",
     "static/media/ellipse-2.svg": "/static/media/ellipse-2.7fff44abc24dd8114ddf1d571aa79864.svg",
     "static/media/ellipse-3.svg": "/static/media/ellipse-3.23ac211eb01e22f45bea194b6430fef3.svg",
-    "main.bacb21fe.css.map": "/static/css/main.bacb21fe.css.map",
-    "main.b3d98357.js.map": "/static/js/main.b3d98357.js.map"
+    "main.622cc20a.css.map": "/static/css/main.622cc20a.css.map",
+    "main.cba9605c.js.map": "/static/js/main.cba9605c.js.map"
   },
   "entrypoints": [
-    "static/css/main.bacb21fe.css",
-    "static/js/main.b3d98357.js"
+    "static/css/main.622cc20a.css",
+    "static/js/main.cba9605c.js"
   ]
 }

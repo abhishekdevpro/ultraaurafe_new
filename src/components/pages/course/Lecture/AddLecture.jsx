@@ -27,6 +27,41 @@ const AddLecture = () => {
     setLectureData({ ...lectureData, [name]: files[0] });
   };
 
+  // const handleSave = async () => {
+  //   try {
+  //     const formData = new FormData();
+  //     for (const key in lectureData) {
+  //       if (lectureData[key]) {
+  //         formData.append(key, lectureData[key]);
+  //       }
+  //     }
+  //     const token = localStorage.getItem("trainerToken");
+  //     const response = await axios.post(
+  //       `https://api.novajobs.us/api/trainers/${courseid}/${sectionid}/upload`,
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //           Authorization: `${token}`,
+  //         },
+  //       }
+  //     );
+
+  //     console.log("Lecture saved successfully:", response.data);
+
+  //     // Show success toast
+  //     toast.success("Lecture saved successfully!");
+
+  //     // Navigate after a short delay to allow the toast to be visible
+  //     setTimeout(() => {
+  //       navigate(`/course-details/${courseid}`);
+  //     }, 2000); // 2 seconds delay
+  //   } catch (error) {
+  //     console.error("Error saving lecture:", error);
+  //     toast.error("Error saving lecture. Please try again.");
+  //   }
+  // };
+
   const handleSave = async () => {
     try {
       const formData = new FormData();
@@ -46,12 +81,15 @@ const AddLecture = () => {
           },
         }
       );
-
+  
       console.log("Lecture saved successfully:", response.data);
-
+  
+      // Store the lecture data in session storage
+      sessionStorage.setItem("lectureData", JSON.stringify(lectureData));
+  
       // Show success toast
       toast.success("Lecture saved successfully!");
-
+  
       // Navigate after a short delay to allow the toast to be visible
       setTimeout(() => {
         navigate(`/course-details/${courseid}`);
@@ -61,6 +99,7 @@ const AddLecture = () => {
       toast.error("Error saving lecture. Please try again.");
     }
   };
+  
 
   return (
     <div className="main-wrapper">
