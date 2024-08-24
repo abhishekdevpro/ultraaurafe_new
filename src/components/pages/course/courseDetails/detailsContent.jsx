@@ -808,7 +808,7 @@ const DetailsContent = () => {
           <div className="row">
             <div className="col-lg-8">
               {/* Overview */}
-              <div className="card overview-sec">
+              {/* <div className="card overview-sec">
                 <div className="card-body">
                   <h5 className="subs-title">Overview</h5>
                   <h6>Course Description</h6>
@@ -844,7 +844,7 @@ const DetailsContent = () => {
                     <li className="mb-0">No previous Adobe XD skills are needed.</li>
                   </ul>
                 </div>
-              </div>
+              </div> */}
               {/* /Overview */}
 
               {/* Course Content */}
@@ -972,9 +972,9 @@ const DetailsContent = () => {
                       <span className="d-inline-block average-rating">4.5 Instructor Rating</span>
                     </div>
                   </div>
-                  <p className="rev-info">
+                  {/* <p className="rev-info">
   &quot; This is the second Photoshop course I have completed with Cristian. Worth every penny and recommend it highly. To get the most out of this course, its best to to take the Beginner to Advanced course first. The sound and video quality is of a good standard. Thank you Cristian. &quot;
-</p>
+</p> */}
                   <Link to="#" className=" btn-reply">
                     <FeatherIcon icon="corner-up-left"/> Reply
                   </Link>
