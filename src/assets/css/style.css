@@ -2266,6 +2266,7 @@ html.menu-opened body {
 }
 .product-img img {
   width: 100%;
+  height: auto;
   border-radius: 4px 4px 0 0;
   transform: translateZ(0);
   transition: all 2000ms cubic-bezier(0.19, 1, 0.22, 1) 0ms;
@@ -30369,4 +30370,45 @@ color: #B9B7C0 ;
 .edit-lecture-button:hover {
   background-color: #e0a800; /* Slightly darker on hover */
   color: #fff;
+}
+.header-nav .submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Light border */
+  padding: 15px;
+  width: 300px; /* Adjust the width as needed */
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px; /* Rounded corners */
+  overflow: hidden; /* Prevent content overflow */
+  word-wrap: break-word; /* Ensure long words are wrapped */
+}
+
+.header-nav .submenu-item {
+  padding: 10px 0;
+  line-height: 1.5; /* Add some space between lines */
+}
+
+.header-nav .submenu-item .submenu-link {
+  color: #333;
+  text-decoration: none;
+  display: block;
+  white-space: normal; /* Allow text to wrap */
+}
+
+.header-nav .submenu-item .submenu-link:hover {
+  text-decoration: underline;
+}
+
+.header-nav .has-submenu:hover .submenu {
+  display: block;
+  transition: opacity 0.3s ease-in-out; /* Smooth transition */
+  opacity: 1;
+}
+
+.header-nav .submenu {
+  opacity: 0;
 }

@@ -66,9 +66,17 @@ const options = [
   { label: "React", value: "React" },
   { label: "Python", value: "Python" },
 ];
+const levelOptions = [
+  { value: 'undergraduates', label: 'Undergraduates' },
+  { value: 'graduates', label: 'Graduates' },
+  { value: 'professionals', label: 'Professionals' },
+  { value: 'home-care', label: 'Home Care' },
+  { value: 'special-kids', label: 'Special Kids' },
+];
 
 export const Home = () => {
   const [setValue] = useState(null);
+  const [selectedLevel, setSelectedLevel] = useState(null);
   const [isActive, setIsActive] = useState(false);
   const [isActivetwo, setIsActivetwo] = useState(false);
   const [isActivethree, setIsActivethree] = useState(false);
@@ -189,6 +197,15 @@ export const Home = () => {
                               styles={style}
                             ></Select>
                           </span>
+                          <span className="drop-detail">
+              <Select
+                options={levelOptions}
+                value={selectedLevel}
+                placeholder="Levels"
+                onChange={setSelectedLevel}
+                styles={style}
+              />
+            </span>
                           <button className="btn sub-btn" type="submit">
                             <i className="fas fa-arrow-right" />
                           </button>
@@ -198,8 +215,8 @@ export const Home = () => {
                   </div>
                   <div className="trust-user">
                     <p>
-                      Trusted by over 15K Users <br />
-                      worldwide since 2024
+                      Trusted by Users <br />
+                      Now Live worldwide
                     </p>
                     <div className="trust-rating d-flex align-items-center">
                       <div className="rate-head">
@@ -256,13 +273,13 @@ export const Home = () => {
                           <h4>
                             {/* <span>10</span>K */}
                             <span className="d-flex">
-                              <CountUp
+                              {/* <CountUp
                                 start={0}
                                 end={10}
                                 delay={1}
                                 duration={4}
-                              />
-                              K
+                              /> */}
+                              100+
                             </span>
                           </h4>
                           <p>Online Courses</p>
@@ -284,7 +301,8 @@ export const Home = () => {
                         <div className="course-inner-content">
                           <h4>
                             <span className="d-flex">
-                              <CountUp start={0} end={200} delay={1} />+
+                              {/* <CountUp start={0} end={200} delay={1} />+ */}
+                              50+
                             </span>
                           </h4>
                           <p>Expert Tutors</p>
@@ -306,13 +324,14 @@ export const Home = () => {
                         <div className="course-inner-content">
                           <h4>
                             <span className="d-flex">
-                              <CountUp
+                              {/* <CountUp
                                 start={0}
                                 end={6}
                                 delay={1}
                                 duration={5}
                               />
-                              K+
+                              K+ */}
+                              100+
                             </span>
                           </h4>
                           <p>Ceritified Courses</p>
@@ -334,13 +353,14 @@ export const Home = () => {
                         <div className="course-inner-content">
                           <h4>
                             <span className="d-flex">
-                              <CountUp
+                              {/* <CountUp
                                 start={0}
                                 end={60}
                                 delay={1}
                                 duration={2}
                               />
-                              K +
+                              K + */}
+                              100+
                             </span>
                           </h4>
                           <p>Online Students</p>
