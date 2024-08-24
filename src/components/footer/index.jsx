@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Icon19, Icon20, Icon21, logo } from "../imagepath";
+import { Icon19, Icon20, Icon21 } from "../imagepath";
 import logo5 from './logo5.png'
 
 const Footer = () => {
