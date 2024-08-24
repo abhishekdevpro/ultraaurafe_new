@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Icon19, Icon20, Icon21, logo } from "../imagepath";
+import logo5 from './logo5.png'
 
 const Footer = () => {
   return (
@@ -13,13 +14,11 @@ const Footer = () => {
               {/* Footer Widget */}
               <div className="footer-widget footer-about">
                 <div className="footer-logo">
-                  <img src={logo} alt="logo" />
+                  <img src={logo5} alt="logo" />
                 </div>
                 <div className="footer-about-content">
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
-                    consequat mauris Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit. Ut consequat mauris
+                  UltraAura.Education - An AI enabled Edtech Company
                   </p>
                 </div>
               </div>
@@ -92,17 +91,17 @@ const Footer = () => {
                     <img src={Icon20} alt="" className="img-fluid" />
                     <p>
                       {" "}
-                      3556 Beech Street, San Francisco,
-                      <br /> California, CA 94108{" "}
+                      1509 Lady St, Columbia, SC 29201, 
+                      <br />United States,{" "}
                     </p>
                   </div>
                   <p>
                     <img src={Icon19} alt="" className="img-fluid" />
-                    Ultraaura@example.com
+                    info@ultraaura.education
                   </p>
                   <p className="mb-0">
                     <img src={Icon21} alt="" className="img-fluid" />
-                    +19 123-456-7890
+                    1803-967-7715
                   </p>
                 </div>
               </div>
@@ -132,7 +131,7 @@ const Footer = () => {
               </div>
               <div className="col-md-6">
                 <div className="copyright-text">
-                  <p className="mb-0">© 2023 Ultraaura. All rights reserved.</p>
+                  <p className="mb-0">© 2024 Ultraaura. All rights reserved.</p>
                 </div>
               </div>
             </div>
