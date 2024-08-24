@@ -133,6 +133,8 @@ import AddSection from "./components/pages/course/Section/AddSection.jsx";
 import AddLecture from "./components/pages/course/Lecture/AddLecture.jsx";
 import EditCourse from "./components/pages/course/EditCourse/EditCourse.jsx";
 import SectionsList from "./components/pages/course/Section/SectionList.jsx";
+import EditSection from "./components/pages/course/Section/EditSection.jsx";
+import EditLecture from "./components/pages/course/Lecture/EditLecture.jsx";
 
 const Approuter = () => {
   return (
@@ -145,7 +147,9 @@ const Approuter = () => {
         <Route path="/home4" element={<Home4 />} />
         {/* routes added by me  */}
         <Route path="/add-section/:id" element={<AddSection />} />
+        <Route path="/edit-section/:courseid/:sectionid" element={<EditSection />} />
         <Route path="/add-lecture/:courseid/:sectionid" element={<AddLecture />} />
+        <Route path="/edit-lecture/:courseid/:sectionid/:lectureid" element={<EditLecture />} />
         <Route path="/edit-course/:id" element={<EditCourse />} />
         <Route path="/course-details/:id" element={<SectionsList />} />
 

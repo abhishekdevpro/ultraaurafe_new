@@ -1,225 +1,45 @@
-//  import React from "react";
-// import { useState } from "react";
-// import { Link } from "react-router-dom";
-// import Footer from "../../../footer";
-//  import Basic from "./basic";
-//  import CourseMedia from "./courseMedia";
-//  import Curriculum from "./curriculum";
-//  import Settings from "./settings";
-// import Success from "./success";
-// import CourseHeader from "../header";
-
-
-//  const AddCourse = () => {
-//    const [TabChange, setTabChange] = useState(false);
-//    const [TabChange1, setTabChange1] = useState(false);
-//   const [TabChange2, setTabChange2] = useState(false);
-//    const [TabChange3, setTabChange3] = useState(false);
-//   const [PageChange, setPageChange] = useState("basic");
-
-//    const nextTab = () => {
-//      setTabChange(true);
-//      setPageChange("courseMedia");
-//    };
-
-//    const prevTab1 = () => {
-//      setTabChange(false);
-//      setPageChange("basic");
-//    };
-
-//   const nextTab2 = () => {
-//     setTabChange1(true);
-//     setTabChange(true);
-//     setPageChange("curriculum");
-//   };
-
-//   const prevTab2 = () => {
-//     setTabChange1(false);
-//     setPageChange("courseMedia");
-//   };
-
-//   const nextTab3 = () => {
-//     setTabChange2(true);
-//     setTabChange(true);
-//     setPageChange("settings");
-//   };
-
-//   const prevTab3 = () => {
-//     setTabChange2(false);
-//     setPageChange("curriculum");
-//   };
-
-//   const nextTab4 = () => {
-//     setTabChange3(true);
-//     setTabChange(true);
-//     setPageChange("success");
-//   };
-
-
-//   return (
-//     <>
-//       <div className="main-wrapper">
-//         <CourseHeader activeMenu={"AddCourse"} />
-
-//         <section className="page-content course-sec">
-//           <div className="container">
-//             <div className="row align-items-center">
-//               <div className="col-md-12">
-//                 <div className="add-course-header">
-//                   <h2>Add New Course</h2>
-//                   <div className="add-course-btns">
-//                     <ul className="nav">
-//                       <li>
-//                         <Link
-//                           to="/instructor/instructor-dashboard"
-//                           className="btn btn-black"
-//                         >
-//                           Back to Course
-//                         </Link>
-//                       </li>
-//                       <li>
-//                         <Link to="#" className="btn btn-success-dark">
-//                           Save
-//                         </Link>
-//                       </li>
-//                     </ul>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//             <div className="row">
-//               <div className="col-md-12">
-//                 <div className="card">
-//                   <div className="widget-set">
-//                     <div className="widget-setcount">
-//                       <ul id="progressbar">
-//                         <li
-//                           className={
-//                             TabChange ? "progress-activated" : "progress-active"
-//                           }
-//                         >
-//                           <p>
-//                             <span></span> Basic Information
-//                           </p>
-//                         </li>
-//                         <li
-//                           className={
-//                             TabChange1
-//                               ? "progress-activated"
-//                               : "" || TabChange
-//                               ? "progress-active"
-//                               : ""
-//                           }
-//                         >
-//                           <p>
-//                             <span></span> Courses Media
-//                           </p>
-//                         </li>
-//                         <li
-//                           className={
-//                             TabChange2
-//                               ? "progress-activated"
-//                               : "" || TabChange1
-//                               ? "progress-active"
-//                               : ""
-//                           }
-//                         >
-//                           <p>
-//                             <span></span> Curriculum
-//                           </p>
-//                         </li>
-//                         <li
-//                           className={
-//                             TabChange3
-//                               ? "progress-activated"
-//                               : "" || TabChange2
-//                               ? "progress-active"
-//                               : ""
-//                           }
-//                         >
-//                           <p>
-//                             <span /> Settings
-//                           </p>
-//                         </li>
-//                       </ul>
-//                     </div>
-
-//                     <div className="widget-content multistep-form">
-//                       {PageChange === "basic" ? (
-//                         <Basic nextTab={nextTab} />
-//                       ) : (
-//                         ""
-//                       )}
-//                       {PageChange === "courseMedia" ? (
-//                         <CourseMedia nextTab2={nextTab2} prevTab1={prevTab1} />
-//                       ) : (
-//                         ""
-//                       )}
-//                       {PageChange === "curriculum" ? (
-//                         <Curriculum nextTab3={nextTab3} prevTab2={prevTab2} />
-//                       ) : (
-//                         ""
-//                       )}
-//                       {PageChange === "settings" ? (
-//                         <Settings nextTab4={nextTab4} prevTab3={prevTab3}/>
-//                       ) : (
-//                         ""
-//                       )}
-//                       {PageChange === "success" ? (
-//                         <Success />
-//                       ) : (
-//                         ""
-//                       )}
-
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </section>
-
-//         <Footer />
-//       </div>
-//     </>
-//   );
-// };
-
-// export default AddCourse;
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Footer from "../../../footer";
 import CourseHeader from "../header";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+// import { CKEditor } from "@ckeditor/ckeditor5-react";
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Select from "react-select";
 import { useSelector } from "react-redux";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddCourse = () => {
   const navigate = useNavigate();
   const mobileSidebar = useSelector((state) => state.sidebarSlice.expandMenu);
   const [activeTab, setActiveTab] = useState("basic");
-  const [courseData, setCourseData] = useState({
-    course_title: "Web development",
-    category: "Hardware",
-    level: "Level 02",
-    course_description: "<p>Dummy course</p>",
-    course_banner_image: null,
-    course_intro_video: null,
-    requirements: "laptop",
-    course_price: 0,
-    after_discount_price: 0,
-    coupon_code: "summy",
-    course_language: "English",
-    discount_percent: 0,
-    learning_objectives: "dummy",
-    target_audience: "students",
-    time_spent_on_course: "10 hours",
+  const [courseData, setCourseData] = useState(() => {
+    const savedData = sessionStorage.getItem("courseData");
+    return savedData
+      ? JSON.parse(savedData)
+      : {
+          course_title: "Web development",
+          category: "Hardware",
+          level: "Level 02",
+          course_description: "<p>Dummy course</p>",
+          course_banner_image: null,
+          course_intro_video: null,
+          requirements: "laptop",
+          course_price: 0,
+          after_discount_price: 0,
+          coupon_code: "summy",
+          course_language: "English",
+          discount_percent: 0,
+          learning_objectives: "dummy",
+          target_audience: "students",
+          time_spent_on_course: "10 hours",
+        };
   });
+
+  useEffect(() => {
+    sessionStorage.setItem("courseData", JSON.stringify(courseData));
+  }, [courseData]);
 
   const handleInputChange = (e) => {
     setCourseData({ ...courseData, [e.target.name]: e.target.value });
@@ -249,20 +69,26 @@ const AddCourse = () => {
           formData.append(key, courseData[key]);
         }
       }
-        const token = localStorage.getItem("trainerToken")
-      const response = await axios.post("https://api.novajobs.us/api/trainers/create-course", formData, {
-        headers: { "Content-Type": "multipart/form-data",
-          Authorization: `${token}`
-         },
-      });
+      const token = localStorage.getItem("trainerToken");
+      const response = await axios.post(
+        "https://api.novajobs.us/api/trainers/create-course",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `${token}`,
+          },
+        }
+      );
       console.log("Course saved successfully:", response.data);
-      toast.success('Course created successfully!');
+      toast.success("Course created successfully!");
+      // sessionStorage.removeItem('courseData'); // Clear the session storage after successful save
       setTimeout(() => {
         navigate(`/instructor/instructor-dashboard`);
-      }, 2000)
+      }, 2000);
     } catch (error) {
       console.error("Error saving course:", error);
-      toast.error('Failed to create section. Please try again.');
+      toast.error("Failed to create section. Please try again.");
     }
   };
   const categoryOptions = [
@@ -315,21 +141,27 @@ const AddCourse = () => {
     <div className="main-wrapper">
       <CourseHeader activeMenu={"AddCourse"} />
 
-      <section className="page-content course-sec">
+      <section className="page-content course-sec ">
         <div className="container">
           <div className="row align-items-center">
-            <div className="col-md-12">
+            <div className="col-md-12 border border-danger">
               <div className="add-course-header">
                 <h2>Add New Course</h2>
                 <div className="add-course-btns">
                   <ul className="nav">
                     <li>
-                      <Link to="/instructor/instructor-dashboard" className="btn btn-black">
+                      <Link
+                        to="/instructor/instructor-dashboard"
+                        className="btn btn-black"
+                      >
                         Back to Course
                       </Link>
                     </li>
                     <li>
-                      <button onClick={handleSave} className="btn btn-success-dark">
+                      <button
+                        onClick={handleSave}
+                        className="btn btn-success-dark"
+                      >
                         Save
                       </button>
                     </li>
@@ -344,14 +176,38 @@ const AddCourse = () => {
                 <div className="widget-set">
                   <div className="widget-setcount">
                     <ul id="progressbar">
-                      <li className={activeTab === "basic" ? "progress-active" : "progress-activated"}>
-                        <p><span></span> Basic Information</p>
+                      <li
+                        className={
+                          activeTab === "basic"
+                            ? "progress-active"
+                            : "progress-activated"
+                        }
+                      >
+                        <p>
+                          <span></span> Basic Information
+                        </p>
                       </li>
-                      <li className={activeTab === "media" ? "progress-active" : activeTab === "settings" ? "progress-activated" : ""}>
-                        <p><span></span> Courses Media</p>
+                      <li
+                        className={
+                          activeTab === "media"
+                            ? "progress-active"
+                            : activeTab === "settings"
+                            ? "progress-activated"
+                            : ""
+                        }
+                      >
+                        <p>
+                          <span></span> Courses Media
+                        </p>
                       </li>
-                      <li className={activeTab === "settings" ? "progress-active" : ""}>
-                        <p><span></span> Settings</p>
+                      <li
+                        className={
+                          activeTab === "settings" ? "progress-active" : ""
+                        }
+                      >
+                        <p>
+                          <span></span> Settings
+                        </p>
                       </li>
                     </ul>
                   </div>
@@ -365,7 +221,9 @@ const AddCourse = () => {
                         <div className="add-course-form">
                           <form action="#">
                             <div className="input-block">
-                              <label className="add-course-label">Course Title</label>
+                              <label className="add-course-label">
+                                Course Title
+                              </label>
                               <input
                                 type="text"
                                 className="form-control"
@@ -376,7 +234,9 @@ const AddCourse = () => {
                               />
                             </div>
                             <div className="input-block">
-                              <label className="add-course-label">Courses Category</label>
+                              <label className="add-course-label">
+                                Courses Category
+                              </label>
                               <Select
                                 options={categoryOptions}
                                 onChange={handleSelectChange("category")}
@@ -385,7 +245,9 @@ const AddCourse = () => {
                               />
                             </div>
                             <div className="input-block">
-                              <label className="add-course-label">Courses Level</label>
+                              <label className="add-course-label">
+                                Courses Level
+                              </label>
                               <Select
                                 options={levelOptions}
                                 onChange={handleSelectChange("level")}
@@ -394,7 +256,9 @@ const AddCourse = () => {
                               />
                             </div>
                             <div className="input-block">
-                              <label className="add-course-label">Course Language</label>
+                              <label className="add-course-label">
+                                Course Language
+                              </label>
                               <Select
                                 options={languageOptions}
                                 onChange={handleSelectChange("course_language")}
@@ -402,7 +266,7 @@ const AddCourse = () => {
                                 styles={selectStyle}
                               />
                             </div>
-                            <div className="input-block mb-0">
+                            {/* <div className="input-block mb-0">
                               <label className="add-course-label">Course Description</label>
                               <div id="editor">
                                 <CKEditor
@@ -410,9 +274,23 @@ const AddCourse = () => {
                                   onChange={handleEditorChange}
                                 />
                               </div>
+                            </div> */}
+                            <div className="input-block mb-0">
+                              <label className="add-course-label">
+                                Course Description
+                              </label>
+                              <textarea
+                                className="form-control"
+                                rows="5"
+                                placeholder="Enter course description..."
+                                onChange={handleEditorChange} // Update the function to handle textarea changes
+                              ></textarea>
                             </div>
+
                             <div className="input-block">
-                              <label className="add-course-label">Learning Objectives</label>
+                              <label className="add-course-label">
+                                Learning Objectives
+                              </label>
                               <textarea
                                 className="form-control"
                                 name="learning_objectives"
@@ -421,7 +299,9 @@ const AddCourse = () => {
                               ></textarea>
                             </div>
                             <div className="input-block">
-                              <label className="add-course-label">Target Audience</label>
+                              <label className="add-course-label">
+                                Target Audience
+                              </label>
                               <input
                                 type="text"
                                 className="form-control"
@@ -431,7 +311,9 @@ const AddCourse = () => {
                               />
                             </div>
                             <div className="input-block">
-                              <label className="add-course-label">Time Spent on Course</label>
+                              <label className="add-course-label">
+                                Time Spent on Course
+                              </label>
                               <input
                                 type="text"
                                 className="form-control"
@@ -443,7 +325,11 @@ const AddCourse = () => {
                           </form>
                         </div>
                         <div className="widget-btn">
-                          <Link to="#" className="btn btn-info-light next_btn" onClick={() => setActiveTab("media")}>
+                          <Link
+                            to="#"
+                            className="btn btn-info-light next_btn"
+                            onClick={() => setActiveTab("media")}
+                          >
                             Continue
                           </Link>
                         </div>
@@ -497,7 +383,7 @@ const AddCourse = () => {
                         </div>
                       </div>
                     )} */}
- {activeTab === "media" && (
+                    {activeTab === "media" && (
                       <div className="add-course-info">
                         <div className="add-course-inner-header">
                           <h4>Courses Media</h4>
@@ -505,11 +391,22 @@ const AddCourse = () => {
                         <div className="add-course-form">
                           <form action="#">
                             <div className="input-block">
-                              <label className="add-course-label">Course cover image</label>
+                              <label className="add-course-label">
+                                Course cover image
+                              </label>
                               <div className="relative-form">
-                                <span>{courseData.course_banner_image ? courseData.course_banner_image.name : "No File Selected"}</span>
+                                <span>
+                                  {courseData.course_banner_image
+                                    ? courseData.course_banner_image.name
+                                    : "No File Selected"}
+                                </span>
                                 <label className="relative-file-upload">
-                                  Upload File <input type="file" name="course_banner_image" onChange={handleFileChange} />
+                                  Upload File{" "}
+                                  <input
+                                    type="file"
+                                    name="course_banner_image"
+                                    onChange={handleFileChange}
+                                  />
                                 </label>
                               </div>
                             </div>
@@ -521,11 +418,23 @@ const AddCourse = () => {
                               </div>
                             </div>
                             <div className="input-block">
-                              <label className="add-course-label">Course Intro Video (MP4)</label>
+                              <label className="add-course-label">
+                                Course Intro Video (MP4)
+                              </label>
                               <div className="relative-form">
-                                <span>{courseData.course_intro_video ? courseData.course_intro_video.name : "No File Selected"}</span>
+                                <span>
+                                  {courseData.course_intro_video
+                                    ? courseData.course_intro_video.name
+                                    : "No File Selected"}
+                                </span>
                                 <label className="relative-file-upload">
-                                  Upload File <input type="file" name="course_intro_video" onChange={handleFileChange} accept=".mp4" />
+                                  Upload File{" "}
+                                  <input
+                                    type="file"
+                                    name="course_intro_video"
+                                    onChange={handleFileChange}
+                                    accept=".mp4"
+                                  />
                                 </label>
                               </div>
                             </div>
@@ -539,8 +448,18 @@ const AddCourse = () => {
                           </form>
                         </div>
                         <div className="widget-btn">
-                          <Link className="btn btn-black prev_btn" onClick={() => setActiveTab("basic")}>Previous</Link>
-                          <Link className="btn btn-info-light next_btn" onClick={() => setActiveTab("settings")}>Continue</Link>
+                          <Link
+                            className="btn btn-black prev_btn"
+                            onClick={() => setActiveTab("basic")}
+                          >
+                            Previous
+                          </Link>
+                          <Link
+                            className="btn btn-info-light next_btn"
+                            onClick={() => setActiveTab("settings")}
+                          >
+                            Continue
+                          </Link>
                         </div>
                       </div>
                     )}
@@ -552,7 +471,9 @@ const AddCourse = () => {
                         <div className="add-course-form">
                           <form action="#">
                             <div className="input-block">
-                              <label className="add-course-label">Requirements</label>
+                              <label className="add-course-label">
+                                Requirements
+                              </label>
                               <textarea
                                 className="form-control"
                                 name="requirements"
@@ -561,7 +482,9 @@ const AddCourse = () => {
                               ></textarea>
                             </div>
                             <div className="input-block">
-                              <label className="add-course-label">Course Price</label>
+                              <label className="add-course-label">
+                                Course Price
+                              </label>
                               <input
                                 type="number"
                                 className="form-control"
@@ -572,7 +495,9 @@ const AddCourse = () => {
                               />
                             </div>
                             <div className="input-block">
-                              <label className="add-course-label">Discount Percent</label>
+                              <label className="add-course-label">
+                                Discount Percent
+                              </label>
                               <input
                                 type="number"
                                 className="form-control"
@@ -583,7 +508,9 @@ const AddCourse = () => {
                               />
                             </div>
                             <div className="input-block">
-                              <label className="add-course-label">Price After Discount</label>
+                              <label className="add-course-label">
+                                Price After Discount
+                              </label>
                               <input
                                 type="number"
                                 className="form-control"
@@ -594,7 +521,9 @@ const AddCourse = () => {
                               />
                             </div>
                             <div className="input-block">
-                              <label className="add-course-label">Coupon Code</label>
+                              <label className="add-course-label">
+                                Coupon Code
+                              </label>
                               <input
                                 type="text"
                                 className="form-control"
@@ -607,10 +536,16 @@ const AddCourse = () => {
                           </form>
                         </div>
                         <div className="widget-btn">
-                          <Link className="btn btn-black prev_btn" onClick={() => setActiveTab("media")}>
+                          <Link
+                            className="btn btn-black prev_btn"
+                            onClick={() => setActiveTab("media")}
+                          >
                             Previous
                           </Link>
-                          <Link className="btn btn-info-light next_btn" onClick={handleSave}>
+                          <Link
+                            className="btn btn-info-light next_btn"
+                            onClick={handleSave}
+                          >
                             Save Course
                           </Link>
                         </div>

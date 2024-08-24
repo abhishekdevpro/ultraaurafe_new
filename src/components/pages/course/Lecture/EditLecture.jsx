@@ -1,15 +1,13 @@
-import React, { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams,Link } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Footer from "../../../footer";
 import CourseHeader from "../header";
 
-const AddLecture = () => {
-  const { courseid, sectionid } = useParams();
-  console.log(courseid, sectionid, "id hu bhai");
-
+const EditLecture = () => {
+  const { courseid, sectionid, lectureid } = useParams();
   const [lectureData, setLectureData] = useState({
     lecture_name: "",
     files: null,
@@ -17,6 +15,14 @@ const AddLecture = () => {
     links: "",
   });
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Retrieve lecture data from session storage
+    const storedLectureData = JSON.parse(sessionStorage.getItem("lectureData"));
+    if (storedLectureData) {
+      setLectureData(storedLectureData);
+    }
+  }, []);
 
   const handleInputChange = (e) => {
     setLectureData({ ...lectureData, [e.target.name]: e.target.value });
@@ -27,41 +33,6 @@ const AddLecture = () => {
     setLectureData({ ...lectureData, [name]: files[0] });
   };
 
-  // const handleSave = async () => {
-  //   try {
-  //     const formData = new FormData();
-  //     for (const key in lectureData) {
-  //       if (lectureData[key]) {
-  //         formData.append(key, lectureData[key]);
-  //       }
-  //     }
-  //     const token = localStorage.getItem("trainerToken");
-  //     const response = await axios.post(
-  //       `https://api.novajobs.us/api/trainers/${courseid}/${sectionid}/upload`,
-  //       formData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //           Authorization: `${token}`,
-  //         },
-  //       }
-  //     );
-
-  //     console.log("Lecture saved successfully:", response.data);
-
-  //     // Show success toast
-  //     toast.success("Lecture saved successfully!");
-
-  //     // Navigate after a short delay to allow the toast to be visible
-  //     setTimeout(() => {
-  //       navigate(`/course-details/${courseid}`);
-  //     }, 2000); // 2 seconds delay
-  //   } catch (error) {
-  //     console.error("Error saving lecture:", error);
-  //     toast.error("Error saving lecture. Please try again.");
-  //   }
-  // };
-
   const handleSave = async () => {
     try {
       const formData = new FormData();
@@ -71,8 +42,8 @@ const AddLecture = () => {
         }
       }
       const token = localStorage.getItem("trainerToken");
-      const response = await axios.post(
-        `https://api.novajobs.us/api/trainers/${courseid}/${sectionid}/upload`,
+      const response = await axios.patch(
+        `https://api.novajobs.us/api/trainers/lectureupdate/${courseid}/${sectionid}/${lectureid}`,
         formData,
         {
           headers: {
@@ -81,29 +52,25 @@ const AddLecture = () => {
           },
         }
       );
-  
-      console.log("Lecture saved successfully:", response.data);
-  
-      // Store the lecture data in session storage
-      sessionStorage.setItem("lectureData", JSON.stringify(lectureData));
-  
+
+      console.log("Lecture updated successfully:", response.data);
+
       // Show success toast
-      toast.success("Lecture saved successfully!");
-  
+      toast.success("Lecture updated successfully!");
+
       // Navigate after a short delay to allow the toast to be visible
       setTimeout(() => {
         navigate(`/course-details/${courseid}`);
       }, 2000); // 2 seconds delay
     } catch (error) {
-      console.error("Error saving lecture:", error);
-      toast.error("Error saving lecture. Please try again.");
+      console.error("Error updating lecture:", error);
+      toast.error("Error updating lecture. Please try again.");
     }
   };
-  
 
   return (
     <div className="main-wrapper">
-      <CourseHeader activeMenu={"AddLecture"} />
+      <CourseHeader activeMenu={"EditLecture"} />
 
       <ToastContainer /> {/* Toast container to display toasts */}
 
@@ -112,11 +79,11 @@ const AddLecture = () => {
           <div className="row align-items-center">
             <div className="col-md-12">
               <div className="add-course-header">
-                <h2>Add New Lecture</h2>
+                <h2>Edit Lecture</h2>
                 <div className="add-course-btns">
                   <ul className="nav">
                     <li>
-                      <Link to="/instructor/instructor-dashboard" className="btn btn-black">
+                      <Link to={`/course-details/${courseid}`} className="btn btn-black">
                         Back to Course
                       </Link>
                     </li>
@@ -190,9 +157,9 @@ const AddLecture = () => {
                         </form>
                       </div>
                       <div className="widget-btn">
-                        <Link to="#" className="btn btn-info-light" onClick={handleSave}>
-                          Save Lecture
-                        </Link>
+                        <button className="btn btn-info-light" onClick={handleSave}>
+                          Save Changes
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -208,4 +175,4 @@ const AddLecture = () => {
   );
 };
 
-export default AddLecture;
+export default EditLecture;
