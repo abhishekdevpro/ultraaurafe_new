@@ -445,37 +445,53 @@ const EditCourse = () => {
   });
 
   useEffect(() => {
-    const savedCourseData = sessionStorage.getItem('courseData');
-    if (savedCourseData) {
-      const parsedData = JSON.parse(savedCourseData);
-      setCourseData(prev => ({
-        ...prev,
-        ...parsedData,
-        course_description: parsedData.course_description || ''
-      }));
-    } else {
-      toast.error('No course data found. Please go back and select a course to edit.');
-      navigate("/instructor/instructor-dashboard");
-    }
+    const fetchCourseData = async () => {
+      try {
+        const token = localStorage.getItem("trainerToken");
+        const response = await axios.get(`https://api.novajobs.us/api/trainers/courses/${id}`, {
+          headers: {
+            Authorization: `${token}`,
+          },
+        });
+        const { data } = response.data;
+        setCourseData({
+          course_title: data.course_title,
+          category: data.category,
+          level: data.level,
+          course_description: data.course_description,
+          course_banner_image: data.course_banner_image,
+          course_intro_video: data.course_intro_video_url,
+          requirements: data.requirements,
+          course_price: data.course_price,
+          after_discount_price: data.after_discount_price,
+          coupon_code: data.coupon_code,
+          course_language: data.course_language,
+          discount_percent: data.discount_percent,
+          learning_objectives: data.learning_objectives,
+          target_audience: data.target_audience,
+          time_spent_on_course: data.time_spent_on_course,
+        });
+      } catch (error) {
+        console.error("Error fetching course data:", error);
+        toast.error('Error fetching course data. Please try again.');
+        navigate("/instructor/instructor-dashboard");
+      }
+    };
+
+    fetchCourseData();
   }, [id, navigate]);
 
   const handleInputChange = (e) => {
-    const updatedData = { ...courseData, [e.target.name]: e.target.value };
-    setCourseData(updatedData);
-    sessionStorage.setItem('courseData', JSON.stringify(updatedData));
+    setCourseData({ ...courseData, [e.target.name]: e.target.value });
   };
 
   const handleSelectChange = (name) => (selectedOption) => {
-    const updatedData = { ...courseData, [name]: selectedOption.value };
-    setCourseData(updatedData);
-    sessionStorage.setItem('courseData', JSON.stringify(updatedData));
+    setCourseData({ ...courseData, [name]: selectedOption.value });
   };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    const updatedData = { ...courseData, [e.target.name]: file };
-    setCourseData(updatedData);
-    // Don't save file objects to session storage
+    setCourseData({ ...courseData, [e.target.name]: file });
   };
 
   const handleSave = async () => {
@@ -501,7 +517,6 @@ const EditCourse = () => {
       });
       console.log("Course updated successfully:", response.data.data);
       toast.success('Course updated successfully!');
-      // sessionStorage.removeItem('courseData');
       navigate("/instructor/instructor-dashboard");
     } catch (error) {
       console.error("Error updating course:", error);

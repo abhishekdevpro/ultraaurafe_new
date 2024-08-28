@@ -457,7 +457,7 @@ const SectionsList = () => {
           <div className="row align-items-center">
             <div className="col-md-12">
               <div className="add-course-header">
-                <h2>{courseTitle}</h2>
+                <h2>{courseTitle || "Course"} </h2>
                 <div className="add-course-btns">
                   <Link to={`/add-section/${id}`} className="btn btn-primary">
                     Add New Section

@@ -762,45 +762,66 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useParams } from 'react-router-dom';
-import FeatherIcon from "feather-icons-react";
+// import FeatherIcon from "feather-icons-react";
 import { 
-  Play, User1, Icon1, Icon2, People, Import, Key, Mobile, Cloud, 
+  Play, Key, Mobile, Cloud, 
   Teacher, Users, Timer2, Chapter, Video2, Chart, Video
 } from "../../../imagepath";
+import InstructorCard from "./InstructorCard";
+import CourseContent from "./CourseContent";
+import SidebarSection from "./SidebarSection";
 
 const DetailsContent = () => {
   const [courseData, setCourseData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [open, setOpen] = useState({});
   const {courseid} = useParams()
 
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
-        const response = await axios.get(`https://api.novajobs.us/api/students/course-details/${courseid}`);
-        setCourseData(response.data.data);
-        setLoading(false);
+        const token = localStorage.getItem("token");
+          const url = token
+            ? `https://api.novajobs.us/api/students/mycourse-details/${courseid}`
+            : `https://api.novajobs.us/api/students/course-details/${courseid}`;
+          const headers = token ? { Authorization: token } : {};
+          
+          const response = await axios.get(url, { headers });
+          console.log(response.data.data.trainer_id,"cdd")
+        if (response.data.data) {
+          setCourseData(response.data.data);
+        } else {
+          setError("No course content available at this time.");
+        }
       } catch (error) {
         console.error("Error fetching course data:", error);
+        setError("Error loading course data. Please try again later.");
+      } finally {
         setLoading(false);
       }
     };
 
     fetchCourseData();
   }, [courseid]);
-
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (!courseData) {
-    return <div>Error loading course data</div>;
+  if (error) {
+    return <div className="alert alert-warning">{error}</div>;
+  }
+
+  if (!courseData || !courseData.section_response || courseData.section_response.length === 0) {
+    return <div className="alert alert-info">No course content available at this time.</div>;
   }
 
   const toggleOpen = (id) => {
     setOpen(prevState => ({ ...prevState, [id]: !prevState[id] }));
   };
 
+  console.log(courseData.trainer_id,"kkkk")
+ 
   return (
     <>
       <section className="page-content course-sec">
@@ -848,7 +869,7 @@ const DetailsContent = () => {
               {/* /Overview */}
 
               {/* Course Content */}
-              <div className="card content-sec">
+              {/* <div className="card content-sec">
                 <div className="card-body">
                   <div className="row">
                     <div className="col-sm-6">
@@ -887,11 +908,56 @@ const DetailsContent = () => {
                     </div>
                   ))}
                 </div>
-              </div>
+              </div> */}
+              {/* <div className="card content-sec">
+                <div className="card-body">
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <h5 className="subs-title">Course Content</h5>
+                    </div>
+                    <div className="col-sm-6 text-sm-end">
+                      <h6>{courseData.section_response.length} Sections</h6>
+                    </div>
+                  </div>
+                  {courseData.section_response.map((section) => (
+                    <div className="course-card" key={section.id}>
+                      <h6 className="cou-title">
+                        <Link 
+                          className={open[section.id] ? "" : "collapsed"} 
+                          onClick={() => toggleOpen(section.id)}
+                        >
+                          {section.section_name}
+                        </Link>
+                      </h6>
+                      <div className={`card-collapse collapse ${open[section.id] ? 'show' : ''}`}>
+                        <ul>
+                          {section.lectures && section.lectures.length > 0 ? (
+                            section.lectures.map((lecture) => (
+                              <li key={lecture.id}>
+                                <p>
+                                  <img src={Play} alt="" className="me-2"/>
+                                  {lecture.lecture_name}
+                                </p>
+                                <div>
+                                  <Link to="#">Preview</Link>
+                                  <span>02:53</span>
+                                </div>
+                              </li>
+                            ))
+                          ) : (
+                            <li>No lectures available for this section.</li>
+                          )}
+                        </ul>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div> */}
+              <CourseContent courseData={courseData}/>
               {/* /Course Content */}
 
               {/* Instructor */}
-              <div className="card instructor-sec">
+              {/* <div className="card instructor-sec">
                 <div className="card-body">
                   <h5 className="subs-title">About the instructor</h5>
                   <div className="instructor-wrap">
@@ -944,11 +1010,12 @@ const DetailsContent = () => {
                     <li>5. Worldwide</li>
                   </ul>
                 </div>
-              </div>
+              </div> */}
+              <InstructorCard trainerID={courseData.trainer_id}/>
               {/* /Instructor */}
 
               {/* Reviews */}
-              <div className="card review-sec">
+              {/* <div className="card review-sec">
                 <div className="card-body">
                   <h5 className="subs-title">Reviews</h5>
                   <div className="instructor-wrap">
@@ -972,14 +1039,12 @@ const DetailsContent = () => {
                       <span className="d-inline-block average-rating">4.5 Instructor Rating</span>
                     </div>
                   </div>
-                  {/* <p className="rev-info">
-  &quot; This is the second Photoshop course I have completed with Cristian. Worth every penny and recommend it highly. To get the most out of this course, its best to to take the Beginner to Advanced course first. The sound and video quality is of a good standard. Thank you Cristian. &quot;
-</p> */}
+            
                   <Link to="#" className=" btn-reply">
                     <FeatherIcon icon="corner-up-left"/> Reply
                   </Link>
                 </div>
-              </div>
+              </div> */}
               {/* /Reviews */}
 
               {/* Comment */}
@@ -1014,9 +1079,8 @@ const DetailsContent = () => {
               {/* /Comment */}
             </div>
 
-            <div className="col-lg-4">
+            {/* <div className="col-lg-4">
               <div className="sidebar-sec">
-                {/* Video */}
                 <div className="video-sec vid-bg">
                   <div className="card">
                     <div className="card-body">
@@ -1050,16 +1114,14 @@ const DetailsContent = () => {
                     </div>
                   </div>
                 </div>
-                {/* /Video */}
 
-                {/* Include */}
                 <div className="card include-sec">
                   <div className="card-body">
                     <div className="cat-title">
                       <h4>Includes</h4>
                     </div>
                     <ul>
-                      <li><img src={Import} className="me-2" alt="" /> 11 hours on-demand video</li>
+                      <li><img src={Mobile} className="me-2" alt="" /> 11 hours on-demand video</li>
                       <li><img src={Play} className="me-2" alt="" /> 69 downloadable resources</li>
                       <li><img src={Key} className="me-2" alt="" /> Full lifetime access</li>
                       <li><img src={Mobile} className="me-2" alt="" /> Access on mobile and TV</li>
@@ -1068,9 +1130,7 @@ const DetailsContent = () => {
                     </ul>
                   </div>
                 </div>
-                {/* /Include */}
 
-                {/* Features */}
                 <div className="card feature-sec">
                   <div className="card-body">
                     <div className="cat-title">
@@ -1085,9 +1145,9 @@ const DetailsContent = () => {
                     </ul>
                   </div>
                 </div>
-                {/* /Features */}
               </div>
-            </div>
+            </div> */}
+            <SidebarSection courseId={courseData.id}/>
           </div>
         </div>
       </section>
