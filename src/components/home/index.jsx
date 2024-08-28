@@ -5,19 +5,12 @@ import {
   Become1,
   Become2,
   CertificateIcon,
-  Course1,
-  Course2,
-  Course3,
-  Course4,
-  Course5,
-  Course6,
   CourseIcon,
   GratuateIcon,
   Icon01,
   Icon02,
   Icon03,
   Icon04,
-  Icon1,
   Icon10,
   Icon12,
   Icon13,
@@ -26,19 +19,13 @@ import {
   Icon16,
   Icon17,
   Icon18,
-  Icon2,
   Icon7,
   Icon8,
   Icon9,
   Join,
   PencilIcon,
   Share,
-  User1,
-  User2,
-  User3,
-  User4,
-  User5,
-  User6,
+
 } from "../imagepath";
 import { useSelector } from "react-redux";
 import TopCategory from "./slider/topCategory";
@@ -58,6 +45,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
 import CountUp from "react-countup";
+import FeaturedCourses from "./FeaturedCourses";
 
 const options = [
   { label: "Category", value: "Category" },
@@ -380,7 +368,7 @@ export const Home = () => {
         {/* Top Category with Owl Carousel */}
 
         {/* What's new Featured Course */}
-        <section className="section new-course">
+        {/* <section className="section new-course">
           <div className="container">
             <div className="section-header aos" data-aos="fade-up">
               <div className="section-sub-head">
@@ -863,7 +851,8 @@ export const Home = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
+        <FeaturedCourses />
         {/* What's new Featured Course */}
 
         {/* Master Skills */}

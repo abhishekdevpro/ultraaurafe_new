@@ -119,8 +119,8 @@ const EditSection = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/instructor/instructor-dashboard" className="btn btn-black">
-                        Back to Course
+                      <Link to={`/course-details/${courseid}`}  className="btn btn-black">
+                        Back 
                       </Link>
                     </li>
                   </ul>
