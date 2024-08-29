@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Chapter, Chart, Cloud, Key, Mobile, Play, Teacher, Timer2, Users, Video, Video2 } from '../../../imagepath';
@@ -140,6 +141,11 @@ const SidebarSection = ({ courseId }) => {
       </div>
     </div>
   );
+};
+
+// Add prop types validation
+SidebarSection.propTypes = {
+  courseId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
 export default SidebarSection;

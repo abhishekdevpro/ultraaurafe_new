@@ -168,11 +168,9 @@
 
 // export default InstructorCard;
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
-// Import your images
-import { Play } from '../../../imagepath';
 
 const InstructorCard = ({ trainerID }) => {
   const [trainer, setTrainer] = useState(null);
@@ -181,7 +179,7 @@ const InstructorCard = ({ trainerID }) => {
     const fetchTrainer = async () => {
       try {
         const response = await axios.get(`https://api.novajobs.us/api/trainers/trainer-profile/${trainerID}`);
-        console.log(response)
+        console.log(response);
         setTrainer(response.data.data.trainer);
       } catch (error) {
         console.error('Error fetching trainer data:', error);
@@ -195,7 +193,6 @@ const InstructorCard = ({ trainerID }) => {
     return <div>Loading...</div>;
   }
 
-  // Adjusted fields to match your provided data structure
   return (
     <div className="card instructor-sec">
       <div className="card-body">
@@ -212,14 +209,15 @@ const InstructorCard = ({ trainerID }) => {
               <p>{trainer.jobtitle || 'Instructor'}</p>
             </div>
           </div>
-          {/* The rating and other fields need adjustment as they are not present in your data */}
         </div>
-        {/* You might need to replace or handle the fields below based on actual data */}
-        {/* Example: */}
-        {/* <p>{trainer.biography || 'No biography available'}</p> */}
       </div>
     </div>
   );
+};
+
+// Add PropTypes validation
+InstructorCard.propTypes = {
+  trainerID: PropTypes.string.isRequired, // Validate trainerID prop
 };
 
 export default InstructorCard;

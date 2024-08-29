@@ -1018,7 +1018,7 @@ const TrendingCourse = () => {
       <div className="container">
         <div className="section-header aos" data-aos="fade-up">
           <div className="section-sub-head">
-            <span>What's New</span>
+            <span>What&rsquo;s New</span>
             <h2>TRENDING COURSES</h2>
           </div>
           <div className="all-btn all-category d-flex align-items-center">

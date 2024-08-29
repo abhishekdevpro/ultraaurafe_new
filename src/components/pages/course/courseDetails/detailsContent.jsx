@@ -232,7 +232,7 @@
 //                         to="#course3"
 //                         aria-expanded={open3} aria-controls="example-collapse-text"
 //                       >
-//                         Wireframing Low Fidelity
+// //                         Wireframing Low Fidelity
 //                       </Link>
 //                     </h6>
                     
@@ -761,12 +761,9 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 // import FeatherIcon from "feather-icons-react";
-import { 
-  Play, Key, Mobile, Cloud, 
-  Teacher, Users, Timer2, Chapter, Video2, Chart, Video
-} from "../../../imagepath";
+
 import InstructorCard from "./InstructorCard";
 import CourseContent from "./CourseContent";
 import SidebarSection from "./SidebarSection";
@@ -775,7 +772,7 @@ const DetailsContent = () => {
   const [courseData, setCourseData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [open, setOpen] = useState({});
+  // const [open, setOpen] = useState({});
   const {courseid} = useParams()
 
   useEffect(() => {
@@ -816,9 +813,7 @@ const DetailsContent = () => {
     return <div className="alert alert-info">No course content available at this time.</div>;
   }
 
-  const toggleOpen = (id) => {
-    setOpen(prevState => ({ ...prevState, [id]: !prevState[id] }));
-  };
+
 
   console.log(courseData.trainer_id,"kkkk")
  

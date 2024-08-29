@@ -10,7 +10,7 @@ const Footer = () => {
       <div className="footer-top">
         <div className="container">
           <div className="row">
-            <div className="col-lg-4 col-md-6">
+            <div className="col-lg-3 col-md-6">
               {/* Footer Widget */}
               <div className="footer-widget footer-about">
                 <div className="footer-logo">
@@ -24,6 +24,32 @@ const Footer = () => {
               </div>
               {/* /Footer Widget */}
             </div>
+            <div className="col-lg-2 col-md-6">
+              {/* Footer Widget */}
+              <div className="footer-widget footer-menu">
+                <h2 className="footer-title">Introduction</h2>
+                <ul>
+                  <li>
+                    <Link to="/about-us">About</Link>
+                  </li>
+                  <li>
+                    <Link to="/privacy-policy">Privacy-Policy</Link>
+                  </li>
+                  <li>
+                    <Link to="/return-policy">Refund Policy </Link>
+                  </li>
+                  <li>
+                    <Link to="/document">Documentation</Link>
+                  </li>
+                  <li>
+                    <Link to="/chat-online"> Chat Online
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+              {/* /Footer Widget */}
+            </div>
+
             <div className="col-lg-2 col-md-6">
               {/* Footer Widget */}
               <div className="footer-widget footer-menu">
@@ -48,6 +74,7 @@ const Footer = () => {
               </div>
               {/* /Footer Widget */}
             </div>
+      
             <div className="col-lg-2 col-md-6">
               {/* Footer Widget */}
               <div className="footer-widget footer-menu">
@@ -72,7 +99,8 @@ const Footer = () => {
               </div>
               {/* /Footer Widget */}
             </div>
-            <div className="col-lg-4 col-md-6">
+
+            <div className="col-lg-3 col-md-6">
               {/* Footer Widget */}
               <div className="footer-widget footer-contact">
                 <h2 className="footer-title">News letter</h2>

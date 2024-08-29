@@ -150,7 +150,7 @@ export function InstructorHeader({ activeMenu }) {
                 </span>
               </Link>
               <Link to="/home" className=" ">
-                <img src={logo5} className="rounded-3" alt="Logo" style={{height:"50px" ,width:"200px"}} />
+                <img src={logo5} className="rounded-3" alt="Logo" style={{ height: "50px", width: "200px" }} />
               </Link>
             </div>
             <div className="main-menu-wrapper">
@@ -678,25 +678,25 @@ export function InstructorHeader({ activeMenu }) {
                 </li>
               </ul> */}
 
-<ul className="main-nav">
-  {menu_data.map((item) => (
-    <li key={item.id} className="has-submenu">
-      <Link to={item.link}>{item.title}</Link>
-      {item.sub_menus.length > 0 && (
-        <ul className="submenu">
-          {item.sub_menus.map((sub, i) => (
-            <li key={i}>
-              <Link to={sub.link}>{sub.title}</Link>
-            </li>
-          ))}
-        </ul>
-      )}
-    </li>
-  ))}
-</ul>
+              <ul className="main-nav">
+                {menu_data.map((item) => (
+                  <li key={item.id} className="has-submenu">
+                    <Link to={item.link}>{item.title}</Link>
+                    {item.sub_menus.length > 0 && (
+                      <ul className="submenu">
+                        {item.sub_menus.map((sub, i) => (
+                          <li key={i}>
+                            <Link to={sub.link}>{sub.title}</Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
             </div>
             <ul className="nav header-navbar-rht">
-            <DarkMode />
+              <DarkMode />
               <li className="nav-item user-nav">
                 <Link
                   to="#"
@@ -747,7 +747,7 @@ export function InstructorHeader({ activeMenu }) {
                     <Star size={14} color={"#FF875A"} className="feather-star me-1" />{" "}
                     Edit Profile
                   </Link>
-                  
+
                   <Link className="dropdown-item text" to="/home">
                     <LogOut
                       size={14}

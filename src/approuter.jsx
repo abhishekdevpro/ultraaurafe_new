@@ -24,6 +24,10 @@ import ForgotPassword from "./components/pages/forgotPassword";
 import Login from "./components/pages/login";
 import Notification from "./components/pages/notification";
 import PrivacyPolicy from "./components/pages/policy";
+import ChatOnline from "./components/pages/chatOnline";
+import Document from "./components/pages/doc";
+import ReturnPolicy from "./components/pages/return";
+import AboutUS from "./components/pages/about";
 import PricingPlan from "./components/pages/pricingPlan";
 import PricingPlan2 from "./components/pages/pricingPlan/pricingPlan2";
 import Register from "./components/pages/register";
@@ -194,7 +198,10 @@ const Approuter = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/term-condition" element={<TermsCondition />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-
+        <Route path="/return-policy" element={<ReturnPolicy/>} />
+        <Route path="/document" element={<Document/>} />
+        <Route path="/chat-online" element={<ChatOnline/>} />
+        <Route path="/about-us" element={<AboutUS/>} />
         <Route path="/setting-edit-profile" element={<StudentEditProfile />} />
 
         <Route path="/view-invoice" element={<ViewInvoice />} />
