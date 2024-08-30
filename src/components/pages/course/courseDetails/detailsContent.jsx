@@ -778,7 +778,7 @@ const DetailsContent = () => {
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("trainerToken");
           const url = token
             ? `https://api.novajobs.us/api/students/mycourse-details/${courseid}`
             : `https://api.novajobs.us/api/students/course-details/${courseid}`;
@@ -809,7 +809,7 @@ const DetailsContent = () => {
     return <div className="alert alert-warning">{error}</div>;
   }
 
-  if (!courseData || !courseData.section_response || courseData.section_response.length === 0) {
+  if (!courseData || !courseData.section_response || courseData.section_response.length === null) {
     return <div className="alert alert-info">No course content available at this time.</div>;
   }
 
