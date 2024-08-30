@@ -10,7 +10,7 @@ import React from "react";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 const TopCategory = () => {
   var settings = {
@@ -48,20 +48,18 @@ const TopCategory = () => {
       <div className="container">
         <div className="section-header aos" data-aos="fade-up">
           <div className="section-sub-head">
-            <span>Favourite Course</span>
-            <h2>Top Category</h2>
+            {/* <span>Favourite Course</span> */}
+            <h2>Explore Levels as per your needs</h2>
           </div>
-          <div className="all-btn all-category d-flex align-items-center">
+          {/* <div className="all-btn all-category d-flex align-items-center">
             <Link to="job-category" className="btn btn-primary">
               All Categories
             </Link>
-          </div>
+          </div> */}
         </div>
         <div className="section-text aos" data-aos="fade-up">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget aenean
-            accumsan bibendum gravida maecenas augue elementum et neque.
-            Suspendisse imperdiet.
+          Discover specialized learning paths tailored to every stage of your journey, from undergraduates to professionals. Ultra Aura also offers targeted programs in home care and special needs education, empowering you to achieve your unique goals.
           </p>
         </div>
         <OwlCarousel

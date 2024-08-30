@@ -46,87 +46,130 @@ const PrivacyPolicy = () => {
                 <div className="terms-content">
                   <div className="terms-text">
                     <h3>
-                      Effective date: <span>23rd of March, 2024</span>
+                      Ultra Aura Education
+
                     </h3>
-                    <h4>This is a H1, Perfect&apos;s for titles.</h4>
+
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Stress, for the United States element ante. Duis cursus,
-                      mi quis viverra ornare, eros pain, sometimes none at all,
-                      freedom of the living creature was as the profit and
-                      financial security. Jasmine neck adapter and just running
-                      it lorem makeup sad smile of the television set.
+                      Ultra Aura Education, Inc.  is committed to protecting your privacy and ensuring a secure online experience. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website https://ultraaura.education, use our services, or interact with us in other ways.
+
+
                     </p>
-                    <h5>This is a H2&apos;s perfect for the titles.</h5>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Stress, for the United States element ante. Duis cursus,
-                      mi quis viverra ornare, eros pain , sometimes none at all,
-                      freedom of the living creature was as the profit and
-                      financial security. Jasmine neck adapter and just running
-                      it lorem makeup hairstyle. Now sad smile of the television
-                      set.
-                    </p>
-                    <h5>This is a H2&apos;s perfect for the titles.</h5>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Stress, for the United States element ante. Duis cursus,
-                      mi quis viverra ornare, eros pain , sometimes none at all,
-                      freedom of the living creature was as the profit and
-                      financial security. Jasmine neck adapter and just running
-                      it lorem makeup hairstyle. Now sad smile of the television
-                      set.
-                    </p>
-                  </div>
-                  <div className="terms-text">
-                    <h4>This is a H2&apos;s perfect for the titles.</h4>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Stress, for the United States element ante. Duis cursus,
-                      mi quis viverra ornare, eros pain , sometimes none at all,
-                      freedom of the living creature was as the profit and
-                      financial security. Jasmine neck adapter and just running
-                      it lorem makeup hairstyle. Now sad smile of the television
-                      set.
+                    <h4> Please read this policy carefully. By using our services, you agree to the terms outlined in this Privacy Policy.
+
+                    </h4>
+                    <h3>1. Information We Collect </h3>
+                    <p>Personal Information: We may collect personal information that you provide to us directly, including but not limited to:
                     </p>
                     <ul>
-                      <li>More than 60+ components</li>
-                      <li>Five ready tests</li>
-                      <li>Coming soon page </li>
-                      <li>Check list with left icon</li>
-                      <li>And much more ...</li>
+                      <li>Name
+
+                      </li>
+                      <li> Email address
+
+                      </li>
+                      <li> Phone number
+
+
+                      </li>
+                      <li> Billing address
+
+
+                      </li>
+                      <li> Shipping address
+
+                      </li>
+                      <li> Payment information
+
+                      </li>
                     </ul>
-                  </div>
-                  <div className="terms-text">
-                    <h4>This is a H2&apos;s perfect for the titles.</h4>
+                    <h3> How to Request a Refund</h3>
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Stress, for the United States element ante. Duis cursus,
-                      mi quis viverra ornare, eros pain , sometimes none at all,
-                      freedom of the living creature was as the profit and
-                      financial security. Jasmine neck adapter and just running
-                      it lorem makeup hairstyle. Now sad smile of the television
-                      set.
+                      <h4 >Usage Data:</h4>We collect information about your interactions with our website and services, including:
+
+                      <ul>
+                        <li>IP address
+
+
+                        </li>
+                        <li> Browser type and version
+
+
+                        </li>
+                        <li> Operating system
+
+
+                        </li>
+                        <li> BPages you visit
+
+
+                        </li>
+                        <li> Time and date of your visit
+
+
+                        </li>
+                        <li> Referring site
+
+
+                        </li>
+                      </ul>
+
+                    </p>
+
+                    <p>
+                      <h4> Cookies and Tracking Technologies:</h4> We use cookies and similar tracking technologies to enhance your experience, analyze usage, and personalize content. You can control cookie settings through your browser.
+
+
                     </p>
                   </div>
                   <div className="terms-text">
-                    <h4>Changes about terms</h4>
+                    <h3>How We Use Your Information
+                    </h3>
                     <p>
-                      If we change our terms of use we will post those changes
-                      on this page. Registered users will be sent an email that
-                      outlines changes made to the terms of use.
+                      We use the information we collect for various purposes, including:
+
                     </p>
-                    <p>
-                      Questions? Please email us at{" "}
-                      <Link to="#">Ultraaura@example.com</Link>
-                    </p>
+
+                    <h3>To Provide and Improve Services:</h3> Deliver and manage our educational products and services, and enhance your user experience.
+                    <h3>To Process Transactions:</h3> Handle payments, fulfill orders, and provide customer support.
+                    <h3>To Communicate:</h3> Send you updates, newsletters, marketing materials, and respond to your inquiries.
+                    <h3>To Personalize:</h3> Customize content and recommendations based on your preferences and usage patterns.
+                    <h3>For Security:</h3> Detect and prevent fraud, abuse, and other illegal activities.
+
                   </div>
+                  <h2>How We Share Your Information</h2>
+                  <p>We do not sell or rent your personal information to third parties. However, we may share your information in the following circumstances:-
+                  </p>
+                  <p>With Service Providers:- We may share your information with third-party vendors who assist us in operating our website, processing payments, or providing other services.
+                    For Legal Compliance: We may disclose your information if required by law or to comply with legal processes, enforce our terms of service, or protect the rights and safety of Ultra Aura, our users, or others.
+                    In Business Transfers: In the event of a merger, acquisition, or asset sale, your information may be transferred as part of the transaction.
+                  </p>
+                  <h3>Data Security
+                  </h3>
+                  <p>We implement reasonable security measures to protect your personal information from unauthorized access, disclosure, alteration, or destruction. However, no method of transmission over the Internet or electronic storage is completely secure. While we strive to protect your information, we cannot guarantee its absolute security.
+                  </p>
+                  <h3>Your Choices
+                  </h3>
+                  <p>Access and Update: You have the right to access and update your personal information. You can do so by contacting us directly at privacy@ultraauraeducation.com.
+                    Opt-Out: You may opt out of receiving promotional emails by following the unsubscribe instructions provided in the email.
+                    Cookies: You can manage your cookie preferences through your browser settings. Note that disabling cookies may affect the functionality of our website.
+                  </p>
+                  <h3>Childrens Privacy</h3>
+                  <p>Our services are not directed to individuals under the age of 13. We do not knowingly collect or solicit personal information from children under 13. If we become aware that we have collected personal information from a child under 13, we will take steps to delete such information.</p>
+                  <h3>Changes to This Privacy Policy</h3>
+                  <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated effective date. We encourage you to review this Privacy Policy periodically to stay informed about how we are protecting your information.
+                  </p>
+                  <h3>Contact Us</h3>
+                  <p>If you have any questions or concerns about this Privacy Policy or our data practices, please contact us at:
+                    <h2>Ultra Aura Education, Inc.
+                      1509 Lady St, Columbia, SC 29201,</h2>
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <Footer/>
+        <Footer />
       </div>
     </>
   );

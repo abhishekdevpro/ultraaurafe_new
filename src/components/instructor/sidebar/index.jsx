@@ -3,7 +3,7 @@ import StickyBox from "react-sticky-box";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-
+import profilelogo from "../../../assets/img/profile-pro.png"
 // eslint-disable-next-line react/prop-types
 export default function InstructorSidebar() {
   const location = useLocation();
@@ -18,12 +18,12 @@ export default function InstructorSidebar() {
 
     const fetchProfile = async () => {
       try {
-        const response = await axios.get("https://api.novajobs.us/api/trainers/profile",{
+        const response = await axios.get("https://api.novajobs.us/api/trainers/profile", {
           headers: {
-            Authorization: `${token}`, 
+            Authorization: `${token}`,
           }
         });
-        console.log(response,"profile")
+        console.log(response, "profile")
         setProfile(response.data.data); // Update state with fetched data
       } catch (error) {
         setError(error); // Handle error if the API request fails
@@ -47,7 +47,11 @@ export default function InstructorSidebar() {
             <div className="profile-bg">
               <div className="profile-img">
                 <Link to="/instructor/instructor-profile">
-                  <img src={`https://api.novajobs.us${profile.photo}`} alt="Img" />
+                  {profile && profile.photo ? (
+                    <img src={`https://api.novajobs.us${profile.photo}`} alt="Profile" />
+                  ) : (
+                    <img src={profilelogo} alt="Default Profile" />
+                  )}
                 </Link>
               </div>
             </div>
@@ -106,7 +110,7 @@ export default function InstructorSidebar() {
                 </Link>
               </li>
               <li className={`nav-item ${location.pathname === '/instructor/instructor-quiz' || location.pathname === '/instructor/instructor-quiz-details' ? 'active' : ''}`}>
-              <Link to="/instructor/instructor-quiz" className="nav-link">
+                <Link to="/instructor/instructor-quiz" className="nav-link">
                   <i className="bx bxs-shapes" />
                   My Quiz Attempts
                 </Link>
@@ -152,7 +156,7 @@ export default function InstructorSidebar() {
             </ul>
             <h3>Instructor</h3>
             <ul>
-            <li className={`nav-item ${location.pathname === '/instructor/instructor-course' ? 'active' : ''}`}>
+              <li className={`nav-item ${location.pathname === '/instructor/instructor-course' ? 'active' : ''}`}>
 
                 <Link to="/instructor/instructor-course" className="nav-link ">
                   <i className="bx bxs-rocket" />
@@ -195,7 +199,7 @@ export default function InstructorSidebar() {
             </ul>
             <h3>Account Settings</h3>
             <ul>
-            <li className={`nav-item ${location.pathname === '/instructor/instructor-settings' || location.pathname === '/instructor/instructor-change-password' || location.pathname === '/instructor/instructor-setting-notifications' || location.pathname === '/instructor/instructor-setting-withdraw' || location.pathname === '/instructor/instructor-delete-account' ? 'active' : ''}`}>
+              <li className={`nav-item ${location.pathname === '/instructor/instructor-settings' || location.pathname === '/instructor/instructor-change-password' || location.pathname === '/instructor/instructor-setting-notifications' || location.pathname === '/instructor/instructor-setting-withdraw' || location.pathname === '/instructor/instructor-delete-account' ? 'active' : ''}`}>
 
                 <Link to="/instructor/instructor-settings" className="nav-link ">
                   <i className="bx bxs-cog" />

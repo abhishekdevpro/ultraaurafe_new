@@ -176,6 +176,7 @@
 // export default CourseContent;
 
 import React, { useState } from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Play } from '../../../imagepath';
@@ -191,8 +192,6 @@ const CourseContent = ({ courseData }) => {
 
   const handlePreviewClick = async (lecture, sectionId) => {
     setSelectedLecture(lecture);
-    console.log(lecture, "lecture");
-    console.log(lecture.lecture_videos[0]?.course_id, sectionId, lecture.id, lecture.lecture_videos[0]?.id, "ids");
 
     try {
       const token = 'your-auth-token'; // Replace with your actual token
@@ -202,16 +201,15 @@ const CourseContent = ({ courseData }) => {
           Authorization: `${token}`
         }
       });
-    console.log(response,"VideoRes")
+
       if (response.status !== 200) {
         throw new Error('Failed to fetch streaming URL');
       }
 
       const data = response.data;
-      setStreamingUrl(data.streaming_url); // Assuming the API returns an object with a streaming_url property
+      setStreamingUrl(data.streaming_url);
     } catch (error) {
       console.error('Error fetching streaming URL:', error);
-      // Handle error (e.g., show an error message to the user)
     }
   };
 
@@ -278,6 +276,30 @@ const CourseContent = ({ courseData }) => {
       )}
     </div>
   );
+};
+
+// Define PropTypes
+CourseContent.propTypes = {
+  courseData: PropTypes.shape({
+    section_response: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        section_name: PropTypes.string.isRequired,
+        lectures: PropTypes.arrayOf(
+          PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            lecture_name: PropTypes.string.isRequired,
+            lecture_videos: PropTypes.arrayOf(
+              PropTypes.shape({
+                course_id: PropTypes.number,
+                id: PropTypes.number
+              })
+            )
+          })
+        )
+      })
+    ).isRequired
+  }).isRequired
 };
 
 export default CourseContent;

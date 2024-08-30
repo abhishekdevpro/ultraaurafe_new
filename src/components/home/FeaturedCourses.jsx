@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 // import { Icon1, Icon2 } from "../../imagepath";
-import { Icon01,Icon02 } from "../imagepath";
+import { Icon01, Icon02 } from "../imagepath";
 
 const FeaturedCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -12,8 +12,8 @@ const FeaturedCourses = () => {
     const fetchCourses = async () => {
       try {
         const response = await axios.get("https://api.novajobs.us/api/trainers/all-courses");
-        console.log(response ,"coureses,,,,")
-        setCourses(response.data.data.slice(0, 6)); // Limit to 6 courses
+        console.log(response, "courses");
+        setCourses(response.data.data.slice(0, 3)); // Limit to 6 courses
       } catch (error) {
         console.error("Error fetching courses:", error);
       } finally {
@@ -33,8 +33,9 @@ const FeaturedCourses = () => {
       <div className="container">
         <div className="section-header aos" data-aos="fade-up">
           <div className="section-sub-head">
-            <span>What's New</span>
-            <h2>Featured Courses</h2>
+            {/* <span>What&#39;s New</span>   or use <span>What's New</span> * */}
+            <h2>Explore Levels as per your needs
+            </h2>
           </div>
           <div className="all-btn all-category d-flex align-items-center">
             <Link to="/course-grid" className="btn btn-primary">
@@ -44,7 +45,7 @@ const FeaturedCourses = () => {
         </div>
         <div className="section-text aos" data-aos="fade-up">
           <p className="mb-0">
-            Explore our featured courses and enhance your skills with the latest in-demand topics.
+          Discover specialized learning paths tailored to every stage of your journey, from undergraduates to professionals. Ultra Aura also offers targeted programs in home care and special needs education, empowering you to achieve your unique goals.
           </p>
         </div>
         <div className="course-feature">

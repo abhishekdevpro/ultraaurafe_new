@@ -30,7 +30,7 @@ import {
 import { useSelector } from "react-redux";
 import TopCategory from "./slider/topCategory";
 // import Loginbg from "../../assets/img/banner.png";
-import TrendingCourse from "./slider/trendingCourse";
+// import TrendingCourse from "./slider/trendingCourse";
 import Companies from "./slider/companies";
 // import BgBanner1 from "../../assets/img/bg-banner-01.png";
 // import BgBanner2 from "../../assets/img/bg-banner-02.png";
@@ -38,7 +38,7 @@ import Companies from "./slider/companies";
 // import UserLove from "../../assets/img/user-love.jpg";
 import Blog from "./slider/blog";
 import Footer from "../footer";
-import Testimonial from "./slider/testimonial";
+// import Testimonial from "./slider/testimonial";
 import Select from "react-select";
 import { Link } from "react-router-dom";
 import AOS from "aos";
@@ -65,40 +65,15 @@ const levelOptions = [
 export const Home = () => {
   const [setValue] = useState(null);
   const [selectedLevel, setSelectedLevel] = useState(null);
-  const [isActive, setIsActive] = useState(false);
-  const [isActivetwo, setIsActivetwo] = useState(false);
-  const [isActivethree, setIsActivethree] = useState(false);
-  const [isActivefour, setIsActivefour] = useState(false);
-  const [isActivefive, setIsActivefive] = useState(false);
-  const [isActivesix, setIsActivesix] = useState(false);
   const mobileSidebar = useSelector(
     (state) => state.sidebarSlice.expandMenu
   );
-  const toggleClass = () => {
-    setIsActive(!isActive);
-  };
-  const toggleClasstwo = () => {
-    setIsActivetwo(!isActivetwo);
-  };
-  const toggleClassthree = () => {
-    setIsActivethree(!isActivethree);
-  };
-  const toggleClassfour = () => {
-    setIsActivefour(!isActivefour);
-  };
-  const toggleClassfive = () => {
-    setIsActivefive(!isActivefive);
-  };
-  const toggleClasssix = () => {
-    setIsActivesix(!isActivesix);
-  };
-
   const formatValue = (value) => `${Math.floor(value)}`;
 
   const style = {
     control: (baseStyles, state) => ({
       ...baseStyles,
-      backgroundColor:  "#FFDEDA",
+      backgroundColor: "#FFDEDA",
       border: state.isFocused ? 0 : 0,
       paddingLeft: "5px",
       paddingTop: "5px",
@@ -118,11 +93,11 @@ export const Home = () => {
     menu: (base) => ({ ...base, marginTop: "2px" }),
     option: (provided) => ({
       ...provided,
-      backgroundColor:  mobileSidebar === 'disabled' ? "#fff" : "#000",
-      color:mobileSidebar === 'disabled'? '#000':'#fff',
+      backgroundColor: mobileSidebar === 'disabled' ? "#fff" : "#000",
+      color: mobileSidebar === 'disabled' ? '#000' : '#fff',
       fontSize: "14px",
       "&:hover": {
-        backgroundColor:mobileSidebar === 'disabled'? "#FFDEDA":"#2b2838",
+        backgroundColor: mobileSidebar === 'disabled' ? "#FFDEDA" : "#2b2838",
       },
     }),
     indicatorSeparator: (base) => ({
@@ -139,12 +114,12 @@ export const Home = () => {
 
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
-    
+
   }, []);
   useEffect(() => {
-    console.log(mobileSidebar,'gg');
-    
-    
+    console.log(mobileSidebar, 'gg');
+
+
   }, [mobileSidebar]);
 
   return (
@@ -186,14 +161,14 @@ export const Home = () => {
                             ></Select>
                           </span>
                           <span className="drop-detail">
-              <Select
-                options={levelOptions}
-                value={selectedLevel}
-                placeholder="Levels"
-                onChange={setSelectedLevel}
-                styles={style}
-              />
-            </span>
+                            <Select
+                              options={levelOptions}
+                              value={selectedLevel}
+                              placeholder="Levels"
+                              onChange={setSelectedLevel}
+                              styles={style}
+                            />
+                          </span>
                           <button className="btn sub-btn" type="submit">
                             <i className="fas fa-arrow-right" />
                           </button>
@@ -938,7 +913,7 @@ export const Home = () => {
         {/* /Master Skills */}
 
         {/* Trending Course */}
-        <TrendingCourse />
+        {/* <TrendingCourse /> */}
         {/* Trending Course */}
 
         {/* Companies */}
@@ -999,7 +974,7 @@ export const Home = () => {
         </section>
         {/* /Share knowledge */}
 
-        <section
+        {/* <section
           className="section user-love"
         >
           <div className="container">
@@ -1010,9 +985,9 @@ export const Home = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
         {/* Testimonial Carousel */}
-        <Testimonial />
+        {/* <Testimonial /> */}
         {/* Testimonial Carousel */}
 
         {/* Become a instructor */}
@@ -1073,11 +1048,6 @@ export const Home = () => {
               <div className="section-sub-head feature-head text-center mb-0">
                 <h2>Latest Blogs</h2>
                 <div className="section-text aos" data-aos="fade-up">
-                  <p className="mb-0">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Eget aenean accumsan bibendum gravida maecenas augue
-                    elementum et neque. Suspendisse imperdiet.
-                  </p>
                 </div>
               </div>
             </div>
