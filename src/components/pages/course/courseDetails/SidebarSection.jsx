@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types'; // Import PropTypes
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Chapter, Chart, Cloud, Key, Mobile, Play, Teacher, Timer2, Users, Video, Video2 } from '../../../imagepath';
+import { Chapter, Chart, Cloud, Key, Mobile, Play, Teacher, Timer2, Users, Video2 } from '../../../imagepath';
 
 const SidebarSection = ({ courseId }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [videoUrl, setVideoUrl] = useState(null); // State for video URL
   const navigate = useNavigate();
 
   const handleEnrollClick = () => {
@@ -46,6 +47,19 @@ const SidebarSection = ({ courseId }) => {
     }
   };
 
+  // Function to handle video play
+  const handleVideoPlay = async () => {
+    try {
+      const response = await axios.get(`https://api.novajobs.us/api/students/streaming/${courseId}`); // API call to get the video URL
+      const { data } = response;
+      console.log(response ,'shubha')
+      setVideoUrl(data.url); // Set the video URL from the API response
+    } catch (error) {
+      console.error('Error fetching video URL:', error);
+      alert('Unable to fetch video. Please try again later.');
+    }
+  };
+
   return (
     <div className="col-lg-4">
       <div className="sidebar-sec">
@@ -53,12 +67,19 @@ const SidebarSection = ({ courseId }) => {
         <div className="video-sec vid-bg">
           <div className="card">
             <div className="card-body">
-              <Link to="https://www.youtube.com/embed/1trvO6dqQUI" className="video-thumbnail" data-fancybox="">
-                <div className="play-icon">
-                  <i className="fa-solid fa-play" />
-                </div>
-                <img className="" src={Video} alt="" />
-              </Link>
+              {videoUrl ? (
+                <video width="100%" controls>
+                  <source src={videoUrl} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <button onClick={handleVideoPlay} className="video-thumbnail btn btn-link" data-fancybox="">
+                  <div className="play-icon">
+                    <i className="fa-solid fa-play" />
+                  </div>
+                  <img className="" src={Video2} alt="Video Thumbnail" />
+                </button>
+              )}
               <div className="video-details">
                 <div className="course-fee">
                   <h2>FREE</h2>

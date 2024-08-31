@@ -1,46 +1,73 @@
-import {
-  CategoryIcon,
-  CategoryIcon1,
-  CategoryIcon2,
-  CategoryIcon3,
-  CategoryIcon4,
-  CategoryIcon5,
-} from "../../imagepath";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-// import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for routing
 
 const TopCategory = () => {
-  var settings = {
-    //autoWidth: true,
+  const [categories, setCategories] = useState([]);
+  const [selectedLevel, setSelectedLevel] = useState(null);
+  const navigate = useNavigate(); // Initialize navigate for routing
+
+  // Fetch data from API
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch("https://api.novajobs.us/api/trainers/course-level");
+        const data = await response.json();
+        if (data.code === 200) {
+          setCategories(data.data); // Store the fetched data
+        } else {
+          console.error("Failed to fetch data");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  const handleCardClick = (category) => {
+    setSelectedLevel(category);
+    const queryParams = new URLSearchParams();
+    if (category) queryParams.append("course_level_id", category.id);
+
+    navigate(`/course-list?${queryParams.toString()}`); // Use navigate for routing
+  };
+
+  // Filter categories based on selected level
+  const filteredCategories = selectedLevel
+    ? categories.filter((category) => category.levelId === selectedLevel.id)
+    : categories;
+
+  const settings = {
     items: 2,
     margin: 25,
-    gap: 10,
     dots: true,
     nav: true,
     navText: [
       '<i className="fas fa-arrow-left"></i>',
       '<i className="fas fa-arrow-right"></i>',
     ],
-
     loop: true,
     responsiveClass: true,
     responsive: {
-      0: {
-        items: 1,
-        margin: 25,
-      },
-      768: {
-        items: 3,
-        margin: 25,
-      },
-      1170: {
-        items: 4,
-        margin: 25,
-      },
+      0: { items: 1, margin: 25 },
+      768: { items: 3, margin: 25 },
+      1170: { items: 4, margin: 25 },
     },
+  };
+
+  // Inline styles
+  const cardStyle = {
+    cursor: 'pointer',
+    transition: 'transform 0.3s, box-shadow 0.3s',
+  };
+
+  const cardHoverStyle = {
+    transform: 'scale(1.05)',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
   };
 
   return (
@@ -48,226 +75,37 @@ const TopCategory = () => {
       <div className="container">
         <div className="section-header aos" data-aos="fade-up">
           <div className="section-sub-head">
-            {/* <span>Favourite Course</span> */}
             <h2>Explore Levels as per your needs</h2>
           </div>
-          {/* <div className="all-btn all-category d-flex align-items-center">
-            <Link to="job-category" className="btn btn-primary">
-              All Categories
-            </Link>
-          </div> */}
         </div>
         <div className="section-text aos" data-aos="fade-up">
           <p>
-          Discover specialized learning paths tailored to every stage of your journey, from undergraduates to professionals. Ultra Aura also offers targeted programs in home care and special needs education, empowering you to achieve your unique goals.
+            Discover specialized learning paths tailored to every stage of your journey, from undergraduates to professionals. Ultra Aura also offers targeted programs in home care and special needs education, empowering you to achieve your unique goals.
           </p>
         </div>
-        <OwlCarousel
-          {...settings}
-          className="owl-carousel mentoring-course owl-theme aos"
-          data-aos="fade-up"
-          loop
-          margin={10}
-          nav
-        >
-          <div className="feature-box text-center ">
-            <div className="feature-bg">
-              <div className="feature-header">
-                <div className="feature-icon">
-                  <img src={CategoryIcon} alt="" />
-                </div>
-                <div className="feature-cont">
-                  <div className="feature-text">Angular Development</div>
-                </div>
-              </div>
-              <p>40 Instructors</p>
-            </div>
-          </div>
-          <div className="feature-box text-center ">
-            <div className="feature-bg">
-              <div className="feature-header">
-                <div className="feature-icon">
-                  <img src={CategoryIcon1} alt="" />
-                </div>
-                <div className="feature-cont">
-                  <div className="feature-text">Docker Development</div>
-                </div>
-              </div>
-              <p>45 Instructors</p>
-            </div>
-          </div>
-          <div className="feature-box text-center ">
-            <div className="feature-bg">
-              <div className="feature-header">
-                <div className="feature-icon">
-                  <img src={CategoryIcon2} alt="" />
-                </div>
-                <div className="feature-cont">
-                  <div className="feature-text">Node JS Frontend</div>
-                </div>
-              </div>
-              <p>40 Instructors</p>
-            </div>
-          </div>
-          <div className="feature-box text-center ">
-            <div className="feature-bg">
-              <div className="feature-header">
-                <div className="feature-icon">
-                  <img src={CategoryIcon3} alt="" />
-                </div>
-                <div className="feature-cont">
-                  <div className="feature-text">Swift Development</div>
-                </div>
-              </div>
-              <p>23 Instructors</p>
-            </div>
-          </div>
-          <div className="feature-box text-center ">
-            <div className="feature-bg">
-              <div className="feature-header">
-                <div className="feature-icon">
-                  <img src={CategoryIcon4} alt="" />
-                </div>
-                <div className="feature-cont">
-                  <div className="feature-text">Python Development</div>
-                </div>
-              </div>
-              <p>30 Instructors</p>
-            </div>
-          </div>
-          <div className="feature-box text-center ">
-            <div className="feature-bg">
-              <div className="feature-header">
-                <div className="feature-icon">
-                  <img src={CategoryIcon5} alt="" />
-                </div>
-                <div className="feature-cont">
-                  <div className="feature-text">
-                    React
-                    <br /> Native
+        <OwlCarousel {...settings} className="owl-carousel mentoring-course owl-theme aos" data-aos="fade-up">
+          {filteredCategories.map((category) => (
+            <div
+              className="feature-box text-center"
+              key={category.id}
+              onClick={() => handleCardClick(category)}
+              style={cardStyle}
+              onMouseEnter={(e) => e.currentTarget.style.transform = cardHoverStyle.transform}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+            >
+              <div className="feature-bg">
+                <div className="feature-header">
+                  <div className="feature-icon">
+                    <img src={category.image_url} alt={category.name} />
+                  </div>
+                  <div className="feature-cont">
+                    <div className="feature-text">{category.name}</div>
                   </div>
                 </div>
+                <p>40 Instructors</p>
               </div>
-              <p>80 Instructors</p>
             </div>
-          </div>
-          <div className="feature-box text-center ">
-            <div className="feature-bg">
-              <div className="feature-header">
-                <div className="feature-icon">
-                  <img src={CategoryIcon4} alt="" />
-                </div>
-                <div className="feature-cont">
-                  <div className="feature-text">Angular Development</div>
-                </div>
-              </div>
-              <p>40 Instructors</p>
-            </div>
-          </div>
-          <div className="feature-box text-center ">
-            <div className="feature-bg">
-              <div className="feature-header">
-                <div className="feature-icon">
-                  <img src={CategoryIcon1} alt="" />
-                </div>
-                <div className="feature-cont">
-                  <div className="feature-text">Docker Development</div>
-                </div>
-              </div>
-              <p>45 Instructors</p>
-            </div>
-          </div>
-          <div className="feature-box text-center ">
-            <div className="feature-bg">
-              <div className="feature-header">
-                <div className="feature-icon">
-                  <img src={CategoryIcon2} alt="" />
-                </div>
-                <div className="feature-cont">
-                  <div className="feature-text">Node JS Frontend</div>
-                </div>
-              </div>
-              <p>40 Instructors</p>
-            </div>
-          </div>
-          <div className="feature-box text-center ">
-            <div className="feature-bg">
-              <div className="feature-header">
-                <div className="feature-icon">
-                  <img src={CategoryIcon3} alt="" />
-                </div>
-                <div className="feature-cont">
-                  <div className="feature-text">Swift Development</div>
-                </div>
-              </div>
-              <p>23 Instructors</p>
-            </div>
-          </div>
-          <div className="feature-box text-center ">
-            <div className="feature-bg">
-              <div className="feature-header">
-                <div className="feature-icon">
-                  <img src={CategoryIcon4} alt="" />
-                </div>
-                <div className="feature-cont">
-                  <div className="feature-text">Python Development</div>
-                </div>
-              </div>
-              <p>30 Instructors</p>
-            </div>
-          </div>
-          <div className="feature-box text-center ">
-            <div className="feature-bg">
-              <div className="feature-header">
-                <div className="feature-icon">
-                  <img src={CategoryIcon1} alt="" />
-                </div>
-                <div className="feature-cont">
-                  <div className="feature-text">Docker Development</div>
-                </div>
-              </div>
-              <p>45 Instructors</p>
-            </div>
-          </div>
-          <div className="feature-box text-center ">
-            <div className="feature-bg">
-              <div className="feature-header">
-                <div className="feature-icon">
-                  <img src={CategoryIcon2} alt="" />
-                </div>
-                <div className="feature-cont">
-                  <div className="feature-text">Node JS Frontend</div>
-                </div>
-              </div>
-              <p>40 Instructors</p>
-            </div>
-          </div>
-          <div className="feature-box text-center ">
-            <div className="feature-bg">
-              <div className="feature-header">
-                <div className="feature-icon">
-                  <img src={CategoryIcon3} alt="" />
-                </div>
-                <div className="feature-cont">
-                  <div className="feature-text">Swift Development</div>
-                </div>
-              </div>
-              <p>23 Instructors</p>
-            </div>
-          </div>
-          <div className="feature-box text-center ">
-            <div className="feature-bg">
-              <div className="feature-header">
-                <div className="feature-icon">
-                  <img src={CategoryIcon4} alt="" />
-                </div>
-                <div className="feature-cont">
-                  <div className="feature-text">Python Development</div>
-                </div>
-              </div>
-              <p>30 Instructors</p>
-            </div>
-          </div>
+          ))}
         </OwlCarousel>
       </div>
     </section>
