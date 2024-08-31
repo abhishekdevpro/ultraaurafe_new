@@ -45,7 +45,7 @@ const FeaturedCourses = () => {
         </div>
         <div className="section-text aos" data-aos="fade-up">
           <p className="mb-0">
-          Discover specialized learning paths tailored to every stage of your journey, from undergraduates to professionals. Ultra Aura also offers targeted programs in home care and special needs education, empowering you to achieve your unique goals.
+          Gain practical, in-demand skills through online courses taught by industry experts. Enhance your career with real-world knowledge from leaders in the field.
           </p>
         </div>
         <div className="course-feature">
