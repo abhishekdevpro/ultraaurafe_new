@@ -46,29 +46,37 @@ import "aos/dist/aos.css";
 import { useEffect } from "react";
 import CountUp from "react-countup";
 import FeaturedCourses from "./FeaturedCourses";
+import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
-const options = [
-  { label: "Category", value: "Category" },
-  { label: "Angular", value: "Angular" },
-  { label: "Node Js", value: "Node Js" },
-  { label: "React", value: "React" },
-  { label: "Python", value: "Python" },
-];
-const levelOptions = [
-  { value: 'undergraduates', label: 'Undergraduates' },
-  { value: 'graduates', label: 'Graduates' },
-  { value: 'professionals', label: 'Professionals' },
-  { value: 'home-care', label: 'Home Care' },
-  { value: 'special-kids', label: 'Special Kids' },
-];
+// const options = [
+//   { label: "Category", value: "Category" },
+//   { label: "Angular", value: "Angular" },
+//   { label: "Node Js", value: "Node Js" },
+//   { label: "React", value: "React" },
+//   { label: "Python", value: "Python" },
+// ];
+// const levelOptions = [
+//   { value: 'undergraduates', label: 'Undergraduates' },
+//   { value: 'graduates', label: 'Graduates' },
+//   { value: 'professionals', label: 'Professionals' },
+//   { value: 'home-care', label: 'Home Care' },
+//   { value: 'special-kids', label: 'Special Kids' },
+// ];
 
 export const Home = () => {
-  const [setValue] = useState(null);
+  // const [setValue] = useState(null);
+  const [searchKeyword, setSearchKeyword] = useState(""); // State for the search input
   const [selectedLevel, setSelectedLevel] = useState(null);
+  const [categoryOptions, setCategoryOptions] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [levelOptions, setLevelOptions] = useState([]);
+  const navigate = useNavigate(); // Initialize useNavigate
   const mobileSidebar = useSelector(
     (state) => state.sidebarSlice.expandMenu
   );
   const formatValue = (value) => `${Math.floor(value)}`;
+  // const navigate = useNavigate();
 
   const style = {
     control: (baseStyles, state) => ({
@@ -122,6 +130,46 @@ export const Home = () => {
 
   }, [mobileSidebar]);
 
+  useEffect(() => {
+    // Fetch categories from API
+    fetch('https://api.novajobs.us/api/trainers/course-categories')
+      .then(response => response.json())
+      .then(data => {
+        const categories = data.data.map(category => ({
+          label: category.name,
+          value: category.id
+        }));
+        setCategoryOptions(categories);
+      })
+      .catch(error => {
+        console.error('Error fetching categories:', error);
+      });
+  }, []);
+  useEffect(() => {
+    // Fetch levels from API
+    fetch('https://api.novajobs.us/api/trainers/course-level')
+      .then(response => response.json())
+      .then(data => {
+        const levels = data.data.map(level => ({
+          label: level.name,
+          value: level.id
+        }));
+        setLevelOptions(levels);
+      })
+      .catch(error => {
+        console.error('Error fetching levels:', error);
+      });
+  }, []);
+
+  const handleSearch = () => {
+    const queryParams = new URLSearchParams();
+    if (searchKeyword) queryParams.append("title_keywords", searchKeyword);
+    if (selectedCategory) queryParams.append("course_category_id", selectedCategory.value);
+    if (selectedLevel) queryParams.append("course_level_id", selectedLevel.value);
+
+    navigate(`/course-list?${queryParams.toString()}`); // Use navigate for routing
+  };
+
   return (
     <>
       <div className="main-wrapper">
@@ -145,31 +193,32 @@ export const Home = () => {
                         <div className="input-group homeSearch">
                           <i className="fa-solid fa-magnifying-glass search-icon" />
                           <input
-                            type="email"
+                            type="text"
                             className="form-control"
                             placeholder="Search School, Online eductional centers, etc"
+                            value={searchKeyword}
+                            onChange={(e) => setSearchKeyword(e.target.value)}
                           />
                           <span className="drop-detail">
                             <Select
                               // className="select2-container"
-                              options={options}
-                              value={options.value}
-                              defaultValue={options[0]}
+                              options={categoryOptions}
+                              value={selectedCategory}
                               placeholder="Category"
-                              onChange={setValue}
+                              onChange={setSelectedCategory}
                               styles={style}
                             ></Select>
                           </span>
                           <span className="drop-detail">
                             <Select
-                              options={levelOptions}
-                              value={selectedLevel}
-                              placeholder="Levels"
-                              onChange={setSelectedLevel}
+                          options={levelOptions}
+                          value={selectedLevel}
+                          placeholder="Levels"
+                          onChange={setSelectedLevel}
                               styles={style}
                             />
                           </span>
-                          <button className="btn sub-btn" type="submit">
+                          <button className="btn sub-btn" type="button" onClick={handleSearch}>
                             <i className="fas fa-arrow-right" />
                           </button>
                         </div>

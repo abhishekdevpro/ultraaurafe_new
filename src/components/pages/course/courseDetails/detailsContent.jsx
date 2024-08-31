@@ -780,7 +780,7 @@ const DetailsContent = () => {
       try {
         const token = localStorage.getItem("trainerToken");
           const url = token
-            ? `https://api.novajobs.us/api/students/mycourse-details/${courseid}`
+            ? `https://api.novajobs.us/api/students/course-details/${courseid}`
             : `https://api.novajobs.us/api/students/course-details/${courseid}`;
           const headers = token ? { Authorization: token } : {};
           
@@ -1142,7 +1142,7 @@ const DetailsContent = () => {
                 </div>
               </div>
             </div> */}
-            <SidebarSection courseId={courseData.id}/>
+            <SidebarSection courseId={courseid}/>
           </div>
         </div>
       </section>

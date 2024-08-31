@@ -758,13 +758,13 @@ const CourseHeader = ({ activeMenu }) => {
         <nav className="navbar navbar-expand-lg header-nav scroll-sticky">
           <div className="container">
             <div className="navbar-header">
-              <Link to="#" className="navbar-brand logo" onClick={toggleMobileMenu}>
+              <Link to="/" className="navbar-brand logo" onClick={toggleMobileMenu}>
                 <img src={logo5} className="img-fluid" alt="Logo" />
               </Link>
             </div>
             <div className={`main-menu-wrapper ${mobileMenuOpen ? 'show' : ''}`}>
               <div className="menu-header">
-                <Link to="/home" className="menu-logo">
+                <Link to="/" className="menu-logo">
                   <img src={logo5} className="img-fluid" alt="Logo" />
                 </Link>
                 <Link
