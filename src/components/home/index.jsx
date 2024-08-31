@@ -47,6 +47,7 @@ import { useEffect } from "react";
 import CountUp from "react-countup";
 import FeaturedCourses from "./FeaturedCourses";
 import { useNavigate } from "react-router-dom";
+
 // import { useNavigate } from "react-router-dom";
 
 // const options = [
@@ -71,13 +72,15 @@ export const Home = () => {
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [levelOptions, setLevelOptions] = useState([]);
+  // const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const navigate = useNavigate(); // Initialize useNavigate
   const mobileSidebar = useSelector(
     (state) => state.sidebarSlice.expandMenu
   );
   const formatValue = (value) => `${Math.floor(value)}`;
   // const navigate = useNavigate();
-
+  const animatedText = ["Career", "Development", "Growth", "Learning", "Certifications"]; // Array of texts for animation
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const style = {
     control: (baseStyles, state) => ({
       ...baseStyles,
@@ -122,7 +125,11 @@ export const Home = () => {
 
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
+    const interval = setInterval(() => {
+      setCurrentTextIndex((prevIndex) => (prevIndex + 1) % animatedText.length);
+    }, 2000); // Change text every 2 seconds
 
+    return () => clearInterval(interval);
   }, []);
   useEffect(() => {
     console.log(mobileSidebar, 'gg');
@@ -183,9 +190,16 @@ export const Home = () => {
               <div className="col-md-7">
                 <div className="home-slide-face aos" data-aos="fade-up">
                   <div className="home-slide-text ">
-                    <h5>Empowering Futures: Anytime, Anywhere</h5>
-                    <h1>Ultra Aura is now Live, with Technology Enabled Learning</h1>
-                    <p>Own your future learning new skills online</p>
+                  <h5>Empowering Futures: Anytime, Anywhere</h5>
+                    {/* Animated Text */}
+                    <h2>
+                      Take the next step towards your{" "}
+                      <span className="animated-text">
+                        {animatedText[currentTextIndex]}
+                      </span>{" "}
+                      at Ultra Aura with technology-enabled learning.
+                    </h2>
+                    <p>Own your future by learning new skills online</p>
                   </div>
                   <div className="banner-content">
                     <form className="form" action="/course-list">

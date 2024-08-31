@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate for routin
 
 const TopCategory = () => {
   const [categories, setCategories] = useState([]);
-  const [selectedLevel, setSelectedLevel] = useState(null);
   const navigate = useNavigate(); // Initialize navigate for routing
 
   // Fetch data from API
@@ -29,17 +28,31 @@ const TopCategory = () => {
   }, []);
 
   const handleCardClick = (category) => {
-    setSelectedLevel(category);
     const queryParams = new URLSearchParams();
     if (category) queryParams.append("course_level_id", category.id);
 
     navigate(`/course-list?${queryParams.toString()}`); // Use navigate for routing
   };
 
-  // Filter categories based on selected level
-  const filteredCategories = selectedLevel
-    ? categories.filter((category) => category.levelId === selectedLevel.id)
-    : categories;
+  // Inline styles
+  const cardStyle = {
+    cursor: 'pointer',
+    transition: 'transform 0.3s, box-shadow 0.3s',
+  };
+
+  const imageStyle = {
+    transition: 'transform 0.3s', // Smooth transition for image hover effect
+  };
+
+  const handleMouseEnter = (e) => {
+    // Apply hover effect to image
+    e.currentTarget.querySelector('img').style.transform = 'scale(1.1)';
+  };
+
+  const handleMouseLeave = (e) => {
+    // Remove hover effect from image
+    e.currentTarget.querySelector('img').style.transform = 'scale(1)';
+  };
 
   const settings = {
     items: 2,
@@ -59,17 +72,6 @@ const TopCategory = () => {
     },
   };
 
-  // Inline styles
-  const cardStyle = {
-    cursor: 'pointer',
-    transition: 'transform 0.3s, box-shadow 0.3s',
-  };
-
-  const cardHoverStyle = {
-    transform: 'scale(1.05)',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-  };
-
   return (
     <section className="section how-it-works">
       <div className="container">
@@ -84,19 +86,23 @@ const TopCategory = () => {
           </p>
         </div>
         <OwlCarousel {...settings} className="owl-carousel mentoring-course owl-theme aos" data-aos="fade-up">
-          {filteredCategories.map((category) => (
+          {categories.map((category) => (
             <div
               className="feature-box text-center"
               key={category.id}
               onClick={() => handleCardClick(category)}
               style={cardStyle}
-              onMouseEnter={(e) => e.currentTarget.style.transform = cardHoverStyle.transform}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
               <div className="feature-bg">
                 <div className="feature-header">
                   <div className="feature-icon">
-                    <img src={category.image_url} alt={category.name} />
+                    <img
+                      src={category.image_url}
+                      alt={category.name}
+                      style={imageStyle} // Apply initial image style
+                    />
                   </div>
                   <div className="feature-cont">
                     <div className="feature-text">{category.name}</div>
