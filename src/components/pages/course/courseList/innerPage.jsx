@@ -713,7 +713,7 @@ const InnerPage = ({ courses }) => {
           <div className="course-box course-design d-flex">
             <div className="product">
               <div className="product-img">
-                <Link to="/course-details">
+                <Link to={`/course-details/${course.id}`}>
                   <img
                     className="img-fluid"
                     alt=""

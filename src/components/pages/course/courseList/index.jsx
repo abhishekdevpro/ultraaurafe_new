@@ -173,25 +173,18 @@ const CourseList = () => {
                   <div className="row">
                     <div className="col-lg-6">
                       <div className="d-flex align-items-center">
-                        <div className="view-icons">
-                          <Link to="/course-grid" className="grid-view">
-                            <FeatherIcon icon="grid" />
-                          </Link>
-                          <Link to="/course-list" className="list-view active">
-                            <FeatherIcon icon="list" />
-                          </Link>
-                        </div>
+                        
                         <div className="show-result">
                           <h4>Showing 1-9 of {courses.length} results</h4>
                         </div>
                       </div>
                     </div>
 
-                    <div className="col-lg-6 mt-2">
+                    <div className="col-lg-6 ">
                       <div className="show-filter add-course-info">
                         <form action="#">
                           <div className="row gx-2 align-items-center">
-                            <div className="col-md-6 col-item">
+                            <div className="col-md-9 col-item">
                               <div className="search-group">
                                 <i className="feather-search me-2">
                                   <FeatherIcon icon="search" />
@@ -205,8 +198,10 @@ const CourseList = () => {
                                 />
                               </div>
                             </div>
-                            <div className="col-md-6 col-lg-6 col-item">
-                              {/* Placeholder for additional filters */}
+                            <div className="col-md-3 col-lg-3 col-item">
+                            <button className="btn sub-btn bg-warning text-white" type="button" onClick={fetchCourses}>
+                          Search <i className="fas fa-arrow-right" />
+                        </button>
                             </div>
                           </div>
                         </form>
@@ -240,9 +235,7 @@ const CourseList = () => {
                   <div className="filter-clear">
                     <div className="clear-filter d-flex align-items-center">
                       <h4>
-                        <button className="btn sub-btn bg-warning text-white" type="button" onClick={fetchCourses}>
-                          Search <i className="fas fa-arrow-right" />
-                        </button>
+                       
                       </h4>
                       <div className="clear-text">
                         <p>CLEAR</p>

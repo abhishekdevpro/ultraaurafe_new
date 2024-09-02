@@ -40,9 +40,7 @@ const TopCategory = () => {
     transition: 'transform 0.3s, box-shadow 0.3s',
   };
 
-  const imageStyle = {
-    transition: 'transform 0.3s', // Smooth transition for image hover effect
-  };
+
 
   const handleMouseEnter = (e) => {
     // Apply hover effect to image
@@ -74,51 +72,57 @@ const TopCategory = () => {
 
   return (
     <section className="section how-it-works">
-      <div className="container">
-        <div className="section-header aos" data-aos="fade-up">
-          <div className="section-sub-head">
-            <h2>Explore Levels as per your needs</h2>
-          </div>
+    <div className="container">
+      <div className="section-header aos" data-aos="fade-up">
+        <div className="section-sub-head">
+          <h2>Explore Levels as per your needs</h2>
         </div>
-        <div className="section-text aos" data-aos="fade-up">
-          <p>
-            Discover specialized learning paths tailored to every stage of your journey, from undergraduates to professionals. Ultra Aura also offers targeted programs in home care and special needs education, empowering you to achieve your unique goals.
-          </p>
-        </div>
-        <OwlCarousel {...settings} className="owl-carousel mentoring-course owl-theme aos" data-aos="fade-up">
-          {categories.map((category) => (
-            <div
-              className="feature-box text-center shadow"
-              key={category.id}
-              onClick={() => handleCardClick(category)}
-              style={cardStyle}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-            >
-              <div className="feature-bg">
-                <div className="feature-header">
-                  <div className="feature-icon">
-                    <img
-                      src={category.image_url}
-                      alt={category.name}
-                      style={imageStyle} // Apply initial image style
-                    />
-                  </div>
-                  <div className="feature-cont">
-                    <div className="feature-text">{category.name}</div>
-                   
-                  </div>
-                </div>
-                
-                <p className="">{category.students_counts} {" "}Students</p>
-                    <p className="">{category.course_counts}{" "} Courses</p>
-                    <p className="">{category.trainer_counts} {" "}Instructors</p>
-              </div>
-            </div>
-          ))}
-        </OwlCarousel>
       </div>
-    </section>
+      <div className="section-text aos" data-aos="fade-up">
+        <p>
+          Discover specialized learning paths tailored to every stage of your journey, from undergraduates to professionals. Ultra Aura also offers targeted programs in home care and special needs education, empowering you to achieve your unique goals.
+        </p>
+      </div>
+      <OwlCarousel {...settings} className="owl-carousel mentoring-course owl-theme aos" data-aos="fade-up">
+  {categories.map((category) => (
+    <div
+      className="card shadow-sm border-0 h-100 text-center"
+      key={category.id}
+      onClick={() => handleCardClick(category)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        cursor: 'pointer',
+        transition: 'transform 0.3s, box-shadow 0.3s',
+        borderRadius: '15px',
+        overflow: 'hidden',
+        ...cardStyle,
+        background: `linear-gradient(135deg, #ff7e5f, #feb47b)`, // Background gradient
+      }}
+    >
+      <div className="card-body d-flex flex-column justify-content-between text-white">
+        <div className="-icon mb-3">
+          <img
+            src={category.image_url}
+            alt={category.name}
+            className="img-fluid rounded-2"
+            style={{ width: '480px', height: '180px', transition: 'transform 0.3s' }} // Adjust image size as needed
+          />
+        </div>
+        <h5 className="card-title font-weight-bold">{category.name}</h5>
+        <div className="card-text d-flex gap-3 bg-white text-black rounded-4 p-1">
+          <p className="m-0">{category.students_counts} Students</p>
+          <p className="m-0">{category.course_counts} Courses</p>
+          <p className="m-0">{category.trainer_counts} Instructors</p>
+        </div>
+      </div>
+    </div>
+  ))}
+</OwlCarousel>
+
+    </div>
+  </section>
+  
   );
 };
 

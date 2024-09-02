@@ -139,6 +139,7 @@ import EditCourse from "./components/pages/course/EditCourse/EditCourse.jsx";
 import SectionsList from "./components/pages/course/Section/SectionList.jsx";
 import EditSection from "./components/pages/course/Section/EditSection.jsx";
 import EditLecture from "./components/pages/course/Lecture/EditLecture.jsx";
+import Partnerwithus from "./components/pages/partnerwithus/index.jsx";
 
 const Approuter = () => {
   return (
@@ -166,6 +167,7 @@ const Approuter = () => {
         <Route path="/blog-details" element={<BlogDetails />} />
 
         {/* Pages */}
+        <Route path="/partnerwithus" element={<Partnerwithus/>}/>
         <Route path="/page-notification" element={<Notification />} />
         <Route path="/pricing-plan" element={<PricingPlan />} />
         <Route path="/pricing-plan2" element={<PricingPlan2 />} />
