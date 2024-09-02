@@ -220,7 +220,7 @@ const Header = () => {
             <ul className="nav header-navbar-rht">
               <DarkMode />
               <li className="nav-item">
-                <Link className="nav-link header-sign" to="/login">
+                <Link className="nav-link header-sign" to="/partnerwithus">
                   Partner With us
                 </Link>
               </li>
