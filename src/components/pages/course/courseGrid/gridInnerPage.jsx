@@ -127,18 +127,19 @@ const GridInnerPage = ({ courses }) => {
                 <div className="product-content">
                   <div className="course-group d-flex">
                     <div className="course-group-img d-flex">
-                      <Link to="/instructor/instructor-profile">
+                     {/* <Link to="/instructor/instructor-profile">
                         <img
                           src={`https://via.placeholder.com/150x150?text=${course.trainer_first_name.charAt(0)}${course.trainer_last_name.charAt(0)}`}
                           alt=""
                           className="img-fluid"
                         />
-                      </Link>
+                      </Link> */}
                       <div className="course-name">
                         <h4>
-                          <Link to="/instructor/instructor-profile">
-                            {`${course.trainer_first_name} ${course.trainer_last_name}`}
-                          </Link>
+                        <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
+                                {course.trainer_first_name} {course.trainer_last_name}
+                                
+                              </Link>
                         </h4>
                         <p>Instructor</p>
                       </div>
@@ -154,6 +155,12 @@ const GridInnerPage = ({ courses }) => {
                       {course.course_title}
                     </Link>
                   </h3>
+                  <p className="fs-6">
+                       
+                          {course.course_category_name}
+                          
+                        
+                      </p>
                   <div className="course-info d-flex align-items-center">
                     <div className="rating-img d-flex align-items-center">
                       <img src={Icon1} alt="" />
@@ -164,20 +171,12 @@ const GridInnerPage = ({ courses }) => {
                       <p>{course.level}</p>
                     </div>
                   </div>
-                  <div className="rating">
-                    {/* You might want to add actual rating logic here */}
-                    <i className="fas fa-star filled me-1" />
-                    <i className="fas fa-star filled me-1" />
-                    <i className="fas fa-star filled me-1" />
-                    <i className="fas fa-star filled me-1" />
-                    <i className="fas fa-star me-1" />
-                    <span className="d-inline-block average-rating">
-                      <span>4.0</span> ({course.enrolled_student_count})
-                    </span>
-                  </div>
+                  <span className="d-inline-block average-rating fs-6">
+                            <span className="fs-8" style={{fontSize:"15px"}}>{course.course_level_name}</span>
+                          </span>
                   <div className="all-btn all-category d-flex align-items-center">
                     <Link to="/checkout" className="btn btn-primary">
-                      BUY NOW
+                    Enroll Now
                     </Link>
                   </div>
                 </div>
