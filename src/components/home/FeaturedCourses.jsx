@@ -38,7 +38,7 @@ const FeaturedCourses = () => {
             </h2>
           </div>
           <div className="all-btn all-category d-flex align-items-center">
-            <Link to="/course-grid" className="btn btn-primary">
+            <Link to="/course-list" className="btn btn-primary">
               All Courses
             </Link>
           </div>
