@@ -1,53 +1,141 @@
-import React from "react";
-import { Blog1, Blog2, Blog3 } from "../../../imagepath";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link, useLocation } from "react-router-dom";
+import FeatherIcon from "feather-icons-react";
 import CourseHeader from "../header";
 import InnerPage from "./innerPage";
-import FeatherIcon from "feather-icons-react";
 import Footer from "../../../footer";
-import { Link } from "react-router-dom";
-import Select from "react-select";
-import { useState } from "react";
-import { useSelector } from "react-redux";
 
 const CourseList = () => {
-  const mobileSidebar = useSelector(
-    (state) => state.sidebarSlice.expandMenu
-  );
-  const customStyles = {
-  
-    menu: (base) => ({ ...base, marginTop: "0px" }),
-    menuList: (base) => ({ ...base, padding: "0" }),
-    option: (provided) => ({
-      ...provided,
-      backgroundColor:  mobileSidebar === 'disabled' ? "#fff" : "#000",
-      color:mobileSidebar === 'disabled'? '#000':'#fff',
-      fontSize: "14px",
-      "&:hover": {
-        backgroundColor:mobileSidebar === 'disabled'? "#FFDEDA":"#2b2838",
-        // #dddddd
-      },
-    }),
-    indicatorSeparator: (base) => ({
-      ...base,
-      display: "none",
-    }),
-    dropdownIndicator: (base, state) => ({
-      ...base,
-      color: "black",
-      transform: state.selectProps.menuIsOpen ? "rotate(-180deg)" : "rotate(0)",
-      transition: "250ms",
-      display: "none"
-    }),
+  const [courses, setCourses] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [categoryOptions, setCategoryOptions] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [trainerOptions, setTrainerOptions] = useState([]);
+  const [selectedTrainers, setSelectedTrainers] = useState([]);
+  const [levelOptions, setLevelOptions] = useState([]);
+  const [selectedLevel, setSelectedLevel] = useState(null);
+
+  const token = localStorage.getItem("trainerToken");
+  const location = useLocation();
+
+  // Fetch categories
+  useEffect(() => {
+    axios.get('https://api.novajobs.us/api/trainers/course-categories', {
+      headers: { Authorization: token }
+    })
+    .then(response => {
+      const categories = response.data.data.map(category => ({
+        label: category.name, 
+        value: category.id,
+      }));
+      setCategoryOptions(categories);
+    })
+    .catch(error => console.error('Error fetching categories:', error));
+  }, [token]);
+
+  // Fetch trainers
+  useEffect(() => {
+    axios.get('https://api.novajobs.us/api/trainers/getalltrainer', {
+      headers: { Authorization: token },
+    })
+    .then(response => {
+      const trainers = response.data.data.map(trainer => ({
+        label: `${trainer.trainer.first_name} ${trainer.trainer.last_name}`,
+        value: trainer.trainer.id,
+      }));
+      setTrainerOptions(trainers);
+    })
+    .catch(error => console.error('Error fetching trainers:', error));
+  }, [token]);
+
+  // Fetch levels
+  useEffect(() => {
+    fetch('https://api.novajobs.us/api/trainers/course-level')
+      .then(response => response.json())
+      .then(data => {
+        const levels = data.data.map(level => ({
+          label: level.name,
+          value: level.id
+        }));
+        setLevelOptions(levels);
+      })
+      .catch(error => console.error('Error fetching levels:', error));
+  }, []);
+
+  // Handle category change
+  const handleCategoryChange = (event) => {
+    const value = event.target.value;
+    setSelectedCategories(prev =>
+      prev.includes(value)
+        ? prev.filter(id => id !== value)
+        : [...prev, value]
+    );
+  };
+
+  // Handle trainer change
+  const handleTrainerChange = (event) => {
+    const value = event.target.value;
+    setSelectedTrainers(prevSelected =>
+      prevSelected.includes(value)
+        ? prevSelected.filter(id => id !== value)
+        : [...prevSelected, value]
+    );
+  };
+
+  // Handle level change
+  const handleLevelChange = (event) => {
+    setSelectedLevel(event.target.value);
+  };
+
+  // Fetch courses based on filters and URL parameters
+  const fetchCourses = async () => {
+    const queryParams = new URLSearchParams();
+
+    if (searchKeyword) queryParams.append("title_keywords", searchKeyword);
+
+    if (selectedCategories.length > 0) {
+      queryParams.append("course_category_id", selectedCategories.join('+'));
     }
 
-  const option = [
-    { label: "Newly published", value: "Newly published" },
-    { label: "published 1", value: "published 1" },
-    { label: "published 2", value: "published 2" },
-    { label: "published 3", value: "published 3" },
-  ];
+    if (selectedTrainers.length > 0) {
+      queryParams.append("trainer_id", selectedTrainers.join('+'));
+    }
 
-  const [input, setInput] = useState(null);
+    if (selectedLevel) {
+      queryParams.append("course_level_id", selectedLevel);
+    }
+
+    const apiUrl = queryParams.toString()
+      ? `https://api.novajobs.us/api/trainers/all-courses?${queryParams.toString()}`
+      : 'https://api.novajobs.us/api/trainers/all-courses';
+
+    try {
+      const response = await axios.get(apiUrl, { headers: { Authorization: token } });
+      if (response.data && Array.isArray(response.data.data)) {
+        setCourses(response.data.data);
+      } else {
+        console.error("Unexpected API response structure:", response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    }
+  };
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const titleKeywords = queryParams.get("title_keywords") || "";
+    const courseCategoryIds = queryParams.getAll("course_category_id");
+    const trainerIds = queryParams.getAll("trainer_id");
+    const courseLevelId = queryParams.get("course_level_id") || "";
+
+    setSearchKeyword(titleKeywords);
+    setSelectedCategories(courseCategoryIds);
+    setSelectedTrainers(trainerIds);
+    setSelectedLevel(courseLevelId);
+
+    fetchCourses();
+  }, [location.search]);
 
   return (
     <>
@@ -61,15 +149,12 @@ const CourseList = () => {
                   <nav aria-label="breadcrumb" className="page-breadcrumb">
                     <ol className="breadcrumb">
                       <li className="breadcrumb-item">
-                        <Link to="/home">Home</Link> 
+                        <Link to="/home">Home</Link>
                       </li>
                       <li className="breadcrumb-item" aria-current="page">
                         Courses
                       </li>
-                      <li
-                        className="breadcrumb-item active"
-                        aria-current="page"
-                      >
+                      <li className="breadcrumb-item active" aria-current="page">
                         All Courses
                       </li>
                     </ol>
@@ -84,55 +169,44 @@ const CourseList = () => {
           <div className="container">
             <div className="row">
               <div className="col-lg-9">
-                {/* Filter */}
                 <div className="showing-list">
                   <div className="row">
                     <div className="col-lg-6">
                       <div className="d-flex align-items-center">
                         <div className="view-icons">
                           <Link to="/course-grid" className="grid-view">
-                            {/* <i className="feather-grid" /> */}
                             <FeatherIcon icon="grid" />
-                          </Link> 
-                          <Link
-                            to="/course-list"
-                            className="list-view active"
-                          >
-                            {/* <i className="feather-list" /> */}
+                          </Link>
+                          <Link to="/course-list" className="list-view active">
                             <FeatherIcon icon="list" />
-                          </Link> 
+                          </Link>
                         </div>
                         <div className="show-result">
-                          <h4>Showing 1-9 of 50 results</h4>
+                          <h4>Showing 1-9 of {courses.length} results</h4>
                         </div>
                       </div>
                     </div>
-                    <div className="col-lg-6">
-                      <div className="show-filter add-course-info ">
+
+                    <div className="col-lg-6 mt-2">
+                      <div className="show-filter add-course-info">
                         <form action="#">
                           <div className="row gx-2 align-items-center">
                             <div className="col-md-6 col-item">
-                              <div className=" search-group">
+                              <div className="search-group">
                                 <i className="feather-search me-2">
-                                  <FeatherIcon icon="search"/>
+                                  <FeatherIcon icon="search" />
                                 </i>
                                 <input
                                   type="text"
                                   className="form-control"
-                                  placeholder="Search our courses"
+                                  placeholder="Search School, Online educational centers, etc"
+                                  value={searchKeyword}
+                                  onChange={(e) => setSearchKeyword(e.target.value)}
                                 />
                               </div>
                             </div>
                             <div className="col-md-6 col-lg-6 col-item">
-                              <div className="input-block select-form mb-0">
-                              <Select
-                                  options={option}
-                                  defaultValue={input}
-                                  onChange={setInput}
-                                  placeholder="Newly Published"
-                                  styles={customStyles}
-                              ></Select>
-                              </div>
+                              {/* Placeholder for additional filters */}
                             </div>
                           </div>
                         </form>
@@ -140,299 +214,117 @@ const CourseList = () => {
                     </div>
                   </div>
                 </div>
-                {/* /Filter */}
+                <InnerPage courses={courses} />
 
-                <InnerPage />
-
-                {/* /pagination */}
                 <div className="row">
                   <div className="col-md-12">
                     <ul className="pagination lms-page">
                       <li className="page-item prev">
-                        <Link className="page-link" to="#" >
+                        <Link className="page-link" to="#">
                           <i className="fas fa-angle-left" />
-                        </Link> 
+                        </Link>
                       </li>
-                      <li className="page-item first-page active">
-                        <Link className="page-link" to="#">
-                          1
-                        </Link> 
-                      </li>
-                      <li className="page-item">
-                        <Link className="page-link" to="#">
-                          2
-                        </Link> 
-                      </li>
-                      <li className="page-item">
-                        <Link className="page-link" to="#">
-                          3
-                        </Link> 
-                      </li>
-                      <li className="page-item">
-                        <Link className="page-link" to="#">
-                          4
-                        </Link> 
-                      </li>
-                      <li className="page-item">
-                        <Link className="page-link" to="#">
-                          5
-                        </Link> 
-                      </li>
+                      {/* Pagination items */}
                       <li className="page-item next">
                         <Link className="page-link" to="#">
                           <i className="fas fa-angle-right" />
-                        </Link> 
+                        </Link>
                       </li>
                     </ul>
                   </div>
                 </div>
-                {/* /pagination */}
               </div>
-              
+
               <div className="col-lg-3 theiaStickySidebar">
-              <div className="stickysidebar">
-                <div className="filter-clear">
-                  <div className="clear-filter d-flex align-items-center">
-                    <h4>
-                      {/* <i className="feather-filter" /> */}
-                      <FeatherIcon icon="filter" />
-                      Filters
-                    </h4>
-                    <div className="clear-text">
-                      <p>CLEAR</p>
+                <div className="stickysidebar">
+                  <div className="filter-clear">
+                    <div className="clear-filter d-flex align-items-center">
+                      <h4>
+                        <button className="btn sub-btn bg-warning text-white" type="button" onClick={fetchCourses}>
+                          Search <i className="fas fa-arrow-right" />
+                        </button>
+                      </h4>
+                      <div className="clear-text">
+                        <p>CLEAR</p>
+                      </div>
                     </div>
-                  </div>
-                  {/* Search Filter */}
-                  <div className="card search-filter categories-filter-blk">
-                    <div className="card-body">
-                      <div className="filter-widget mb-0">
-                        <div className="categories-head d-flex align-items-center">
-                          <h4>Course categories</h4>
-                          <i className="fas fa-angle-down" />
+
+                    <div className="card search-filter categories-filter-blk">
+                      <div className="card-body">
+                        <div className="filter-widget mb-0">
+                          <div className="categories-head d-flex align-items-center">
+                            <h4>Course categories</h4>
+                            <i className="fas fa-angle-down" />
+                          </div>
+                          <div className="row px-3">
+                            {categoryOptions.map(option => (
+                              <label key={option.value} className="custom_check">
+                                <input
+                                  type="checkbox"
+                                  name="select_specialist"
+                                  value={option.value}
+                                  checked={selectedCategories.includes(option.value)}
+                                  onChange={handleCategoryChange}
+                                />
+                                <span className="checkmark" /> {option.label}
+                              </label>
+                            ))}
+                          </div>
                         </div>
-                        <div>
-                          <label className="custom_check">
-                            <input type="checkbox" name="select_specialist" />
-                            <span className="checkmark" /> Backend (3)
-                          </label>
+                      </div>
+                    </div>
+
+                    <div className="card search-filter">
+                      <div className="card-body">
+                        <div className="filter-widget mb-0">
+                          <div className="categories-head d-flex align-items-center">
+                            <h4>Instructors</h4>
+                            <i className="fas fa-angle-down" />
+                          </div>
+                          <div className="row px-3">
+                            {trainerOptions.map(option => (
+                              <label key={option.value} className="custom_check">
+                                <input
+                                  type="checkbox"
+                                  name="select_trainer"
+                                  value={option.value}
+                                  checked={selectedTrainers.includes(option.value)}
+                                  onChange={handleTrainerChange}
+                                />
+                                <span className="checkmark" /> {option.label}
+                              </label>
+                            ))}
+                          </div>
                         </div>
-                        <div>
-                          <label className="custom_check">
-                            <input type="checkbox" name="select_specialist" />
-                            <span className="checkmark" /> CSS (2)
-                          </label>
-                        </div>
-                        <div>
-                          <label className="custom_check">
-                            <input type="checkbox" name="select_specialist" />
-                            <span className="checkmark" /> Frontend (2)
-                          </label>
-                        </div>
-                        <div>
-                          <label className="custom_check">
-                            <input
-                              type="checkbox"
-                              name="select_specialist"
-                              defaultChecked="true"
-                            />
-                            <span className="checkmark" /> General (2)
-                          </label>
-                        </div>
-                        <div>
-                          <label className="custom_check">
-                            <input
-                              type="checkbox"
-                              name="select_specialist"
-                              defaultChecked="true"
-                            />
-                            <span className="checkmark" /> IT &amp; Software (2)
-                          </label>
-                        </div>
-                        <div>
-                          <label className="custom_check">
-                            <input type="checkbox" name="select_specialist" />
-                            <span className="checkmark" /> Photography (2)
-                          </label>
-                        </div>
-                        <div>
-                          <label className="custom_check">
-                            <input type="checkbox" name="select_specialist" />
-                            <span className="checkmark" /> Programming Language
-                            (3)
-                          </label>
-                        </div>
-                        <div>
-                          <label className="custom_check mb-0">
-                            <input type="checkbox" name="select_specialist" />
-                            <span className="checkmark" /> Technology (2)
-                          </label>
+                      </div>
+                    </div>
+
+                    <div className="card search-filter">
+                      <div className="card-body">
+                        <div className="filter-widget mb-0">
+                          <div className="categories-head d-flex align-items-center">
+                            <h4>Level</h4>
+                            <i className="fas fa-angle-down" />
+                          </div>
+                          <div className="row px-3">
+                            {levelOptions.map(option => (
+                              <label key={option.value} className="custom_check">
+                                <input
+                                  type="checkbox"
+                                  name="select_level"
+                                  value={option.value}
+                                  checked={selectedLevel === option.value}
+                                  onChange={handleLevelChange}
+                                />
+                                <span className="checkmark" /> {option.label}
+                              </label>
+                            ))}
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  {/* /Search Filter */}
-                  {/* Search Filter */}
-                  <div className="card search-filter">
-                    <div className="card-body">
-                      <div className="filter-widget mb-0">
-                        <div className="categories-head d-flex align-items-center">
-                          <h4>Instructors</h4>
-                          <i className="fas fa-angle-down" />
-                        </div>
-                        <div>
-                          <label className="custom_check">
-                            <input type="checkbox" name="select_specialist" />
-                            <span className="checkmark" /> Keny White (10)
-                          </label>
-                        </div>
-                        <div>
-                          <label className="custom_check">
-                            <input type="checkbox" name="select_specialist" />
-                            <span className="checkmark" /> Hinata Hyuga (5)
-                          </label>
-                        </div>
-                        <div>
-                          <label className="custom_check">
-                            <input type="checkbox" name="select_specialist" />
-                            <span className="checkmark" /> John Doe (3)
-                          </label>
-                        </div>
-                        <div>
-                          <label className="custom_check mb-0">
-                            <input
-                              type="checkbox"
-                              name="select_specialist"
-                              defaultChecked="true"
-                            />
-                            <span className="checkmark" /> Nicole Brown
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* /Search Filter */}
-                  {/* Search Filter */}
-                  <div className="card search-filter ">
-                    <div className="card-body">
-                      <div className="filter-widget mb-0">
-                        <div className="categories-head d-flex align-items-center">
-                          <h4>Price</h4>
-                          <i className="fas fa-angle-down" />
-                        </div>
-                        <div>
-                          <label className="custom_check custom_one">
-                            <input type="radio" name="select_specialist" />
-                            <span className="checkmark" /> All (18)
-                          </label>
-                        </div>
-                        <div>
-                          <label className="custom_check custom_one">
-                            <input type="radio" name="select_specialist" />
-                            <span className="checkmark" /> Free (3)
-                          </label>
-                        </div>
-                        <div>
-                          <label className="custom_check custom_one mb-0">
-                            <input
-                              type="radio"
-                              name="select_specialist"
-                              defaultChecked="true"
-                            />
-                            <span className="checkmark" /> Paid (15)
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* /Search Filter */}
-                  {/* Latest Posts */}
-                  <div className="card post-widget ">
-                    <div className="card-body">
-                      <div className="latest-head">
-                        <h4 className="card-title">Latest Courses</h4>
-                      </div>
-                      <ul className="latest-posts">
-                        <li>
-                          <div className="post-thumb">
-                            <Link to="/course-details">
-                              <img className="img-fluid" src={Blog1} alt="" />
-                            </Link> 
-                          </div>
-                          <div className="post-info free-color">
-                            <h4>
-                              <Link to="/course-details">
-                                Introduction LearnPress – LMS plugin
-                              </Link> 
-                            </h4>
-                            <p>FREE</p>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="post-thumb">
-                            <Link to="/course-details">
-                              <img className="img-fluid" src={Blog2} alt="" />
-                            </Link> 
-                          </div>
-                          <div className="post-info">
-                            <h4>
-                              <Link to="/course-details">
-                                Become a PHP Master and Make Money
-                              </Link> 
-                            </h4>
-                            <p>$200</p>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="post-thumb">
-                            <Link to="#">
-                              <img className="img-fluid" src={Blog3} alt="" />
-                            </Link> 
-                          </div>
-                          <div className="post-info free-color">
-                            <h4>
-                              <Link to="/blog-details">
-                                Learning jQuery Mobile for Beginners
-                              </Link> 
-                            </h4>
-                            <p>FREE</p>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="post-thumb">
-                            <Link to="/course-details">
-                              <img className="img-fluid" src={Blog1} alt="" />
-                            </Link> 
-                          </div>
-                          <div className="post-info">
-                            <h4>
-                              <Link to="/course-details">
-                                Improve Your CSS Workflow with SASS
-                              </Link> 
-                            </h4>
-                            <p>$200</p>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="post-thumb ">
-                            <Link to="/course-details">
-                              <img className="img-fluid" src={Blog2} alt="" />
-                            </Link> 
-                          </div>
-                          <div className="post-info free-color">
-                            <h4>
-                              <Link to="/course-details">
-                                HTML5/CSS3 Essentials in 4-Hours
-                              </Link> 
-                            </h4>
-                            <p>FREE</p>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  {/* /Latest Posts */}
                 </div>
-              </div>
               </div>
             </div>
           </div>

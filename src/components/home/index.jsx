@@ -209,7 +209,7 @@ export const Home = () => {
                           <input
                             type="text"
                             className="form-control"
-                            placeholder="Search School, Online eductional centers, etc"
+                            placeholder="Search Course"
                             value={searchKeyword}
                             onChange={(e) => setSearchKeyword(e.target.value)}
                           />

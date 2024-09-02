@@ -34,7 +34,7 @@ const FeaturedCourses = () => {
         <div className="section-header aos" data-aos="fade-up">
           <div className="section-sub-head">
             {/* <span>What&#39;s New</span>   or use <span>What's New</span> * */}
-            <h2>Explore Levels as per your needs
+            <h2>Explore courses as per your needs
             </h2>
           </div>
           <div className="all-btn all-category d-flex align-items-center">
@@ -77,6 +77,7 @@ const FeaturedCourses = () => {
                             <h4>
                               <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
                                 {course.trainer_first_name} {course.trainer_last_name}
+                                
                               </Link>
                             </h4>
                             <p>Instructor</p>
@@ -91,12 +92,19 @@ const FeaturedCourses = () => {
                       <h3 className="title instructor-text">
                         <Link to={`/course-info/${course.id}`}>
                           {course.course_title}
+                          
                         </Link>
                       </h3>
+                      <p className="fs-6">
+                       
+                          {course.course_category_name}
+                          
+                        
+                      </p>
                       <div className="course-info d-flex align-items-center">
                         <div className="rating-img d-flex align-items-center">
                           <img src={Icon01} alt="" />
-                          <p>{course.enrolled_student_count}+ Students</p>
+                          <p>{course.students_counts}+ Students</p>
                         </div>
                         <div className="course-view d-flex align-items-center">
                           <img src={Icon02} alt="" />
@@ -104,19 +112,12 @@ const FeaturedCourses = () => {
                         </div>
                       </div>
                       <div className="d-flex align-items-center justify-content-between">
-                        <div className="rating">
-                          <i className="fas fa-star filled me-1" />
-                          <i className="fas fa-star filled me-1" />
-                          <i className="fas fa-star filled me-1" />
-                          <i className="fas fa-star filled me-1" />
-                          <i className="fas fa-star" />
-                          <span className="d-inline-block average-rating">
-                            <span>{course.level}</span>
+                      <span className="d-inline-block average-rating fs-6">
+                            <span className="fs-8" style={{fontSize:"15px"}}>{course.course_level_name}</span>
                           </span>
-                        </div>
                         <div className="all-btn all-category d-flex align-items-center">
                           <Link to={`/checkout/${course.id}`} className="btn btn-primary">
-                            BUY NOW
+                          Enroll Now
                           </Link>
                         </div>
                       </div>

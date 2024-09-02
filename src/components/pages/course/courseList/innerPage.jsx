@@ -699,121 +699,113 @@
 // };
 
 // export default InnerPage;
-
-
-import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+
 import { Icon1, Icon2 } from "../../../imagepath";
+import PropTypes from 'prop-types';
 
-const InnerPage = () => {
-  const [courses, setCourses] = useState([]);
-
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const response = await axios.get("https://api.novajobs.us/api/trainers/all-courses");
-        setCourses(response.data.data);
-      } catch (error) {
-        console.error("Error fetching courses:", error);
-      }
-    };
-
-    fetchCourses();
-  }, []);
-
+const InnerPage = ({ courses }) => {
   return (
-    <>
-      <div className="row">
-        {courses.map((course) => (
-          <div key={course.id} className="col-lg-12 col-md-12 d-flex">
-            <div className="course-box course-design list-course d-flex">
-              <div className="product">
-                <div className="product-img">
-                  <Link to={`/course-info/${course.id}`}>
-                    <img
-                      className="img-fluid"
-                      alt={course.course_title}
-                      src={`https://api.novajobs.us/${course.course_banner_image}`}
-                    />
-                  </Link>
-                  <div className="price">
-                    <h3>
-                      ${course.course_price} 
-                      {course.after_discount_price > 0 && (
-                        <span>${course.after_discount_price}</span>
-                      )}
-                    </h3>
+    <div className="row">
+      {courses.length > 0 ? (
+        courses.map(course => (
+          <div className="col-lg-4 col-md-6 d-flex" key={course.id}>
+          <div className="course-box course-design d-flex">
+            <div className="product">
+              <div className="product-img">
+                <Link to="/course-details">
+                  <img
+                    className="img-fluid"
+                    alt=""
+                    src={`https://api.novajobs.us${course.course_banner_image}`}
+                  />
+                </Link>
+                <div className="price">
+                  <h3>
+                    ${course.course_price}
+                    {course.discount_percent > 0 && (
+                      <span>${course.after_discount_price}</span>
+                    )}
+                  </h3>
+                </div>
+              </div>
+              <div className="product-content">
+                <div className="course-group d-flex">
+                  <div className="course-group-img d-flex">
+                   {/* <Link to="/instructor/instructor-profile">
+                      <img
+                        src={`https://via.placeholder.com/150x150?text=${course.trainer_first_name.charAt(0)}${course.trainer_last_name.charAt(0)}`}
+                        alt=""
+                        className="img-fluid"
+                      />
+                    </Link> */}
+                    <div className="course-name">
+                      <h4>
+                      <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
+                              {course.trainer_first_name} {course.trainer_last_name}
+                              
+                            </Link>
+                      </h4>
+                      <p>Instructor</p>
+                    </div>
+                  </div>
+                  <div className="course-share d-flex align-items-center justify-content-center">
+                    <Link to="#">
+                      <i className="fa-regular fa-heart" />
+                    </Link>
                   </div>
                 </div>
-                <div className="product-content">
-                  <div className="head-course-title">
-                    <h3 className="title">
-                      <Link to={`/course-info/${course.id}`}>
-                        {course.course_title}
-                      </Link>
-                    </h3>
-                    <div className="all-btn all-category d-flex align-items-center">
-                      <Link to={`/checkout/${course.id}`} className="btn btn-primary">
-                        BUY NOW
-                      </Link>
-                    </div>
+                <h3 className="title">
+                  <Link to={`/course-info/${course.id}`}>
+                    {course.course_title}
+                  </Link>
+                </h3>
+                <p className="fs-6">
+                     
+                        {course.course_category_name}
+                        
+                      
+                    </p>
+                <div className="course-info d-flex align-items-center">
+                  <div className="rating-img d-flex align-items-center">
+                    <img src={Icon1} alt="" />
+                    <p>{course.time_spent_on_course}</p>
                   </div>
-                  <div className="course-info border-bottom-0 pb-0 d-flex align-items-center">
-                    <div className="rating-img d-flex align-items-center">
-                      <img src={Icon1} alt="" />
-                      <p>{course.enrolled_student_count} Students</p>
-                    </div>
-                    <div className="course-view d-flex align-items-center">
-                      <img src={Icon2} alt="" />
-                      <p>{course.time_spent_on_course}</p>
-                    </div>
+                  <div className="course-view d-flex align-items-center">
+                    <img src={Icon2} alt="" />
+                    <p>{course.level}</p>
                   </div>
-                  <div className="course-group d-flex mb-0">
-                    <div className="course-group-img d-flex">
-                      <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
-                        <img
-                          src="/path/to/default/instructor/image.jpg" // You might want to add a default image
-                          alt={`${course.trainer_first_name} ${course.trainer_last_name}`}
-                          className="img-fluid"
-                        />
-                      </Link>
-                      <div className="course-name">
-                        <h4>
-                          <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
-                            {course.trainer_first_name} {course.trainer_last_name}
-                          </Link>
-                        </h4>
-                        <p>Instructor</p>
-                      </div>
-                    </div>
-                    <div className="course-share d-flex align-items-center justify-content-center">
-                      <Link to="#">
-                        <i className="fa-regular fa-heart" />
-                      </Link>
-                    </div>
-                  </div>
-                  <div className="course-info border-bottom-0 pb-0 d-flex align-items-center">
-                    <div className="rating-img d-flex align-items-center">
-                      <p>Category: {course.category}</p>
-                    </div>
-                    <div className="course-view d-flex align-items-center">
-                      <p>Level: {course.level}</p>
-                    </div>
-                  </div>
-                  <div className="course-info border-bottom-0 pb-0 d-flex align-items-center">
-                    <div className="rating-img d-flex align-items-center">
-                      <p>Language: {course.course_language}</p>
-                    </div>
-                  </div>
+                </div>
+                <span className="d-inline-block average-rating fs-6">
+                          <span className="fs-8" style={{fontSize:"15px"}}>{course.course_level_name}</span>
+                        </span>
+                <div className="all-btn all-category d-flex align-items-center">
+                  <Link to="/checkout" className="btn btn-primary">
+                  Enroll Now
+                  </Link>
                 </div>
               </div>
             </div>
           </div>
-        ))}
-      </div>
-    </>
+        </div>
+        ))
+      ) : (
+        <p>No courses found.</p>
+      )}
+    </div>
   );
+};
+
+InnerPage.propTypes = {
+  courses: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      course_category_name: PropTypes.string.isRequired,
+      course_description: PropTypes.string.isRequired,
+      course_banner_image: PropTypes.string.isRequired,
+      // Add other required fields based on your course object structure
+    })
+  ).isRequired,
 };
 
 export default InnerPage;

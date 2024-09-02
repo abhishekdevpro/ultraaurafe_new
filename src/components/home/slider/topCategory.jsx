@@ -88,7 +88,7 @@ const TopCategory = () => {
         <OwlCarousel {...settings} className="owl-carousel mentoring-course owl-theme aos" data-aos="fade-up">
           {categories.map((category) => (
             <div
-              className="feature-box text-center"
+              className="feature-box text-center shadow"
               key={category.id}
               onClick={() => handleCardClick(category)}
               style={cardStyle}
@@ -106,9 +106,13 @@ const TopCategory = () => {
                   </div>
                   <div className="feature-cont">
                     <div className="feature-text">{category.name}</div>
+                   
                   </div>
                 </div>
-                <p>40 Instructors</p>
+                
+                <p className="">{category.students_counts} {" "}Students</p>
+                    <p className="">{category.course_counts}{" "} Courses</p>
+                    <p className="">{category.trainer_counts} {" "}Instructors</p>
               </div>
             </div>
           ))}

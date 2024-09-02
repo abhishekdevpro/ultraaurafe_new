@@ -9,6 +9,8 @@ import Select from "react-select";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "react-quill/dist/quill.snow.css"; 
+import ReactQuill from "react-quill";
 
 const AddCourse = () => {
   const navigate = useNavigate();
@@ -49,10 +51,10 @@ const AddCourse = () => {
     setCourseData({ ...courseData, [name]: selectedOption.value });
   };
 
-  const handleEditorChange = (event, editor) => {
-    const data = editor.getData();
-    setCourseData({ ...courseData, course_description: data });
+  const handleEditorChange = (value) => {
+    setCourseData({ ...courseData, course_description: value });
   };
+  
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -323,17 +325,17 @@ const AddCourse = () => {
                                 />
                               </div>
                             </div> */}
-                            <div className="input-block mb-0">
-                              <label className="add-course-label" style={{ fontWeight: "700" }}>
-                                Course Description
-                              </label>
-                              <textarea
-                                className="form-control"
-                                rows="5"
-                                placeholder="Enter course description..."
-                                onChange={handleEditorChange} // Update the function to handle textarea changes
-                              ></textarea>
-                            </div>
+                               <div className="input-block mb-0">
+      <label className="add-course-label rounded-3" style={{ fontWeight: "700"  }}>
+        Course Description
+      </label>
+      <ReactQuill
+       className="rounded-3 h-75 "
+        onChange={handleEditorChange}
+        placeholder="Enter course description..."
+        
+      />
+    </div>
 
                             <div className="input-block">
                               <label className="add-course-label" style={{ fontWeight: "700" }}>
