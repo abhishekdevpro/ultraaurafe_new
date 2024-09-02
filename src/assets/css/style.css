@@ -12953,7 +12953,7 @@ input[type="password"]::-ms-clear {
 }
 .inner-banner {
   padding: 45px 0;
-  background: url("../img/inner-banner.jpg");
+  
   background-size: cover;
   background-repeat: no-repeat;
   position: relative;

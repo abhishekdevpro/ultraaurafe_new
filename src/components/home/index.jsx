@@ -11,22 +11,12 @@ import {
   Icon02,
   Icon03,
   Icon04,
-  Icon10,
-  Icon12,
-  Icon13,
-  Icon14,
-  Icon15,
-  Icon16,
-  Icon17,
-  Icon18,
-  Icon7,
-  Icon8,
-  Icon9,
+ 
   Join,
   PencilIcon,
   Share,
 
-} from "../imagepath";
+} from "../imagepath"; 
 import { useSelector } from "react-redux";
 import TopCategory from "./slider/topCategory";
 // import Loginbg from "../../assets/img/banner.png";
@@ -36,7 +26,7 @@ import Companies from "./slider/companies";
 // import BgBanner2 from "../../assets/img/bg-banner-02.png";
 // import Loginbg from "../../assets/img/banner.png";
 // import UserLove from "../../assets/img/user-love.jpg";
-import Blog from "./slider/blog";
+//import Blog from "./slider/blog";
 import Footer from "../footer";
 // import Testimonial from "./slider/testimonial";
 import Select from "react-select";
@@ -985,7 +975,7 @@ export const Home = () => {
             <div className="section-header aos" data-aos="fade-up">
               <div className="section-sub-head feature-head text-center">
                 <span>Trusted By</span>
-                <h2>500+ Leading Universities And Companies</h2>
+                <h2>We Work with Some of the Best - Globally</h2>
               </div>
             </div>
             <div className="lead-group aos" data-aos="fade-up">
@@ -1008,26 +998,27 @@ export const Home = () => {
               </div>
               <div className="col-md-6 d-flex align-items-center">
                 <div className="join-mentor aos" data-aos="fade-up">
-                  <h2>Want to share your knowledge? Join us a Mentor</h2>
+                  <h2>Want to share your knowledge? Join us a Trainer</h2>
                   <p>
-                    High-definition video is video of higher resolution and
-                    quality than standard-definition. While there is no
-                    standardized meaning for high-definition, generally any
-                    video.
+                  Share your expertise and inspire the next generation 
+                  by joining UltraAura as an instructor. Shape the future
+                   of education with flexible teaching opportunities and a global reach.
+
                   </p>
                   <ul className="course-list">
                     <li>
                       <i className="fa-solid fa-circle-check" />
-                      Best Courses
+                      Quick Onboarding
                     </li>
                     <li>
                       <i className="fa-solid fa-circle-check" />
-                      Top rated Instructors
+                      100% Online platform
+
                     </li>
                   </ul>
                   <div className="all-btn all-category d-flex align-items-center">
                     <Link to="/instructor/instructor-list" className="btn btn-primary">
-                      Read More
+                    Join as Trainer Now
                     </Link>
                   </div>
                 </div>
@@ -1035,38 +1026,26 @@ export const Home = () => {
             </div>
           </div>
         </section>
-        {/* /Share knowledge */}
-
-        {/* <section
-          className="section user-love"
-        >
-          <div className="container">
-            <div className="section-header white-header aos" data-aos="fade-up">
-              <div className="section-sub-head feature-head text-center">
-                <span>Check out these real reviews</span>
-                <h2>Users-love-us Dont take it from us.</h2>
-              </div>
-            </div>
-          </div>
-        </section> */}
-        {/* Testimonial Carousel */}
-        {/* <Testimonial /> */}
-        {/* Testimonial Carousel */}
-
-        {/* Become a instructor */}
-        <section className="section become-instructors aos" data-aos="fade-up">
+      
+        <section className="section py-5" data-aos="fade-up">
           <div className="container">
             <div className="row">
               <div className="col-lg-6 col-md-6 d-flex">
                 <div className="student-mentor cube-instuctor ">
-                  <h4>Become An Instructor</h4>
+                  <h4>Partner with US</h4>
                   <div className="row">
                     <div className="col-lg-7 col-md-12">
                       <div className="top-instructors">
                         <p>
-                          Top instructors from around the world teach millions
-                          of students on Mentoring.
+                        Collaborate with UltraAura to expand educational opportunities 
+                        and make a lasting impact. Partner with us to drive innovation 
+                        and empower learners worldwide.
                         </p>
+                        <div className="all-btn all-category d-flex align-items-center">
+                    <Link to="/partnerwithus" className="btn btn-primary">
+                    Partner with US
+                    </Link>
+                  </div>
                       </div>
                     </div>
                     <div className="col-lg-5 col-md-12">
@@ -1087,6 +1066,11 @@ export const Home = () => {
                           Create an account to receive our newsletter, course
                           recommendations and promotions.
                         </p>
+                        <div className="all-btn all-category d-flex align-items-center">
+                    <Link to="/register" className="btn btn-primary">
+                    Sign up
+                    </Link>
+                  </div>
                       </div>
                     </div>
                     <div className="col-lg-4 col-md-12">
@@ -1102,7 +1086,7 @@ export const Home = () => {
         </section>
         {/* /Become a instructor */}
 
-        {/* Blog */}
+        {/* Blog 
         <section
           className="section latest-blog"
         >
@@ -1272,7 +1256,7 @@ export const Home = () => {
             </div>
           </div>
         </section>
-        {/* /Blog */}
+         /Blog */}
 
         {/* Footer */}
         <Footer />

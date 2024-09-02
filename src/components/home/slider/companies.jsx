@@ -1,6 +1,6 @@
 import React from "react";
 import OwlCarousel from "react-owl-carousel";
-import { Lead1, Lead2, Lead3, Lead4, Lead5, Lead6 } from "../../imagepath";
+
 
 const Companies = () => {
   var settings = {
@@ -29,34 +29,39 @@ const Companies = () => {
       {...settings}
       className="lead-group-slider owl-carousel owl-theme"
     >
-      <div className="item">
-        <div className="lead-img">
-          <img className="img-fluid" alt="" src={Lead1} />
+      <div className=" card-body item">
+        <div className=" lead-img">
+          <img className="img-fluid" alt="" src="https://idfy-eia3.vercel.app/assets/logo1-D7AqdC-G.jpg"/>
         </div>
       </div>
-      <div className="item">
+      <div className=" card-body item">
         <div className="lead-img">
-          <img className="img-fluid" alt="" src={Lead2} />
+          <img className="img-fluid" alt="" src="https://idfy-eia3.vercel.app/assets/logo2-Bjhd8dXy.png" />
         </div>
       </div>
-      <div className="item">
+      <div className=" card-body item">
         <div className="lead-img">
-          <img className="img-fluid" alt="" src={Lead3} />
+          <img className="img-fluid" alt="" src="https://idfy-eia3.vercel.app/assets/log3-D3L7OafR.png" />
         </div>
       </div>
-      <div className="item">
+      <div className="item card-body">
         <div className="lead-img">
-          <img className="img-fluid" alt="" src={Lead4} />
+          <img className="img-fluid" alt="" src="https://idfy-eia3.vercel.app/assets/logo4-CmX0GcRG.png" />
         </div>
       </div>
-      <div className="item">
+      <div className="item card-body">
         <div className="lead-img">
-          <img className="img-fluid" alt="" src={Lead5} />
+          <img className="img-fluid" alt="" src="https://idfy-eia3.vercel.app/assets/logo5-DddCxhI1.jpg"/>
         </div>
       </div>
-      <div className="item">
+      <div className="item card-body">
         <div className="lead-img">
-          <img className="img-fluid" alt="" src={Lead6} />
+          <img className="img-fluid" alt="" src="https://idfy-eia3.vercel.app/assets/logo6-BaryiB03.png" />
+        </div>
+      </div>
+      <div className="item card-body">
+        <div className="lead-img">
+          <img className="img-fluid" alt="" src="https://idfy-eia3.vercel.app/assets/logo7-Bp2tKP0k.png" />
         </div>
       </div>
     </OwlCarousel>

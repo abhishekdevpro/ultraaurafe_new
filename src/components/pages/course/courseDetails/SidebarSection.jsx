@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types'; // Import PropTypes
+import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Chapter, Chart, Cloud, Key, Mobile, Play, Teacher, Timer2, Users, Video2 } from '../../../imagepath';
@@ -8,6 +8,7 @@ const SidebarSection = ({ courseId }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [loading, setLoading] = useState(false);
   const [videoUrl, setVideoUrl] = useState(null); // State for video URL
+  //const [videoLoading, setVideoLoading] = useState(false); // State for video loading
   const navigate = useNavigate();
 
   const handleEnrollClick = () => {
@@ -38,7 +39,6 @@ const SidebarSection = ({ courseId }) => {
       );
       console.log('Purchase successful:', response.data);
       setShowPopup(false);
-      // Optionally, redirect to the course page or show a success message
     } catch (error) {
       console.error('Error during purchase:', error);
       alert('There was an issue with the purchase. Please try again.');
@@ -49,37 +49,48 @@ const SidebarSection = ({ courseId }) => {
 
   // Function to handle video play
   const handleVideoPlay = async () => {
-    try {
-      const response = await axios.get(`https://api.novajobs.us/api/students/streaming/${courseId}`); // API call to get the video URL
-      const { data } = response;
-      console.log(response ,'shubha')
-      setVideoUrl(data.url); // Set the video URL from the API response
-    } catch (error) {
-      console.error('Error fetching video URL:', error);
-      alert('Unable to fetch video. Please try again later.');
-    }
-  };
+  setLoading(true);
+  try {
+    const response = await axios.get(`https://api.novajobs.us/api/students/streaming/${courseId}`, {
+      responseType: 'blob', // Set response type to 'blob' to handle binary data
+    });
+
+    // Convert the binary data to a Blob URL
+    const videoBlob = new Blob([response.data], { type: 'video/mp4' }); // Specify the MIME type
+    const videoUrl = URL.createObjectURL(videoBlob);
+    
+    setVideoUrl(videoUrl); // Set the video URL to the Blob URL
+    console.log('Video URL:', videoUrl);
+  } catch (error) {
+    console.error('Error fetching video:', error);
+    alert('Unable to fetch video. Please try again later.');
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="col-lg-4">
       <div className="sidebar-sec">
-        {/* Video */}
+        {/* Video Section */}
         <div className="video-sec vid-bg">
           <div className="card">
             <div className="card-body">
-              {videoUrl ? (
-                <video width="100%" controls>
-                  <source src={videoUrl} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              ) : (
-                <button onClick={handleVideoPlay} className="video-thumbnail btn btn-link" data-fancybox="">
-                  <div className="play-icon">
-                    <i className="fa-solid fa-play" />
-                  </div>
-                  <img className="" src={Video2} alt="Video Thumbnail" />
-                </button>
-              )}
+            {videoUrl ? (
+  <video width="100%" controls>
+    <source src={videoUrl} type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+) : (
+  <button onClick={handleVideoPlay} className="video-thumbnail btn btn-link" data-fancybox="">
+    <div className="play-icon">
+      <i className="fa-solid fa-play" />
+    </div>
+    <img className="" src={Video2} alt="Video Thumbnail" />
+  </button>
+)}
+
               <div className="video-details">
                 <div className="course-fee">
                   <h2>FREE</h2>
@@ -106,9 +117,8 @@ const SidebarSection = ({ courseId }) => {
             </div>
           </div>
         </div>
-        {/* /Video */}
 
-        {/* Popup */}
+        {/* Checkout Popup */}
         {showPopup && (
           <div className="checkout-popup">
             <div className="popup-content">
@@ -123,9 +133,8 @@ const SidebarSection = ({ courseId }) => {
             </div>
           </div>
         )}
-        {/* /Popup */}
 
-        {/* Include */}
+        {/* Include Section */}
         <div className="card include-sec">
           <div className="card-body">
             <div className="cat-title">
@@ -141,9 +150,8 @@ const SidebarSection = ({ courseId }) => {
             </ul>
           </div>
         </div>
-        {/* /Include */}
 
-        {/* Features */}
+        {/* Features Section */}
         <div className="card feature-sec">
           <div className="card-body">
             <div className="cat-title">
@@ -158,13 +166,11 @@ const SidebarSection = ({ courseId }) => {
             </ul>
           </div>
         </div>
-        {/* /Features */}
       </div>
     </div>
   );
 };
 
-// Add prop types validation
 SidebarSection.propTypes = {
   courseId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
