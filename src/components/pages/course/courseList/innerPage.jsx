@@ -10,7 +10,7 @@
 //           <div className="course-box course-design list-course d-flex">
 //             <div className="product">
 //               <div className="product-img">
-//                 <Link to="/course-details">
+//                 <Link to="/course-info">
 //                   <img
 //                     className="img-fluid"
 //                     alt=""
@@ -26,7 +26,7 @@
 //               <div className="product-content">
 //                 <div className="head-course-title">
 //                   <h3 className="title">
-//                     <Link to="/course-details">
+//                     <Link to="/course-info">
 //                       Information About UI/UX Design Degree
 //                     </Link>
 //                   </h3>
@@ -86,7 +86,7 @@
 //           <div className="course-box course-design list-course d-flex">
 //             <div className="product">
 //               <div className="product-img">
-//                 <Link to="/course-details">
+//                 <Link to="/course-info">
 //                   <img
 //                     className="img-fluid"
 //                     alt=""
@@ -102,7 +102,7 @@
 //               <div className="product-content">
 //                 <div className="head-course-title">
 //                   <h3 className="title">
-//                     <Link to="/course-details">
+//                     <Link to="/course-info">
 //                       Sketch from A to Z (2024): Become an app designer
 //                     </Link>
 //                   </h3>
@@ -162,7 +162,7 @@
 //           <div className="course-box course-design list-course d-flex">
 //             <div className="product">
 //               <div className="product-img">
-//                 <Link to="/course-details">
+//                 <Link to="/course-info">
 //                   <img
 //                     className="img-fluid"
 //                     alt=""
@@ -178,7 +178,7 @@
 //               <div className="product-content">
 //                 <div className="head-course-title">
 //                   <h3 className="title">
-//                     <Link to="/course-details">
+//                     <Link to="/course-info">
 //                       Learn Angular Fundamentals From beginning to advance lavel
 //                     </Link>
 //                   </h3>
@@ -238,7 +238,7 @@
 //           <div className="course-box course-design list-course d-flex">
 //             <div className="product">
 //               <div className="product-img">
-//                 <Link to="/course-details">
+//                 <Link to="/course-info">
 //                   <img
 //                     className="img-fluid"
 //                     alt=""
@@ -254,7 +254,7 @@
 //               <div className="product-content">
 //                 <div className="head-course-title">
 //                   <h3 className="title">
-//                     <Link to="/course-details">
+//                     <Link to="/course-info">
 //                       Build Responsive Real World Websites with HTML5 and CSS3
 //                     </Link>
 //                   </h3>
@@ -314,7 +314,7 @@
 //           <div className="course-box course-design list-course d-flex">
 //             <div className="product">
 //               <div className="product-img">
-//                 <Link to="/course-details">
+//                 <Link to="/course-info">
 //                   <img
 //                     className="img-fluid"
 //                     alt=""
@@ -330,7 +330,7 @@
 //               <div className="product-content">
 //                 <div className="head-course-title">
 //                   <h3 className="title">
-//                     <Link to="/course-details">
+//                     <Link to="/course-info">
 //                       C# Developers Double Your Coding Speed with Visual Studio
 //                     </Link>
 //                   </h3>
@@ -390,7 +390,7 @@
 //           <div className="course-box course-design list-course d-flex">
 //             <div className="product">
 //               <div className="product-img">
-//                 <Link to="/course-details">
+//                 <Link to="/course-info">
 //                   <img
 //                     className="img-fluid"
 //                     alt=""
@@ -406,7 +406,7 @@
 //               <div className="product-content">
 //                 <div className="head-course-title">
 //                   <h3 className="title">
-//                     <Link to="/course-details">
+//                     <Link to="/course-info">
 //                       Learn JavaScript and Express to become a professional
 //                       JavaScript
 //                     </Link>
@@ -467,7 +467,7 @@
 //           <div className="course-box course-design list-course d-flex">
 //             <div className="product">
 //               <div className="product-img">
-//                 <Link to="/course-details">
+//                 <Link to="/course-info">
 //                   <img
 //                     className="img-fluid"
 //                     alt=""
@@ -483,7 +483,7 @@
 //               <div className="product-content">
 //                 <div className="head-course-title">
 //                   <h3 className="title">
-//                     <Link to="/course-details">
+//                     <Link to="/course-info">
 //                       Learn and Understand AngularJS to become a professional
 //                       developer
 //                     </Link>
@@ -544,7 +544,7 @@
 //           <div className="course-box course-design list-course d-flex">
 //             <div className="product">
 //               <div className="product-img">
-//                 <Link to="/course-details">
+//                 <Link to="/course-info">
 //                   <img
 //                     className="img-fluid"
 //                     alt=""
@@ -560,7 +560,7 @@
 //               <div className="product-content">
 //                 <div className="head-course-title">
 //                   <h3 className="title">
-//                     <Link to="/course-details">
+//                     <Link to="/course-info">
 //                       Responsive Web Design Essentials HTML5 CSS3 and Bootstrap
 //                     </Link>
 //                   </h3>
@@ -620,7 +620,7 @@
 //           <div className="course-box course-design list-course d-flex">
 //             <div className="product">
 //               <div className="product-img">
-//                 <Link to="/course-details">
+//                 <Link to="/course-info">
 //                   <img
 //                     className="img-fluid"
 //                     alt=""
@@ -636,7 +636,7 @@
 //               <div className="product-content">
 //                 <div className="head-course-title">
 //                   <h3 className="title">
-//                     <Link to="/course-details">
+//                     <Link to="/course-info">
 //                       The Complete App Design Course - UX, UI and Design
 //                       Thinking
 //                     </Link>
@@ -713,7 +713,7 @@ const InnerPage = ({ courses }) => {
           <div className="course-box course-design d-flex">
             <div className="product">
               <div className="product-img">
-                <Link to={`/course-details/${course.id}`}>
+                <Link to={`/course-info/${course.id}`}>
                   <img
                     className="img-fluid"
                     alt=""
@@ -780,7 +780,7 @@ const InnerPage = ({ courses }) => {
                           <span className="fs-8" style={{fontSize:"15px"}}>{course.course_level_name}</span>
                         </span>
                 <div className="all-btn all-category d-flex align-items-center">
-                  <Link to="/checkout" className="btn btn-primary">
+                  <Link to="/login" className="btn btn-primary">
                   Enroll Now
                   </Link>
                 </div>
