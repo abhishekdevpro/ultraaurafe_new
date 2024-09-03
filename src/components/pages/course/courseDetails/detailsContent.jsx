@@ -772,6 +772,7 @@ const DetailsContent = () => {
   const [courseData, setCourseData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
   // const [open, setOpen] = useState({});
   const {courseid} = useParams()
 
