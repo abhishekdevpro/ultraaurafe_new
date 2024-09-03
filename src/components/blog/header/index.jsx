@@ -92,13 +92,13 @@ const BlogHeader = ({ activeMenu }) => {
                       <span></span>
                     </span>
                   </Link>
-                  <Link to="#" className="navbar-brand logo">
+                  <Link to="/" className="navbar-brand logo">
                     <img src={logo} className="img-fluid" alt="Logo" />
                   </Link>
                 </div>
                 <div className="main-menu-wrapper">
                   <div className="menu-header">
-                    <Link to="/home" className="menu-logo">
+                    <Link to="/" className="menu-logo">
                       <img src={logo} className="img-fluid" alt="Logo" />
                     </Link>
                     <Link

@@ -142,6 +142,8 @@ import EditLecture from "./components/pages/course/Lecture/EditLecture.jsx";
 import Partnerwithus from "./components/pages/partnerwithus/index.jsx";
 import PartnerLogin from './components/pages/partnerwithus/PartnerLogin.jsx'
 import { VendorDashboard } from "./components/Vendor/VendorDasboard.jsx";
+import ForgotPasswordVendor from "./components/pages/forgotPassword/Vendor-ForgetPassword.jsx";
+import NewPasswordVendor from "./components/pages/newPassword/Vendor-ResetPassword.jsx";
 const Approuter = () => {
   return (
     <BrowserRouter>
@@ -197,6 +199,7 @@ const Approuter = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/students/new-password/:token" element={<NewPassword />} />
         <Route path="/trainers/new-password/:token" element={<NewPassword2 />} />
+        <Route path="/vendors/new-password/:token" element={<NewPasswordVendor />} />
         <Route path="/register" element={<Register />} />
         <Route path="/register1" element={<RegisterOne />} />
         <Route path="/register2" element={<RegisterTwo />} />
@@ -204,6 +207,7 @@ const Approuter = () => {
         <Route path="/register4" element={<RegisterFour />} />
         <Route path="/register5" element={<RegisterFive />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/vendor-forgot-password" element={<ForgotPasswordVendor />} />
         <Route path="/term-condition" element={<TermsCondition />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/return-policy" element={<ReturnPolicy/>} />

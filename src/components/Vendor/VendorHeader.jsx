@@ -95,13 +95,13 @@ export function VendorHeader({ activeMenu }) {
                   <span></span>
                 </span>
               </Link>
-              <Link to="/vendor/home" className=" ">
+              <Link to="/" className=" ">
                 <img src={logo5} className="rounded-3" alt="Logo" style={{ height: "50px", width: "200px" }} />
               </Link>
             </div>
             <div className="main-menu-wrapper">
               <div className="menu-header">
-                <Link to="/vendor/home" className="menu-logo">
+                <Link to="/" className="menu-logo">
                   <img src={logo5} className="img-fluid" alt="Logo" />
                 </Link>
                 <Link

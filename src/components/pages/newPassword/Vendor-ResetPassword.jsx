@@ -7,7 +7,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { toast } from 'react-toastify'; // Import toast for notifications
 
-const NewPassword = () => {
+const NewPasswordVendor = () => {
     const [eye, setEye] = useState(true);
     const [eye2, setEye2] = useState(true);
     const [formData, setFormData] = useState({
@@ -81,7 +81,7 @@ const NewPassword = () => {
             formDataObj.append("new_password", formData.newPassword);
     
             const response = await axios.post(
-                "https://api.novajobs.us/api/students/reset-password", // Adjust the URL according to your API
+                "https://api.novajobs.us/api/vendors/reset-password", // Updated URL for vendors
                 formDataObj,
                 {
                     headers: {
@@ -203,4 +203,4 @@ const NewPassword = () => {
     );
 };
 
-export default NewPassword;
+export default NewPasswordVendor;
