@@ -140,7 +140,8 @@ import SectionsList from "./components/pages/course/Section/SectionList.jsx";
 import EditSection from "./components/pages/course/Section/EditSection.jsx";
 import EditLecture from "./components/pages/course/Lecture/EditLecture.jsx";
 import Partnerwithus from "./components/pages/partnerwithus/index.jsx";
-
+import PartnerLogin from './components/pages/partnerwithus/PartnerLogin.jsx'
+import { VendorDashboard } from "./components/Vendor/VendorDasboard.jsx";
 const Approuter = () => {
   return (
     <BrowserRouter>
@@ -166,8 +167,13 @@ const Approuter = () => {
         <Route path="/blog-modern" element={<BlogModern />} />
         <Route path="/blog-details" element={<BlogDetails />} />
 
+        {/* Vendor */}
+        <Route path="/vendor-dashboard" element={<VendorDashboard />} />
+
+
         {/* Pages */}
-        <Route path="/partnerwithus" element={<Partnerwithus/>}/>
+        <Route path="/partner-signin" element={<PartnerLogin/>}/>
+        <Route path="/partner-signup" element={<Partnerwithus/>}/>
         <Route path="/page-notification" element={<Notification />} />
         <Route path="/pricing-plan" element={<PricingPlan />} />
         <Route path="/pricing-plan2" element={<PricingPlan2 />} />
