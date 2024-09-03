@@ -1,36 +1,27 @@
 /* eslint-disable no-unused-vars */
 import React, { useRef, useState } from "react";
-import { Home, LogOut, Moon, Star } from "react-feather";
+import PropTypes from 'prop-types'; // Import PropTypes
+import { Home, LogOut, Package, ShoppingCart } from "react-feather";
 import { Link } from "react-router-dom";
-import useOnClickOutside from "../../../hooks/useOnClickOutside";
+import useOnClickOutside from "../../hooks/useOnClickOutside";
 import {
   logo,
   User17,
-} from "../../imagepath";
-import DarkMode from "../../common/darkMode";
-import menu_data from "../../header/menu-data";
-import logo5 from "../../../assets/logo5.png"
-// eslint-disable-next-line react/prop-types
-export function InstructorHeader({ activeMenu }) {
-  console.log(activeMenu === "Dashboard", "activeMenu");
+} from "../imagepath"; // Assuming you'll replace this with the appropriate vendor image
+import DarkMode from "../common/darkMode";
+import vendorMenuData from "../header/menu-data"; // Assuming a separate menu data file for vendors
+import logo5 from "../../assets/logo5.png";
+
+export function VendorHeader({ activeMenu }) {
   const [navbar, setNavbar] = useState(false);
 
   const [showCart, setShowCart] = useState(false);
-  const [showWish, setShowWish] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
 
   // Mobile Menu toggle
   const [mobileMenu, setMobileMenu] = useState(false);
   const [mobileSubMenu, setMobileSubMenu] = useState(false);
-  const [mobileSubMenu2, setMobileSubMenu2] = useState(false);
-  const [mobileSubMenu22, setMobileSubMenu22] = useState(false);
-  const [mobileSubMenu3, setMobileSubMenu3] = useState(false);
-  const [mobileSubMenu32, setMobileSubMenu32] = useState(false);
-  const [mobileSubMenu4, setMobileSubMenu4] = useState(false);
-  const [mobileSubMenu42, setMobileSubMenu42] = useState(false);
-  const [mobileSubMenu43, setMobileSubMenu43] = useState(false);
-  const [mobileSubMenu5, setMobileSubMenu5] = useState(false);
 
   const openMobileMenu = () => {
     document.body.classList.add("menu-opened");
@@ -45,44 +36,10 @@ export function InstructorHeader({ activeMenu }) {
     e.preventDefault();
     setMobileSubMenu(!mobileSubMenu);
   };
-  const openMobileSubMenu2 = (e) => {
-    e.preventDefault();
-    setMobileSubMenu2(!mobileSubMenu2);
-  };
-  const openMobileSubMenu22 = (e) => {
-    e.preventDefault();
-    setMobileSubMenu22(!mobileSubMenu22);
-  };
-  const openMobileSubMenu3 = (e) => {
-    e.preventDefault();
-    setMobileSubMenu3(!mobileSubMenu3);
-  };
-  const openMobileSubMenu32 = (e) => {
-    e.preventDefault();
-    setMobileSubMenu32(!mobileSubMenu32);
-  };
-  const openMobileSubMenu4 = (e) => {
-    e.preventDefault();
-    setMobileSubMenu4(!mobileSubMenu4);
-  };
-  const openMobileSubMenu42 = (e) => {
-    e.preventDefault();
-    setMobileSubMenu42(!mobileSubMenu42);
-  };
-  const openMobileSubMenu43 = (e) => {
-    e.preventDefault();
-    setMobileSubMenu43(!mobileSubMenu43);
-  };
-  const openMobileSubMenu5 = (e) => {
-    e.preventDefault();
-    setMobileSubMenu5(!mobileSubMenu5);
-  };
+
   // To close the modal, when clicked outside anywhere
   const cart = useRef();
   useOnClickOutside(cart, () => setShowCart(false));
-
-  const wish = useRef();
-  useOnClickOutside(wish, () => setShowWish(false));
 
   const notification = useRef();
   useOnClickOutside(notification, () => setShowNotification(false));
@@ -93,25 +50,14 @@ export function InstructorHeader({ activeMenu }) {
   // Cart Click
   const cartClick = (e) => {
     e.preventDefault();
-    // if (showWish) {
-    //   setShowWish(false);
-    // }
     setShowCart(!showCart);
-    console.log(showCart);
-  };
-
-  const wishClick = (e) => {
-    e.preventDefault();
-    // if (showCart) {
-    //   setShowCart(false);
-    // }
-    setShowWish(!showWish);
   };
 
   const notificationClick = (e) => {
     e.preventDefault();
     setShowNotification(!showNotification);
   };
+
   const profileClick = (e) => {
     e.preventDefault();
     setShowProfile(!showProfile);
@@ -136,7 +82,7 @@ export function InstructorHeader({ activeMenu }) {
               : "navbar navbar-expand-lg header-nav scroll-sticky"
           }
         >
-          <div className="container ">
+          <div className="container">
             <div className="navbar-header">
               <Link
                 id="mobile_btn"
@@ -149,13 +95,13 @@ export function InstructorHeader({ activeMenu }) {
                   <span></span>
                 </span>
               </Link>
-              <Link to="/home" className=" ">
+              <Link to="/vendor/home" className=" ">
                 <img src={logo5} className="rounded-3" alt="Logo" style={{ height: "50px", width: "200px" }} />
               </Link>
             </div>
             <div className="main-menu-wrapper">
               <div className="menu-header">
-                <Link to="/home" className="menu-logo">
+                <Link to="/vendor/home" className="menu-logo">
                   <img src={logo5} className="img-fluid" alt="Logo" />
                 </Link>
                 <Link
@@ -167,8 +113,9 @@ export function InstructorHeader({ activeMenu }) {
                   <i className="fas fa-times"></i>
                 </Link>
               </div>
+
               <ul className="main-nav">
-                {menu_data.map((item) => (
+                {vendorMenuData.map((item) => (
                   <li key={item.id} className="has-submenu">
                     <Link to={item.link}>{item.title}</Link>
                     {item.sub_menus.length > 0 && (
@@ -196,7 +143,7 @@ export function InstructorHeader({ activeMenu }) {
                   onClick={profileClick}
                 >
                   <span className="user-img">
-                    <img src={User17} alt="" />
+                    <img src={User17} alt="Vendor Image" />
                     <span className="status online"></span>
                   </span>
                 </Link>
@@ -213,30 +160,36 @@ export function InstructorHeader({ activeMenu }) {
                     <div className="avatar avatar-sm">
                       <img
                         src={User17}
-                        alt="User Image"
+                        alt="Vendor Image"
                         className="avatar-img rounded-circle"
                       />
                     </div>
                     <div className="user-text">
-                      <h6>Eugene Andre</h6>
-                      <p className="text-muted text mb-0">Instructor</p>
+                      <h6>John Doe</h6> {/* Replace with vendor's name */}
+                      <p className="text-muted text mb-0">Vendor</p>
                     </div>
                   </div>
                   <Link
                     className="dropdown-item"
-                    to="/instructor/instructor-dashboard"
+                    to="/vendor/dashboard"
                   >
                     <Home size={14} color={"#FF875A"} className="feather-home me-1" />{" "}
                     Dashboard
                   </Link>
                   <Link
                     className="dropdown-item text"
-                    to="/instructor/instructor-settings"
+                    to="/vendor/products"
                   >
-                    <Star size={14} color={"#FF875A"} className="feather-star me-1" />{" "}
-                    Edit Profile
+                    <Package size={14} color={"#FF875A"} className="feather-package me-1" />{" "}
+                    My Products
                   </Link>
-
+                  <Link
+                    className="dropdown-item text"
+                    to="/vendor/orders"
+                  >
+                    <ShoppingCart size={14} color={"#FF875A"} className="feather-shopping-cart me-1" />{" "}
+                    Orders
+                  </Link>
                   <Link className="dropdown-item text" to="/home">
                     <LogOut
                       size={14}
@@ -257,3 +210,10 @@ export function InstructorHeader({ activeMenu }) {
     </header>
   );
 }
+
+// Define prop types for VendorHeader
+VendorHeader.propTypes = {
+  activeMenu: PropTypes.string, // Adjust the type based on your actual usage
+};
+
+export default VendorHeader;
