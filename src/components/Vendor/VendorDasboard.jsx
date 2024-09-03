@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import VendorSidebar from "./VendorSidebar";
 import { VendorHeader } from "./VendorHeader";
+import Footer from "../footer";
 // import productImg from "../../../assets/Product.png"; // Placeholder image for products
 
 export const VendorDashboard = () => {
@@ -206,7 +207,7 @@ export const VendorDashboard = () => {
         </div>
       </div>
       {/* /Page Content */}
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };
