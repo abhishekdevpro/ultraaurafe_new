@@ -816,7 +816,7 @@ const DetailsContent = () => {
 
 
 
-  console.log(courseData.trainer_id,"kkkk")
+  console.log(courseData,"kkkk")
  
   return (
     <>
@@ -1143,7 +1143,8 @@ const DetailsContent = () => {
                 </div>
               </div>
             </div> */}
-            <SidebarSection courseId={courseid}/>
+            {console.log(courseid,'dasd')}
+            <SidebarSection courseId={courseid}  courseData={courseData} />
           </div>
         </div>
       </section>

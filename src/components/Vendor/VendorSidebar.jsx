@@ -1,10 +1,33 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import StickyBox from "react-sticky-box";
 import { Link, useLocation } from "react-router-dom";
 import vendorLogo from "../../assets/img/profile-pro.png"; // Placeholder logo for vendor
+import axios from "axios";
+
 
 export default function VendorSidebar() {
   const location = useLocation();
+  const [profile ,setProfileData] =useState("")
+
+  const token = localStorage.getItem("vendorToken")
+
+
+  useEffect(() => {
+    axios
+      .get("https://api.novajobs.us/api/vendors/profile",{
+        headers: {
+          Authorization:token,}
+      })
+      .then((response) => {
+        const data = response.data.data;
+        setProfileData(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching profile data:", error);
+      });
+  }, []);
+
+
 
   return (
     <div className="col-xl-3 col-lg-3 theiaStickySidebar">
@@ -14,14 +37,18 @@ export default function VendorSidebar() {
             <div className="profile-bg">
               <div className="profile-img">
                 <Link to="/vendor/vendor-profile">
-                  <img src={vendorLogo} alt="Vendor Profile" />
+              <img  src={profile.photo ? `https://api.novajobs.us/${profile.photo}` :vendorLogo }
+                  
+                alt="Profile"
+                            className="img-fluid"
+                          />
                 </Link>
               </div>
             </div>
             <div className="profile-group">
               <div className="profile-name text-center">
                 <h4>
-                  <Link to="/vendor/vendor-profile">Vendor Name</Link>
+                  <Link to="/vendor/vendor-profile">{profile.first_name}{" "}{profile.last_name}</Link>
                 </h4>
                 <p>Vendor</p>
                 <Link to="/add-course" className="add-course btn-primary">
@@ -41,38 +68,38 @@ export default function VendorSidebar() {
                   Dashboard
                 </Link>
               </li>
-              <li className={`nav-item ${location.pathname === '/vendor/vendor-profile' ? 'active' : ''}`}>
-                <Link to="/vendor/vendor-profile" className="nav-link">
+              <li className={`nav-item ${location.pathname === '/vendor-setting' ? 'active' : ''}`}>
+                <Link to="/vendor-setting" className="nav-link">
                   <i className="bx bxs-user" />
                   My Profile
                 </Link>
               </li>
               <li className={`nav-item ${location.pathname === '/vendor/vendor-products' ? 'active' : ''}`}>
-                <Link to="/vendor/vendor-products" className="nav-link">
+                <Link to="" className="nav-link">
                   <i className="bx bxs-box" />
                   My Products
                 </Link>
               </li>
               <li className={`nav-item ${location.pathname === '/vendor/vendor-orders' ? 'active' : ''}`}>
-                <Link to="/vendor/vendor-orders" className="nav-link">
+                <Link to="" className="nav-link">
                   <i className="bx bxs-cart" />
                   Order History
                 </Link>
               </li>
               <li className={`nav-item ${location.pathname === '/vendor/vendor-reviews' ? 'active' : ''}`}>
-                <Link to="/vendor/vendor-reviews" className="nav-link">
+                <Link to="" className="nav-link">
                   <i className="bx bxs-star" />
                   Reviews
                 </Link>
               </li>
               <li className={`nav-item ${location.pathname === '/vendor/vendor-withdrawals' ? 'active' : ''}`}>
-                <Link to="/vendor/vendor-withdrawals" className="nav-link">
+                <Link to="" className="nav-link">
                   <i className="bx bxs-wallet" />
                   Withdrawals
                 </Link>
               </li>
               <li className={`nav-item ${location.pathname === '/vendor/vendor-support' ? 'active' : ''}`}>
-                <Link to="/vendor/vendor-support" className="nav-link">
+                <Link to="" className="nav-link">
                   <i className="bx bxs-help-circle" />
                   Support Tickets
                 </Link>
@@ -81,13 +108,13 @@ export default function VendorSidebar() {
             <h3>Account Settings</h3>
             <ul>
               <li className={`nav-item ${location.pathname === '/vendor/vendor-settings' ? 'active' : ''}`}>
-                <Link to="/vendor/vendor-settings" className="nav-link">
+                <Link to="/vendor-setting" className="nav-link">
                   <i className="bx bxs-cog" />
                   Settings
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/home" className="nav-link">
+                <Link to="/patnerwithus" className="nav-link">
                   <i className="bx bxs-log-out" />
                   Logout
                 </Link>

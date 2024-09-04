@@ -45,7 +45,7 @@ const Login = () => {
             localStorage.setItem(tokenKey, response.data.data.token);
 
             console.log("Login successful", response.data);
-            navigate(role === "student" ? "/setting-edit-profile" : `/instructor/instructor-dashboard`);
+            navigate(role === "student" ? "/student/student-setting" : `/instructor/instructor-dashboard`);
         }
     } catch (error) {
         console.error("Login failed", error);

@@ -144,6 +144,7 @@ import PartnerLogin from './components/pages/partnerwithus/PartnerLogin.jsx'
 import { VendorDashboard } from "./components/Vendor/VendorDasboard.jsx";
 import ForgotPasswordVendor from "./components/pages/forgotPassword/Vendor-ForgetPassword.jsx";
 import NewPasswordVendor from "./components/pages/newPassword/Vendor-ResetPassword.jsx";
+import VendorSetting from "./components/Vendor/VendorSetting.jsx";
 const Approuter = () => {
   return (
     <BrowserRouter>
@@ -171,6 +172,8 @@ const Approuter = () => {
 
         {/* Vendor */}
         <Route path="/vendor-dashboard" element={<VendorDashboard />} />
+        <Route path="/vendor-setting" element={<VendorSetting/>}/>
+        <Route path="/vendor/vendor-dashboard" element={<VendorDashboard/>}/>
 
 
         {/* Pages */}
