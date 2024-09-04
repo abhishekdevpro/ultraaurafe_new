@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import StickyBox from "react-sticky-box";
-import { User16 } from "../../imagepath";
+// import { User16 } from "../../imagepath";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
@@ -8,6 +8,32 @@ import { useState,useEffect } from "react";
 // eslint-disable-next-line react/prop-types
 export default function StudentSidebar() {
   const location = useLocation();
+  const [profileData, setProfileData] = useState({});
+    // const token = "your_token_here"; // Replace with actual token after login
+    const token = localStorage.getItem('trainerToken');
+    useEffect(() => {
+        const fetchProfileData = async () => {
+            try {
+                const response = await fetch('https://api.novajobs.us/api/students/profile', {
+                    method: 'GET',
+                    headers: { Authorization: token },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch profile data');
+                }
+
+                const result = await response.json();
+                if (result.status === "success") {
+                    setProfileData(result.data);
+                }
+            } catch (error) {
+                console.error('Error fetching profile data:', error);
+            }
+        };
+
+        fetchProfileData();
+    }, [token]);
 
   const token = localStorage.getItem("token");
 
@@ -68,7 +94,7 @@ export default function StudentSidebar() {
             <div className="profile-bg">
               <div className="profile-img">
                 <Link to="/student/student-profile">
-                  <img  src={profileData.photo ? `${profileData.photo}` : User16} alt="Img" />
+                  <img  src={profileData.photo ? `${profileData.photo}` : User16} alt="Img" 
                 </Link>
               </div>
             </div>
@@ -78,7 +104,7 @@ export default function StudentSidebar() {
                   <Link to="/student/student-profile">{profileData.first_name}{" "} {profileData.last_name}</Link>
                 </h4>
                 <p>Student</p>
-                
+
               </div>
             </div>
           </div>

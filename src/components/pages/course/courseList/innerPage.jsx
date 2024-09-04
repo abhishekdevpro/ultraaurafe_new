@@ -715,7 +715,7 @@ const InnerPage = ({ courses = [] }) => { // Default to an empty array
                   <Link to={`/course-info/${course.id}`}>
                     <img
                       className="img-fluid"
-                      alt=""
+                      alt={`Banner for ${course.course_title}`}
                       src={`https://api.novajobs.us${course.course_banner_image}`}
                     />
                   </Link>
@@ -754,16 +754,18 @@ const InnerPage = ({ courses = [] }) => { // Default to an empty array
                   <p className="fs-6">{course.course_category_name}</p>
                   <div className="course-info d-flex align-items-center">
                     <div className="rating-img d-flex align-items-center">
-                      <img src={Icon1} alt="" />
+                      <img src={Icon1} alt="Course duration icon" />
                       <p>{course.time_spent_on_course}</p>
                     </div>
                     <div className="course-view d-flex align-items-center">
-                      <img src={Icon2} alt="" />
+                      <img src={Icon2} alt="Course level icon" />
                       <p>{course.level}</p>
                     </div>
                   </div>
                   <span className="d-inline-block average-rating fs-6">
-                    <span className="fs-8" style={{ fontSize: "15px" }}>{course.course_level_name}</span>
+                    <span className="fs-8" style={{ fontSize: "15px" }}>
+                      {course.course_level_name}
+                    </span>
                   </span>
                 
                 </div>
@@ -782,10 +784,19 @@ InnerPage.propTypes = {
   courses: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
+      course_title: PropTypes.string.isRequired,
       course_category_name: PropTypes.string.isRequired,
       course_description: PropTypes.string.isRequired,
       course_banner_image: PropTypes.string.isRequired,
-      // Add other required fields based on your course object structure
+      course_price: PropTypes.number.isRequired,
+      discount_percent: PropTypes.number,
+      after_discount_price: PropTypes.number,
+      trainer_id: PropTypes.number.isRequired,
+      trainer_first_name: PropTypes.string.isRequired,
+      trainer_last_name: PropTypes.string.isRequired,
+      time_spent_on_course: PropTypes.string.isRequired,
+      level: PropTypes.string.isRequired,
+      course_level_name: PropTypes.string.isRequired,
     })
   ).isRequired,
 };

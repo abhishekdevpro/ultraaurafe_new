@@ -101,7 +101,7 @@ export const Dashboard = () => {
                   <div className="card dash-info flex-fill">
                     <div className="card-body">
                       <h5>Enrolled Courses</h5>
-                      <h2>13</h2>
+                      <h2>0</h2>
                     </div>
                   </div>
                 </div>
@@ -109,7 +109,7 @@ export const Dashboard = () => {
                   <div className="card dash-info flex-fill">
                     <div className="card-body">
                       <h5>Active Courses</h5>
-                      <h2>08</h2>
+                      <h2>0</h2>
                     </div>
                   </div>
                 </div>
@@ -117,7 +117,7 @@ export const Dashboard = () => {
                   <div className="card dash-info flex-fill">
                     <div className="card-body">
                       <h5>Completed Courses</h5>
-                      <h2>06</h2>
+                      <h2>0</h2>
                     </div>
                   </div>
                 </div>
@@ -125,7 +125,7 @@ export const Dashboard = () => {
                   <div className="card dash-info flex-fill">
                     <div className="card-body">
                       <h5>Total Students</h5>
-                      <h2>5</h2>
+                      <h2>0</h2>
                     </div>
                   </div>
                 </div>
@@ -133,7 +133,7 @@ export const Dashboard = () => {
                   <div className="card dash-info flex-fill">
                     <div className="card-body">
                       <h5>Total Courses</h5>
-                      <h2>11</h2>
+                      <h2>0</h2>
                     </div>
                   </div>
                 </div>
@@ -141,7 +141,7 @@ export const Dashboard = () => {
                   <div className="card dash-info flex-fill">
                     <div className="card-body">
                       <h5>Total Earnings</h5>
-                      <h2>$486</h2>
+                      <h2>$0</h2>
                     </div>
                   </div>
                 </div>

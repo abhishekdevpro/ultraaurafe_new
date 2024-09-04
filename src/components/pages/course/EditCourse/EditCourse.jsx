@@ -471,6 +471,7 @@ const EditCourse = () => {
           target_audience: data.target_audience,
           time_spent_on_course: data.time_spent_on_course,
         });
+        console
       } catch (error) {
         console.error("Error fetching course data:", error);
         toast.error('Error fetching course data. Please try again.');
@@ -480,9 +481,9 @@ const EditCourse = () => {
 
     fetchCourseData();
   }, [id, navigate]);
-
-  const handleInputChange = (e) => {
-    setCourseData({ ...courseData, [e.target.name]: e.target.value });
+  
+  const handleInputChange = ({ target: { name, value } }) => {
+    setCourseData(prevState => ({ ...prevState, [name]: value }));
   };
 
   const handleSelectChange = (name) => (selectedOption) => {

@@ -9,7 +9,7 @@ import Select from "react-select";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "react-quill/dist/quill.snow.css"; 
+import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 
 const AddCourse = () => {
@@ -21,22 +21,22 @@ const AddCourse = () => {
     return savedData
       ? JSON.parse(savedData)
       : {
-          course_title: "Web development",
-          category: "Hardware",
-          level: "Level 02",
-          course_description: "<p>Dummy course</p>",
-          course_banner_image: null,
-          course_intro_video: null,
-          requirements: "laptop",
-          course_price: 0,
-          after_discount_price: 0,
-          coupon_code: "summy",
-          course_language: "English",
-          discount_percent: 0,
-          learning_objectives: "dummy",
-          target_audience: "students",
-          time_spent_on_course: "10 hours",
-        };
+        course_title: "Web development",
+        category: "Hardware",
+        level: "Level 02",
+        course_description: "<p>Dummy course</p>",
+        course_banner_image: null,
+        course_intro_video: null,
+        requirements: "laptop",
+        course_price: 0,
+        after_discount_price: 0,
+        coupon_code: "summy",
+        course_language: "English",
+        discount_percent: 0,
+        learning_objectives: "dummy",
+        target_audience: "students",
+        time_spent_on_course: "10 hours",
+      };
   });
 
   useEffect(() => {
@@ -54,7 +54,7 @@ const AddCourse = () => {
   const handleEditorChange = (value) => {
     setCourseData({ ...courseData, course_description: value });
   };
-  
+
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -93,16 +93,16 @@ const AddCourse = () => {
       toast.error("Failed to create section. Please try again.");
     }
   };
- 
+
   const token = localStorage.getItem("trainerToken");
 
   const [categoryOptions, setCategoryOptions] = useState([]);
 
   useEffect(() => {
     // Fetch data from the API
-    axios.get('https://api.novajobs.us/api/trainers/course-categories',{
-      headers:{
-        Authorization:token,
+    axios.get('https://api.novajobs.us/api/trainers/course-categories', {
+      headers: {
+        Authorization: token,
       }
     })
       .then(response => {
@@ -117,30 +117,30 @@ const AddCourse = () => {
       });
   }, []);
 
-  const [levelOptions, setlevelOptions ]=useState([])
+  const [levelOptions, setlevelOptions] = useState([])
 
-  useEffect(()=>{
-   axios.get('https://api.novajobs.us/api/trainers/course-level',{
-    headers:{
-      Authorization:token,
-    }
-   })
-   .then(response =>{
-    const level = response.data.data.map(category => ({
-      label: category.name, // category name
-      value: category.id,   // category id
-    }));
-    setlevelOptions(level);
-   })
-   .catch(error => {
-    console.error('Error fetching the categories:', error);
-  });
-}, []);
+  useEffect(() => {
+    axios.get('https://api.novajobs.us/api/trainers/course-level', {
+      headers: {
+        Authorization: token,
+      }
+    })
+      .then(response => {
+        const level = response.data.data.map(category => ({
+          label: category.name, // category name
+          value: category.id,   // category id
+        }));
+        setlevelOptions(level);
+      })
+      .catch(error => {
+        console.error('Error fetching the categories:', error);
+      });
+  }, []);
 
 
   const languageOptions = [
-    {id:1, label: "English", value: "English" },
-   
+    { id: 1, label: "English", value: "English" },
+
   ];
 
   const selectStyle = {
@@ -223,8 +223,8 @@ const AddCourse = () => {
                           activeTab === "media"
                             ? "progress-active"
                             : activeTab === "settings"
-                            ? "progress-activated"
-                            : ""
+                              ? "progress-activated"
+                              : ""
                         }
                       >
                         <p>
@@ -265,56 +265,56 @@ const AddCourse = () => {
                               />
                             </div>
                             <div className="input-block w-full">
-      <label className="add-course-label" style={{ fontWeight: "700" }}>
-        Courses Category / Discipline
-      </label>
-      <div className="w-full">
-        <select className="w-100 p-2 rounded-2 border">
-          <label>Slect</label>
-          {categoryOptions.map(option => (
-            <option key={option.value} value={option.value} className="w-full">
-              {option.label}
-            </option>
-          ))}
-        </select>
-      </div>
-    </div>
+                              <label className="add-course-label" style={{ fontWeight: "700" }}>
+                                Courses Category / Discipline
+                              </label>
+                              <div className="w-full">
+                                <select className="w-100 p-2 rounded-2 border">
+                                  <label>Slect</label>
+                                  {categoryOptions.map(option => (
+                                    <option key={option.value} value={option.value} className="w-full">
+                                      {option.label}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
 
                             <div className="input-block">
                               <label className="add-course-label" style={{ fontWeight: "700" }}>
                                 Courses Level
                               </label>
                               <div className="">
-                              <select className="w-100 p-2 rounded-2 border">
-                              {levelOptions.map(option => (
-            <option key={option.value} value={option.value} className="w-full">
-              {option.label}
-            </option>
-          ))}
-                             </select>
-                             </div>
+                                <select className="w-100 p-2 rounded-2 border">
+                                  {levelOptions.map(option => (
+                                    <option key={option.value} value={option.value} className="w-full">
+                                      {option.label}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
                             </div>
                             <div className="input-block">
                               <label className="add-course-label" style={{ fontWeight: "700" }}>
                                 Course Language
                               </label>
                               <div className="position-relative">
-                              <Select
-                                options={languageOptions}
-                                onChange={handleSelectChange("course_language")}
-                                placeholder="Select Language"
-                                styles={selectStyle}
-                              />
-                                 <i
-      className="fas fa-chevron-down position-absolute"
-      style={{
-        right: "10px", // Adjust the positioning as needed
-        top: "50%", 
-        transform: "translateY(-50%)",
-        pointerEvents: "none", // Ensures the icon doesn't interfere with the select
-        zIndex: 2, 
-      }}
-    ></i> </div>
+                                <Select
+                                  options={languageOptions}
+                                  onChange={handleSelectChange("course_language")}
+                                  placeholder="Select Language"
+                                  styles={selectStyle}
+                                />
+                                <i
+                                  className="fas fa-chevron-down position-absolute"
+                                  style={{
+                                    right: "10px", // Adjust the positioning as needed
+                                    top: "50%",
+                                    transform: "translateY(-50%)",
+                                    pointerEvents: "none", // Ensures the icon doesn't interfere with the select
+                                    zIndex: 2,
+                                  }}
+                                ></i> </div>
                             </div>
                             {/* <div className="input-block mb-0">
                               <label className="add-course-label">Course Description</label>
@@ -325,21 +325,21 @@ const AddCourse = () => {
                                 />
                               </div>
                             </div> */}
-                               <div className="input-block mb-0">
-      <label className="add-course-label rounded-3" style={{ fontWeight: "700"  }}>
-        Course Description
-      </label>
-      <ReactQuill
-       className="rounded-3 h-75 "
-        onChange={handleEditorChange}
-        placeholder="Enter course description..."
-        
-      />
-    </div>
+                            <div className="input-block mb-0">
+                              <label className="add-course-label rounded-3" style={{ fontWeight: "700" }}>
+                                Course Description
+                              </label>
+                              <ReactQuill
+                                className="rounded-3 h-75 "
+                                onChange={handleEditorChange}
+                                placeholder="Enter course description..."
+
+                              />
+                            </div>
 
                             <div className="input-block">
                               <label className="add-course-label" style={{ fontWeight: "700" }}>
-                              What you will Learn
+                                What you will Learn
                               </label>
                               <textarea
                                 className="form-control"
@@ -350,7 +350,7 @@ const AddCourse = () => {
                             </div>
                             <div className="input-block">
                               <label className="add-course-label" style={{ fontWeight: "700" }}>
-                              Who is this Course for?
+                                Who is this Course for?
                               </label>
                               <input
                                 type="text"

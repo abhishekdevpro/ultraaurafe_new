@@ -11,12 +11,12 @@ import {
   Icon02,
   Icon03,
   Icon04,
- 
+
   Join,
   PencilIcon,
   Share,
 
-} from "../imagepath"; 
+} from "../imagepath";
 import { useSelector } from "react-redux";
 import TopCategory from "./slider/topCategory";
 // import Loginbg from "../../assets/img/banner.png";
@@ -179,56 +179,58 @@ export const Home = () => {
             <div className="row ">
               <div className="col-md-7">
                 <div className="home-slide-face aos" data-aos="fade-up">
-                  <div className="home-slide-text ">
-                  <h5>Empowering Futures: Anytime, Anywhere</h5>
-                    {/* Animated Text */}
-                    <h2>
-                      Take the next step towards your{" "}
-                      <span className="animated-text">
-                        {animatedText[currentTextIndex]}
-                      </span>{" "}
-                      at Ultra Aura with technology-enabled learning.
-                    </h2>
-                    <p>Own your future by learning new skills online</p>
-                  </div>
-                  <div className="banner-content">
-                    <form className="form" action="/course-list">
-                      <div className="form-inner">
-                        <div className="input-group homeSearch">
-                          <i className="fa-solid fa-magnifying-glass search-icon" />
-                          <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Search Course"
-                            value={searchKeyword}
-                            onChange={(e) => setSearchKeyword(e.target.value)}
-                          />
-                          <span className="drop-detail">
-                            <Select
-                              // className="select2-container"
-                              options={categoryOptions}
-                              value={selectedCategory}
-                              placeholder="Category"
-                              onChange={setSelectedCategory}
-                              styles={style}
-                            ></Select>
-                          </span>
-                          <span className="drop-detail">
-                            <Select
-                          options={levelOptions}
-                          value={selectedLevel}
-                          placeholder="Levels"
-                          onChange={setSelectedLevel}
-                              styles={style}
+                <div className="home-slide-text text-center">
+  <h5 className="d-none d-md-block">Empowering Futures: Anytime, Anywhere</h5>
+  <h2>
+    Take the next step towards your{" "}
+    <span className="animated-text">
+      {animatedText[currentTextIndex]}
+    </span>{" "}
+    at Ultra Aura with technology-enabled learning.
+  </h2>
+  <p className="d-none d-md-block">Own your future by learning new skills online</p>
+</div>
+
+                  <div className="container my-4">
+                    <div className="banner-content">
+                      <form className="form" action="/course-list">
+                        <div className="form-inner">
+                          <div className="input-group homeSearch">
+                            <i className="fa-solid fa-magnifying-glass search-icon" />
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Search Course"
+                              value={searchKeyword}
+                              onChange={(e) => setSearchKeyword(e.target.value)}
                             />
-                          </span>
-                          <button className="btn sub-btn" type="button" onClick={handleSearch}>
-                            <i className="fas fa-arrow-right" />
-                          </button>
+                            <span className="input-group-append mx-2">
+                              <Select
+                                options={categoryOptions}
+                                value={selectedCategory}
+                                placeholder="Category"
+                                onChange={setSelectedCategory}
+                                styles={style}
+                              />
+                            </span>
+                            <span className="input-group-append mx-2">
+                              <Select
+                                options={levelOptions}
+                                value={selectedLevel}
+                                placeholder="Levels"
+                                onChange={setSelectedLevel}
+                                styles={style}
+                              />
+                            </span>
+                            <button className="btn btn-primary rounded" type="button" onClick={handleSearch}>
+                              <i className="fas fa-arrow-right" />
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    </form>
+                      </form>
+                    </div>
                   </div>
+
                   <div className="trust-user">
                     <p>
                       Trusted by Users <br />
@@ -519,9 +521,9 @@ export const Home = () => {
                 <div className="join-mentor aos" data-aos="fade-up">
                   <h2>Want to share your knowledge? Join us a Trainer</h2>
                   <p>
-                  Share your expertise and inspire the next generation 
-                  by joining UltraAura as an instructor. Shape the future
-                   of education with flexible teaching opportunities and a global reach.
+                    Share your expertise and inspire the next generation
+                    by joining UltraAura as an instructor. Shape the future
+                    of education with flexible teaching opportunities and a global reach.
 
                   </p>
                   <ul className="course-list">
@@ -537,7 +539,7 @@ export const Home = () => {
                   </ul>
                   <div className="all-btn all-category d-flex align-items-center">
                     <Link to="/instructor/instructor-list" className="btn btn-primary">
-                    Join as Trainer Now
+                      Join as Trainer Now
                     </Link>
                   </div>
                 </div>
@@ -545,7 +547,7 @@ export const Home = () => {
             </div>
           </div>
         </section>
-      
+
         <section className="section py-5" data-aos="fade-up">
           <div className="container">
             <div className="row">
@@ -556,15 +558,15 @@ export const Home = () => {
                     <div className="col-lg-7 col-md-12">
                       <div className="top-instructors">
                         <p>
-                        Collaborate with UltraAura to expand educational opportunities 
-                        and make a lasting impact. Partner with us to drive innovation 
-                        and empower learners worldwide.
+                          Collaborate with UltraAura to expand educational opportunities
+                          and make a lasting impact. Partner with us to drive innovation
+                          and empower learners worldwide.
                         </p>
                         <div className="all-btn all-category d-flex align-items-center">
-                    <Link to="/partnerwithus" className="btn btn-primary">
-                    Partner with US
-                    </Link>
-                  </div>
+                          <Link to="/partnerwithus" className="btn btn-primary">
+                            Partner with US
+                          </Link>
+                        </div>
                       </div>
                     </div>
                     <div className="col-lg-5 col-md-12">
@@ -586,10 +588,10 @@ export const Home = () => {
                           recommendations and promotions.
                         </p>
                         <div className="all-btn all-category d-flex align-items-center">
-                    <Link to="/register" className="btn btn-primary">
-                    Sign up
-                    </Link>
-                  </div>
+                          <Link to="/register" className="btn btn-primary">
+                            Sign up
+                          </Link>
+                        </div>
                       </div>
                     </div>
                     <div className="col-lg-4 col-md-12">
