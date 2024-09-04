@@ -134,7 +134,7 @@ const Header = () => {
             </div>
             <ul className="nav header-navbar-rht">
               <DarkMode />
-              </li>
+              
               {isLoggedIn ? (
                 <>
                
