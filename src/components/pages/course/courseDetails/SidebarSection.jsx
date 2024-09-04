@@ -49,25 +49,25 @@ const SidebarSection = ({ courseId }) => {
 
   // Function to handle video play
   const handleVideoPlay = async () => {
-  setLoading(true);
-  try {
-    const response = await axios.get(`https://api.novajobs.us/api/students/streaming/${courseId}`, {
-      responseType: 'blob', // Set response type to 'blob' to handle binary data
-    });
+    setLoading(true);
+    try {
+      const response = await axios.get(`https://api.novajobs.us/api/students/streaming/${courseId}`, {
+        responseType: 'blob', // Set response type to 'blob' to handle binary data
+      });
 
-    // Convert the binary data to a Blob URL
-    const videoBlob = new Blob([response.data], { type: 'video/mp4' }); // Specify the MIME type
-    const videoUrl = URL.createObjectURL(videoBlob);
-    
-    setVideoUrl(videoUrl); // Set the video URL to the Blob URL
-    console.log('Video URL:', videoUrl);
-  } catch (error) {
-    console.error('Error fetching video:', error);
-    alert('Unable to fetch video. Please try again later.');
-  } finally {
-    setLoading(false);
-  }
-};
+      // Convert the binary data to a Blob URL
+      const videoBlob = new Blob([response.data], { type: 'video/mp4' }); // Specify the MIME type
+      const videoUrl = URL.createObjectURL(videoBlob);
+
+      setVideoUrl(videoUrl); // Set the video URL to the Blob URL
+      console.log('Video URL:', videoUrl);
+    } catch (error) {
+      console.error('Error fetching video:', error);
+      alert('Unable to fetch video. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
 
   return (
@@ -77,19 +77,19 @@ const SidebarSection = ({ courseId }) => {
         <div className="video-sec vid-bg">
           <div className="card">
             <div className="card-body">
-            {videoUrl ? (
-  <video width="100%" controls>
-    <source src={videoUrl} type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
-) : (
-  <button onClick={handleVideoPlay} className="video-thumbnail btn btn-link" data-fancybox="">
-    <div className="play-icon">
-      <i className="fa-solid fa-play" />
-    </div>
-    <img className="" src={Video2} alt="Video Thumbnail" />
-  </button>
-)}
+              {videoUrl ? (
+                <video width="100%" controls>
+                  <source src={videoUrl} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <button onClick={handleVideoPlay} className="video-thumbnail btn btn-link" data-fancybox="">
+                  <div className="play-icon">
+                    <i className="fa-solid fa-play" />
+                  </div>
+                  <img className="" src={Video2} alt="Video Thumbnail" />
+                </button>
+              )}
 
               <div className="video-details">
                 <div className="course-fee">

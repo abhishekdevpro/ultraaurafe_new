@@ -1,54 +1,52 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import axios from 'axios'; // Import axios
 import { Play } from '../../../imagepath';
 
 const CourseContent = ({ courseData }) => {
   const [open, setOpen] = useState({});
   const [selectedLecture, setSelectedLecture] = useState(null);
   const [streamingUrl, setStreamingUrl] = useState(null);
+  const [loading, setLoading] = useState(false); // Loading state for API request
 
   const toggleOpen = (sectionId) => {
     setOpen((prev) => ({ ...prev, [sectionId]: !prev[sectionId] }));
   };
 
-  // const handlePreviewClick = (lecture, sectionId) => { 
-  //   console.log(`Lecture: ${lecture.lecture_name}`);
-  //   setSelectedLecture(lecture);
-   
-  //   if (!lecture.lecture_videos || lecture.lecture_videos.length === 0) {
-  //     console.error('No videos available for this lecture');
-  //     return;
-  //   }
+  // Handle preview button click and fetch video using API
+  const handlePreviewClick = async (lecture, sectionId) => {
+    console.log(`Lecture: ${lecture.lecture_name}`);
+    setSelectedLecture(lecture);
 
-  //   // Construct streaming URL
-  //   const streamingURL = `https://api.novajobs.us/api/students/streaming/${courseData.course_id}/${sectionId}/${lecture.id}/${lecture.lecture_videos[0].id}`;
-  //   console.log('Streaming URL:', streamingURL);
+    if (!lecture.lecture_videos || lecture.lecture_videos.length === 0) {
+      console.error('No videos available for this lecture');
+      return;
+    }
 
-  //   // Set streaming URL
-  //   setStreamingUrl(streamingURL);
-  // };
-const handlePreviewClick = async (lecture, sectionId) => { 
-  console.log(`Lecture: ${lecture.lecture_name}`);
-  setSelectedLecture(lecture);
-  
-  if (!lecture.lecture_videos || lecture.lecture_videos.length === 0) {
-    console.error('No videos available for this lecture');
-    return;
-  }
+    try {
+      setLoading(true); // Set loading state
+      const streamingURL = `https://api.novajobs.us/api/trainers/streaming/${courseData.course_id}/${sectionId}/${lecture.id}/${lecture.lecture_videos[0].id}`;
+      console.log('Fetching Streaming URL:', streamingURL);
 
-  try {
-    const streamingURL = `https://api.novajobs.us/api/students/streaming/${courseData.course_id}/${sectionId}/${lecture.id}/${lecture.lecture_videos[0].id}`;
-    console.log('Streaming URL:', streamingURL);
+      // Fetch video data as binary (Blob)
+      const response = await axios.get(streamingURL, {
+        responseType: 'blob', // Ensure response is binary
+      });
 
-    // Assuming streamingURL is valid, set it as the video source
-    setStreamingUrl(streamingURL);
+      // Convert binary data to a Blob URL
+      const videoBlob = new Blob([response.data], { type: 'video/mp4' });
+      const videoUrl = URL.createObjectURL(videoBlob);
 
-  } catch (error) {
-    console.error('Error fetching streaming URL:', error);
-    // Optionally, set an error state to display a message to the user
-  }
-};
+      setStreamingUrl(videoUrl); // Set the Blob URL to play video
+      console.log('Video URL:', videoUrl);
+    } catch (error) {
+      console.error('Error fetching video:', error);
+      alert('Unable to fetch video. Please try again later.');
+    } finally {
+      setLoading(false); // Reset loading state
+    }
+  };
 
   const closePreview = () => {
     setSelectedLecture(null);
@@ -86,7 +84,9 @@ const handlePreviewClick = async (lecture, sectionId) => {
                         {lecture.lecture_name}
                       </p>
                       <div>
-                        <button onClick={() => handlePreviewClick(lecture, section.id)}>Preview</button>
+                        <button onClick={() => handlePreviewClick(lecture, section.id)}>
+                          {loading ? 'Loading...' : 'Preview'}
+                        </button>
                         <span>02:53</span>
                       </div>
                     </li>
