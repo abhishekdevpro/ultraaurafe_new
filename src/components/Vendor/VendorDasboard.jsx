@@ -1,41 +1,68 @@
-import React, { useState } from "react";
+//import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import VendorSidebar from "./VendorSidebar";
 import { VendorHeader } from "./VendorHeader";
 import Footer from "../footer";
+
+// import { Icon1, Icon2, User6, } from "./../../components/imagepath";
+
+//import { useParams, useNavigate } from "react-router-dom";
+import CourseTable from "./../instructor/dashboard/CourseList";
+//import axios from 'axios';
 // import productImg from "../../../assets/Product.png"; // Placeholder image for products
 
 export const VendorDashboard = () => {
-  // Hardcoded sample data
-  const sampleProducts = [
-    {
-      id: 1,
-      product_name: "Sample Product 1",
-      price: 100,
-      product_image: "/path/to/image1.jpg", // Replace with actual path or leave it as is
-    },
-    {
-      id: 2,
-      product_name: "Sample Product 2",
-      price: 200,
-      product_image: "/path/to/image2.jpg", // Replace with actual path or leave it as is
-    },
-    {
-      id: 3,
-      product_name: "Sample Product 3",
-      price: 150,
-      product_image: "/path/to/image3.jpg", // Replace with actual path or leave it as is
-    },
-  ];
+ {/* const { id } = useParams()
+  console.log(id, "trainer id")
+  const [isClassAdded, setIsClassAdded] = useState([false]);
+  const [allCourses, setAllCourses] = useState([]);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const toggleClass = (index) => {
+    const updatedClasses = [...isClassAdded];
+    updatedClasses[index] = !updatedClasses[index];
+    setIsClassAdded(updatedClasses);
 
-  const [isFavorite, setIsFavorite] = useState([false, false, false]);
-
-  const toggleFavorite = (index) => {
-    const updatedFavorites = [...isFavorite];
-    updatedFavorites[index] = !updatedFavorites[index];
-    setIsFavorite(updatedFavorites);
   };
 
+  useEffect(() => {
+    const fetchAllCourses = async () => {
+      try {
+        const response = await axios.get(
+          "https://api.novajobs.us/api/trainers/all-courses",
+          {
+            headers: {
+              Authorization: localStorage.getItem("token"),
+            },
+          }
+        );
+        setAllCourses(response.data.data);
+      } catch (error) {
+        console.error("Error fetching all courses:", error);
+        setError("Error fetching all courses.");
+      }
+    };
+    fetchAllCourses();
+  }, []);
+  const fetchCourseDetails = async (courseId) => {
+    try {
+      const response = await axios.get(
+        `https://api.novajobs.us/api/trainers/course-details/${courseId}`,
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      );
+      console.log(response.data);
+      navigate(`/course-details/${courseId}`, { state: { courseData: response.data.data } });
+    } catch (error) {
+      console.error("Error fetching course details:", error);
+    }
+  };
+  if (error) {
+    return <div className="alert alert-danger">{error}</div>;
+  } */}
   return (
     <div className="main-wrapper">
       <VendorHeader activeMenu={"Dashboard"} />
@@ -45,7 +72,7 @@ export const VendorDashboard = () => {
           <div className="row">
             <div className="col-md-12 col-12">
               <div className="breadcrumb-list">
-                <h2 className="breadcrumb-title">Vendor Dashboard</h2>
+                <h2 className="breadcrumb-title"> Vendor Dashboard</h2>
                 <nav aria-label="breadcrumb" className="page-breadcrumb">
                   <ol className="breadcrumb">
                     <li className="breadcrumb-item">
@@ -66,109 +93,237 @@ export const VendorDashboard = () => {
       <div className="page-content">
         <div className="container">
           <div className="row">
-            {/* Sidebar */}
+            {/* sidebar */}
             <VendorSidebar />
             {/* /Sidebar */}
-
-            {/* Vendor Dashboard */}
+            {/* Student Dashboard */}
             <div className="col-xl-9 col-lg-9">
               {/* Dashboard Grid */}
               <div className="row justify-content-center">
                 <div className="col-lg-4 col-md-6 d-flex">
                   <div className="card dash-info flex-fill">
                     <div className="card-body">
-                      <h5>Total Products</h5>
-                      <h2>20</h2>
+                      <h5>Enrolled Courses</h5>
+                      <h2>13</h2>
                     </div>
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-6 d-flex">
                   <div className="card dash-info flex-fill">
                     <div className="card-body">
-                      <h5>Active Listings</h5>
-                      <h2>15</h2>
+                      <h5>Active Courses</h5>
+                      <h2>08</h2>
                     </div>
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-6 d-flex">
                   <div className="card dash-info flex-fill">
                     <div className="card-body">
-                      <h5>Total Sales</h5>
-                      <h2>120</h2>
+                      <h5>Completed Courses</h5>
+                      <h2>06</h2>
                     </div>
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-6 d-flex">
                   <div className="card dash-info flex-fill">
                     <div className="card-body">
-                      <h5>Total Revenue</h5>
-                      <h2>$3,500</h2>
+                      <h5>Total Students</h5>
+                      <h2>5</h2>
                     </div>
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-6 d-flex">
                   <div className="card dash-info flex-fill">
                     <div className="card-body">
-                      <h5>Total Revenue</h5>
-                      <h2>$3,500</h2>
+                      <h5>Total Courses</h5>
+                      <h2>11</h2>
                     </div>
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-6 d-flex">
                   <div className="card dash-info flex-fill">
                     <div className="card-body">
-                      <h5>Total Revenue</h5>
-                      <h2>$3,500</h2>
+                      <h5>Total Earnings</h5>
+                      <h2>$486</h2>
                     </div>
                   </div>
                 </div>
               </div>
+              <CourseTable />
+
               {/* /Dashboard Grid */}
+              {/* <div className="instructor-course-table">
+                <div className="dashboard-title">
+                  <h4>Recently Created Courses</h4>
+                </div>
+                <div className="table-responsive custom-table">
+                  <table className="table table-nowrap mb-0">
+                    <thead>
+                      <tr>
+                        <th>Courses</th>
+                        <th>Enrolled</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <div className="table-course-detail">
+                            <Link to="#" className="course-table-img">
+                              <span>
+                                <img
+                                  src={instructortabel01}
+                                  alt="Img"
+                                />
+                              </span>
+                              Complete HTML, CSS and Javascript Course
+                            </Link>
+                          </div>
+                        </td>
+                        <td>0</td>
+                        <td>Published</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div className="table-course-detail">
+                            <Link to="#" className="course-table-img">
+                              <span>
+                                <img
+                                  src={instructortabel05}
+                                  alt="Img"
+                                />
+                              </span>
+                              Complete Course on Fullstack Web Developer
+                            </Link>
+                          </div>
+                        </td>
+                        <td>2</td>
+                        <td>Published</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div className="table-course-detail">
+                            <Link to="#" className="course-table-img">
+                              <span>
+                                <img
+                                  src={instructortabel02}
+                                  alt="Img"
+                                />
+                              </span>
+                              Data Science Fundamentals and Advanced Bootcamp
+                            </Link>
+                          </div>
+                        </td>
+                        <td>2</td>
+                        <td>Published</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div className="table-course-detail">
+                            <Link to="#" className="course-table-img">
+                              <span>
+                                <img
+                                  src={instructortabel03}
+                                  alt="Img"
+                                />
+                              </span>
+                              Master Microservices with Spring Boot and Spring Cloud
+                            </Link>
+                          </div>
+                        </td>
+                        <td>1</td>
+                        <td>Published</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div className="table-course-detail">
+                            <Link to="#" className="course-table-img">
+                              <span>
+                                <img
+                                  src={instructortabel04}
+                                  alt="Img"
+                                />
+                              </span>
+                              Information About UI/UX Design Degree
+                            </Link>
+                          </div>
+                        </td>
+                        <td>3</td>
+                        <td>Published</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div> 
+            
               <div className="dashboard-title">
-                <h4>Recently Added Products</h4>
+                <h4>Recently Enrolled Coursess</h4>
               </div>
-              {sampleProducts.length > 0 ? (
+              {allCourses.length > 0 ? (
                 <div className="row">
-                  {sampleProducts.map((product, index) => (
-                    <div className="col-md-4" key={product.id}>
-                      <div className="product-box flex-fill">
+                  {allCourses.map((course) => (
+                    <div className="col-md-4" key={course.id}>
+                      <div className="course-box flex-fill">
                         <div className="product">
                           <div className="product-img">
-                            <Link to={`/product-details/${product.id}`}>
+                            <Link to={`/course-details/${course.id}`} >
                               <img
                                 className="img-fluid"
-                                src={product.product_image}
-                                alt={product.product_name}
+                                src={course.course_banner_image ? `https://api.novajobs.us${course.course_banner_image}` : "couresimg"}
+                                alt={course.course_title}
                               />
                             </Link>
                             <div className="price">
-                              <h3>${product.price}</h3>
+                              <h3>
+                                ${course.after_discount_price} <span>${course.discount_percent}</span>
+                              </h3>
                             </div>
                           </div>
                           <div className="product-content">
-                            <div className="product-name">
-                              <h3 className="title">
-                                <Link to={`/product-details/${product.id}`}>
-                                  {product.product_name}
+                            <div className="course-group d-flex">
+                              <div className="course-group-img d-flex">
+                                <Link to="/instructor/instructor-profile">
+                                  <img
+                                    src={User6}
+                                    alt="Img"
+                                    className="img-fluid"
+                                  />
                                 </Link>
-                              </h3>
+                                <p>{course.trainer_first_name} <span>{course.trainer_last_name}</span></p>
+                                <div className="course-name">
+                                 
+                                </div>
+                              </div>
+                              <div className="course-share d-flex align-items-center justify-content-center">
+                                <Link to="#" onClick={() => toggleClass(5)}>
+                                  <i className={`fa-regular fa-heart ${isClassAdded[5] ? 'color-active' : ''}`} />
+                                </Link>
+                              </div>
                             </div>
-                            <div className="product-info d-flex align-items-center justify-content-between">
-                              <div className="rating mb-0">
-                                <i className="fas fa-star filled me-1" />
-                                <i className="fas fa-star filled me-1" />
-                                <i className="fas fa-star filled me-1" />
-                                <i className="fas fa-star filled me-1" />
-                                <i className="fas fa-star me-1" />
-                                <span className="d-inline-block average-rating">
-                                  <span>4.8</span> (24)
-                                </span>
+                            <h3 className="title instructor-text">
+                              <Link to="#" onClick={() => fetchCourseDetails(course.id)}>
+                                {course.course_title}
+                              </Link>
+                            </h3>
+                            <div className="course-info d-flex align-items-center">
+                              <div className="rating-img d-flex align-items-center">
+                                <img src={Icon1} alt="Img" />
+                                <p>15+ Lesson</p>
                               </div>
-                              <div className="product-favorite">
-                                <Link to="#" onClick={() => toggleFavorite(index)}>
-                                  <i className={`fa-regular fa-heart ${isFavorite[index] ? 'color-active' : ''}`} />
-                                </Link>
+                              <div className="course-view d-flex align-items-center">
+                                <img src={Icon2} alt="Img" />
+                                <p>70hr 30min</p>
                               </div>
+                            </div>
+                            <div className="rating mb-0">
+                              <i className="fas fa-star filled me-1" />
+                              <i className="fas fa-star filled me-1" />
+                              <i className="fas fa-star filled me-1" />
+                              <i className="fas fa-star filled me-1" />
+                              <i className="fas fa-star me-1" />
+                              <span className="d-inline-block average-rating">
+                                <span>4.6</span> (15)
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -177,8 +332,8 @@ export const VendorDashboard = () => {
                   ))}
                 </div>
               ) : (
-                <p>No products available</p>
-              )}
+                <p>No courses available</p>
+              )} */}
               <div className="dash-pagination">
                 <div className="row align-items-center">
                   <div className="col-6">
@@ -202,14 +357,13 @@ export const VendorDashboard = () => {
                 </div>
               </div>
             </div>
-            {/* /Vendor Dashboard */}
+            {/* Student Dashboard */}
           </div>
         </div>
       </div>
       {/* /Page Content */}
       <Footer />
     </div>
+
   );
 };
-
-export default VendorDashboard

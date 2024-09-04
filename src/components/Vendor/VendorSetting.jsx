@@ -1,39 +1,30 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import StudentHeader from "../header";
-import StudentSidebar from "../sidebar";
-import { User16 } from "../../imagepath";
-//import StudentSettingPageHeader from "./settingPageHeader";
-
-
-
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useState,useEffect } from "react";
+// import { User17 } from "../imagepath"; // Uncomment this if you have a default placeholder image
+import Footer from "../footer";
+import { Link } from "react-router-dom";
+import VendorSidebar from "./VendorSidebar";
+import VendorHeader from "./VendorHeader";
 
-const StudentSetting = () => {
-  const token = localStorage.getItem("token");
+const VendorSetting = () => {
+  const token = localStorage.getItem("vendorToken");
 
   const [profileData, setProfileData] = useState({
     first_name: "",
     last_name: "",
-    address: "",
+    designation: "",
     phone: "",
-  
+    instituteName: "",
     website: "",
     email: "",
-   
+    location: "",
     photo: "",
-    headline: "",
-    twitter_profile: "",
-    facebook_profile: "",
-    linkedin_profile: "",
-    youtube_profile: "",
-
+    about: "",
   });
 
   useEffect(() => {
     axios
-      .get("https://api.novajobs.us/api/students/profile", {
+      .get("https://api.novajobs.us/api/vendors/profile", {
         headers: {
           Authorization: token,
         },
@@ -43,18 +34,14 @@ const StudentSetting = () => {
         setProfileData({
           first_name: data.first_name,
           last_name: data.last_name,
-          address: data.address,
+          designation: data.designation,
           phone: data.phone,
-         
+          instituteName: data.institute_name,
           website: data.website,
           email: data.email,
-         
+          location: data.location,
           photo: data.photo ? `https://api.novajobs.us${data.photo}` : "", // Properly setting the photo URL
-          headline: data.headline,
-          twitter_profile: data.twitter_profile,
-          facebook_profile: data.facebook_profile,
-          linkedin_profile: data.linkedin_profile,
-          youtube_profile: data.youtube_profile,
+          about: data.about,
         });
       })
       .catch((error) => {
@@ -86,7 +73,7 @@ const StudentSetting = () => {
     }
 
     axios
-      .patch("https://api.novajobs.us/api/students/edit-profile", formData, {
+      .put("https://api.novajobs.us/api/vendors/profile", formData, {
         headers: {
           Authorization: token,
           "Content-Type": "multipart/form-data",
@@ -102,7 +89,7 @@ const StudentSetting = () => {
 
   return (
     <div className="main-wrapper">
-      <StudentHeader activeMenu={"Settings"} />
+      <VendorHeader activeMenu={"Settings"} />
       <div className="breadcrumb-bar breadcrumb-bar-info">
         <div className="container">
           <div className="row">
@@ -127,7 +114,7 @@ const StudentSetting = () => {
       <div className="page-content">
         <div className="container">
           <div className="row">
-            <StudentSidebar />
+            <VendorSidebar />
             <div className="col-xl-9 col-lg-9">
               <div className="settings-widget card-details">
                 <div className="settings-menu p-0">
@@ -140,7 +127,7 @@ const StudentSetting = () => {
                       <div className="course-group-img profile-edit-field d-flex align-items-center">
                         <Link to="/student/student-profile" className="profile-pic">
                           <img
-                            src={profileData.photo ? `${profileData.photo}` : User16}
+                            src={profileData.photo ? (profileData.photo) : `https://api.novajobs.us/${profileData.photo}`}
                             alt="Profile"
                             className="img-fluid"
                           />
@@ -193,12 +180,12 @@ const StudentSetting = () => {
                         </div>
                         <div className="col-md-6">
                           <div className="input-block">
-                            <label className="form-label">Address</label>
+                            <label className="form-label">Designation</label>
                             <input
                               type="text"
                               className="form-control"
-                              name="address"
-                              value={profileData.address}
+                              name="designation"
+                              value={profileData.designation}
                               onChange={handleChange}
                             />
                           </div>
@@ -216,7 +203,18 @@ const StudentSetting = () => {
                               />
                             </div>
                           </div>
-                          
+                          <div className="col-md-6">
+                            <div className="input-block">
+                              <label className="form-label">Institute Name</label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                name="instituteName"
+                                value={profileData.instituteName}
+                                onChange={handleChange}
+                              />
+                            </div>
+                          </div>
                           <div className="col-md-6">
                             <div className="input-block">
                               <label className="form-label">Website</label>
@@ -225,54 +223,6 @@ const StudentSetting = () => {
                                 className="form-control"
                                 name="website"
                                 value={profileData.website}
-                                onChange={handleChange}
-                              />
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="input-block">
-                              <label className="form-label">Twitter Profile</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                name="twitter_profile"
-                                value={profileData.twitter_profile}
-                                onChange={handleChange}
-                              />
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="input-block">
-                              <label className="form-label">Facebook Profile</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                name="facebook_profile"
-                                value={profileData.facebook_profile}
-                                onChange={handleChange}
-                              />
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="input-block">
-                              <label className="form-label">Linkedin Profile</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                name="linkedin_profile"
-                                value={profileData.linkedin_profile}
-                                onChange={handleChange}
-                              />
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="input-block">
-                              <label className="form-label">Youtube Profile</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                name="youtube_profile"
-                                value={profileData.youtube_profile}
                                 onChange={handleChange}
                               />
                             </div>
@@ -292,17 +242,28 @@ const StudentSetting = () => {
                           </div>
                           <div className="col-md-12">
                             <div className="input-block">
-                              <label className="form-label">Headline</label>
+                              <label className="form-label">About</label>
                               <textarea
                                 className="form-control"
                                 style={{ height: "150px" }}
-                                name="headline"
-                                value={profileData.headline}
+                                name="about"
+                                value={profileData.about}
                                 onChange={handleChange}
                               />
                             </div>
                           </div>
-                         
+                          <div className="col-md-12">
+                            <div className="input-block">
+                              <label className="form-label">Location</label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                name="location"
+                                value={profileData.location}
+                                onChange={handleChange}
+                              />
+                            </div>
+                          </div>
                           <div className="col-md-12">
                             <button className="btn btn-primary" type="submit">
                               Update Profile
@@ -318,9 +279,10 @@ const StudentSetting = () => {
             </div>
           </div>
         </div>
-
+        <Footer />
       </div>
     );
   };
 
-export default StudentSetting;
+  export default VendorSetting;
+

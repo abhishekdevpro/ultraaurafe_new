@@ -32,11 +32,17 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const apiUrl = "https://api.novajobs.us/api/vendors/login";
-
+    
         try {
             const response = await axios.post(apiUrl, formData);
-
+    
             if (response.data) {
+                // Assuming the token is returned in response.data.token
+                const token = response.data.data.token;
+                console.log(token,"token")
+                // Store the token in local storage
+                localStorage.setItem("vendorToken", token);
+    
                 toast.success("Login successful!");
                 navigate("/vendor-dashboard"); // Adjust the path as needed
             }
@@ -45,6 +51,7 @@ const Login = () => {
             toast.error("Login failed. Please check your credentials.");
         }
     };
+    
 
     var settings = {
         items: 1,

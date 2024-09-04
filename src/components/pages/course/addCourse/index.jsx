@@ -181,12 +181,12 @@ const AddCourse = () => {
                 <div className="add-course-btns">
                   <ul className="nav">
                     <li>
-                      <Link
+                     {/* <Link
                         to="/instructor/instructor-dashboard"
                         className="btn btn-black"
                       >
                         Back to Course
-                      </Link>
+                      </Link> */}
                     </li>
                     <li>
                       <button
