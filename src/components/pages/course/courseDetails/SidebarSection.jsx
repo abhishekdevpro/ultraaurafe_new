@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Chapter, Chart, Cloud, Key, Mobile, Play, Teacher, Timer2, Users, Video2 } from '../../../imagepath';
+import { Modal, Button, Spinner } from 'react-bootstrap';
 
-const SidebarSection = ({ courseId }) => {
+const SidebarSection = ({ courseId, courseData }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [videoUrl, setVideoUrl] = useState(null); // State for video URL
-  //const [videoLoading, setVideoLoading] = useState(false); // State for video loading
+  const [videoUrl, setVideoUrl] = useState(null);
   const navigate = useNavigate();
 
   const handleEnrollClick = () => {
@@ -33,7 +33,7 @@ const SidebarSection = ({ courseId }) => {
         },
         {
           headers: {
-            Authorization: `${token}`,
+            Authorization: token,
           },
         }
       );
@@ -47,19 +47,17 @@ const SidebarSection = ({ courseId }) => {
     }
   };
 
-  // Function to handle video play
   const handleVideoPlay = async () => {
     setLoading(true);
     try {
       const response = await axios.get(`https://api.novajobs.us/api/students/streaming/${courseId}`, {
-        responseType: 'blob', // Set response type to 'blob' to handle binary data
+        responseType: 'blob',
       });
 
-      // Convert the binary data to a Blob URL
-      const videoBlob = new Blob([response.data], { type: 'video/mp4' }); // Specify the MIME type
+      const videoBlob = new Blob([response.data], { type: 'video/mp4' });
       const videoUrl = URL.createObjectURL(videoBlob);
 
-      setVideoUrl(videoUrl); // Set the video URL to the Blob URL
+      setVideoUrl(videoUrl);
       console.log('Video URL:', videoUrl);
     } catch (error) {
       console.error('Error fetching video:', error);
@@ -68,7 +66,6 @@ const SidebarSection = ({ courseId }) => {
       setLoading(false);
     }
   };
-
 
   return (
     <div className="col-lg-4">
@@ -98,7 +95,7 @@ const SidebarSection = ({ courseId }) => {
                 </div>
                 <div className="row gx-2">
                   <div className="col-md-6 addHeart">
-                    <Link to="/course-wishlist" className="btn btn-wish w-100">
+                    <Link to="" className="btn btn-wish w-100">
                       <i className="feather icon-heart me-2" />
                       Add to Wishlist
                     </Link>
@@ -110,29 +107,38 @@ const SidebarSection = ({ courseId }) => {
                     </Link>
                   </div>
                 </div>
-                <button onClick={handleEnrollClick} className="btn btn-enroll w-100">
-                  Enroll Now
-                </button>
+                {/* Conditional Button Rendering */}
+                {!courseData.is_student_enroll ? (
+                  <button onClick={handleEnrollClick} className="btn btn-enroll w-100">
+                    Enroll Now
+                  </button>
+                ) : (
+                  <button className="btn btn-enroll w-100" disabled>
+                    Enrolled
+                  </button>
+                )}
               </div>
             </div>
           </div>
         </div>
 
         {/* Checkout Popup */}
-        {showPopup && (
-          <div className="checkout-popup">
-            <div className="popup-content">
-              <h3>Confirm Purchase</h3>
-              <p>Are you sure you want to enroll in this course?</p>
-              <button onClick={handleCheckout} className="btn btn-confirm">
-                {loading ? 'Processing...' : 'Confirm and Enroll'}
-              </button>
-              <button onClick={() => setShowPopup(false)} className="btn btn-cancel">
-                Cancel
-              </button>
-            </div>
-          </div>
-        )}
+        <Modal show={showPopup} onHide={() => setShowPopup(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Confirm Purchase</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>Are you sure you want to enroll in this course?</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowPopup(false)}>
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={handleCheckout}>
+              {loading ? <Spinner as="span" animation="border" size="sm" /> : 'Confirm and Enroll'}
+            </Button>
+          </Modal.Footer>
+        </Modal>
 
         {/* Include Section */}
         <div className="card include-sec">
@@ -141,10 +147,10 @@ const SidebarSection = ({ courseId }) => {
               <h4>Includes</h4>
             </div>
             <ul>
-              <li><img src={Mobile} className="me-2" alt="" /> 11 hours on-demand video</li>
-              <li><img src={Play} className="me-2" alt="" /> 69 downloadable resources</li>
-              <li><img src={Key} className="me-2" alt="" /> Full lifetime access</li>
-              <li><img src={Mobile} className="me-2" alt="" /> Access on mobile and TV</li>
+              <li><img src={Mobile} className="me-2" alt="" /> On-demand video</li>
+              <li><img src={Play} className="me-2" alt="" />Downloadable resources</li>
+              <li><img src={Key} className="me-2" alt="" /> Full  access</li>
+              <li><img src={Mobile} className="me-2" alt="" /> Access on mobile screen</li>
               <li><img src={Cloud} className="me-2" alt="" /> Assignments</li>
               <li><img src={Teacher} className="me-2" alt="" /> Certificate of Completion</li>
             </ul>
@@ -173,6 +179,11 @@ const SidebarSection = ({ courseId }) => {
 
 SidebarSection.propTypes = {
   courseId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  courseData: PropTypes.shape({
+    is_student_enroll: PropTypes.bool.isRequired,
+    name: PropTypes.string.isRequired,  // Adjust based on actual data structure
+    // Add other properties that you expect in the courseData objects
+  }).isRequired,
 };
 
 export default SidebarSection;

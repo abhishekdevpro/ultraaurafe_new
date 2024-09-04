@@ -765,11 +765,7 @@ const InnerPage = ({ courses = [] }) => { // Default to an empty array
                   <span className="d-inline-block average-rating fs-6">
                     <span className="fs-8" style={{ fontSize: "15px" }}>{course.course_level_name}</span>
                   </span>
-                  <div className="all-btn all-category d-flex align-items-center">
-                    <Link to="/login" className="btn btn-primary">
-                      Enroll Now
-                    </Link>
-                  </div>
+                
                 </div>
               </div>
             </div>
