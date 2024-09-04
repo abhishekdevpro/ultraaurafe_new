@@ -89,9 +89,9 @@ const CourseList = () => {
     const searchParams = new URLSearchParams(location.search);
     return {
       title_keywords: searchParams.get('title_keywords') || searchTerm,
-      course_category_id: (searchParams.get('course_category_id') || '').split('+'),
-      trainer_id: (searchParams.get('trainer_id') || '').split('+'),
-      course_level_id: (searchParams.get('course_level_id') || '').split('+'),
+      course_category_id: (searchParams.get('course_category_id') || '').split('+').filter(Boolean),
+      trainer_id: (searchParams.get('trainer_id') || '').split('+').filter(Boolean),
+      course_level_id: (searchParams.get('course_level_id') || '').split('+').filter(Boolean),
     };
   };
 
@@ -114,6 +114,7 @@ const CourseList = () => {
     const value = e.target.value;
     let updatedFilters;
 
+    // Determine which filter is being updated
     if (filterType === 'course_category_id') {
       updatedFilters = e.target.checked
         ? [...selectedCategories, value]
@@ -131,18 +132,40 @@ const CourseList = () => {
       setSelectedLevels(updatedFilters);
     }
 
-    // Update URL with selected filters
+    // Update the URL with selected filters without reloading the page
     const newParams = new URLSearchParams(location.search);
-    if (filterType === 'course_category_id') {
-      newParams.set('course_category_id', updatedFilters.join('+'));
-    } else if (filterType === 'trainer_id') {
-      newParams.set('trainer_id', updatedFilters.join('+'));
-    } else if (filterType === 'course_level_id') {
-      newParams.set('course_level_id', updatedFilters.join('+'));
-    }
+    newParams.set(filterType, updatedFilters.join('+'));
+
+    // Use navigate to update the URL query parameters without refreshing
     navigate(`?${newParams.toString()}`, { replace: true });
+
+    // Fetch filtered courses
     fetchFilteredCourses();
   };
+
+
+  const handleClearFilters = () => {
+    // Reset filter state variables
+    setSelectedCategories([]);
+    setSelectedTrainers([]);
+    setSelectedLevels([]);
+    setSearchTerm('');
+  
+    // Update the URL to remove all filter parameters
+    const newParams = new URLSearchParams();
+    navigate(`?${newParams.toString()}`, { replace: true });
+  
+    // Fetch all courses without any filters
+    fetchFilteredCourses();
+  };
+  
+
+  useEffect(() => {
+    const { course_category_id, trainer_id, course_level_id } = parseQueryParams();
+    setSelectedCategories(course_category_id);
+    setSelectedTrainers(trainer_id);
+    setSelectedLevels(course_level_id);
+  }, [location.search]);
 
   const handleSearchClick = () => {
     const newParams = new URLSearchParams(location.search);
@@ -260,6 +283,12 @@ const CourseList = () => {
             </div>
 
             <div className="col-lg-3">
+              <div className="d-flex">
+                <h4>Filter</h4>
+                <button   className='mx-5 my-2 btn btn-secondary'
+  type="button"
+  onClick={handleClearFilters}>Clear</button>
+              </div>
               <div className="sidebar-filter">
                 <div className="card search-filter">
                   <div className="card-header d-flex justify-content-between">
@@ -269,14 +298,22 @@ const CourseList = () => {
                     <div className="filter-widget">
                       {categoryOptions.map(option => (
                         <div key={option.value} className="filter-list">
-                          <label className="custom_checkbox">
+                          <label className="custom_checkbox flex items-center space-x-2">
                             <input
                               type="checkbox"
                               value={option.value}
                               checked={selectedCategories.includes(option.value)}
                               onChange={e => handleCheckboxChange(e, 'course_category_id')}
+                              className="form-checkbox h-4 w-4 text-blue-600"
                             />
-                            <span className="checkmark"></span> {option.label}
+                            <span className="checkmark w-4 h-4 border border-gray-300 rounded-md inline-block bg-white flex items-center justify-center">
+                              {selectedCategories.includes(option.value) && (
+                                <svg className="w-3 h-3 text-blue-600" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path d="M5 13l4 4L19 7"></path>
+                                </svg>
+                              )}
+                            </span>
+                            <span className="ml-2">{option.label}</span>
                           </label>
                         </div>
                       ))}
@@ -292,14 +329,22 @@ const CourseList = () => {
                     <div className="filter-widget">
                       {trainerOptions.map(option => (
                         <div key={option.value} className="filter-list">
-                          <label className="custom_checkbox">
+                          <label className="custom_checkbox flex items-center space-x-2">
                             <input
                               type="checkbox"
                               value={option.value}
                               checked={selectedTrainers.includes(option.value)}
                               onChange={e => handleCheckboxChange(e, 'trainer_id')}
+                              className="form-checkbox h-4 w-4 text-blue-600"
                             />
-                            <span className="checkmark"></span> {option.label}
+                            <span className="checkmark w-4 h-4 border border-gray-300 rounded-md inline-block bg-white flex items-center justify-center">
+                              {selectedTrainers.includes(option.value) && (
+                                <svg className="w-3 h-3 text-blue-600" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path d="M5 13l4 4L19 7"></path>
+                                </svg>
+                              )}
+                            </span>
+                            <span className="ml-2">{option.label}</span>
                           </label>
                         </div>
                       ))}
@@ -315,14 +360,22 @@ const CourseList = () => {
                     <div className="filter-widget">
                       {levelOptions.map(option => (
                         <div key={option.value} className="filter-list">
-                          <label className="custom_checkbox">
+                          <label className="custom_checkbox flex items-center space-x-2">
                             <input
                               type="checkbox"
                               value={option.value}
                               checked={selectedLevels.includes(option.value)}
                               onChange={e => handleCheckboxChange(e, 'course_level_id')}
+                              className="form-checkbox h-4 w-4 text-blue-600"
                             />
-                            <span className="checkmark"></span> {option.label}
+                            <span className="checkmark w-4 h-4 border border-gray-300 rounded-md inline-block bg-white flex items-center justify-center">
+                              {selectedLevels.includes(option.value) && (
+                                <svg className="w-3 h-3 text-blue-600" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path d="M5 13l4 4L19 7"></path>
+                                </svg>
+                              )}
+                            </span>
+                            <span className="ml-2">{option.label}</span>
                           </label>
                         </div>
                       ))}
