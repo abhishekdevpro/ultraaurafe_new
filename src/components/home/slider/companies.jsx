@@ -1,16 +1,15 @@
 import React from "react";
 import OwlCarousel from "react-owl-carousel";
 
-
 const Companies = () => {
   var settings = {
-    //autoWidth: true,
     items: 2,
     margin: 25,
     dots: false,
     nav: true,
-
     loop: true,
+    autoplay: true, // Enable auto-scrolling
+    autoplayTimeout: 3000, // Time in milliseconds between slides
     responsiveClass: true,
     responsive: {
       0: {
@@ -24,22 +23,23 @@ const Companies = () => {
       },
     },
   };
+
   return (
     <OwlCarousel
       {...settings}
       className="lead-group-slider owl-carousel owl-theme"
     >
-      <div className=" card-body item">
-        <div className=" lead-img">
+      <div className="card-body item">
+        <div className="lead-img">
           <img className="img-fluid" alt="" src="https://idfy-eia3.vercel.app/assets/logo1-D7AqdC-G.jpg"/>
         </div>
       </div>
-      <div className=" card-body item">
+      <div className="card-body item">
         <div className="lead-img">
           <img className="img-fluid" alt="" src="https://idfy-eia3.vercel.app/assets/logo2-Bjhd8dXy.png" />
         </div>
       </div>
-      <div className=" card-body item">
+      <div className="card-body item">
         <div className="lead-img">
           <img className="img-fluid" alt="" src="https://idfy-eia3.vercel.app/assets/log3-D3L7OafR.png" />
         </div>

@@ -1,9 +1,36 @@
-import React from 'react'
-import Footer from '../../footer'
-import StudentHeader from '../header'
-import StudentSidebar from '../sidebar'
+import React, { useEffect, useState } from 'react';
+import Footer from '../../footer';
+import StudentHeader from '../header';
+import StudentSidebar from '../sidebar';
 
 const StudentProfile = () => {
+    const [profileData, setProfileData] = useState({});
+    // const token = "your_token_here"; // Replace with actual token after login
+    const token = localStorage.getItem('trainerToken');
+    useEffect(() => {
+        const fetchProfileData = async () => {
+            try {
+                const response = await fetch('https://api.novajobs.us/api/students/profile', {
+                    method: 'GET',
+                    headers: { Authorization: token },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch profile data');
+                }
+
+                const result = await response.json();
+                if (result.status === "success") {
+                    setProfileData(result.data);
+                }
+            } catch (error) {
+                console.error('Error fetching profile data:', error);
+            }
+        };
+
+        fetchProfileData();
+    }, [token]);
+
     return (
         <>
             {/* Main Wrapper */}
@@ -21,7 +48,7 @@ const StudentProfile = () => {
                                     <nav aria-label="breadcrumb" className="page-breadcrumb">
                                         <ol className="breadcrumb">
                                             <li className="breadcrumb-item">
-                                                <a to="/home">Home</a>
+                                                <a href="/home">Home</a>
                                             </li>
                                             <li className="breadcrumb-item active" aria-current="page">
                                                 My Profile
@@ -39,7 +66,7 @@ const StudentProfile = () => {
                     <div className="container">
                         <div className="row">
                             {/* sidebar */}
-                           <StudentSidebar/>
+                            <StudentSidebar />
                             {/* /Sidebar */}
                             {/* Student Profile */}
                             <div className="col-xl-9 col-lg-9">
@@ -53,45 +80,28 @@ const StudentProfile = () => {
                                                 <div className="col-sm-6">
                                                     <div className="contact-info">
                                                         <h6>First Name</h6>
-                                                        <p>Ronald</p>
+                                                        <p>{profileData.first_name}</p>
                                                     </div>
                                                 </div>
                                                 <div className="col-sm-6">
                                                     <div className="contact-info">
                                                         <h6>Last Name</h6>
-                                                        <p>Richard</p>
-                                                    </div>
-                                                </div>
-                                                <div className="col-sm-6">
-                                                    <div className="contact-info">
-                                                        <h6>User Name</h6>
-                                                        <p>studentdemo</p>
+                                                        <p>{profileData.last_name}</p>
                                                     </div>
                                                 </div>
                                                 <div className="col-sm-6">
                                                     <div className="contact-info">
                                                         <h6>Email</h6>
-                                                        <p>studentdemo@example.com</p>
+                                                        <p>{profileData.email}</p>
                                                     </div>
                                                 </div>
                                                 <div className="col-sm-6">
                                                     <div className="contact-info">
                                                         <h6>Phone Number</h6>
-                                                        <p>90154-91036</p>
+                                                        <p>{profileData.phone}</p>
                                                     </div>
                                                 </div>
-                                                <div className="col-sm-12">
-                                                    <div className="contact-info mb-0">
-                                                        <h6>Bio</h6>
-                                                        <p>
-                                                            Hello! I&apos;m Ronald Richard. I&apos;m passionate about
-                                                            developing innovative software solutions, analyzing
-                                                            classic literature. I aspire to become a software
-                                                            developer, work as an editor. In my free time, I enjoy
-                                                            coding, reading, hiking etc.
-                                                        </p>
-                                                    </div>
-                                                </div>
+                                                {/* Add other fields as needed */}
                                             </div>
                                         </div>
                                     </div>
@@ -103,13 +113,12 @@ const StudentProfile = () => {
                 </div>
                 {/* /Page Content */}
                 {/* Footer */}
-               <Footer/>
+                <Footer />
                 {/* /Footer */}
             </div>
             {/* /Main Wrapper */}
         </>
+    );
+};
 
-    )
-}
-
-export default StudentProfile
+export default StudentProfile;

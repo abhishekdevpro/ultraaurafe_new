@@ -53,8 +53,8 @@
 //               </Link>
 //               <Link to="/home" className="navbar-brand logo">
 //                  <img src={logo5} className="img-fluid" alt="Logo" />
-                 
-                 
+
+
 //               </Link>
 //             </div>
 //             <div className="main-menu-wrapper">
@@ -132,6 +132,7 @@ import { Link } from "react-router-dom";
 import logo5 from "./logo5.png";
 import DarkMode from "../common/darkMode";
 import menu_data from "./menu-data";
+import menu_btn from "./menu-btn";
 
 const Header = () => {
   useEffect(() => {
@@ -215,25 +216,34 @@ const Header = () => {
                     )}
                   </li>
                 ))}
+                
+                {menu_btn.map((items) => (
+                
+                  <li  key={items.id} className="has-submenu nav-item ">
+                    <Link className="nav-link header-sign header-sign btn rounded fw-bold" to={items.link}>{items.title}</Link>
+                  </li>
+                ))}
+                
               </ul>
             </div>
             <ul className="nav header-navbar-rht">
               <DarkMode />
-              <li className="nav-item">
+              {/* Uncomment and adjust if needed */}
+              {/* <li className="nav-item">
                 <Link className="nav-link header-sign" to="/partner-signin">
                   Partner With us
                 </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link header-sign" to="/login">
+              </li> */}
+              {/* <li className="nav-item">
+                <Link className="nav-link header-sign " to="/login">
                   Signin
                 </Link>
-              </li>
-              <li className="nav-item">
+              </li> */}
+              {/* <li className="nav-item">
                 <Link className="nav-link header-login" to="/register">
                   Signup
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         </nav>

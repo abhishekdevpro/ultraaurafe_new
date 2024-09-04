@@ -1,12 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import StickyBox from "react-sticky-box";
-import { User16 } from "../../imagepath";
+// import { User16 } from "../../imagepath";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 export default function StudentSidebar() {
   const location = useLocation();
+  const [profileData, setProfileData] = useState({});
+    // const token = "your_token_here"; // Replace with actual token after login
+    const token = localStorage.getItem('trainerToken');
+    useEffect(() => {
+        const fetchProfileData = async () => {
+            try {
+                const response = await fetch('https://api.novajobs.us/api/students/profile', {
+                    method: 'GET',
+                    headers: { Authorization: token },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch profile data');
+                }
+
+                const result = await response.json();
+                if (result.status === "success") {
+                    setProfileData(result.data);
+                }
+            } catch (error) {
+                console.error('Error fetching profile data:', error);
+            }
+        };
+
+        fetchProfileData();
+    }, [token]);
 
   return (
     <div className="col-xl-3 col-lg-3 theiaStickySidebar">
@@ -16,17 +42,18 @@ export default function StudentSidebar() {
             <div className="profile-bg">
               <div className="profile-img">
                 <Link to="/student/student-profile">
-                  <img src={User16} alt="Img" />
+                  <img src="#"
+                  />
                 </Link>
               </div>
             </div>
             <div className="profile-group">
               <div className="profile-name text-center">
                 <h4>
-                  <Link to="/student/student-profile">Rolands Richard</Link>
+                  <Link to="/student/student-profile"> {profileData.first_name}{profileData.last_name}</Link>
                 </h4>
                 <p>Student</p>
-                
+
               </div>
             </div>
           </div>
