@@ -692,17 +692,12 @@ CourseContent.propTypes = {
               PropTypes.shape({
                 id: PropTypes.number,
               })
-            )
+            ),
           })
-        )
+        ),
       })
-    ).isRequired
-  }).isRequired
+    ).isRequired,
+  }).isRequired,
 };
-// heloo
-CourseContent.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
-};
+
 export default CourseContent;

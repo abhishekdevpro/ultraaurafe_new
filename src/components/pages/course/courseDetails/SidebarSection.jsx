@@ -300,16 +300,16 @@ const SidebarSection = ({ courseId, courseData,courseFeatureData}) => {
 
 SidebarSection.propTypes = {
   courseFeatureData: PropTypes.shape({
-    enrolled_student_count: PropTypes.number,
-    time_spent_on_course: PropTypes.number,
-    total_lectures: PropTypes.number,
-    course_level_name: PropTypes.string,
-  }),
+    enrolled_student_count: PropTypes.number.isRequired,
+    time_spent_on_course: PropTypes.string.isRequired, // Assuming it's in string format like '5 hours'
+    total_lectures: PropTypes.number.isRequired,
+    course_level_name: PropTypes.string.isRequired,
+  }).isRequired,
   courseData: PropTypes.shape({
-    course_id: PropTypes.string.isRequired,
-    course_title: PropTypes.string,
-    is_certificate: PropTypes.bool,
+    course_id: PropTypes.number.isRequired,  // Assuming course_id is a number
+    course_title: PropTypes.string.isRequired,
+    is_student_enroll: PropTypes.bool.isRequired,
+    is_certificate: PropTypes.bool.isRequired,
   }).isRequired,
 };
-
 export default SidebarSection;
