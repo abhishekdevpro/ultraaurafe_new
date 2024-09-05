@@ -6,7 +6,8 @@ import { Chapter, Chart, Cloud, Key, Mobile, Play, Teacher, Timer2, Users, Video
 import { Modal, Button, Spinner } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
-const SidebarSection = ({ courseId, courseData }) => {
+const SidebarSection = ({ courseId, courseData,courseFeatureData}) => {
+  console.log(courseData,"from sidebar")
   const [showPopup, setShowPopup] = useState(false);
   const [loading, setLoading] = useState(false);
   const [videoUrl, setVideoUrl] = useState(null);
@@ -22,6 +23,40 @@ const SidebarSection = ({ courseId, courseData }) => {
       navigate('/login');
     }
   };
+
+    const handleDownload = async () => {
+      const token = localStorage.getItem('token')
+      try {
+        const response = await axios.get(`https://api.novajobs.us/api/students/certificate/${courseId}`, {
+          headers: {
+            Authorization: `${token}`,
+          },
+          responseType: 'blob', // Important for handling file downloads
+        });
+  
+        // Create a blob from the response data
+        const blob = new Blob([response.data], { type: response.headers['content-type'] });
+  
+        // Create a link element and trigger the download
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `certificate_${courseId}.pdf`); // Assuming it's a PDF, adjust if needed
+        document.body.appendChild(link);
+        link.click();
+  
+        // Clean up
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(link);
+  
+        // Show success toast
+        toast.success('Certificate downloaded successfully!');
+      } catch (error) {
+        console.error('Error downloading certificate:', error);
+        toast.error('Failed to download certificate. Please try again.');
+      }
+    
+  }
 
   const toggleClass = async (courseId, isFavorite) => {
     const updatedClasses = [...isClassAdded];
@@ -67,31 +102,6 @@ const SidebarSection = ({ courseId, courseData }) => {
     }
   };
 
-  // const toggleClass = async (courseId) => {
-  //   const updatedClasses = [...isClassAdded];
-  //   updatedClasses[courseId] = !updatedClasses[courseId];
-  //   setIsClassAdded(updatedClasses);
-
-  //   try {
-  //     const token = localStorage.getItem('token');
-  //     await axios.post(
-  //       'https://api.novajobs.us/api/students/course-favorite',
-  //       { course_id: courseId },
-  //       {
-  //         headers: {
-  //           'Authorization': `${token}`,
-  //           'Content-Type': 'application/json',
-  //         }
-  //       }
-  //     );
-  //     // Show success toast
-  //     toast.success('Course added to favorites!');
-  //   } catch (error) {
-  //     console.error('Failed to add course to favorites:', error);
-  //     // Show error toast
-  //     toast.error('Failed to add course to favorites. Please try again.');
-  //   }
-  // };
 
   const handleCheckout = async () => {
     setLoading(true);
@@ -211,14 +221,24 @@ const SidebarSection = ({ courseId, courseData }) => {
                 
               </div>
               {!courseData.is_student_enroll ? (
-                 <button className="btn btn-enroll w-100" disabled>
-                  </button>
+                //  <button className="btn btn-enroll w-100" disabled>
+                //   </button>
+                " "
                 ) : (
                   <Link to={`/student/student-skilltest/${courseData.course_id}/${courseData.course_title}`} className="btn btn-enroll w-100">
                   Take Test
                 </Link>
                 )}
+
+                {!courseData.is_certificate ? (
+                 ""
+                ) : (
+                 <button onClick={handleDownload} className="btn btn-enroll w-100">
+                    Download Certificate
+                  </button>
+                )}
                 </div>
+                
             </div>
           </div>
         </div>
@@ -265,11 +285,11 @@ const SidebarSection = ({ courseId, courseData }) => {
               <h4>Features</h4>
             </div>
             <ul>
-              <li><img src={Users} className="me-2" alt="" /> Enrolled: <span>32 students</span></li>
-              <li><img src={Timer2} className="me-2" alt="" /> Duration: <span>20 hours</span></li>
-              <li><img src={Chapter} className="me-2" alt="" /> Chapters: <span>15</span></li>
-              <li><img src={Video2} className="me-2" alt="" /> Video:<span> 12 hours</span></li>
-              <li><img src={Chart} className="me-2" alt="" /> Level: <span>Beginner</span></li>
+              <li><img src={Users} className="me-2" alt="" /> Enrolled: <span>{courseFeatureData.enrolled_student_count}</span></li>
+              <li><img src={Timer2} className="me-2" alt="" /> Duration: <span>{courseFeatureData.time_spent_on_course}</span></li>
+              <li><img src={Chapter} className="me-2" alt="" /> Lectures: <span> {courseFeatureData.total_lectures} </span></li>
+              {/* <li><img src={Video2} className="me-2" alt="" /> Video:<span> 12 hours</span></li> */}
+              <li><img src={Chart} className="me-2" alt="" /> Level: <span>{courseFeatureData.course_level_name}</span></li>
             </ul>
           </div>
         </div>
