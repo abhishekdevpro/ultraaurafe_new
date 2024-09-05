@@ -1501,7 +1501,7 @@ button.bg-danger:hover {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1040;
+  z-index: 900;
 }
 .menu-opened .main-menu-wrapper {
   transform: translateX(0);

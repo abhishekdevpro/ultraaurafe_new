@@ -18,6 +18,7 @@ const CourseDetails = () => {
       try {
         const url = `https://api.novajobs.us/api/trainers/courses/${courseid}`;
         const response = await axios.get(url);
+        console.log(response.data.data,"ALL data")
         if (response.data) {
           setCourseData(response.data);
           console.log(response.data, "testt")
@@ -129,8 +130,8 @@ const CourseDetails = () => {
             </div>
           </div>
         </div>
-
-        <DetailsContent courseData={courseData} />
+          {console.log(courseData,"from index")}
+        <DetailsContent courseFeatureData={courseData.data} />
 
         <Footer />
       </div>
