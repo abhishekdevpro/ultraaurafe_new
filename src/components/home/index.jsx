@@ -37,7 +37,7 @@ import { useEffect } from "react";
 import CountUp from "react-countup";
 import FeaturedCourses from "./FeaturedCourses";
 import { useNavigate } from "react-router-dom";
-
+import { TypeAnimation } from "react-type-animation";
 // import { useNavigate } from "react-router-dom";
 
 // const options = [
@@ -179,7 +179,8 @@ export const Home = () => {
             <div className="row ">
               <div className="col-md-7">
                 <div className="home-slide-face aos" data-aos="fade-up">
-                <div className="home-slide-text text-center">
+                  {console.log(currentTextIndex)}
+               {/* <div className="home-slide-text text-center">
   <h5 className="d-none d-md-block">Empowering Futures: Anytime, Anywhere</h5>
   <h2>
     Take the next step towards your{" "}
@@ -189,7 +190,27 @@ export const Home = () => {
     at Ultra Aura with technology-enabled learning.
   </h2>
   <p className="d-none d-md-block">Own your future by learning new skills online</p>
-</div>
+</div> */}
+ <div className="home-slide-text text-center">
+  
+  <h2 className="mb-2 " style={{fontWeight:"700"}}> Empowering Futures: Anytime, Anywhere</h2>
+   <h2>Take the next step towards your {" "}
+                 <TypeAnimation
+                   sequence={[
+                     
+                     " at Ultra Aura with technology-enabled learning.",
+                     1000,
+                     " Own your future by learning new skills online",
+                     1000,
+                    
+                   ]}
+                   wrapper="span"
+                   speed={50}
+                   repeat={Infinity}
+                 />
+               </h2>
+  
+ </div>
 
                   <div className="container my-4">
                     <div className="banner-content">
@@ -538,7 +559,7 @@ export const Home = () => {
                     </li>
                   </ul>
                   <div className="all-btn all-category d-flex align-items-center">
-                    <Link to="/instructor/instructor-list" className="btn btn-primary">
+                    <Link to="/login" className="btn btn-primary">
                       Join as Trainer Now
                     </Link>
                   </div>
@@ -563,7 +584,7 @@ export const Home = () => {
                           and empower learners worldwide.
                         </p>
                         <div className="all-btn all-category d-flex align-items-center">
-                          <Link to="/partnerwithus" className="btn btn-primary">
+                          <Link to="/partner-signin" className="btn btn-primary">
                             Partner with US
                           </Link>
                         </div>
@@ -607,7 +628,7 @@ export const Home = () => {
         </section>
         {/* /Become a instructor */}
 
-        {/* Blog 
+        {/* B
         <section
           className="section latest-blog"
         >
