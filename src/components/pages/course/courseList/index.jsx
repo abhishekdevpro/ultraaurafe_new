@@ -3,7 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import InnerPage from './innerPage'; // Adjust the import path according to your file structure
 import Footer from '../../../footer';
-import CourseHeader from '../header';
+//import CourseHeader from '../header';
+import Header from '../../../header';
 
 const CourseList = () => {
   const [courses, setCourses] = useState([]);
@@ -164,25 +165,13 @@ const CourseList = () => {
 
   return (
     <div className="main-wrapper">
-      <CourseHeader activeMenu={"CourseList"} />
+      <Header activeMenu={"CourseList"} />
       <div className="breadcrumb-bar">
         <div className="container">
           <div className="row">
             <div className="col-md-12 col-12">
               <div className="breadcrumb-list">
-                <nav aria-label="breadcrumb" className="page-breadcrumb">
-                  <ol className="breadcrumb">
-                    <li className="breadcrumb-item">
-                      <a href="/home">Home</a>
-                    </li>
-                    <li className="breadcrumb-item" aria-current="page">
-                      Courses
-                    </li>
-                    <li className="breadcrumb-item active" aria-current="page">
-                      All Courses
-                    </li>
-                  </ol>
-                </nav>
+                
               </div>
             </div>
           </div>

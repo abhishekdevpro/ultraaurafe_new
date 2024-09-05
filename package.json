@@ -37,6 +37,7 @@
     "react-sticky-box": "^2.0.5",
     "react-tag-input-component": "^2.0.2",
     "react-toastify": "^10.0.5",
+    "react-type-animation": "^3.2.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.12",
     "swiper": "^11.1.9"
