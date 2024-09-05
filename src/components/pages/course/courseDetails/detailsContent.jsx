@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {  useParams } from 'react-router-dom';
+import { propTypes } from "prop-types";
 // import FeatherIcon from "feather-icons-react";
 
 import InstructorCard from "./InstructorCard";
@@ -112,6 +113,15 @@ const DetailsContent = ({courseFeatureData}) => {
       </section>
     </>
   );
+};
+
+detailsContent.propTypes = {
+  courseFeatureData: PropTypes.shape({
+    enrolled_student_count: PropTypes.number,
+    time_spent_on_course: PropTypes.number,
+    total_lectures: PropTypes.number,
+    course_level_name: PropTypes.string,
+  }),
 };
 
 export default DetailsContent;

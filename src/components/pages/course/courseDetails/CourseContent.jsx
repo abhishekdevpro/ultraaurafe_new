@@ -700,4 +700,9 @@ CourseContent.propTypes = {
   }).isRequired
 };
 // heloo
+CourseContent.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+};
 export default CourseContent;

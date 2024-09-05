@@ -299,11 +299,16 @@ const SidebarSection = ({ courseId, courseData,courseFeatureData}) => {
 };
 
 SidebarSection.propTypes = {
-  courseId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  courseFeatureData: PropTypes.shape({
+    enrolled_student_count: PropTypes.number,
+    time_spent_on_course: PropTypes.number,
+    total_lectures: PropTypes.number,
+    course_level_name: PropTypes.string,
+  }),
   courseData: PropTypes.shape({
-    is_student_enroll: PropTypes.bool.isRequired,
-    name: PropTypes.string.isRequired,  // Adjust based on actual data structure
-    // Add other properties that you expect in the courseData objects
+    course_id: PropTypes.string.isRequired,
+    course_title: PropTypes.string,
+    is_certificate: PropTypes.bool,
   }).isRequired,
 };
 
