@@ -541,6 +541,12 @@ const Modal = ({ isOpen, onClose, children }) => {
   );
 };
 
+Modal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+};
+
 const CourseContent = ({ courseData }) => {
   const [open, setOpen] = useState({});
   const [selectedLecture, setSelectedLecture] = useState(null);
@@ -692,17 +698,12 @@ CourseContent.propTypes = {
               PropTypes.shape({
                 id: PropTypes.number,
               })
-            )
+            ),
           })
-        )
+        ),
       })
-    ).isRequired
-  }).isRequired
+    ).isRequired,
+  }).isRequired,
 };
-// heloo
-CourseContent.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
-};
+
 export default CourseContent;
