@@ -4,12 +4,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Chapter, Chart, Cloud, Key, Mobile, Play, Teacher, Timer2, Users, Video2 } from '../../../imagepath';
 import { Modal, Button, Spinner } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
 const SidebarSection = ({ courseId, courseData }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [loading, setLoading] = useState(false);
   const [videoUrl, setVideoUrl] = useState(null);
   const navigate = useNavigate();
+  const [isClassAdded, setIsClassAdded] = useState([]);
+
 
   const handleEnrollClick = () => {
     const token = localStorage.getItem('token');
@@ -19,6 +22,76 @@ const SidebarSection = ({ courseId, courseData }) => {
       navigate('/login');
     }
   };
+
+  const toggleClass = async (courseId, isFavorite) => {
+    const updatedClasses = [...isClassAdded];
+    updatedClasses[courseId] = !isFavorite;
+    setIsClassAdded(updatedClasses);
+  
+    try {
+      const token = localStorage.getItem('token');
+      if (isFavorite) {
+        // Remove from favorites
+        await axios.post(
+          'https://api.novajobs.us/api/students/course-favorite',
+          { course_id: courseId },
+          {
+            headers: {
+              'Authorization': `${token}`,
+              'Content-Type': 'application/json',
+            },
+            
+          }
+        );
+        // Show success toast
+        toast.success('Course removed from favorites!');
+      } else {
+        // Add to favorites
+        await axios.post(
+          'https://api.novajobs.us/api/students/course-favorite',
+          { course_id: courseId },
+          {
+            headers: {
+              'Authorization': `${token}`,
+              'Content-Type': 'application/json',
+            }
+          }
+        );
+        // Show success toast
+        toast.success('Course added to favorites!');
+      }
+    } catch (error) {
+      console.error('Failed to update course favorites:', error);
+      // Show error toast
+      toast.error('Failed to update course favorites. Please try again.');
+    }
+  };
+
+  // const toggleClass = async (courseId) => {
+  //   const updatedClasses = [...isClassAdded];
+  //   updatedClasses[courseId] = !updatedClasses[courseId];
+  //   setIsClassAdded(updatedClasses);
+
+  //   try {
+  //     const token = localStorage.getItem('token');
+  //     await axios.post(
+  //       'https://api.novajobs.us/api/students/course-favorite',
+  //       { course_id: courseId },
+  //       {
+  //         headers: {
+  //           'Authorization': `${token}`,
+  //           'Content-Type': 'application/json',
+  //         }
+  //       }
+  //     );
+  //     // Show success toast
+  //     toast.success('Course added to favorites!');
+  //   } catch (error) {
+  //     console.error('Failed to add course to favorites:', error);
+  //     // Show error toast
+  //     toast.error('Failed to add course to favorites. Please try again.');
+  //   }
+  // };
 
   const handleCheckout = async () => {
     setLoading(true);
@@ -66,7 +139,7 @@ const SidebarSection = ({ courseId, courseData }) => {
       setLoading(false);
     }
   };
-
+  const isFavorite = isClassAdded[courseData.course_id]
   return (
     <div className="col-lg-4">
       <div className="sidebar-sec">
@@ -94,12 +167,29 @@ const SidebarSection = ({ courseId, courseData }) => {
                   <p><span>$99.00</span> 50% off</p>
                 </div>
                 <div className="row gx-2">
-                  <div className="col-md-6 addHeart">
+                  {/* <div className="col-md-6 addHeart">
                     <Link to="" className="btn btn-wish w-100">
                       <i className="feather icon-heart me-2" />
                       Add to Wishlist
                     </Link>
-                  </div>
+                  </div> */}
+              <div className="col-md-6 addHeart">
+      {isFavorite ? (
+        <button 
+          className="btn btn-danger w-100" 
+          onClick={() => toggleClass(courseData.course_id, isFavorite)}>
+          <i className="feather icon-heart me-2" />
+          Remove
+        </button>
+      ) : (
+        <button 
+          className="btn btn-wish w-100" 
+          onClick={() => toggleClass(courseData.course_id, isFavorite)}>
+          <i className="feather icon-heart me-2" />
+          Add to Wishlist
+        </button>
+      )}
+    </div>
                   <div className="col-md-6 addHeart">
                     <Link to="#" className="btn btn-wish w-100">
                       <i className="feather icon-share-2 me-2" />
@@ -108,6 +198,7 @@ const SidebarSection = ({ courseId, courseData }) => {
                   </div>
                 </div>
                 {/* Conditional Button Rendering */}
+                <div>
                 {!courseData.is_student_enroll ? (
                   <button onClick={handleEnrollClick} className="btn btn-enroll w-100">
                     Enroll Now
@@ -117,7 +208,17 @@ const SidebarSection = ({ courseId, courseData }) => {
                     Enrolled
                   </button>
                 )}
+                
               </div>
+              {!courseData.is_student_enroll ? (
+                 <button className="btn btn-enroll w-100" disabled>
+                  </button>
+                ) : (
+                  <Link to={`/student/student-skilltest/${courseData.course_id}/${courseData.course_title}`} className="btn btn-enroll w-100">
+                  Take Test
+                </Link>
+                )}
+                </div>
             </div>
           </div>
         </div>

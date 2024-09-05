@@ -145,6 +145,7 @@ import { VendorDashboard } from "./components/Vendor/VendorDasboard.jsx";
 import ForgotPasswordVendor from "./components/pages/forgotPassword/Vendor-ForgetPassword.jsx";
 import NewPasswordVendor from "./components/pages/newPassword/Vendor-ResetPassword.jsx";
 import VendorSetting from "./components/Vendor/VendorSetting.jsx";
+import SkillTest from "./components/student/StudentSkillsTest/index.jsx";
 const Approuter = () => {
   return (
     <BrowserRouter>
@@ -459,6 +460,8 @@ const Approuter = () => {
           element={<StudentOrderHistory />}
         />
         <Route path="/student/student-qa" element={<StudentQA />} />
+        <Route path="/student/student-skilltest/:courseid/:coursetitle" element={<SkillTest />} />
+
         <Route path="/student/student-referral" element={<StudentReferral />} />
         <Route path="/student/student-messages" element={<StudentMessages />} />
         <Route path="/student/students-profile" element={<StudentProfile />} />
