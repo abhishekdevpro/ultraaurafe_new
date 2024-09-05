@@ -460,7 +460,7 @@ const Approuter = () => {
           element={<StudentOrderHistory />}
         />
         <Route path="/student/student-qa" element={<StudentQA />} />
-        <Route path="/student/student-skilltest" element={<SkillTest />} />
+        <Route path="/student/student-skilltest/:courseid/:coursetitle" element={<SkillTest />} />
 
         <Route path="/student/student-referral" element={<StudentReferral />} />
         <Route path="/student/student-messages" element={<StudentMessages />} />
