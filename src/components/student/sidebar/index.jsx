@@ -112,10 +112,10 @@ export default function StudentSidebar() {
               </li>
               <li className={`nav-item ${location.pathname === '/student/student-wishlist' || location.pathname === '/student/student-quiz-details' ? 'active' : ''}`}>
 
-                <Link to="" className="nav-link">
-                  <i className="bx bxs-heart" />
-                  Wishlist
-                </Link>
+              <Link to="/student/student-wishlist" className="nav-link">
+    <i className="bx bxs-heart" />
+    Wishlist
+  </Link>
               </li>
               <li className={`nav-item ${location.pathname === '/student/student-reviews' ? 'active' : ''}`}>
 

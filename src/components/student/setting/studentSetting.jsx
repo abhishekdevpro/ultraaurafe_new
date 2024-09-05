@@ -155,11 +155,11 @@ const StudentSetting = () => {
                                   <i className="bx bx-cloud-upload" />
                                 </div>
                               </div>
-                              <div className="img-delete">
+                              {/* <div className="img-delete">
                                 <Link to="#" className="delete-icon">
                                   <i className="bx bx-trash" />
                                 </Link>
-                              </div>
+                              </div> */}
                             </div>
                           </div>
                         </div>
