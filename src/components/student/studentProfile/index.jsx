@@ -6,7 +6,7 @@ import StudentSidebar from '../sidebar';
 const StudentProfile = () => {
     const [profileData, setProfileData] = useState({});
     // const token = "your_token_here"; // Replace with actual token after login
-    const token = localStorage.getItem('trainerToken');
+    const token = localStorage.getItem('token');
     useEffect(() => {
         const fetchProfileData = async () => {
             try {
