@@ -306,7 +306,7 @@ SidebarSection.propTypes = {
     course_level_name: PropTypes.string.isRequired,
   }).isRequired,
   courseData: PropTypes.shape({
-    course_id: PropTypes.number.isRequired,  // Assuming course_id is a number
+    courseId: PropTypes.number.isRequired,  // Assuming course_id is a number
     course_title: PropTypes.string.isRequired,
     is_student_enroll: PropTypes.bool.isRequired,
     is_certificate: PropTypes.bool.isRequired,

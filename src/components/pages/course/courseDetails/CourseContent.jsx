@@ -541,6 +541,12 @@ const Modal = ({ isOpen, onClose, children }) => {
   );
 };
 
+Modal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+};
+
 const CourseContent = ({ courseData }) => {
   const [open, setOpen] = useState({});
   const [selectedLecture, setSelectedLecture] = useState(null);
