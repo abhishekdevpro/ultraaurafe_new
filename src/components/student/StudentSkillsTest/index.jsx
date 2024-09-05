@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import styled from 'styled-components';
 import StudentHeader from "../header";
@@ -151,6 +151,23 @@ const ResultItem = styled.div`
   background-color: ${props => props.correct ? '#d4edda' : '#f8d7da'};
 `;
 
+const PercentageBar = styled.div`
+  width: 100%;
+  height: 20px;
+  background-color: #e9ecef;
+  border-radius: 10px;
+  margin-top: 10px;
+`;
+
+const PercentageFill = styled.div`
+  width: ${props => props.percentage}%;
+  height: 100%;
+  background-color: #007bff;
+  border-radius: 10px;
+  transition: width 0.5s ease-in-out;
+`;
+
+
 const SkillTest = () => {
   const [skillData, setSkillData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -161,12 +178,15 @@ const SkillTest = () => {
   const [showModal, setShowModal] = useState(false);
   const [testResults, setTestResults] = useState(null);
 
+
+  const { courseid, coursetitle } = useParams();
+   console.log(coursetitle,"ct")
   useEffect(() => {
     const fetchSkillData = async () => {
       try {
         const token = localStorage.getItem('token');
         const response = await axios.get(
-          "https://api.novajobs.us/api/students/skill-assessment?skill_id=1&skill_name=intorduction of java",
+          `https://api.novajobs.us/api/students/skill-assessment?skill_id=${courseid}&skill_name=${encodeURIComponent(coursetitle)}`,
           {
             headers: {
               Authorization: `${token}`,
@@ -182,7 +202,30 @@ const SkillTest = () => {
     };
 
     fetchSkillData();
-  }, []);
+  }, [courseid, coursetitle]);
+
+//   useEffect(() => {
+//     const fetchSkillData = async () => {
+//       try {
+//         const token = localStorage.getItem('token');
+//         const response = await axios.get(
+//           "https://api.novajobs.us/api/students/skill-assessment?skill_id=1&skill_name=intorduction of java",
+//           {
+//             headers: {
+//               Authorization: `${token}`,
+//             },
+//           }
+//         );
+//         setSkillData(response.data.data);
+//         setLoading(false);
+//       } catch (err) {
+//         setError("Failed to fetch skill data");
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchSkillData();
+//   }, []);
 
   const handleOptionSelect = (questionIndex, option) => {
     setSelectedAnswers({

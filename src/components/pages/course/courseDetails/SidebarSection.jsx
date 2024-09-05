@@ -214,7 +214,7 @@ const SidebarSection = ({ courseId, courseData }) => {
                  <button className="btn btn-enroll w-100" disabled>
                   </button>
                 ) : (
-                  <Link to={'/students/skills-test'} className="btn btn-enroll w-100">
+                  <Link to={`/student/student-skilltest/${courseData.course_id}/${courseData.course_title}`} className="btn btn-enroll w-100">
                   Take Test
                 </Link>
                 )}
