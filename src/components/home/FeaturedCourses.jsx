@@ -71,11 +71,9 @@ const FeaturedCourses = () => {
           }
         }
       );
-      // Show success toast
       toast.success('Course added to favorites!');
     } catch (error) {
       console.error('Failed to add course to favorites:', error);
-      // Show error toast
       navigate('/login')
     }
   };
@@ -181,10 +179,10 @@ const FeaturedCourses = () => {
                           </div>
                         </div>
                         <div className="course-share d-flex align-items-center justify-content-center">
-                        <Link to="#" onClick={() => toggleClass(index, course.id)}>
-                                            <i className={`fa-regular fa-heart ${isClassAdded[index] ? 'color-active' : ''}`} />
-                                          </Link>
-                        </div>
+                      <Link to="#" onClick={() => toggleClass(index, course.id)}>
+                        <i className={`fa-regular fa-heart ${isClassAdded[index] ? 'color-active' : ''}`} />
+                      </Link>
+                    </div>
                       </div>
                       <h3 className="title instructor-text">
                         <Link to={`/course-info/${course.id}`}>
