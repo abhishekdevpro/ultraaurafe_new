@@ -214,7 +214,7 @@ const DynamicCourseList = () => {
                                         <div className="course-group-img d-flex">
                                           <div className="course-name">
                                             <h4>
-                                              <Link to="/instructor/instructor-profile">
+                                              <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
                                                 {course.trainer_first_name}
                                               </Link>
                                             </h4>
@@ -239,8 +239,9 @@ const DynamicCourseList = () => {
                                         </div>
                                         <div className="course-view d-flex align-items-center">
                                           <img src={Icon2} alt="Icon" />
-                                          <p>{course.time_spent_on_course}</p>
+                                          <p>{course.course_level_name}</p>
                                         </div>
+                                  
                                       </div>
                                       <div className="rating mb-0">
                                         {[...Array(5)].map((star, index) => (
@@ -252,6 +253,14 @@ const DynamicCourseList = () => {
                                         <span className="d-inline-block average-rating">
                                           {course.rating}
                                         </span>
+
+                                      </div>
+                                      <div>
+                                        <Link to={`/course-info/${course.id}`}>
+                                        <button>
+                                          Start the Lesson
+                                        </button>
+                                        </Link>
                                       </div>
                                     </div>
                                   </div>
