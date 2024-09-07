@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo5 from "./logo5.png";
 import DarkMode from "../common/darkMode";
-import menu_data from "./menu-data";
 
 const Header = () => {
   const [navbar, setNavbar] = useState(false);
