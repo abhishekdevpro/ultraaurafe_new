@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import logo from "../../header/logo5.png"
 import DarkMode from "../../common/darkMode";
 // eslint-disable-next-line react/prop-types
-const PageHeader = ({ activeMenu }) => {
+const PageHeader = () => {
 
   const openMobileMenu = () => {
     document.body.classList.add("menu-opened");

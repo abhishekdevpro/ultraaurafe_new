@@ -99,7 +99,7 @@ const RefundPolicy = () => {
         <Section>
           <h2>Course Flexibility</h2>
           <p>
-            UltraAura's courses are designed to be flexible, allowing students to learn at their own pace. If life events prevent you from completing a course, you can access the materials whenever it is convenient for you, as all of our courses remain available after enrollment.
+            UltraAura courses are designed to be flexible, allowing students to learn at their own pace. If life events prevent you from completing a course, you can access the materials whenever it is convenient for you, as all of our courses remain available after enrollment.
           </p>
         </Section>
 

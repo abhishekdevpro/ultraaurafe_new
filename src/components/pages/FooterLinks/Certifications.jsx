@@ -84,7 +84,7 @@ const CertificationPage = () => {
           <h2>Why Earn an UltraAura Certification?</h2>
           <p>Earning a certification from UltraAura offers numerous benefits:</p>
           <ul>
-            <li><strong>Industry Recognition:</strong> UltraAura's certifications are widely respected in the plumbing industry, helping you stand out in a competitive job market.</li>
+            <li><strong>Industry Recognition:</strong> UltraAura certifications are widely respected in the plumbing industry, helping you stand out in a competitive job market.</li>
             <li><strong>Practical Skills:</strong> Our certifications are based on hands-on, skill-focused learning that equips you with job-ready capabilities, not just theoretical knowledge.</li>
             <li><strong>Career Advancement:</strong> Certifications are a proven way to boost your employability, qualify for higher-paying positions, and open up new career opportunities.</li>
             <li><strong>Flexible Learning:</strong> Complete courses and certification requirements entirely online, allowing you to learn and earn your credentials at your own pace, from anywhere in the world.</li>
@@ -123,9 +123,9 @@ const CertificationPage = () => {
           <h2>How to Earn a Certification</h2>
           <ol>
             <li><strong>Enroll in a Course:</strong> Start by selecting a course that aligns with your career goals. Each certification is tied to a specific course or set of courses designed to give you the knowledge and skills needed to pass the certification exam.</li>
-            <li><strong>Complete the Coursework:</strong> Once enrolled, you'll gain access to high-quality, instructor-led course materials, including video lectures, reading assignments, practical exercises, and quizzes. You can complete the coursework at your own pace, allowing you to balance your learning with your personal and professional commitments.</li>
-            <li><strong>Pass the Skill Assessment:</strong> After completing the coursework, you'll be required to pass a skill assessment. This may include a combination of quizzes, hands-on exercises, and case studies designed to test your practical knowledge. Upon successful completion, you'll qualify for certification.</li>
-            <li><strong>Receive Your Certification:</strong> Once you've passed the skill assessment, you will be awarded your official UltraAura certification. This certificate can be downloaded, printed, and shared with potential employers or clients. It will also be verifiable online, giving you credibility in the job market.</li>
+            <li><strong>Complete the Coursework:</strong> Once enrolled, you will gain access to high-quality, instructor-led course materials, including video lectures, reading assignments, practical exercises, and quizzes. You can complete the coursework at your own pace, allowing you to balance your learning with your personal and professional commitments.</li>
+            <li><strong>Pass the Skill Assessment:</strong> After completing the coursework, you will be required to pass a skill assessment. This may include a combination of quizzes, hands-on exercises, and case studies designed to test your practical knowledge. Upon successful completion, you will qualify for certification.</li>
+            <li><strong>Receive Your Certification:</strong> Once you have passed the skill assessment, you will be awarded your official UltraAura certification. This certificate can be downloaded, printed, and shared with potential employers or clients. It will also be verifiable online, giving you credibility in the job market.</li>
           </ol>
         </Section>
 
@@ -134,13 +134,13 @@ const CertificationPage = () => {
           <ul>
             <li><strong>Digital and Shareable:</strong> Your certifications are digital, making them easy to share on professional networks like LinkedIn or with employers.</li>
             <li><strong>Verifiable Credentials:</strong> Each certification comes with a unique ID and can be verified online, providing proof of your skills to employers.</li>
-            <li><strong>Lifetime Access:</strong> Once earned, your certification is yours for life. You'll always have access to your certificate and course materials for future reference.</li>
+            <li><strong>Lifetime Access:</strong> Once earned, your certification is yours for life. You will always have access to your certificate and course materials for future reference.</li>
           </ul>
         </Section>
 
         <Section>
           <h2>Certification Pathways</h2>
-          <p>UltraAura offers flexible certification pathways, allowing you to progress at your own pace. Whether you're starting with beginner courses or aiming for advanced mastery, you can follow a structured path that matches your career aspirations. Certifications can also be stacked, meaning you can continue to build your expertise by earning multiple certifications over time.</p>
+          <p>UltraAura offers flexible certification pathways, allowing you to progress at your own pace. Whether you are starting with beginner courses or aiming for advanced mastery, you can follow a structured path that matches your career aspirations. Certifications can also be stacked, meaning you can continue to build your expertise by earning multiple certifications over time.</p>
           <p><strong>Example Pathways:</strong></p>
           <ul>
             <li><strong>Beginner to Advanced:</strong> Start with the Plumbing Fundamentals Certification and work your way up to Advanced Plumbing Techniques or Master Plumber Certification.</li>
@@ -150,7 +150,7 @@ const CertificationPage = () => {
 
         <Section>
           <h2>Certification Benefits for Employers</h2>
-          <p>If you're an employer or a contractor looking to hire skilled professionals, UltraAura certifications provide a reliable way to identify candidates with verified, job-ready skills. Our certifications ensure that individuals meet industry standards and are prepared to handle the challenges of modern plumbing work.</p>
+          <p>If you are an employer or a contractor looking to hire skilled professionals, UltraAura certifications provide a reliable way to identify candidates with verified, job-ready skills. Our certifications ensure that individuals meet industry standards and are prepared to handle the challenges of modern plumbing work.</p>
         </Section>
 
         <Section>

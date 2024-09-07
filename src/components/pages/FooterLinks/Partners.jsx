@@ -96,11 +96,11 @@ const PartnersPage = () => {
             </li>
             <li>
               <strong>Flexible Partnership Options</strong>
-              <p>We offer flexible partnership models to accommodate institutes of all sizes. Whether you're an established training center or a smaller institute, UltraAura provides opportunities to scale your reach and increase your revenue through our platform. Choose to offer individual courses, certification programs, or even bundle courses for specializations in plumbing.</p>
+              <p>We offer flexible partnership models to accommodate institutes of all sizes. Whether you are an established training center or a smaller institute, UltraAura provides opportunities to scale your reach and increase your revenue through our platform. Choose to offer individual courses, certification programs, or even bundle courses for specializations in plumbing.</p>
             </li>
             <li>
               <strong>Build Credibility</strong>
-              <p>Partnering with UltraAura enhances your institute's credibility by associating your name with a recognized global brand. Students trust UltraAura for providing high-quality education, and your courses will benefit from our reputation in the plumbing and vocational training sectors. This will help boost your institute's visibility and attract more students to your programs.</p>
+              <p>Partnering with UltraAura enhances your institute credibility by associating your name with a recognized global brand. Students trust UltraAura for providing high-quality education, and your courses will benefit from our reputation in the plumbing and vocational training sectors. This will help boost your institute visibility and attract more students to your programs.</p>
             </li>
           </ol>
         </Section>
@@ -110,29 +110,29 @@ const PartnersPage = () => {
           <ol>
             <li>
               <strong>Apply to Become a Partner</strong>
-              <p>Submit an application to become an UltraAura partner by providing details about your institute, the courses you offer, and the certifications your programs provide. We'll review your application to ensure it aligns with UltraAura's commitment to delivering high-quality educational content.</p>
+              <p>Submit an application to become an UltraAura partner by providing details about your institute, the courses you offer, and the certifications your programs provide. We will review your application to ensure it aligns with UltraAura commitment to delivering high-quality educational content.</p>
             </li>
             <li>
               <strong>List Your Institute</strong>
-              <p>Once approved, your institute will be listed on UltraAura's platform. Your profile will include important details such as your history, areas of expertise, and the courses available to students. This gives your institute the exposure it deserves, helping students make informed decisions when choosing their training provider.</p>
+              <p>Once approved, your institute will be listed on UltraAura platform. Your profile will include important details such as your history, areas of expertise, and the courses available to students. This gives your institute the exposure it deserves, helping students make informed decisions when choosing their training provider.</p>
             </li>
             <li>
               <strong>Upload Your Courses</strong>
-              <p>With your partnership established, you can begin uploading courses directly to our platform. UltraAura's user-friendly interface makes it easy to organize your lessons, add multimedia content, and create assessments to measure student progress. Each course can be customized with its own description, pricing, and prerequisites, giving you full control over your offerings.</p>
+              <p>With your partnership established, you can begin uploading courses directly to our platform. UltraAura user-friendly interface makes it easy to organize your lessons, add multimedia content, and create assessments to measure student progress. Each course can be customized with its own description, pricing, and prerequisites, giving you full control over your offerings.</p>
             </li>
             <li>
               <strong>Reach a Global Audience</strong>
-              <p>Once your courses are live, students worldwide can enroll, complete your training, and earn certifications. Our platform's robust marketing efforts help drive traffic to your courses, expanding your reach and generating revenue. You can track enrollment, monitor student progress, and interact with learners through our integrated system.</p>
+              <p>Once your courses are live, students worldwide can enroll, complete your training, and earn certifications. Our platform robust marketing efforts help drive traffic to your courses, expanding your reach and generating revenue. You can track enrollment, monitor student progress, and interact with learners through our integrated system.</p>
             </li>
             <li>
               <strong>Earn Revenue</strong>
-              <p>As a partner, you'll earn revenue based on student enrollments. UltraAura offers competitive revenue-sharing models that allow you to monetize your courses effectively while growing your brand and student base. Our transparent reporting system ensures you can track your earnings and payments with ease.</p>
+              <p>As a partner, you will earn revenue based on student enrollments. UltraAura offers competitive revenue-sharing models that allow you to monetize your courses effectively while growing your brand and student base. Our transparent reporting system ensures you can track your earnings and payments with ease.</p>
             </li>
           </ol>
         </Section>
 
         <Section>
-          <h2>What We're Looking For in Partners</h2>
+          <h2>What We are Looking For in Partners</h2>
           <p>At UltraAura, we seek partners who share our passion for high-quality education. We are especially interested in institutes that:</p>
           <ul>
             <li><strong>Specialize in Plumbing and Related Fields:</strong> Your courses should focus on plumbing, HVAC systems, drainage systems, safety standards, or other vocational skills related to the industry.</li>
@@ -150,8 +150,8 @@ const PartnersPage = () => {
               <p>UltraAura helps you reach a global audience, enabling you to increase enrollments and generate more revenue. With students from various regions and backgrounds looking to improve their plumbing skills, our platform provides unmatched opportunities for growth.</p>
             </li>
             <li>
-              <strong>Access to UltraAura's Marketing Tools</strong>
-              <p>As a partner, you'll benefit from UltraAura's extensive marketing efforts. Our platform uses SEO, social media, email campaigns, and partnerships to promote courses, driving traffic and boosting your enrollments. You can also use our tools to track marketing performance and adjust your strategies for maximum impact.</p>
+              <strong>Access to UltraAura Marketing Tools</strong>
+              <p>As a partner, you will benefit from UltraAura extensive marketing efforts. Our platform uses SEO, social media, email campaigns, and partnerships to promote courses, driving traffic and boosting your enrollments. You can also use our tools to track marketing performance and adjust your strategies for maximum impact.</p>
             </li>
             <li>
               <strong>Continuous Support</strong>
@@ -159,14 +159,14 @@ const PartnersPage = () => {
             </li>
             <li>
               <strong>Detailed Analytics and Reporting</strong>
-              <p>Our analytics tools provide valuable insights into course performance, student engagement, and revenue generation. You'll have access to reports that help you understand your audience, measure success, and refine your course offerings to better meet student needs.</p>
+              <p>Our analytics tools provide valuable insights into course performance, student engagement, and revenue generation. You will have access to reports that help you understand your audience, measure success, and refine your course offerings to better meet student needs.</p>
             </li>
           </ol>
         </Section>
 
         <Section>
           <h2>Become an UltraAura Partner Today!</h2>
-          <p>If you're ready to expand your institute's reach, grow your student base, and join a thriving global community of educators, becoming an UltraAura partner is the perfect opportunity. Together, we can empower students around the world to gain the skills and certifications they need for successful careers in the plumbing industry.</p>
+          <p>If you are ready to expand your institute reach, grow your student base, and join a thriving global community of educators, becoming an UltraAura partner is the perfect opportunity. Together, we can empower students around the world to gain the skills and certifications they need for successful careers in the plumbing industry.</p>
           <p>To learn more about partnering with UltraAura, visit <a href="http://www.ultraaura.education">www.ultraaura.education</a> or email us at <a href="mailto:info@ultraaura.education">info@ultraaura.education</a>. We look forward to working with you!</p>
         </Section>
       </Container>
