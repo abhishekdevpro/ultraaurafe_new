@@ -486,6 +486,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import InstructorCard from "./InstructorCard";
 import CourseContent from "./CourseContent";
 import SidebarSection from "./SidebarSection";
+import CommentForm from "./CommentForm";
+import CommentsList from "./CommentList";
 
 const DetailsContent = ({ courseFeatureData }) => {
   const [courseData, setCourseData] = useState(null);
@@ -590,7 +592,7 @@ const DetailsContent = ({ courseFeatureData }) => {
               <InstructorCard trainerID={courseData.trainer_id} />
               
               {/* Comment */}
-              <div className="card comment-sec">
+              {/* <div className="card comment-sec">
                 <div className="card-body">
                   <h5 className="subs-title">Post A comment</h5>
                   <form action='#'>
@@ -617,7 +619,9 @@ const DetailsContent = ({ courseFeatureData }) => {
                     </div>
                   </form>
                 </div>
-              </div>
+              </div> */}
+              <CommentForm courseId={courseid} />
+              <CommentsList courseId={courseid}/>
               {/* /Comment */}
             </div>
             

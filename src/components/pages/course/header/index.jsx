@@ -742,7 +742,6 @@ import PropTypes from "prop-types"; // Import PropTypes
 import { Link } from "react-router-dom";
 import logo5 from '../../../../assets/logo5.png';
 import HeadModule from "../module";
-import menu_data from "../../../header/menu-data";
 
 const CourseHeader = ({ activeMenu }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -776,7 +775,7 @@ const CourseHeader = ({ activeMenu }) => {
                   <i className="fas fa-times"></i>
                 </Link>
               </div>
-              <ul className="main-nav">
+              {/* <ul className="main-nav">
                 {menu_data.map((item) => (
                   <li key={item.id} className={`has-submenu ${item.link === activeMenu ? 'active' : ''}`}>
                     <Link to={item.link}>{item.title}</Link>
@@ -791,8 +790,9 @@ const CourseHeader = ({ activeMenu }) => {
                     )}
                   </li>
                 ))}
-              </ul>
+              </ul> */}
             </div>
+            
             <HeadModule />
             <div className="navbar-toggle" onClick={toggleMobileMenu}>
               <span></span>
