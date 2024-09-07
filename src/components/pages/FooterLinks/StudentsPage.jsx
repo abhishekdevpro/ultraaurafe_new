@@ -64,7 +64,7 @@ const Students = () => (
             <Section>
                 <h2>Why Join UltraAura as a Student?</h2>
                 <p>
-                    At UltraAura, we are dedicated to providing a flexible, accessible, and comprehensive learning experience for students seeking to advance their skills in the plumbing industry. Whether you're starting your career, looking to upgrade your skills, or aiming to get certified, UltraAura offers an exceptional educational platform tailored to meet your needs. Here's why you should join us as a student:
+                    At UltraAura, we are dedicated to providing a flexible, accessible, and comprehensive learning experience for students seeking to advance their skills in the plumbing industry. Whether youre starting your career, looking to upgrade your skills, or aiming to get certified, UltraAura offers an exceptional educational platform tailored to meet your needs. Heres why you should join us as a student:
                 </p>
             </Section>
 
@@ -87,7 +87,7 @@ const Students = () => (
             <Section>
                 <h2>Join UltraAura Today!</h2>
                 <p>
-                    Becoming an UltraAura student is the first step toward a rewarding career in the plumbing industry. Whether you're just starting out or looking to expand your expertise, our platform offers the tools and resources to help you achieve your goals.
+                    Becoming an UltraAura student is the first step toward a rewarding career in the plumbing industry. Whether you are just starting out or looking to expand your expertise, our platform offers the tools and resources to help you achieve your goals.
                 </p>
                 <p>
                     Ready to take the next step? Sign up today at <a href="http://www.ultraaura.education">www.ultraaura.education</a> and start your learning journey!

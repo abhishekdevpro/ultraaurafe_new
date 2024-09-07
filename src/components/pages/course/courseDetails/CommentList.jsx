@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -9,14 +10,29 @@ const CommentsList = ({ courseId }) => {
 
   useEffect(() => {
     const fetchComments = async () => {
+      setLoading(true);
+      setError(null);
+
+      if (!courseId) {
+        setError('Invalid course ID');
+        setLoading(false);
+        return;
+      }
+
       try {
         const response = await axios.get(`https://api.novajobs.us/api/trainers/comment/${courseId}`);
+        
+        // Debugging: Log the API response
+        console.log('API Response:', response);
+
         if (response.status === 200 && response.data.status === 'success') {
           setComments(response.data.data);
         } else {
-          setError('Failed to load comments');
+          setError(`Failed to load comments: ${response.data.message || 'Unknown error'}`);
         }
       } catch (error) {
+        // Debugging: Log the error
+        console.error('Error fetching comments:', error);
         setError('An error occurred while fetching comments');
       } finally {
         setLoading(false);
@@ -49,6 +65,11 @@ const CommentsList = ({ courseId }) => {
       )}
     </CommentsContainer>
   );
+};
+
+// PropTypes for validation
+CommentsList.propTypes = {
+  courseId: PropTypes.string.isRequired, // Ensure courseId is a required string
 };
 
 export default CommentsList;

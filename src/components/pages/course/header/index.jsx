@@ -743,7 +743,7 @@ import { Link } from "react-router-dom";
 import logo5 from '../../../../assets/logo5.png';
 import HeadModule from "../module";
 
-const CourseHeader = ({ activeMenu }) => {
+const CourseHeader = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {

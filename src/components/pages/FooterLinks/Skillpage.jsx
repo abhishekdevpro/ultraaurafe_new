@@ -93,7 +93,7 @@ const SkillAssessmentsPage = () => {
         <Section>
           <h2>Types of Skill Assessments</h2>
           <h3>1. Course-Based Skill Assessments</h3>
-          <p>Each course you take at UltraAura includes skill assessments that evaluate the knowledge you've gained. These assessments may consist of:</p>
+          <p>Each course you take at UltraAura includes skill assessments that evaluate the knowledge you have gained. These assessments may consist of:</p>
           <ul>
             <li><strong>Quizzes and Exams:</strong> Test your understanding of theoretical concepts.</li>
             <li><strong>Practical Exercises:</strong> Hands-on tasks that simulate real plumbing problems.</li>
@@ -123,7 +123,7 @@ const SkillAssessmentsPage = () => {
         <Section>
           <h2>How Skill Assessments Work</h2>
           <ol>
-            <li><strong>Enrollment:</strong> You can enroll in skill assessments alongside your courses or opt for standalone assessments. Once enrolled, you'll gain access to the assessment materials and instructions.</li>
+            <li><strong>Enrollment:</strong> You can enroll in skill assessments alongside your courses or opt for standalone assessments. Once enrolled, you will gain access to the assessment materials and instructions.</li>
             <li><strong>Complete the Assessment:</strong> Depending on the assessment type, you may need to complete quizzes, submit practical exercises, or provide written answers to case studies. In some cases, live or video demonstrations of hands-on tasks may be required.</li>
             <li><strong>Assessment Review:</strong> Our team of expert trainers will evaluate your submissions and provide feedback. This is your opportunity to learn from any mistakes and sharpen your skills.</li>
             <li><strong>Certification:</strong> Upon successful completion of the assessment, you will receive an UltraAura certificate, which serves as official recognition of your skills and knowledge. This certification is industry-recognized and can be presented to employers to showcase your competencies.</li>
@@ -135,7 +135,7 @@ const SkillAssessmentsPage = () => {
           <ul>
             <li><strong>Industry-Relevant:</strong> Our assessments are designed to reflect the latest industry standards and expectations.</li>
             <li><strong>Self-Paced:</strong> Complete assessments at your convenience, allowing you to balance work, study, and personal commitments.</li>
-            <li><strong>Globally Recognized Certifications:</strong> UltraAura's certifications are trusted by employers around the world, giving you a competitive edge in the global job market.</li>
+            <li><strong>Globally Recognized Certifications:</strong> UltraAura certifications are trusted by employers around the world, giving you a competitive edge in the global job market.</li>
             <li><strong>Ongoing Support:</strong> If you need help during your assessment, our support team and trainers are available to provide guidance and answer any questions.</li>
           </ul>
         </Section>
@@ -146,13 +146,13 @@ const SkillAssessmentsPage = () => {
           <ul>
             <li><strong>Review Course Materials:</strong> Thoroughly study the content provided in your courses and practice key concepts.</li>
             <li><strong>Practice Hands-On Tasks:</strong> Whenever possible, simulate the practical exercises in a real or controlled environment to refine your skills.</li>
-            <li><strong>Ask Questions:</strong> Don't hesitate to reach out to instructors or peers for clarification on any topics you find challenging.</li>
+            <li><strong>Ask Questions:</strong> Dont hesitate to reach out to instructors or peers for clarification on any topics you find challenging.</li>
           </ul>
         </Section>
 
         <Section>
           <h2>Get Started Today!</h2>
-          <p>UltraAura's skill assessments are your gateway to validating your plumbing skills and advancing your career. Whether you're a beginner or a seasoned professional, our assessments provide a reliable measure of your abilities and open the door to greater job opportunities.</p>
+          <p>UltraAura skill assessments are your gateway to validating your plumbing skills and advancing your career. Whether you are a beginner or a seasoned professional, our assessments provide a reliable measure of your abilities and open the door to greater job opportunities.</p>
           <p>Enroll in a skill assessment today at <a href="http://www.ultraaura.education">www.ultraaura.education</a> and take the next step toward becoming a certified professional in the plumbing industry!</p>
         </Section>
       </Container>

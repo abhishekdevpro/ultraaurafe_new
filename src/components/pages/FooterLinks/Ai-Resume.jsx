@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import PageHeader from '../header';
-import Footer from '../../footer';
+import PageHeader from '../header'; // Ensure this path is correct
+import Footer from '../../footer'; // Ensure this path is correct
 
 const Container = styled.div`
   padding: 20px;
@@ -10,7 +10,7 @@ const Container = styled.div`
 `;
 
 const Banner = styled.div`
-  background-color: #f4f4f4;
+  background-color: #333; // Changed to a darker color for better contrast with white text
   padding: 40px 0;
   text-align: center;
   margin-bottom: 20px;
@@ -18,6 +18,7 @@ const Banner = styled.div`
 
   h1 {
     font-size: 2.5rem;
+    margin: 0; // Ensure no extra margin if not needed
   }
 `;
 
@@ -62,26 +63,18 @@ const AIResumePage = () => {
     <>
       <PageHeader />
       <Banner>
-        <div className="page-banner">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12 col-12">
-                <h1 className="mb-0">AI Resume Building</h1>
-              </div>
-            </div>
-          </div>
-        </div>
+        <h1 className="mb-0">AI Resume Building</h1>
       </Banner>
       <Container>
         <Section>
           <p>
-            At UltraAura, we understand that a well-crafted resume is critical to landing your dream job in the plumbing industry. That's why we offer an innovative AI Resume Building tool designed to help you create professional, polished resumes that highlight your skills, experience, and certifications. Leveraging cutting-edge AI technology, our resume builder simplifies the process, ensuring you stand out to potential employers.
+            At UltraAura, we understand that a well-crafted resume is critical to landing your dream job in the plumbing industry. That why we offer an innovative AI Resume Building tool designed to help you create professional, polished resumes that highlight your skills, experience, and certifications. Leveraging cutting-edge AI technology, our resume builder simplifies the process, ensuring you stand out to potential employers.
           </p>
         </Section>
 
         <Section>
           <h2>Why Use AI for Resume Building?</h2>
-          <p>Creating a resume can be a challenging task, especially when you're unsure of how to format it or what information to include. Our AI-powered resume builder takes the guesswork out of the process by offering:</p>
+          <p>Creating a resume can be a challenging task, especially when you are unsure of how to format it or what information to include. Our AI-powered resume builder takes the guesswork out of the process by offering:</p>
           <ol>
             <li>
               <strong>Smart Suggestions Based on Industry Standards</strong>
@@ -89,11 +82,11 @@ const AIResumePage = () => {
             </li>
             <li>
               <strong>Customization for Different Roles</strong>
-              <p>Whether you're applying for an entry-level plumbing role or seeking a more advanced position, our AI tool tailors your resume to match the job. You can select different templates and formats to suit your experience level, ensuring your resume aligns with the role you're targeting.</p>
+              <p>Whether you are applying for an entry-level plumbing role or seeking a more advanced position, our AI tool tailors your resume to match the job. You can select different templates and formats to suit your experience level, ensuring your resume aligns with the role you are targeting.</p>
             </li>
             <li>
               <strong>Highlight Your UltraAura Certifications</strong>
-              <p>If you've earned certifications through UltraAura, our AI resume builder automatically highlights them in a way that makes them stand out to employers. Certifications are often key differentiators, so the AI ensures they are prominently displayed, giving you an edge over other applicants.</p>
+              <p>If you have earned certifications through UltraAura, our AI resume builder automatically highlights them in a way that makes them stand out to employers. Certifications are often key differentiators, so the AI ensures they are prominently displayed, giving you an edge over other applicants.</p>
             </li>
             <li>
               <strong>Instant Feedback and Optimization</strong>
@@ -124,17 +117,17 @@ const AIResumePage = () => {
             </li>
             <li>
               <strong>Customize Your Resume</strong>
-              <p>The AI will suggest content tailored to the job you're applying for. You can add or remove information, adjust the format, and make any other modifications to ensure your resume reflects your strengths and expertise.</p>
+              <p>The AI will suggest content tailored to the job you are applying for. You can add or remove information, adjust the format, and make any other modifications to ensure your resume reflects your strengths and expertise.</p>
             </li>
             <li>
               <strong>Download and Share</strong>
-              <p>Once you're satisfied with your resume, you can download it in multiple formats (PDF, Word, etc.) and start applying to jobs. The AI also ensures your resume is optimized for digital sharing and submission through job portals.</p>
+              <p>Once you are satisfied with your resume, you can download it in multiple formats (PDF, Word, etc.) and start applying to jobs. The AI also ensures your resume is optimized for digital sharing and submission through job portals.</p>
             </li>
           </ol>
         </Section>
 
         <Section>
-          <h2>Key Features of UltraAura's AI Resume Builder</h2>
+          <h2>Key Features of UltraAura AI Resume Builder</h2>
           <ul>
             <li><strong>Tailored for Plumbing Professionals:</strong> Built specifically with the plumbing industry in mind, ensuring the right skills, certifications, and experiences are highlighted.</li>
             <li><strong>Easy to Use:</strong> No need for advanced technical skills. The tool is user-friendly and intuitive, guiding you step-by-step through the process.</li>
@@ -145,10 +138,10 @@ const AIResumePage = () => {
 
         <Section>
           <h2>Resume Tips from the AI Tool</h2>
-          <p>In addition to building a resume, UltraAura's AI tool offers useful tips and guidance, such as:</p>
+          <p>In addition to building a resume, UltraAura AI tool offers useful tips and guidance, such as:</p>
           <ul>
             <li><strong>Tailor to the Job:</strong> It suggests specific adjustments to make your resume more relevant to the job description, such as adding relevant project experience or technical skills.</li>
-            <li><strong>Emphasize Achievements:</strong> Rather than listing tasks, the AI encourages you to focus on achievements that demonstrate impact (e.g., "Installed plumbing systems for a 200-unit residential project").</li>
+            <li><strong>Emphasize Achievements:</strong> Rather than listing tasks, the AI encourages you to focus on achievements that demonstrate impact.</li>
             <li><strong>Keep It Concise:</strong> The AI reviews the length of your resume and recommends removing unnecessary details to keep it clear and concise, ideally one page for entry-level roles or two pages for more experienced candidates.</li>
           </ul>
         </Section>
@@ -165,13 +158,7 @@ const AIResumePage = () => {
 
         <Section>
           <h2>Real-Life Impact</h2>
-          <p>Our AI resume builder has already helped many UltraAura students land their first jobs or advance in their careers. By focusing on the skills and certifications employers want, students have been able to secure roles faster and with more confidence. Whether you're entering the industry or looking to move up, a strong, well-crafted resume is your key to success.</p>
-        </Section>
-
-        <Section>
-          <h2>Get Started with UltraAura's AI Resume Builder</h2>
-          <p>Ready to take the next step in your career? Try UltraAura's AI Resume Builder and create a professional resume in just a few minutes. Stand out in the competitive plumbing job market with a resume that showcases your skills, certifications, and experience.</p>
-          <p>Visit <a href="http://www.ultraaura.education">www.ultraaura.education</a> to get started, or contact us at <a href="mailto:info@ultraaura.education">info@ultraaura.education</a> for more information.</p>
+          <p>Our AI resume builder has already helped many UltraAura students land their first jobs or advance in their careers. By focusing on the skills and certifications employers want, students have been able to secure roles faster and with more confidence. Whether you are entering the industry or looking to move up, a strong, well-crafted resume is your key to success.</p>
         </Section>
       </Container>
       <Footer />
