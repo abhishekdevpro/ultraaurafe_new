@@ -5,6 +5,36 @@ import axios from 'axios';
 import { Chapter, Chart, Cloud, Key, Mobile, Play, Teacher, Timer2, Users, Video2 } from '../../../imagepath';
 import { Modal, Button, Spinner } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import styled from 'styled-components';
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+
+  .btn-enroll {
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #4CAF50; /* Change this to your desired color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #45a049; /* Darken the button on hover */
+    }
+
+    &:disabled {
+      background-color: #ccc; /* Grey background for disabled button */
+      cursor: not-allowed;
+    }
+  }
+`;
+
 
 const SidebarSection = ({ courseId, courseData,courseFeatureData}) => {
   console.log(courseData,"from sidebar")
@@ -120,11 +150,12 @@ const SidebarSection = ({ courseId, courseData,courseFeatureData}) => {
           },
         }
       );
+      toast.success("Purchase Successful ")
       console.log('Purchase successful:', response.data);
       setShowPopup(false);
     } catch (error) {
       console.error('Error during purchase:', error);
-      alert('There was an issue with the purchase. Please try again.');
+      toast.error('There was an issue with the purchase. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -208,8 +239,7 @@ const SidebarSection = ({ courseId, courseData,courseFeatureData}) => {
                   </div>
                 </div>
                 {/* Conditional Button Rendering */}
-                <div>
-                {!courseData.is_student_enroll ? (
+                {/* {!courseData.is_student_enroll ? (
                   <button onClick={handleEnrollClick} className="btn btn-enroll w-100">
                     Enroll Now
                   </button>
@@ -219,7 +249,6 @@ const SidebarSection = ({ courseId, courseData,courseFeatureData}) => {
                   </button>
                 )}
                 
-              </div>
               {!courseData.is_student_enroll ? (
                 //  <button className="btn btn-enroll w-100" disabled>
                 //   </button>
@@ -236,7 +265,43 @@ const SidebarSection = ({ courseId, courseData,courseFeatureData}) => {
                  <button onClick={handleDownload} className="btn btn-enroll w-100">
                     Download Certificate
                   </button>
-                )}
+                )} */}
+
+<ButtonWrapper>
+    {/* Enroll Button */}
+    {!courseData.is_student_enroll ? (
+      <button onClick={handleEnrollClick} className="btn-enroll w-100">
+        Enroll Now
+      </button>
+    ) : (
+      <button className="btn-enroll w-100" disabled>
+        Enrolled
+      </button>
+    )}
+
+    {/* Take Test Button */}
+    {courseData.is_student_enroll ? (
+      <Link
+        to={`/student/student-skilltest/${courseData.course_id}/${courseData.course_title}`}
+      >
+        <button  
+        className="btn-enroll w-100"
+        >
+        Take Test
+        </button>
+      </Link>
+    ) : null}
+
+    {/* Download Certificate Button */}
+    {courseData.is_certificate ? (
+      <button onClick={handleDownload} className="btn-enroll w-100">
+        Download Certificate
+      </button>
+    ) : null}
+  </ButtonWrapper>
+
+
+
                 </div>
                 
             </div>

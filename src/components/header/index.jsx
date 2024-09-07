@@ -104,7 +104,7 @@ const Header = () => {
                   <i className="fas fa-times" />
                 </Link>
               </div>
-              <ul className="main-nav">
+              {/* <ul className="main-nav">
                 {menu_data.map((item) => (
                   <li key={item.id} className="has-submenu">
                     <Link to={item.link}>{item.title}</Link>
@@ -121,15 +121,15 @@ const Header = () => {
                     )}
                   </li>
                 ))}
-              </ul>
+              </ul> */}
             </div>
             <ul className="nav header-navbar-rht">
               <DarkMode />
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link className="nav-link header-sign" to="/partner-signin">
                   Partner With us
                 </Link>
-              </li>
+              </li> */}
               {isLoggedIn ? (
                 <>
                

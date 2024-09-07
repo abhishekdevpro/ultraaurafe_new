@@ -21,6 +21,20 @@ const Footer = () => {
                 <div className="footer-about-content">
                   <p>UltraAura.Education - An AI enabled Edtech Company</p>
                 </div>
+                <div className="footer-contact-info">
+                <div className="footer-address d-flex align-items-center mb-2">
+                  <img src={Icon20} alt="" className="img-fluid me-2" />
+                  <p>1509 Lady St, Columbia, SC 29201,<br /> United States</p>
+                </div>
+                <p className="mb-2">
+                  <img src={Icon19} alt="" className="img-fluid me-2" />
+                  info@ultraaura.education
+                </p>
+                <p className="mb-0">
+                  <img src={Icon21} alt="" className="img-fluid me-2" />
+                  1803-967-7715
+                </p>
+              </div>
               </div>
               {/* /Footer Widget */}
             </div>
@@ -81,20 +95,7 @@ const Footer = () => {
                   />
                 </form>
               </div>
-              <div className="footer-contact-info">
-                <div className="footer-address d-flex align-items-center mb-2">
-                  <img src={Icon20} alt="" className="img-fluid me-2" />
-                  <p>1509 Lady St, Columbia, SC 29201,<br /> United States</p>
-                </div>
-                <p className="mb-2">
-                  <img src={Icon19} alt="" className="img-fluid me-2" />
-                  info@ultraaura.education
-                </p>
-                <p className="mb-0">
-                  <img src={Icon21} alt="" className="img-fluid me-2" />
-                  1803-967-7715
-                </p>
-              </div>
+              
             </div>
           </div>
         </div>

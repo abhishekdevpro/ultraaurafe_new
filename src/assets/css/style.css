@@ -1714,14 +1714,27 @@ html.menu-opened body {
 	6. Home
 -----------------------*/
 
-.home-slide {
+/* .home-slide {
   position: relative;
   background-image: url(../img/banner.png);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   min-height: 1000px;
+} */
+.home-slide {
+  position: relative;
+  background-image: url(../img/banner.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  min-height: 80vh; /* Reduced height */
+  display: flex;
+  align-items: center;
+  padding-top: 50px;
+  /* border: 2px solid green; */
 }
+
 .section-header.section-head-one .sub-title {
   color: #777777;
   font-size: 18px;
@@ -1732,7 +1745,19 @@ html.menu-opened body {
   color: #0b0b0b;
 }
 .home-slide-text {
-  line-height: 36px;
+  /* line-height: 36px; */
+  /* height: 100%;
+  display: flex;
+  justify-content: center;align-items: center;
+  border: 2px solid green; */
+  height: 20vh; /* Full viewport height */
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: end;
+  text-align: center;
+  /* padding: 0 20px;  */
+  /* border: 2px solid green; */
 }
 .home-slide-text h5 {
   color: #685f78;
@@ -1813,7 +1838,7 @@ html.menu-opened body {
   font-weight: 700;
   margin-bottom: 0;
 }
-.banner-content .form-inner {
+ .form-inner {
   padding: 12px;
   background-color: #fff;
   border-radius: 35px;
@@ -1914,6 +1939,8 @@ html.menu-opened body {
 .select2-results__option {
   font-size: 14px;
 }
+
+
 .select2-container--default
   .select2-results__option--highlighted[aria-selected] {
   background-color: #ffdeda;
@@ -26484,6 +26511,7 @@ color: #B9B7C0 ;
   .banner-content .input-group .search-icon {
     display: none;
   }
+  
   .drop-detail {
     width: 100%;
   }

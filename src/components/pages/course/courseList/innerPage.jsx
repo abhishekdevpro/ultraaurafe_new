@@ -759,14 +759,14 @@ const InnerPage = ({ courses = [] }) => { // Default to an empty array
                     </div>
                     <div className="course-view d-flex align-items-center">
                       <img src={Icon2} alt="Course level icon" />
-                      <p>{course.level}</p>
+                      <p>{course.course_level_name}</p>
                     </div>
                   </div>
-                  <span className="d-inline-block average-rating fs-6">
+                  {/* <span className="d-inline-block average-rating fs-6">
                     <span className="fs-8" style={{ fontSize: "15px" }}>
                       {course.course_level_name}
                     </span>
-                  </span>
+                  </span> */}
                 
                 </div>
               </div>

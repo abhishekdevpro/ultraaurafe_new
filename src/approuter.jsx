@@ -282,7 +282,7 @@ const Approuter = () => {
         />
        
         <Route
-          path="/instructor/instructor-profile"
+          path="/instructor/instructor-profile/:id"
           element={<InstructorProfile />}
         />
         <Route
