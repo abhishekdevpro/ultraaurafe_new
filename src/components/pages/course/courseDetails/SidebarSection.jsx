@@ -128,7 +128,8 @@ const SidebarSection = ({ courseId, courseData,courseFeatureData}) => {
     } catch (error) {
       console.error('Failed to update course favorites:', error);
       // Show error toast
-      toast.error('Failed to update course favorites. Please try again.');
+      toast.error('FYou need to login first.');
+      navigate('/login')
     }
   };
 
@@ -215,7 +216,7 @@ const SidebarSection = ({ courseId, courseData,courseFeatureData}) => {
                     </Link>
                   </div> */}
               <div className="col-md-6 addHeart">
-      {isFavorite ? (
+      {isFavorite && localStorage.getItem("token") ? (
         <button 
           className="btn btn-danger w-100" 
           onClick={() => toggleClass(courseData.course_id, isFavorite)}>

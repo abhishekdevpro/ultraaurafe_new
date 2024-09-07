@@ -1115,6 +1115,29 @@ const BannerContent = styled.div`
   display: flex;
   justify-content: center;
 `;
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 1rem;
+`;
+
+const StyledButton = styled.button`
+  background: ${props => props.primary ? "#f66962" : "#ffffff"};
+  color: ${props => props.primary ? "#ffffff" : "#f66962"};
+  border: 2px solid #f66962;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: ${props => props.primary ? "#fc7f50" : "#f66962"};
+    color: #ffffff;
+  }
+`;
 
 
 
@@ -1188,6 +1211,39 @@ export const Home = () => {
     if (selectedLevel) queryParams.append("course_level_id", selectedLevel.value);
 
     navigate(`/course-list?${queryParams.toString()}`); // Use navigate for routing
+  };
+  useEffect(() => {
+    // Load the Collect.chat script
+    const script = document.createElement('script');
+    script.innerHTML = `
+      (function(w, d) { 
+        w.CollectId = "659ff1c019aee0dd6428a0c5"; 
+        var h = d.head || d.getElementsByTagName("head")[0]; 
+        var s = d.createElement("script"); 
+        s.setAttribute("type", "text/javascript"); 
+        s.async=true; 
+        s.setAttribute("src", "https://collectcdn.com/launcher.js"); 
+        h.appendChild(s); 
+      })(window, document);
+    `;
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  const handleAllCourses = () => {
+    navigate('/course-list');
+  };
+
+  const handleAIAssist = () => {
+    // Open the Collect.chat chatbot
+    if (window.CollectChatLauncher) {
+      window.CollectChatLauncher.open();
+    } else {
+      console.error("Collect.chat launcher not found");
+    }
   };
 
   return (
@@ -1334,6 +1390,10 @@ export const Home = () => {
       </FormContainer>
     </BannerContent>
   </Container>
+  <ButtonContainer>
+                    <StyledButton onClick={handleAllCourses}>All Courses</StyledButton>
+                    <StyledButton primary onClick={handleAIAssist}>AI Assist</StyledButton>
+                  </ButtonContainer>
                   {/* <div className="trust-user">
                     <p>
                       Trusted by Users <br />

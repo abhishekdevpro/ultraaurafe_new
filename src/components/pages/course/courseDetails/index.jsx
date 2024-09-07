@@ -6,6 +6,7 @@ import DetailsContent from "./detailsContent";
 import { Icon1, People, Timer, User1 } from "../../../imagepath";
 import Footer from "../../../footer";
 import { Link } from "react-router-dom";
+import Header from "../../../header";
 
 const CourseDetails = () => {
   const [courseData, setCourseData] = useState(null);
@@ -47,12 +48,16 @@ const CourseDetails = () => {
   if (!courseData) {
     return <div className="alert alert-info">No course content available at this time.</div>;
   }
-
+ const token  = localStorage.getItem('token')
   return (
     <>
       <div className="main-wrapper">
+        {/* <CourseHeader activeMenu={"CourseDetails"} /> */}
+        {token ? (
         <CourseHeader activeMenu={"CourseDetails"} />
-
+      ) : (
+        <Header /> // Replace <Header /> with the header you want to show when not logged in
+      )}
         <div className="breadcrumb-bar">
           <div className="container">
             <div className="row">
@@ -61,16 +66,15 @@ const CourseDetails = () => {
                   <nav aria-label="breadcrumb" className="page-breadcrumb">
                     <ol className="breadcrumb">
                       <li className="breadcrumb-item">
-                        <Link to="/home">Home</Link>
+                        <Link to="/home"></Link>
                       </li>
                       <li className="breadcrumb-item" aria-current="page">
-                        Courses
+                        
                       </li>
                       <li className="breadcrumb-item" aria-current="page">
-                        All Courses
+                        
                       </li>
                       <li className="breadcrumb-item" aria-current="page">
-                        {courseData.title || "Course Title"}
                       </li>
                     </ol>
                   </nav>

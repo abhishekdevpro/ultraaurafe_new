@@ -706,6 +706,8 @@ import Header from '../../header';
 import {
   EmailIcon,
   Icon1,
+  Icon12,
+  Icon2,
   PhoneIcon,
 } from "../../imagepath";
 
@@ -717,6 +719,7 @@ const InstructorProfile = () => {
     const fetchProfileData = async () => {
       try {
         const response = await axios.get(`https://api.novajobs.us/api/trainers/trainer-profile/${id}`);
+        console.log(response,"ghjk");
         setProfileData(response.data.data);
       } catch (error) {
         console.error('Error fetching profile data:', error);
@@ -736,21 +739,21 @@ const InstructorProfile = () => {
       <Header/>
       {/* Breadcrumb */}
       <div className="breadcrumb-bar">
-        {/* <div className="container">
+        <div className="container">
           <div className="row">
             <div className="col-md-12 col-12">
               <div className="breadcrumb-list">
                 <nav aria-label="breadcrumb" className="page-breadcrumb">
                   <ol className="breadcrumb">
-                    <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-                    <li className="breadcrumb-item">Instructors</li>
-                    <li className="breadcrumb-item active" aria-current="page">{trainer.first_name} {trainer.last_name}</li>
+                    <li className="breadcrumb-item"></li>
+                    <li className="breadcrumb-item"></li>
+                    <li className="breadcrumb-item active" aria-current="page"></li>
                   </ol>
                 </nav>
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
 
       {/* Instructor Banner */}
@@ -809,7 +812,7 @@ const InstructorProfile = () => {
               </div>
 
               {/* Courses */}
-              {/* <div className="card education-sec">
+              <div className="card education-sec">
                 <div className="card-body pb-0">
                   <h5 className="subs-title">Courses</h5>
                   <div className="row">
@@ -841,15 +844,15 @@ const InstructorProfile = () => {
                                 </div>
                               </div>
                               <h3 className="title instructor-text">
-                                <Link to={`/course-details/${course.id}`}>{course.course_title}</Link>
+                                <Link to={`/course-info/${course.id}`}>{course.course_title}</Link>
                               </h3>
                               <div className="course-info d-flex align-items-center border-0 m-0">
                                 <div className="rating-img d-flex align-items-center">
-                                  <img src="/icon-01.svg" alt="Course Duration" />
+                                  <img src={Icon1} alt="Course Duration" />
                                   <p>{course.time_spent_on_course}</p>
                                 </div>
                                 <div className="course-view d-flex align-items-center">
-                                  <img src="/icon-02.svg" alt="Total Lectures" />
+                                  <img src={Icon2} alt="Total Lectures" />
                                   <p>{course.total_lectures} Lectures</p>
                                 </div>
                               </div>
@@ -871,7 +874,8 @@ const InstructorProfile = () => {
                     ))}
                   </div>
                 </div>
-              </div> */}
+              </div>
+              
             </div>
 
             <div className="col-lg-4">
@@ -938,7 +942,7 @@ const InstructorProfile = () => {
                     {trainer.website && (
                       <div className="edu-wrap">
                         <div className="edu-name">
-                          <span><img src="/website-icon.svg" alt="Website" /></span>
+                          <span><img src={Icon12} alt="Website" /></span>
                         </div>
                         <div className="edu-detail">
                           <h6>Website</h6>
