@@ -91,13 +91,13 @@ const CourseDetails = () => {
                 <div className="instructor-wrap border-bottom-0 m-0">
                   <div className="about-instructor align-items-center">
                     <div className="abt-instructor-img">
-                      <Link to="/instructor/instructor-profile">
+                      <Link to={`/instructor/instructor-profile/${courseData.data.trainer_id}`}>
                         <img src={User1} alt="Instructor" className="img-fluid" />
                       </Link>
                     </div>
                     <div className="instructor-detail me-3">
                       <h5>
-                        <Link to="/instructor/instructor-profile">{courseData.data.trainer_first_name || "Instructor Name"} {courseData.data.trainer_last_name || "dexter"}</Link>
+                        <Link to={`/instructor/instructor-profile/${courseData.data.trainer_id}`}>{courseData.data.trainer_first_name || "Instructor Name"} {courseData.data.trainer_last_name || "dexter"}</Link>
                       </h5>
                       <p>{courseData.data.trainer_job_title || "Instructor Title"}</p>
                     </div>
@@ -108,7 +108,7 @@ const CourseDetails = () => {
                       <i className="fas fa-star filled me-1" />
                       <i className="fas fa-star me-1" />
                       <span className="d-inline-block average-rating">
-                        <span>{courseData.rating || "4.5"}</span> ({courseData.reviews || "15"})
+                        <span>{courseData.rating || "4.5"}</span> 
                       </span>
                     </div>
                   </div>

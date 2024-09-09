@@ -144,13 +144,13 @@ export default function StudentSidebar() {
                   Question &amp; Answer
                 </Link>
               </li>
-              <li className={`nav-item ${location.pathname === '/student/student-referral' ? 'active' : ''}`}>
+              {/* <li className={`nav-item ${location.pathname === '/student/student-referral' ? 'active' : ''}`}>
 
                 <Link to="" className="nav-link">
                   <i className="bx bxs-user-plus" />
                   Referrals
                 </Link>
-              </li>
+              </li> */}
               <li className={`nav-item ${location.pathname === '/student/student-messages' ? 'active' : ''}`}>
                 <Link to="" className="nav-link">
                   <i className="bx bxs-chat" />
@@ -158,13 +158,13 @@ export default function StudentSidebar() {
                 </Link>
               </li>
 
-              <li className={`nav-item ${location.pathname === '/student/student-ticket' ? 'active' : ''}`}>
+              {/* <li className={`nav-item ${location.pathname === '/student/student-ticket' ? 'active' : ''}`}>
 
                 <Link to="" className="nav-link">
                   <i className="bx bxs-coupon" />
                   Support Tickets
                 </Link>
-              </li>
+              </li> */}
             </ul>
             <h3>Account Settings</h3>
             <ul>
