@@ -421,6 +421,83 @@ import { useSelector } from "react-redux";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import styled from 'styled-components';
+import FeatherIcon from 'feather-icons-react';
+
+// Styled components
+const HeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    align-items: flex-start;
+  }
+`;
+
+const Title = styled.h2`
+  margin: 0;
+  font-size: 24px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 15px;
+  }
+`;
+
+const ButtonGroup = styled.ul`
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  & > li {
+    margin-left: 10px;
+
+    @media (max-width: 768px) {
+      margin-left: 0;
+      margin-bottom: 10px;
+
+      &:nth-child(2) {
+        display: none; /* Hide the Save Changes button on smaller screens */
+      }
+    }
+  }
+
+  & > li > a,
+  & > li > button {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 16px;
+
+    @media (max-width: 768px) {
+      padding: 10px;
+      justify-content: center;
+      gap:2px;
+      font-size: 14px;
+
+      & > span {
+        display: none; /* Hide the text on smaller screens */
+      }
+    }
+  }
+
+  & > li > a > svg,
+  & > li > button > svg {
+    margin-right: 8px;
+
+    @media (max-width: 768px) {
+      margin-right: 0;
+    }
+  }
+`;
+
 const EditCourse = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -581,33 +658,31 @@ const EditCourse = () => {
 
       <section className="page-content course-sec">
         <div className="container">
-          <div className="row align-items-center">
+        <div className="row align-items-center">
             <div className="col-md-12">
-              <div className="add-course-header">
-                <h2>Edit Course</h2>
-                <div className="add-course-btns">
-                  <ul className="nav">
-                  <li>
-                      <button onClick={handleAddSection} className=" btn btn-primary">
-                        Add Section
-                      </button>
-                    </li>
-                    
-                    <li>
-                      <button onClick={handleSave} className="btn btn-success-dark">
-                        Save Changes
-                      </button>
-                    </li>
-
-                    <li>
-                      <Link to="/instructor/instructor-dashboard" className="btn btn-black">
-                        Back to Course
-                      </Link>
-                    </li>
-
-                  </ul>
-                </div>
-              </div>
+            <HeaderWrapper>
+      <Title>Edit Course</Title>
+      <ButtonGroup>
+        <li>
+          <button onClick={handleAddSection} className="btn btn-primary">
+            <FeatherIcon icon="plus-circle" />
+            <span>Add Section</span>
+          </button>
+        </li>
+        <li>
+          <button onClick={handleSave} className="btn btn-success-dark">
+            <FeatherIcon icon="save" />
+            <span>Save Changes</span>
+          </button>
+        </li>
+        <li>
+          <Link to="/instructor/instructor-dashboard" className="btn btn-black">
+            <FeatherIcon icon="arrow-left" />
+            <span>Back to Course</span>
+          </Link>
+        </li>
+      </ButtonGroup>
+    </HeaderWrapper>
             </div>
           </div>
           <div className="row">
@@ -836,6 +911,29 @@ const EditCourse = () => {
                      </div>
                    </div>
                  </div>
+
+                 <div className="add-course-btns">
+                  <ul className="nav">
+                  <li>
+                      <button onClick={handleAddSection} className=" btn btn-primary">
+                        Add Section
+                      </button>
+                    </li>
+                    
+                    {/* <li>
+                      <button onClick={handleSave} className="btn btn-success-dark">
+                        Save Changes
+                      </button>
+                    </li> */}
+
+                    <li>
+                      <Link to="/instructor/instructor-dashboard" className="btn btn-black">
+                        Back to Course
+                      </Link>
+                    </li>
+
+                  </ul>
+                </div>
                </div>
              </div>
            </section>

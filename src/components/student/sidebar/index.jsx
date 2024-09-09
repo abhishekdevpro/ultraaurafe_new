@@ -119,14 +119,14 @@ export default function StudentSidebar() {
               </li>
               <li className={`nav-item ${location.pathname === '/student/student-reviews' ? 'active' : ''}`}>
 
-                <Link to="" className="nav-link">
+                <Link to="/student/student-reviews" className="nav-link">
                   <i className="bx bxs-star" />
                   Reviews
                 </Link>
               </li>
               <li className={`nav-item ${location.pathname === '/student/student-quiz' ? 'active' : ''}`}>
 
-                <Link to="" className="nav-link">
+                <Link to="/student/student-quiz" className="nav-link">
                   <i className="bx bxs-shapes" />
                   My Quiz Attempts
                 </Link>
@@ -139,7 +139,7 @@ export default function StudentSidebar() {
               </li>
               <li className={`nav-item ${location.pathname === '/student/student-qa' ? 'active' : ''}`}>
 
-                <Link to="" className="nav-link">
+                <Link to="/student/student-qa" className="nav-link">
                   <i className="bx bxs-bookmark-alt" />
                   Question &amp; Answer
                 </Link>

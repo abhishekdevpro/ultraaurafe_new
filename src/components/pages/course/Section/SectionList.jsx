@@ -407,6 +407,67 @@ import axios from "axios";
 import Footer from "../../../footer";
 import CourseHeader from "../header";
 import LectureItem from "../Lecture/LectureItem";
+import FeatherIcon from "feather-icons-react/build/FeatherIcon";
+import styled from 'styled-components';
+
+const HeaderWrapper = styled.div`
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const CourseTitle = styled.h2`
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 10px;
+
+  .nav {
+    display: flex;
+    gap: 10px;
+
+    li {
+      list-style: none;
+
+      .btn {
+        font-size: 14px;
+        padding: 10px 20px;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+
+        &.btn-secondary {
+          background-color: #6c757d;
+          color: white;
+          &:hover {
+            background-color: #5a6268;
+          }
+        }
+
+        &.btn-primary {
+          background-color: #007bff;
+          color: white;
+          &:hover {
+            background-color: #0069d9;
+          }
+        }
+
+        .feather {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+`;
 
 const SectionsList = () => {
   const { id } = useParams();
@@ -454,23 +515,56 @@ const SectionsList = () => {
 
       <section className="page-content course-sec">
         <div className="container">
-          <div className="row align-items-center">
+          {/* <div className="row align-items-center">
             <div className="col-md-12">
               <div className="add-course-header">
                 <h2>{courseTitle || "Course"} </h2>
                 <div className="add-course-btns">
-                  <Link to={`/add-section/${id}`} className="btn btn-primary">
-                    Add New Section
-                  </Link>
-                </div>
-              </div>
+  <ul className="nav">
+    <li>
+      <Link to={`/edit-course/${id}`} className="btn btn btn-secondary">
+        <FeatherIcon icon="edit" className="me-2" />
+        Edit Course
+      </Link>
+    </li>
+    <li>
+      <Link to={`/add-section/${id}`} className="btn btn-primary">
+        <FeatherIcon icon="plus-circle" className="me-2" />
+        Add New Section
+      </Link>
+    </li>
+  </ul>
+</div>              </div>
+            </div>
+          </div> */}
+          <div className="row align-items-center">
+            <div className="col-md-12">
+              <HeaderWrapper>
+                <CourseTitle>{courseTitle || "Course"} </CourseTitle>
+                <ButtonGroup>
+                  <ul className="nav">
+                    <li>
+                      <Link to={`/edit-course/${id}`} className="btn btn-secondary">
+                        <FeatherIcon icon="edit" className="feather" />
+                        Edit Course
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to={`/add-section/${id}`} className="btn btn-primary">
+                        <FeatherIcon icon="plus-circle" className="feather" />
+                        Add New Section
+                      </Link>
+                    </li>
+                  </ul>
+                </ButtonGroup>
+              </HeaderWrapper>
             </div>
           </div>
           <div className="row">
             <div className="col-md-12">
               <div className="card">
                 <div className="card-body">
-                  <h4 className="card-title">Course Content</h4>
+                  {/* <h4 className="card-title">Course Content</h4> */}
                   {sections.length === 0 ? (
                     <div className="no-content">
                       <p>No sections available for this course.</p>
@@ -490,20 +584,31 @@ const SectionsList = () => {
                         >
                           <h5>{section.section_name}</h5>
                           <div className="button-group">
-                            <button
-                              className="btn btn-sm btn-info view-button"
-                              onClick={() => toggleSection(section.id)}
-                            >
-                              {expandedSectionId === section.id
-                                ? "Close"
-                                : "View"}
-                            </button>
-                            <Link
+                          <Link
                               to={`/edit-section/${id}/${section.id}`}
                               className="btn btn-sm btn-warning edit-button"
                             >
+                         <FeatherIcon icon="edit" className="me-2" />
+
                               Edit Section
                             </Link>
+                            <button
+  className="btn btn-sm btn-info view-button"
+  onClick={() => toggleSection(section.id)}
+>
+  {expandedSectionId === section.id ? (
+    <>
+      <FeatherIcon icon="x-circle" className="me-2" />
+      Close
+    </>
+  ) : (
+    <>
+      <FeatherIcon icon="eye" className="me-2" />
+      View
+    </>
+  )}
+</button>
+                           
                           </div>
                         </div>
                         {expandedSectionId === section.id && (
@@ -527,6 +632,8 @@ const SectionsList = () => {
                               to={`/add-lecture/${id}/${section.id}`}
                               className="btn btn-sm btn-primary mt-3"
                             >
+                                      <FeatherIcon icon="edit" className="me-2" />
+
                               Add Lecture
                             </Link>
                           </div>
