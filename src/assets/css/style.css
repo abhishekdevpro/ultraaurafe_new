@@ -19848,7 +19848,7 @@ input[type="password"]::-ms-clear {
 -----------------------*/
 
 .add-course-header {
-  padding: 60px 0;
+  /* padding: 60px 0; */
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -19883,7 +19883,6 @@ input[type="password"]::-ms-clear {
 }
 .multistep-form fieldset {
   display: none;
-  width: 100%;
 }
 .widget-setcount {
   padding: 30px 30px 30px;
@@ -19894,7 +19893,7 @@ input[type="password"]::-ms-clear {
   padding: 0;
   margin: 0;
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   list-style: none;
 }
 .widget-setcount ul li {

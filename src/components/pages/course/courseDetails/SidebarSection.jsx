@@ -43,10 +43,9 @@ const SidebarSection = ({ courseId, courseData,courseFeatureData}) => {
   const [videoUrl, setVideoUrl] = useState(null);
   const navigate = useNavigate();
   const [isClassAdded, setIsClassAdded] = useState([]);
-
+  const token = localStorage.getItem('token')
 
   const handleEnrollClick = () => {
-    const token = localStorage.getItem('token');
     if (token) {
       setShowPopup(true);
     } else {
@@ -55,7 +54,6 @@ const SidebarSection = ({ courseId, courseData,courseFeatureData}) => {
   };
 
     const handleDownload = async () => {
-      const token = localStorage.getItem('token')
       try {
         const response = await axios.get(`https://api.novajobs.us/api/students/certificate/${courseId}`, {
           headers: {
@@ -94,7 +92,6 @@ const SidebarSection = ({ courseId, courseData,courseFeatureData}) => {
     setIsClassAdded(updatedClasses);
   
     try {
-      const token = localStorage.getItem('token');
       if (isFavorite) {
         // Remove from favorites
         await axios.post(
@@ -136,7 +133,6 @@ const SidebarSection = ({ courseId, courseData,courseFeatureData}) => {
 
   const handleCheckout = async () => {
     setLoading(true);
-    const token = localStorage.getItem('token');
     try {
       const response = await axios.post(
         'https://api.novajobs.us/api/students/buy',
@@ -281,7 +277,7 @@ const SidebarSection = ({ courseId, courseData,courseFeatureData}) => {
     )}
 
     {/* Take Test Button */}
-    {courseData.is_student_enroll ? (
+    {token && courseData.is_student_enroll ? (
       <Link
         to={`/student/student-skilltest/${courseData.course_id}/${courseData.course_title}`}
       >
@@ -294,7 +290,7 @@ const SidebarSection = ({ courseId, courseData,courseFeatureData}) => {
     ) : null}
 
     {/* Download Certificate Button */}
-    {courseData.is_certificate ? (
+    {token && courseData.is_certificate ? (
       <button onClick={handleDownload} className="btn-enroll w-100">
         Download Certificate
       </button>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import FeatherIcon from 'feather-icons-react';
 
 const LectureItem = ({ lecture, courseId, sectionId }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -14,16 +15,29 @@ const LectureItem = ({ lecture, courseId, sectionId }) => {
       <div className="lecture-header">
         <h6 className="lecture-name">{lecture.lecture_name}</h6>
         <div className="button-group">
-          <button
-            className="btn btn-sm btn-info preview-button"
-            onClick={toggleExpand}
-          >
-            {isExpanded ? 'Close' : 'Preview'}
-          </button>
+        <button
+  className="btn btn-sm btn-info preview-button"
+  onClick={toggleExpand}
+>
+  {isExpanded ? (
+    <>
+      <FeatherIcon icon="x-circle" className="me-2" />
+      Close
+    </>
+  ) : (
+    <>
+      <FeatherIcon icon="eye" className="me-2" />
+      Preview
+    </>
+  )}
+</button>
+
           <Link
             to={`/edit-lecture/${courseId}/${sectionId}/${lecture.id}`}
             className="btn btn-sm btn-warning edit-lecture-button"
           >
+                    <FeatherIcon icon="edit" className="me-2" />
+
             Edit Lecture
           </Link>
         </div>

@@ -11,6 +11,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
+// import InstructorSidebar from "../../../instructor/sidebar";
+
 
 const AddCourse = () => {
   const navigate = useNavigate();
@@ -172,10 +174,10 @@ const AddCourse = () => {
     <div className="main-wrapper">
       <CourseHeader activeMenu={"AddCourse"} />
 
-      <section className="page-content course-sec ">
+      <section className="">
         <div className="container">
-          <div className="row align-items-center">
-            <div className="col-md-12 border border-danger">
+          {/* <div className="row align-items-center">
+            <div className="col-md-12">
               <div className="add-course-header">
                 <h2>Add New Course</h2>
                 <div className="add-course-btns">
@@ -186,7 +188,7 @@ const AddCourse = () => {
                         className="btn btn-black"
                       >
                         Back to Course
-                      </Link> */}
+                      </Link> 
                     </li>
                     <li>
                       <button
@@ -200,9 +202,31 @@ const AddCourse = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
+           <div className="breadcrumb-bar breadcrumb-bar-info">
+        <div className="container">
           <div className="row">
-            <div className="col-md-12">
+            <div className="col-md-12 col-12">
+              <div className="breadcrumb-list">
+                <h2 className="breadcrumb-title">Add New Course</h2>
+                <nav aria-label="breadcrumb" className="page-breadcrumb">
+                  <ol className="breadcrumb">
+                    <li className="breadcrumb-item">
+                      <Link to="/home">Home</Link>
+                    </li>
+                    <li className="breadcrumb-item active" aria-current="page">
+                      Add New Course
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+          
+          <div className="row">
+          <div className="col-md-12">
               <div className="card">
                 <div className="widget-set">
                   <div className="widget-setcount">
@@ -608,6 +632,7 @@ const AddCourse = () => {
               </div>
             </div>
           </div>
+            
         </div>
       </section>
 

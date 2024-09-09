@@ -1,26 +1,24 @@
 import React, { useState, useEffect } from "react";
 import Footer from "../../footer";
 import { InstructorHeader } from "../../instructor/header";
-import { Icon1, Icon2, User6, } from "../../imagepath";
 import InstructorSidebar from "../sidebar";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import CourseTable from "./CourseList";
 import axios from 'axios';
 
-import couresimg from "../../../assets/Online Course.png"
 export const Dashboard = () => {
   const { id } = useParams()
   console.log(id, "trainer id")
-  const [isClassAdded, setIsClassAdded] = useState([false]);
-  const [allCourses, setAllCourses] = useState([]);
+  // const [isClassAdded, setIsClassAdded] = useState([false]);
+  const [ setAllCourses] = useState([]);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
-  const toggleClass = (index) => {
-    const updatedClasses = [...isClassAdded];
-    updatedClasses[index] = !updatedClasses[index];
-    setIsClassAdded(updatedClasses);
+  // const navigate = useNavigate();
+  // const toggleClass = (index) => {
+  //   const updatedClasses = [...isClassAdded];
+  //   updatedClasses[index] = !updatedClasses[index];
+  //   setIsClassAdded(updatedClasses);
 
-  };
+  // };
 
   useEffect(() => {
     const fetchAllCourses = async () => {
@@ -41,22 +39,22 @@ export const Dashboard = () => {
     };
     fetchAllCourses();
   }, []);
-  const fetchCourseDetails = async (courseId) => {
-    try {
-      const response = await axios.get(
-        `https://api.novajobs.us/api/trainers/course-details/${courseId}`,
-        {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        }
-      );
-      console.log(response.data);
-      navigate(`/course-details/${courseId}`, { state: { courseData: response.data.data } });
-    } catch (error) {
-      console.error("Error fetching course details:", error);
-    }
-  };
+  // const fetchCourseDetails = async (courseId) => {
+  //   try {
+  //     const response = await axios.get(
+  //       `https://api.novajobs.us/api/trainers/course-details/${courseId}`,
+  //       {
+  //         headers: {
+  //           Authorization: localStorage.getItem("token"),
+  //         },
+  //       }
+  //     );
+  //     console.log(response.data);
+  //     navigate(`/course-details/${courseId}`, { state: { courseData: response.data.data } });
+  //   } catch (error) {
+  //     console.error("Error fetching course details:", error);
+  //   }
+  // };
   if (error) {
     return <div className="alert alert-danger">{error}</div>;
   }
@@ -251,10 +249,10 @@ export const Dashboard = () => {
                 </div>
               </div> */}
               <CourseTable />
-              <div className="dashboard-title">
+              {/* <div className="dashboard-title">
                 <h4>Recently Enrolled Coursess</h4>
-              </div>
-              {allCourses.length > 0 ? (
+              </div> */}
+              {/* {allCourses.length > 0 ? (
                 <div className="row">
                   {allCourses.map((course) => (
                     <div className="col-md-4" key={course.id}>
@@ -286,7 +284,6 @@ export const Dashboard = () => {
                                 </Link>
                                 <p>{course.trainer_first_name} <span>{course.trainer_last_name}</span></p>
                                 <div className="course-name">
-                                  {/* Instructor details */}
                                 </div>
                               </div>
                               <div className="course-share d-flex align-items-center justify-content-center">
@@ -328,8 +325,9 @@ export const Dashboard = () => {
                 </div>
               ) : (
                 <p>No courses available</p>
-              )}
-              <div className="dash-pagination">
+              )} */}
+              
+              {/* <div className="dash-pagination">
                 <div className="row align-items-center">
                   <div className="col-6">
                     <p>Page 1 of 2</p>
@@ -350,7 +348,7 @@ export const Dashboard = () => {
                     </ul>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
             {/* Student Dashboard */}
           </div>
