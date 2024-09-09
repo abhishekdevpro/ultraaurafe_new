@@ -10,7 +10,7 @@ export const Dashboard = () => {
   const { id } = useParams()
   console.log(id, "trainer id")
   // const [isClassAdded, setIsClassAdded] = useState([false]);
-  const [ setAllCourses] = useState([]);
+  const [allCourses, setAllCourses] = useState([]);
   const [error, setError] = useState(null);
   // const navigate = useNavigate();
   // const toggleClass = (index) => {
