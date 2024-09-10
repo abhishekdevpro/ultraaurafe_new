@@ -11,10 +11,16 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
+import { debounce } from 'lodash';
+
 // import InstructorSidebar from "../../../instructor/sidebar";
 
 
 const AddCourse = () => {
+  const [errors, setErrors] = useState({
+    courseBannerImage: "",
+    courseIntroVideo: ""
+  });
   const navigate = useNavigate();
   const mobileSidebar = useSelector((state) => state.sidebarSlice.expandMenu);
   const [activeTab, setActiveTab] = useState("basic");
@@ -58,43 +64,114 @@ const AddCourse = () => {
   };
 
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setCourseData({ ...courseData, [e.target.name]: file });
-  };
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+  //   setCourseData({ ...courseData, [e.target.name]: file });
+  // };
 
-  const handleSave = async () => {
-    try {
-      const formData = new FormData();
-      for (const key in courseData) {
-        if (key === "course_banner_image" || key === "course_intro_video") {
-          formData.append(key, courseData[key], courseData[key]?.name);
-        } else {
-          formData.append(key, courseData[key]);
-        }
-      }
-      const token = localStorage.getItem("trainerToken");
-      const response = await axios.post(
-        "https://api.novajobs.us/api/trainers/create-course",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: token,
-          },
-        }
-      );
-      console.log("Course saved successfully:", response.data);
-      toast.success("Course created successfully!");
-      // sessionStorage.removeItem('courseData'); // Clear the session storage after successful save
-      setTimeout(() => {
-        navigate(`/instructor/instructor-dashboard`);
-      }, 2000);
-    } catch (error) {
-      console.error("Error saving course:", error);
-      toast.error("Failed to create section. Please try again.");
+const handleFileChange = (e) => {
+  const { name, files } = e.target;
+  const file = files[0];
+  
+  if (name === "course_banner_image") {
+    if (file && !["image/jpeg", "image/png"].includes(file.type)) {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        // courseBannerImage: "Invalid file type. Only JPEG and PNG are allowed."
+      }));
+      toast.error("Invalid file type. Only JPEG and PNG are allowed.");
+      return;
+    } else {
+      setErrors(prevErrors => ({ ...prevErrors, courseBannerImage: "" }));
     }
-  };
+  }
+
+  if (name === "course_intro_video") {
+    if (file && file.type !== "video/mp4") {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        // courseIntroVideo: "Invalid file type. Only MP4 is allowed."
+      }));
+      toast.error("Invalid file type. Only MP4 is allowed.");
+      return;
+    } else {
+      setErrors(prevErrors => ({ ...prevErrors, courseIntroVideo: "" }));
+    }
+  }
+
+  setCourseData(prevData => ({
+    ...prevData,
+    [name]: file
+  }));
+};
+
+  
+
+  // const handleSave = async () => {
+  //   try {
+  //     const formData = new FormData();
+  //     for (const key in courseData) {
+  //       if (key === "course_banner_image" || key === "course_intro_video") {
+  //         formData.append(key, courseData[key], courseData[key]?.name);
+  //       } else {
+  //         formData.append(key, courseData[key]);
+  //       }
+  //     }
+  //     const token = localStorage.getItem("trainerToken");
+  //     const response = await axios.post(
+  //       "https://api.novajobs.us/api/trainers/create-course",
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //           Authorization: token,
+  //         },
+  //       }
+  //     );
+  //     console.log("Course saved successfully:", response.data);
+  //     toast.success("Course created successfully!");
+  //     // sessionStorage.removeItem('courseData'); // Clear the session storage after successful save
+  //     setTimeout(() => {
+  //       navigate(`/instructor/instructor-dashboard`);
+  //     }, 2000);
+  //   } catch (error) {
+  //     console.error("Error saving course:", error);
+  //     toast.error("Failed to create section. Please try again.");
+  //   }
+  // };
+
+const handleSave = debounce(async () => {
+  console.log('check');
+  try {
+    const formData = new FormData();
+    for (const key in courseData) {
+      if (key === "course_banner_image" || key === "course_intro_video") {
+        formData.append(key, courseData[key], courseData[key]?.name);
+      } else {
+        formData.append(key, courseData[key]);
+      }
+    }
+    const token = localStorage.getItem("trainerToken");
+    const response = await axios.post(
+      "https://api.novajobs.us/api/trainers/create-course",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: token,
+        },
+      }
+    );
+    console.log("Course saved successfully:", response.data);
+    toast.success("Course created successfully!");
+    setTimeout(() => {
+      navigate(`/instructor/instructor-dashboard`);
+    }, 2000);
+  } catch (error) {
+    console.error("Error saving course:", error);
+    toast.error("Failed to create section. Please try again.");
+  }
+}, 3000); // Adjust the debounce delay as needed (3000 ms = 3 seconds)
 
   const token = localStorage.getItem("trainerToken");
 
@@ -457,7 +534,7 @@ const AddCourse = () => {
                         </div>
                       </div>
                     )} */}
-                    {activeTab === "media" && (
+                    {/* {activeTab === "media" && (
                       <div className="add-course-info">
                         <div className="add-course-inner-header">
                           <h4>Courses Media</h4>
@@ -538,7 +615,92 @@ const AddCourse = () => {
                           </Link>
                         </div>
                       </div>
-                    )}
+                    )} */}
+                    {activeTab === "media" && (
+  <div className="add-course-info">
+    <div className="add-course-inner-header">
+      <h4>Courses Media</h4>
+    </div>
+    <div className="add-course-form">
+      <form>
+        <div className="input-block">
+          <label className="add-course-label">Course cover image</label>
+          <div className="relative-form">
+            <span>
+              {courseData.course_banner_image
+                ? courseData.course_banner_image.name
+                : "No File Selected"}
+            </span>
+            <label className="relative-file-upload">
+              Upload File
+              <input
+                type="file"
+                name="course_banner_image"
+                onChange={handleFileChange}
+                required
+              />
+            </label>
+            {errors.courseBannerImage && (
+              <p className="error-text">{errors.courseBannerImage}</p>
+            )}
+          </div>
+        </div>
+        <div className="input-block">
+          <div className="add-image-box">
+            <Link to="#">
+              <i className="far fa-image" />
+            </Link>
+          </div>
+        </div>
+        <div className="input-block">
+          <label className="add-course-label">Course Intro Video (MP4)</label>
+          <div className="relative-form">
+            <span>
+              {courseData.course_intro_video
+                ? courseData.course_intro_video.name
+                : "No File Selected"}
+            </span>
+            <label className="relative-file-upload">
+              Upload File
+              <input
+                type="file"
+                name="course_intro_video"
+                onChange={handleFileChange}
+                accept=".mp4"
+                readOnly
+              />
+            </label>
+            {errors.courseIntroVideo && (
+              <p className="error-text">{errors.courseIntroVideo}</p>
+            )}
+          </div>
+        </div>
+        <div className="input-block">
+          <div className="add-image-box add-video-box">
+            <Link to="#">
+              <i className="fas fa-circle-play" />
+            </Link>
+          </div>
+        </div>
+        <div className="widget-btn">
+          <Link
+            className="btn btn-black prev_btn"
+            onClick={() => setActiveTab("basic")}
+          >
+            Previous
+          </Link>
+          <Link
+            className="btn btn-info-light next_btn"
+            onClick={() => setActiveTab("settings")}
+          >
+            Continue
+          </Link>
+        </div>
+      </form>
+    </div>
+  </div>
+)}
+
                     {activeTab === "settings" && (
                       <div className="add-course-info">
                         <div className="add-course-inner-header">

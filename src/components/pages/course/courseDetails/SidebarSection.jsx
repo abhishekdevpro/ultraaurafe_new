@@ -266,18 +266,19 @@ const SidebarSection = ({ courseId, courseData,courseFeatureData}) => {
 
 <ButtonWrapper>
     {/* Enroll Button */}
-    {!courseData.is_student_enroll ? (
+    {token && courseData.is_student_enroll ? (
+      
+       <button className="btn-enroll w-100" disabled>
+       Enrolled
+     </button>
+    ) : (
       <button onClick={handleEnrollClick} className="btn-enroll w-100">
         Enroll Now
-      </button>
-    ) : (
-      <button className="btn-enroll w-100" disabled>
-        Enrolled
       </button>
     )}
 
     {/* Take Test Button */}
-    {token && courseData.is_student_enroll ? (
+    {token  ? (
       <Link
         to={`/student/student-skilltest/${courseData.course_id}/${courseData.course_title}`}
       >
@@ -290,7 +291,7 @@ const SidebarSection = ({ courseId, courseData,courseFeatureData}) => {
     ) : null}
 
     {/* Download Certificate Button */}
-    {token && courseData.is_certificate ? (
+    {token && courseData.is_student_enroll && courseData.is_certificate  ? (
       <button onClick={handleDownload} className="btn-enroll w-100">
         Download Certificate
       </button>

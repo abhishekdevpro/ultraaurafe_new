@@ -272,12 +272,15 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styled from 'styled-components';
 import FeatherIcon from 'feather-icons-react';
+import { debounce } from "lodash";
 
 // Styled components
 const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5rem
+
   background-color: #f5f5f5;
   padding: 20px;
   border-radius: 8px;
@@ -286,7 +289,6 @@ const HeaderWrapper = styled.div`
   flex-wrap: wrap;
 
   @media (max-width: 768px) {
-    flex-direction: column;
     align-items: flex-start;
   }
 `;
@@ -297,11 +299,14 @@ const Title = styled.h2`
 
   @media (max-width: 768px) {
     margin-bottom: 15px;
+  font-size: 18px;
+
   }
 `;
 
 const ButtonGroup = styled.ul`
   display: flex;
+  gap: 0.25rem;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -311,7 +316,7 @@ const ButtonGroup = styled.ul`
 
     @media (max-width: 768px) {
       margin-left: 0;
-      margin-bottom: 10px;
+
     }
   }
 
@@ -334,9 +339,9 @@ const ButtonGroup = styled.ul`
     }
 
     @media (max-width: 768px) {
-      padding: 10px;
+      padding: 2px;
       justify-content: center;
-      font-size: 14px;
+      font-size: 5px;
       gap:1rem;
 
       & > span {
@@ -379,7 +384,7 @@ const AddSection = () => {
     setSectionData({ ...sectionData, section_objective: data });
   };
 
-  const handleSave = async () => {
+  const handleSave = debounce(async () => {
     try {
       const token = localStorage.getItem("trainerToken");
       const response = await axios.post(
@@ -406,7 +411,7 @@ const AddSection = () => {
       console.error("Error saving section:", error);
       toast.error('Failed to create section. Please try again.');
     }
-  };
+  });
 
   return (
     <div className="main-wrapper">

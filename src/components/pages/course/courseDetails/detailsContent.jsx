@@ -10,6 +10,7 @@ import CourseContent from "./CourseContent";
 import SidebarSection from "./SidebarSection";
 import CommentForm from "./CommentForm";
 import CommentsList from "./CommentList";
+import CourseProgressBar from "./CourseProgress";
 
 const DetailsContent = ({ courseFeatureData }) => {
   const [courseData, setCourseData] = useState(null);
@@ -112,6 +113,9 @@ const DetailsContent = ({ courseFeatureData }) => {
         <div className="container">
           <div className="row">
             <div className="col-lg-8">
+            {courseData.is_student_enroll && (
+    <CourseProgressBar progress={courseData.course_progress} />
+  )}
               <CourseContent courseData={courseData} />
               <InstructorCard trainerID={courseData.trainer_id} />
               
