@@ -1889,7 +1889,7 @@ const CourseContent = ({ courseData }) => {
   const [open, setOpen] = useState({});
   const [selectedLecture, setSelectedLecture] = useState(null);
   const [streamingUrl, setStreamingUrl] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loadingStates, setLoadingStates] = useState({});
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [showPDFModal, setShowPDFModal] = useState(false);
   const [selectedPDFUrl, setSelectedPDFUrl] = useState(null);
@@ -1924,7 +1924,7 @@ const CourseContent = ({ courseData }) => {
     }
 
     try {
-      setLoading(true);
+      setLoadingStates(prev => ({ ...prev, [lecture.id]: true }));
       const streamingURL = `https://api.novajobs.us/api/trainers/streaming/${courseData.course_id}/${sectionId}/${lecture.id}/${lecture.lecture_videos[0].id}`;
       console.log('Fetching Streaming URL:', streamingURL);
 
@@ -1943,7 +1943,7 @@ const CourseContent = ({ courseData }) => {
       setError('Unable to fetch video. Please try again later.');
       setShowVideoModal(true);
     } finally {
-      setLoading(false);
+      setLoadingStates(prev => ({ ...prev, [lecture.id]: false }));
     }
   };
 
@@ -1956,11 +1956,11 @@ const CourseContent = ({ courseData }) => {
   };
 
   const handlePDFClick = (pdfUrl) => {
-    console.log(pdfUrl,'mmmmm');
+    console.log(pdfUrl, 'mmmmm');
     setSelectedPDFUrl(pdfUrl);
     setShowPDFModal(true);
   };
-console.log(selectedPDFUrl,"nnnnnndghewhjc");
+
   const closePDFViewer = () => {
     setSelectedPDFUrl(null);
     setShowPDFModal(false);
@@ -1997,8 +1997,11 @@ console.log(selectedPDFUrl,"nnnnnndghewhjc");
                         {lecture.lecture_name}
                       </p>
                       <div>
-                        <PreviewButton onClick={() => handlePreviewClick(lecture, section.id)} disabled={loading}>
-                          {loading ? 'Loading...' : 'Preview'}
+                        <PreviewButton 
+                          onClick={() => handlePreviewClick(lecture, section.id)} 
+                          disabled={loadingStates[lecture.id]}
+                        >
+                          {loadingStates[lecture.id] ? 'Loading...' : 'Preview'}
                         </PreviewButton>
                       </div>
                       {(lecture.lecture_resources_pdf || lecture.lecture_resources_link) && (
@@ -2028,8 +2031,6 @@ console.log(selectedPDFUrl,"nnnnnndghewhjc");
             </div>
           </div>
         ))}
-         
-
       </div>
 
       <VideoModal
@@ -2050,6 +2051,32 @@ console.log(selectedPDFUrl,"nnnnnndghewhjc");
     </div>
   );
 };
+
+CourseContent.propTypes = {
+  courseData: PropTypes.shape({
+    course_id: PropTypes.number.isRequired,
+    section_response: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        section_name: PropTypes.string.isRequired,
+        lectures: PropTypes.arrayOf(
+          PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            lecture_name: PropTypes.string.isRequired,
+            lecture_videos: PropTypes.arrayOf(
+              PropTypes.shape({
+                id: PropTypes.number.isRequired,
+              })
+            ),
+            lecture_resources_pdf: PropTypes.arrayOf(PropTypes.string),
+            lecture_resources_link: PropTypes.arrayOf(PropTypes.string),
+          })
+        ),
+      })
+    ).isRequired,
+  }).isRequired,
+};
+
 
 CourseContent.propTypes = {
   courseData: PropTypes.shape({

@@ -492,27 +492,19 @@ import { Link } from "react-router-dom";
 import logo5 from "../../../assets/logo5.png";
 import useOnClickOutside from "../../../hooks/useOnClickOutside";
 import PropTypes from "prop-types"; 
-import {
-  Course14,
-  Course15,
-  Course4,
-} from "../../imagepath";
+
 import DarkMode from "../../common/darkMode";
-import menu_data from "../../header/menu-data";
 import axios from "axios";
 
 export default function StudentHeader( ) {
   const [navbar, setNavbar] = useState(false);
-  const [showCart, setShowCart] = useState(false);
-  const [showWish, setShowWish] = useState(false);
-  const [showNotification, setShowNotification] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [profileData, setProfileData] = useState(null);
 
-  const cart = useRef();
-  const wish = useRef();
-  const notification = useRef();
+  // const cart = useRef();
+  // const wish = useRef();
+  // const notification = useRef();
   const profile = useRef();
 
   useEffect(() => {
@@ -533,9 +525,9 @@ export default function StudentHeader( ) {
     fetchProfile();
   }, []);
 
-  useOnClickOutside(cart, () => setShowCart(false));
-  useOnClickOutside(wish, () => setShowWish(false));
-  useOnClickOutside(notification, () => setShowNotification(false));
+  // useOnClickOutside(cart, () => setShowCart(false));
+  // useOnClickOutside(wish, () => setShowWish(false));
+  // useOnClickOutside(notification, () => setShowNotification(false));
   useOnClickOutside(profile, () => setShowProfile(false));
 
   const openMobileMenu = () => {
@@ -548,20 +540,10 @@ export default function StudentHeader( ) {
     setMobileMenu(false);
   };
 
-  const cartClick = (e) => {
-    e.preventDefault();
-    setShowCart(!showCart);
-  };
+ 
 
-  const wishClick = (e) => {
-    e.preventDefault();
-    setShowWish(!showWish);
-  };
+  
 
-  const notificationClick = (e) => {
-    e.preventDefault();
-    setShowNotification(!showNotification);
-  };
 
   const profileClick = (e) => {
     e.preventDefault();
@@ -625,7 +607,7 @@ export default function StudentHeader( ) {
                 </Link>
               </div>
             </div>
-            <ul className="main-nav">
+            {/* <ul className="main-nav">
               {menu_data.map((item) => (
                 <li key={item.id} className={item.sub_menus.length > 0 ? "has-submenu" : ""}>
                   <Link to={item.link}>{item.title}</Link>
@@ -640,10 +622,10 @@ export default function StudentHeader( ) {
                   )}
                 </li>
               ))}
-            </ul>
+            </ul> */}
             <ul className="nav header-navbar-rht">
               <DarkMode />
-              <li className="nav-item cart-nav">
+              {/* <li className="nav-item cart-nav">
                 <Link to="#" className="dropdown-toggle" onClick={cartClick}>
                   <i className="fas fa-shopping-cart"></i>
                 </Link>
@@ -761,7 +743,7 @@ export default function StudentHeader( ) {
                 <Link to="#" className="dropdown-toggle" onClick={notificationClick}>
                   <i className="far fa-bell"></i>
                 </Link>
-              </li>
+              </li> */}
               <li className="nav-item user-nav">
                 <Link
                   to="#"
