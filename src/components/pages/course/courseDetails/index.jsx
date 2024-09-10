@@ -743,6 +743,7 @@ const CourseDetails = () => {
   return (
     <div className="main-wrapper">
       {token ? <CourseHeader activeMenu={"CourseDetails"} /> : <Header />}
+      <section className="page-content course-sec">
       
       <div className="breadcrumb-bar">
         <div className="container">
@@ -823,7 +824,7 @@ const CourseDetails = () => {
           </div>
         </div>
       </div>
-
+  </section>
       <DetailsContent courseFeatureData={courseData.data} />
       <Footer />
     </div>
