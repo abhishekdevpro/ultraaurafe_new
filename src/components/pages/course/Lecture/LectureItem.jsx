@@ -597,7 +597,7 @@ const LectureItem = ({ lecture, courseId, sectionId }) => {
   const [streamingUrl, setStreamingUrl] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [selectedLecture, setSelectedLecture] = useState(null);
+  // const [selectedLecture, setSelectedLecture] = useState(null);
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
@@ -610,7 +610,6 @@ const LectureItem = ({ lecture, courseId, sectionId }) => {
 
   const handlePreviewClick = async (lecture, sectionId) => {
     console.log(`Lecture: ${lecture.lecture_name}`);
-    setSelectedLecture(lecture);
     setError(null);
 
     if (!lecture.lecture_videos || lecture.lecture_videos.length === 0) {
