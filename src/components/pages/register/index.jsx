@@ -900,6 +900,9 @@ import OwlCarousel from "react-owl-carousel";
 import {NetIcon1, NetIcon2 } from "../../imagepath";
 import axios from "axios";
 import logo5 from '../../../assets/logo5.png'
+import { toast } from "react-toastify";
+import FeatherIcon from "feather-icons-react";
+import styled from "styled-components";
 const hasNumber = (value) => {
   return new RegExp(/[0-9]/).test(value);
 };
@@ -916,13 +919,29 @@ const strengthColor = (count) => {
   if (count < 3) return "strong";
   if (count < 4) return "heavy";
 };
+const DropdownWrapper = styled.div`
+    position: relative;
 
+    .select-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    select {
+      appearance: none;
+      width: 100%;
+      padding-right: 35px;
+    }
+  `;
 const Register = () => {
   const [eye, seteye] = useState(true);
   const [password, setPassword] = useState("");
   const [validationError, setValidationError] = useState("");
   const [strength, setStrength] = useState("");
-  const [userType, setUserType] = useState("student");
+  const [userType, setUserType] = useState("");
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
@@ -1078,13 +1097,38 @@ const Register = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   const apiUrl = userType === "student"
+  //     ? "https://api.novajobs.us/api/students/register"
+  //     : "https://api.novajobs.us/api/trainers/register";
+  
+  //   // Convert IDs to integers
+  //   const dataToSubmit = {
+  //     ...formData,
+  //     country_id: parseInt(formData.country_id, 10) || 0,
+  //     state_id: parseInt(formData.state_id, 10) || 0,
+  //     city_id: parseInt(formData.city_id, 10) || 0,
+  //     qualification_id: parseInt(formData.qualification_id, 10) || 0,
+  //   };
+  
+  //   try {
+  //     const response = await axios.post(apiUrl, dataToSubmit);
+  //     console.log("Registration successful:", response.data);
+  //     navigate('/login');
+  //     // Handle successful registration (e.g., show success message, redirect)
+  //   } catch (error) {
+  //     console.error("Registration failed:", error);
+  //     // Handle registration error (e.g., show error message)
+  //   }
+  // };
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
     const apiUrl = userType === "student"
       ? "https://api.novajobs.us/api/students/register"
       : "https://api.novajobs.us/api/trainers/register";
   
-    // Convert IDs to integers
     const dataToSubmit = {
       ...formData,
       country_id: parseInt(formData.country_id, 10) || 0,
@@ -1096,15 +1140,39 @@ const Register = () => {
     try {
       const response = await axios.post(apiUrl, dataToSubmit);
       console.log("Registration successful:", response.data);
-      navigate('/login');
-      // Handle successful registration (e.g., show success message, redirect)
+      
+      // Store the token
+      const tokenKey = userType === "student" ? "studentToken" : "trainerToken";
+      localStorage.setItem(tokenKey, response.data.token);
+      
+      // Show success message
+      toast.success('Registration successful! Redirecting to login...', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+
+      // Redirect after a short delay
+      setTimeout(() => {
+        navigate('/login');
+      }, 3000);
     } catch (error) {
       console.error("Registration failed:", error);
-      // Handle registration error (e.g., show error message)
+      
+      // Show error message
+      toast.error(error.response?.data?.message || 'Registration failed. Please try again.', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
-  
-
   useEffect(() => {
     const fetchCountries = async () => {
       try {
@@ -1242,7 +1310,7 @@ const Register = () => {
             <div className="login-wrapper">
               <div className="loginbox">
                 <div className="img-logo">
-                  <img src={logo5} className="img-fluid" alt="Logo" />
+                  {/* <img src={logo5} className="img-fluid" alt="Logo" /> */}
                   <div className="back-home">
                     <Link to="/home">Back to Home</Link>
                   </div>
@@ -1250,15 +1318,27 @@ const Register = () => {
                 <h1>Sign up</h1>
                 <form onSubmit={handleSubmit}>
                   <div className="input-block">
-                    <label className="form-control-label">Register as</label>
-                    <select
+                    <label className=" font-weight-bold">Register as</label>
+                    {/* <select
                       className="form-control"
                       value={userType}
                       onChange={(e) => setUserType(e.target.value)}
                     >
                       <option value="student">Student</option>
                       <option value="trainer">Trainer</option>
-                    </select>
+                    </select> */}
+                     <DropdownWrapper>
+                        <select
+                          className="form-control"
+                          value={userType}
+                          onChange={(e) => setUserType(e.target.value)}
+                        >
+                          <option value="" disabled>Select Your Role</option>
+                          <option value="student">Student</option>
+                          <option value="trainer">Trainer</option>
+                        </select>
+                        <FeatherIcon icon="chevron-down" className="select-icon" />
+                      </DropdownWrapper>
                   </div>
                   <div className="input-block">
                     <label className="form-control-label">First Name</label>

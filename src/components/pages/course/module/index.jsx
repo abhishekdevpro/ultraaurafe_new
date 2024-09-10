@@ -662,11 +662,13 @@ const HeadModule = () => {
               <p className="text-muted mb-0">{trainerToken?"Trainer": "Student"}</p>
             </div>
           </div>
-          <Link className="dropdown-item" to="/setting-edit-profile">
+          <Link className="dropdown-item" 
+  to={studentToken ? '/setting-edit-profile' : '/instructor/instructor-edit-profile'}>          
             <FeatherIcon icon="user" className="me-1"/> Profile
           </Link> 
-          <Link className="dropdown-item" to="/student/setting-student-subscription">
-            <FeatherIcon icon="star" className="me-1"/> Subscription
+          <Link className="dropdown-item" 
+          to={studentToken ? '/student/student-dashboard' : '/instructor/instructor-dashboard'}>
+            <FeatherIcon icon="star" className="me-1"/> Dashboard
           </Link> 
           <button className="dropdown-item"  onClick={handleLogout}>
             <FeatherIcon icon="log-out" className="me-1"/> Logout
