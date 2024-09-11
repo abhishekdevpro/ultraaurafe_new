@@ -39,6 +39,7 @@ import { useNavigate } from "react-router-dom";
 import { TypeAnimation } from "react-type-animation";
 // import { useNavigate } from "react-router-dom";
 import styled from "styled-components"
+import PartnerList from "./PartnerList";
 // Container for the search bar
 const Container = styled.div`
   margin-top: 1rem;
@@ -810,6 +811,7 @@ export const Home = () => {
         </section>
         {/* /Become a instructor */}
  {/* Companies */}
+ <PartnerList/>
  <section className="section lead-companies">
           <div className="container">
             <div className="section-header aos" data-aos="fade-up">
