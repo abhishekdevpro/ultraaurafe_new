@@ -1166,7 +1166,7 @@ const DynamicCourseGrid = () => {
     <Container>
       <Header>
         <Title>Our Popular Online Courses</Title>
-        <AllCoursesButton onClick={handleAllCoursesClick}>All Courses</AllCoursesButton>
+        <AllCoursesButton to={'/course-list'}>All Courses</AllCoursesButton>
       </Header>
 
       <LevelFilter>

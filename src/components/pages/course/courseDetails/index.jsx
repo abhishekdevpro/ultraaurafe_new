@@ -780,7 +780,7 @@ const CourseDetails = () => {
                     </h5>
                     <p>{courseData.data.trainer_job_title || "Instructor Title"}</p>
                   </div>
-                  <div className="rating mb-0">
+                  {/* <div className="rating mb-0">
                     <i className="fas fa-star filled me-1" />
                     <i className="fas fa-star filled me-1" />
                     <i className="fas fa-star filled me-1" />
@@ -789,7 +789,19 @@ const CourseDetails = () => {
                     <span className="d-inline-block average-rating">
                       <span className="rating text-white">({courseData.data.rating})</span> 
                     </span>
-                  </div>
+                  </div> */}
+                  <div className="rating mb-0">
+  {Array.from({ length: 5 }).map((_, index) => (
+    <i
+      key={index}
+      className={`fas fa-star ${index < courseData.data.rating ? 'filled' : 'unfilled'} me-1`}
+    />
+  ))}
+  <span className="d-inline-block average-rating">
+    <span className="rating text-white">({courseData.data.rating})</span>
+  </span>
+</div>
+
                 </div>
                 <span className="web-badge mb-3">
                   {courseData.data.category}

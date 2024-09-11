@@ -1652,6 +1652,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import { Play } from '../../../imagepath';
+import LectureListComponent from './LectureListComponents';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -1988,7 +1989,7 @@ const CourseContent = ({ courseData }) => {
               </Link>
             </h6>
             <div className={`card-collapse collapse ${open[section.id] ? 'show' : ''}`}>
-              <ul>
+              {/* <ul>
                 {section.lectures && section.lectures.length > 0 ? (
                   section.lectures.map((lecture) => (
                     <li key={lecture.id}>
@@ -2027,7 +2028,13 @@ const CourseContent = ({ courseData }) => {
                 ) : (
                   <li>No lectures available for this section.</li>
                 )}
-              </ul>
+              </ul> */}
+              <LectureListComponent
+  section={section}
+  handlePreviewClick={handlePreviewClick}
+  handlePDFClick={handlePDFClick}
+  loadingStates={loadingStates}
+/>
             </div>
           </div>
         ))}
