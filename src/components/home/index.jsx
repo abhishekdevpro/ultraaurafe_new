@@ -80,18 +80,6 @@ const InputGroup = styled.div`
 `;
 
 // Select component wrapper
-const SelectWrapper = styled.span`
-  display: flex;
-  margin: 0 0.5rem;
-  flex: 1; /* Allow elements to grow as needed */
-  min-width: 150px;
-   background: #fff;; /* Ensure this is applied correctly */
-
-  @media (max-width: 768px) {
-    flex: 0 0 100%;
-    margin: 0.5rem 0;
-  }
-`;
 
 // Button styling
 const SearchButton = styled.button`
@@ -188,7 +176,30 @@ const StyledButton = styled.button`
   }
 `;
 
-
+const customSelectStyles = {
+  container: (base) => ({
+    ...base,
+    width: '100%',
+    padding:'5px',
+  }),
+  menu: (base) => ({
+    ...base,
+    zIndex: 10000, 
+  }),
+  control: (base) => ({
+    ...base,
+    borderRadius: '40px',
+    border: '1px solid #ddd',
+    boxShadow: 'none',
+    '&:hover': {
+      borderColor: '#f66962',
+    },
+  }),
+  placeholder: (base) => ({
+    ...base,
+    color: '#a2a2a2',
+  }),
+};
 
 export const Home = () => {
   // const [setValue] = useState(null);
@@ -267,26 +278,29 @@ export const Home = () => {
     navigate('/course-list');
   };
 
-  const loadChatbotScript = () => {
-    const scriptId = 'chatling-embed-script';
-    if (!document.getElementById(scriptId)) {
-      // Create script element
-      const script = document.createElement('script');
-      script.id = scriptId;
-      script.src = 'https://chatling.ai/js/embed.js';
-      script.async = true;
-      script.onload = () => {
-        // Initialize chatbot after script loads
-        window.chtlConfig = { chatbotId: '5594648998' };
-      };
-      // Append script to the head
-      document.head.appendChild(script);
-    }
-  };
-  
-  const handleAIAssist = () => {
-    loadChatbotScript();
-    // Add any additional logic if needed
+  const loadChatbot = () => {
+    // Check if the script is already added to avoid duplicate injections
+    if (document.getElementById('chatling-embed-script')) return;
+
+    // Create and append the chatbot configuration script
+    const configScript = document.createElement('script');
+    configScript.type = 'text/javascript';
+    configScript.text = `window.chtlConfig = { chatbotId: "5594648998" };`;
+    document.body.appendChild(configScript);
+
+    // Create and append the chatbot embed script
+    const embedScript = document.createElement('script');
+    embedScript.id = 'chatling-embed-script';
+    embedScript.async = true;
+    embedScript.src = 'https://chatling.ai/js/embed.js';
+    embedScript.onload = () => {
+      // Optionally, add initialization code here if required
+      console.log('Chatbot script loaded');
+    };
+    embedScript.onerror = () => {
+      console.error('Failed to load the chatbot script');
+    };
+    document.body.appendChild(embedScript);
   };
 
 
@@ -407,25 +421,20 @@ export const Home = () => {
               value={searchKeyword}
               onChange={(e) => setSearchKeyword(e.target.value)}
             />
-            <SelectWrapper>
-              <Select
-                options={categoryOptions}
-                value={selectedCategory}
-                placeholder="Category"
-                onChange={setSelectedCategory}
-                styles={{ container: (base) => ({ ...base, width: '100%',zIndex: 9999,
-                }) }}
-              />
-            </SelectWrapper>
-            <SelectWrapper>
-              <Select
-                options={levelOptions}
-                value={selectedLevel}
-                placeholder="Levels"
-                onChange={setSelectedLevel}
-                styles={{ container: (base) => ({ ...base, width: '100%' }) }}
-              />
-            </SelectWrapper>
+           <Select
+  options={categoryOptions}
+  value={selectedCategory}
+  placeholder="Category"
+  onChange={setSelectedCategory}
+  styles={customSelectStyles}
+/>
+<Select
+  options={levelOptions}
+  value={selectedLevel}
+  placeholder="Levels"
+  onChange={setSelectedLevel}
+  styles={customSelectStyles}
+/>
             <SearchButton type="button" onClick={handleSearch}>
               <i className="fas fa-arrow-right" />
             </SearchButton>
@@ -436,7 +445,7 @@ export const Home = () => {
   </Container>
   <ButtonContainer>
                     <StyledButton onClick={handleAllCourses}>All Courses</StyledButton>
-                    <StyledButton primary onClick={handleAIAssist}>
+                    <StyledButton primary onClick={loadChatbot}>
       AI Assist
     </StyledButton>                  </ButtonContainer>
                   {/* <div className="trust-user">

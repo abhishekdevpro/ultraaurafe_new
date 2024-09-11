@@ -9,6 +9,7 @@ import { User16 } from "../../imagepath";
 
 import axios from "axios";
 import { useState,useEffect } from "react";
+import StudentSettingPageHeader from "./settingPageHeader";
 
 const StudentSetting = () => {
   const token = localStorage.getItem("token");
@@ -128,9 +129,15 @@ const StudentSetting = () => {
         <div className="container">
           <div className="row">
             <StudentSidebar />
+            
             <div className="col-xl-9 col-lg-9">
               <div className="settings-widget card-details">
                 <div className="settings-menu p-0">
+                <div className="profile-heading">
+                    <h3>Settings</h3>
+                    <p>You have full control to manage your own account settings</p>
+                  </div>
+                  <StudentSettingPageHeader />
                   <div className="edit-profile-info px-4 p-3">
                     <h5>Personal Details</h5>
                     <p>Edit your personal information</p>
