@@ -174,6 +174,7 @@ export default function StudentSidebar() {
                   Settings
                 </Link>
               </li>
+             
               <li className="nav-item">
                 <Link to="/home" className="nav-link">
                   <i className="bx bxs-log-out" />

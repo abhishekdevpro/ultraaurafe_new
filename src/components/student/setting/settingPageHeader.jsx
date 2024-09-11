@@ -32,7 +32,7 @@ const StudentSettingPageHeader = () => {
               Change Password
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
               to="/student/student-social-profile"
               className={
@@ -70,7 +70,7 @@ const StudentSettingPageHeader = () => {
               <i className="bx bx-bell" />
               Notifications
             </Link>
-          </li>
+          </li> */}
         </ul>
       </div>
     </div>
