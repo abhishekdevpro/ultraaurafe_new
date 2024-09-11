@@ -1651,7 +1651,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
-import { Play } from '../../../imagepath';
 import LectureListComponent from './LectureListComponents';
 
 const ModalOverlay = styled.div`
@@ -1731,41 +1730,6 @@ const ErrorMessage = styled.div`
   margin-bottom: 16px;
 `;
 
-const PreviewButton = styled.button`
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-
-  &:disabled {
-    background-color: #6c757d;
-    cursor: not-allowed;
-  }
-`;
-
-const ResourceList = styled.ul`
-  list-style-type: none;
-  padding-left: 20px;
-`;
-
-const ResourceItem = styled.li`
-  margin-bottom: 5px;
-`;
-
-const ResourceLink = styled.a`
-  color: #007bff;
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
-`;
 
 const PDFModal = styled(ModalContent)`
   width: 80%;
