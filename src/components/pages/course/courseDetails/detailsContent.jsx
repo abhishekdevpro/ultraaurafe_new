@@ -109,7 +109,7 @@ const DetailsContent = ({ courseFeatureData }) => {
 
   return (
     <>
-      <section className="page-content course-sec">
+      <section className="page-content course-sec ">
         <div className="container">
           <div className="row">
             <div className="col-lg-8">

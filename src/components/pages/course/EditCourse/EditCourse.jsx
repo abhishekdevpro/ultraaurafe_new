@@ -424,6 +424,7 @@ import Select, { components } from "react-select";
 import styled from 'styled-components';
 import FeatherIcon from 'feather-icons-react';
 import ReactQuill from "react-quill";
+import { debounce } from "lodash";
 
 // Styled components
 const HeaderWrapper = styled.div`
@@ -647,7 +648,7 @@ const EditCourse = () => {
   const handleQuillChange = (name) => (content) => {
     setCourseData({ ...courseData, [name]: content });
   };
-  const handleSave = async () => {
+  const handleSave = debounce (async () => {
     try {
       const formData = new FormData();
       for (const key in courseData) {
@@ -675,7 +676,7 @@ const EditCourse = () => {
       console.error("Error updating course:", error);
       toast.error('Error updating course. Please try again.');
     }
-  };
+  },500);
 
   const handleAddSection = () => {
     navigate(`/add-section/${id}`);

@@ -1133,31 +1133,54 @@ const DynamicCourseGrid = () => {
   //     navigate("/course-list");
   //   }
   // };
-  const handleAllCoursesClick = () => {
-    console.log("Active Level:", activeLevel);
-    console.log("Levels:", levels);
+  // const handleAllCoursesClick = () => {
+  //   console.log("Active Level:", activeLevel);
+  //   console.log("Levels:", levels);
 
-    const selectedLevel = levels.find(level => 
-      level.name.toLowerCase().trim() === activeLevel.toLowerCase().trim()
-    );
+  //   const selectedLevel = levels.find(level => 
+  //     level.name.toLowerCase().trim() === activeLevel.toLowerCase().trim()
+  //   );
 
-    console.log("Selected Level:", selectedLevel);
+  //   console.log("Selected Level:", selectedLevel);
 
-    if (selectedLevel) {
-      if (selectedLevel.id !== "ALL") {
-        const url = `/course-list?course_level_id=${selectedLevel.id}`;
-        console.log("Navigating to:", url);
-        navigate(url);
+  //   if (selectedLevel) {
+  //     if (selectedLevel.id !== "ALL") {
+  //       const url = `/course-list?course_level_id=${selectedLevel.id}`;
+  //       console.log("Navigating to:", url);
+  //       navigate(url);
         // window.location.href = `/course-list?course_level_id=${selectedLevel.id}`;
-      } else {
-        console.log("Navigating to: /course-list");
-        navigate("/course-list");
-      }
-    } else {
-      console.log("No matching level found, navigating to: /course-list");
-      navigate("/course-list");
-    }
-  };
+  //     } else {
+  //       console.log("Navigating to: /course-list");
+  //       navigate("/course-list");
+  //     }
+  //   } else {
+  //     console.log("No matching level found, navigating to: /course-list");
+  //     navigate("/course-list");
+  //   }
+  // };
+
+const handleAllCoursesClick = () => {
+  navigate('/course-list')
+  const selectedLevel = levels.find(level =>
+    level.name.toLowerCase().trim() === activeLevel.toLowerCase().trim()
+  );
+  console.log(selectedLevel);
+  if (selectedLevel) {
+    const url =
+      selectedLevel.id !== "ALL"
+        ? `/course-list?course_level_id=${selectedLevel.id}`
+        : "/course-list";
+    console.log(selectedLevel);
+    console.log("Navigating to:", url);
+    // navigate(url); // This should navigate correctly
+    window.location.href = url;
+    
+  } else {
+    console.log("No matching level found, navigating to: /course-list");
+    navigate("/course-list");
+  }
+};
+
   if (loading) {
     return <Container>Loading...</Container>;
   }
