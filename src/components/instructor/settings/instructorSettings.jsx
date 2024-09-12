@@ -626,6 +626,7 @@ import InstructorSidebar from "../sidebar";
 import Footer from "../../footer";
 import SettingsPageHeader from "./settingsPageHeader";
 import axios from "axios";
+import {toast} from 'react-toastify'
 
 const InstructorSettings = () => {
   const [formData, setFormData] = useState({
@@ -649,10 +650,26 @@ const InstructorSettings = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
 
   useEffect(() => {
     fetchUserData();
+    fetchCountries();
   }, []);
+
+  useEffect(() => {
+    if (formData.country_id) {
+      fetchStates(formData.country_id);
+    }
+  }, [formData.country_id]);
+
+  useEffect(() => {
+    if (formData.state_id) {
+      fetchCities(formData.state_id);
+    }
+  }, [formData.state_id]);
 
   const fetchUserData = async () => {
     setLoading(true);
@@ -669,6 +686,45 @@ const InstructorSettings = () => {
       console.error("Error fetching user data:", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchCountries = async () => {
+    try {
+      const response = await axios.get("https://api.novajobs.us/api/trainers/countries", {
+        headers: {
+          Authorization: `${localStorage.getItem("trainerToken")}`,
+        },
+      });
+      setCountries(response.data.data);
+    } catch (error) {
+      console.error("Error fetching countries:", error);
+    }
+  };
+
+  const fetchStates = async (countryId) => {
+    try {
+      const response = await axios.get(`https://api.novajobs.us/api/trainers/stats/${countryId}`, {
+        headers: {
+          Authorization: `${localStorage.getItem("trainerToken")}`,
+        },
+      });
+      setStates(response.data.data);
+    } catch (error) {
+      console.error("Error fetching states:", error);
+    }
+  };
+
+  const fetchCities = async (stateId) => {
+    try {
+      const response = await axios.get(`https://api.novajobs.us/api/trainers/cities/${stateId}`, {
+        headers: {
+          Authorization: `${localStorage.getItem("trainerToken")}`,
+        },
+      });
+      setCities(response.data.data);
+    } catch (error) {
+      console.error("Error fetching cities:", error);
     }
   };
 
@@ -726,14 +782,17 @@ const InstructorSettings = () => {
         }
       );
       setSuccess("Profile updated successfully.");
+      toast.success("Profile updated successfully.")
       setInitialFormData({...formData, photo: null});
     } catch (error) {
       setError("Error updating profile: " + (error.response?.data?.message || error.message));
+      toast.error("Error updating profile")
       console.error("Error updating profile:", error);
     } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="main-wrapper">
@@ -897,7 +956,7 @@ const InstructorSettings = () => {
                             />
                           </div>
                         </div>
-                        <div className="col-md-6">
+                        {/* <div className="col-md-6">
                           <div className="input-block">
                             <label className="form-label">Country</label>
                             <select
@@ -907,7 +966,6 @@ const InstructorSettings = () => {
                               onChange={handleInputChange}
                             >
                               <option value="">Select Country</option>
-                              {/* Add country options here */}
                             </select>
                           </div>
                         </div>
@@ -921,7 +979,6 @@ const InstructorSettings = () => {
                               onChange={handleInputChange}
                             >
                               <option value="">Select State</option>
-                              {/* Add state options here */}
                             </select>
                           </div>
                         </div>
@@ -935,10 +992,63 @@ const InstructorSettings = () => {
                               onChange={handleInputChange}
                             >
                               <option value="">Select City</option>
-                              {/* Add city options here */}
                             </select>
                           </div>
-                        </div>
+                        </div> */}
+                         <div className="col-md-6">
+                      <div className="input-block">
+                        <label className="form-label">Country</label>
+                        <select
+                          className="form-select"
+                          name="country_id"
+                          value={formData.country_id}
+                          onChange={handleInputChange}
+                        >
+                          <option value="">Select Country</option>
+                          {countries.map((country) => (
+                            <option key={country.id} value={country.id}>
+                              {country.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="input-block">
+                        <label className="form-label">State</label>
+                        <select
+                          className="form-select"
+                          name="state_id"
+                          value={formData.state_id}
+                          onChange={handleInputChange}
+                        >
+                          <option value="">Select State</option>
+                          {states.map((state) => (
+                            <option key={state.id} value={state.id}>
+                              {state.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="input-block">
+                        <label className="form-label">City</label>
+                        <select
+                          className="form-select"
+                          name="city_id"
+                          value={formData.city_id}
+                          onChange={handleInputChange}
+                        >
+                          <option value="">Select City</option>
+                          {cities.map((city) => (
+                            <option key={city.id} value={city.id}>
+                              {city.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
                         <div className="col-md-12">
                           <div className="input-block">
                             <label className="form-label">Biography</label>
