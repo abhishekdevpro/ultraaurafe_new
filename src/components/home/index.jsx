@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import Header from "../header";
 import {
@@ -12,11 +11,9 @@ import {
   Icon02,
   Icon03,
   Icon04,
-
   Join,
   PencilIcon,
   Share,
-
 } from "../imagepath";
 import { useSelector } from "react-redux";
 // import Loginbg from "../../assets/img/banner.png";
@@ -38,11 +35,10 @@ import FeaturedCourses from "./FeaturedCourses";
 import { useNavigate } from "react-router-dom";
 import { TypeAnimation } from "react-type-animation";
 // import { useNavigate } from "react-router-dom";
-import styled from "styled-components"
+import styled from "styled-components";
 import PartnerList from "./PartnerList";
 // Container for the search bar
 const Container = styled.div`
-  margin-top: 1rem;
   margin-bottom: 1rem;
   display: flex;
   justify-content: center;
@@ -96,7 +92,6 @@ const SearchButton = styled.button`
   justify-content: center;
   height: 44px;
   margin-left: 0.5rem;
-  
 
   &:hover,
   &:focus {
@@ -123,7 +118,6 @@ const SearchIcon = styled.i`
 `;
 
 // Arrow icon replaced with search icon on mobile
-
 
 // Input field styling
 const InputField = styled.input`
@@ -161,8 +155,8 @@ const ButtonContainer = styled.div`
 `;
 
 const StyledButton = styled.button`
-  background: ${props => props.primary ? "#f66962" : "#ffffff"};
-  color: ${props => props.primary ? "#ffffff" : "#f66962"};
+  background: ${(props) => (props.primary ? "#f66962" : "#ffffff")};
+  color: ${(props) => (props.primary ? "#ffffff" : "#f66962")};
   border: 2px solid #f66962;
   border-radius: 25px;
   padding: 10px 20px;
@@ -172,7 +166,7 @@ const StyledButton = styled.button`
   transition: all 0.3s ease;
 
   &:hover {
-    background: ${props => props.primary ? "#fc7f50" : "#f66962"};
+    background: ${(props) => (props.primary ? "#fc7f50" : "#f66962")};
     color: #ffffff;
   }
 `;
@@ -180,25 +174,25 @@ const StyledButton = styled.button`
 const customSelectStyles = {
   container: (base) => ({
     ...base,
-    width: '100%',
-    padding:'5px',
+    width: "200px",
+    padding: "5px",
   }),
   menu: (base) => ({
     ...base,
-    zIndex: 10000, 
+    zIndex: 10000,
   }),
   control: (base) => ({
     ...base,
-    borderRadius: '40px',
-    border: '1px solid #ddd',
-    boxShadow: 'none',
-    '&:hover': {
-      borderColor: '#f66962',
+    borderRadius: "40px",
+    border: "1px solid #ddd",
+    boxShadow: "none",
+    "&:hover": {
+      borderColor: "#f66962",
     },
   }),
   placeholder: (base) => ({
     ...base,
-    color: '#a2a2a2',
+    color: "#a2a2a2",
   }),
 };
 
@@ -211,14 +205,17 @@ export const Home = () => {
   const [levelOptions, setLevelOptions] = useState([]);
   // const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const navigate = useNavigate(); // Initialize useNavigate
-  const mobileSidebar = useSelector(
-    (state) => state.sidebarSlice.expandMenu
-  );
+  const mobileSidebar = useSelector((state) => state.sidebarSlice.expandMenu);
   // const formatValue = (value) => `${Math.floor(value)}`;
   // const navigate = useNavigate();
-  const animatedText = ["Career", "Development", "Growth", "Learning", "Certifications"]; // Array of texts for animation
+  const animatedText = [
+    "Career",
+    "Development",
+    "Growth",
+    "Learning",
+    "Certifications",
+  ]; // Array of texts for animation
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
- 
 
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
@@ -229,96 +226,92 @@ export const Home = () => {
     return () => clearInterval(interval);
   }, []);
   useEffect(() => {
-    console.log(mobileSidebar, 'gg');
-
-
+    console.log(mobileSidebar, "gg");
   }, [mobileSidebar]);
 
   useEffect(() => {
     // Fetch categories from API
-    fetch('https://api.novajobs.us/api/trainers/course-categories')
-      .then(response => response.json())
-      .then(data => {
-        const categories = data.data.map(category => ({
+    fetch("https://api.novajobs.us/api/trainers/course-categories")
+      .then((response) => response.json())
+      .then((data) => {
+        const categories = data.data.map((category) => ({
           label: category.name,
-          value: category.id
+          value: category.id,
         }));
         setCategoryOptions(categories);
       })
-      .catch(error => {
-        console.error('Error fetching categories:', error);
+      .catch((error) => {
+        console.error("Error fetching categories:", error);
       });
   }, []);
   useEffect(() => {
     // Fetch levels from API
-    fetch('https://api.novajobs.us/api/trainers/course-level')
-      .then(response => response.json())
-      .then(data => {
-        const levels = data.data.map(level => ({
+    fetch("https://api.novajobs.us/api/trainers/course-level")
+      .then((response) => response.json())
+      .then((data) => {
+        const levels = data.data.map((level) => ({
           label: level.name,
-          value: level.id
+          value: level.id,
         }));
         setLevelOptions(levels);
       })
-      .catch(error => {
-        console.error('Error fetching levels:', error);
+      .catch((error) => {
+        console.error("Error fetching levels:", error);
       });
   }, []);
 
   const handleSearch = () => {
     const queryParams = new URLSearchParams();
     if (searchKeyword) queryParams.append("title_keywords", searchKeyword);
-    if (selectedCategory) queryParams.append("course_category_id", selectedCategory.value);
-    if (selectedLevel) queryParams.append("course_level_id", selectedLevel.value);
+    if (selectedCategory)
+      queryParams.append("course_category_id", selectedCategory.value);
+    if (selectedLevel)
+      queryParams.append("course_level_id", selectedLevel.value);
 
     navigate(`/course-list?${queryParams.toString()}`); // Use navigate for routing
   };
-  
 
   const handleAllCourses = () => {
-    navigate('/course-list');
+    navigate("/course-list");
   };
 
   const loadChatbot = () => {
     // Check if the script is already added to avoid duplicate injections
-    if (document.getElementById('chatling-embed-script')) return;
+    if (document.getElementById("chatling-embed-script")) return;
 
     // Create and append the chatbot configuration script
-    const configScript = document.createElement('script');
-    configScript.type = 'text/javascript';
+    const configScript = document.createElement("script");
+    configScript.type = "text/javascript";
     configScript.text = `window.chtlConfig = { chatbotId: "5594648998" };`;
     document.body.appendChild(configScript);
 
     // Create and append the chatbot embed script
-    const embedScript = document.createElement('script');
-    embedScript.id = 'chatling-embed-script';
+    const embedScript = document.createElement("script");
+    embedScript.id = "chatling-embed-script";
     embedScript.async = true;
-    embedScript.src = 'https://chatling.ai/js/embed.js';
+    embedScript.src = "https://chatling.ai/js/embed.js";
     embedScript.onload = () => {
       // Optionally, add initialization code here if required
-      console.log('Chatbot script loaded');
+      console.log("Chatbot script loaded");
     };
     embedScript.onerror = () => {
-      console.error('Failed to load the chatbot script');
+      console.error("Failed to load the chatbot script");
     };
     document.body.appendChild(embedScript);
   };
-
 
   return (
     <>
       <div className="main-wrapper">
         <Header />
         {/* banner */}
-        <section
-          className="home-slide d-flex align-items-center"
-        >
+        <section className="home-slide d-flex align-items-center">
           <div className="container">
             <div className="row ">
               <div className="col-md-7">
                 <div className="home-slide-face aos" data-aos="fade-up">
                   {console.log(currentTextIndex)}
-               {/* <div className="home-slide-text text-center">
+                  {/* <div className="home-slide-text text-center">
   <h5 className="d-none d-md-block">Empowering Futures: Anytime, Anywhere</h5>
   <h2>
     Take the next step towards your{" "}
@@ -329,31 +322,30 @@ export const Home = () => {
   </h2>
   <p className="d-none d-md-block">Own your future by learning new skills online</p>
 </div> */}
- <div className="home-slide-text text-center">
-  
-  {/* <h2 className="mb-2 " style={{fontWeight:"700"}}> Empowering Futures: Anytime, Anywhere</h2> */}
-  <h2 className="mb-2" style={{ fontWeight: "700" }}>
-  Empowering Futures: 
-  <span>
-    <TypeAnimation
-      sequence={[
-        "Anytime",        // Types "Anytime"
-        1500,             // Pause for 1.5 seconds after typing "Anytime"
-        "",               // Clears the text
-        500,              // Short pause before typing the next word
-        "Anywhere",       // Types "Anywhere"
-        1500,             // Pause for 1.5 seconds after typing "Anywhere"
-        "",               // Clears the text
-        500,              // Short pause before repeating
-      ]}
-      // wrapper="span"
-      speed={-15}          // Slower typing speed (adjust this value for slower typing)
-      deletionSpeed={0}   // Slower deletion speed
-      repeat={Infinity}    // Repeat the animation indefinitely
-    />
-  </span>
-</h2>
-   {/* <h2>Take the next step towards your {" "}
+                  <div className="home-slide-text text-center">
+                    {/* <h2 className="mb-2 " style={{fontWeight:"700"}}> Empowering Futures: Anytime, Anywhere</h2> */}
+                    <h2 className="mb-2" style={{ fontWeight: "700" }}>
+                      Empowering Futures:
+                      <span>
+                        <TypeAnimation
+                          sequence={[
+                            "Anytime", // Types "Anytime"
+                            1500, // Pause for 1.5 seconds after typing "Anytime"
+                            "", // Clears the text
+                            500, // Short pause before typing the next word
+                            "Anywhere", // Types "Anywhere"
+                            1500, // Pause for 1.5 seconds after typing "Anywhere"
+                            "", // Clears the text
+                            500, // Short pause before repeating
+                          ]}
+                          // wrapper="span"
+                          speed={-15} // Slower typing speed (adjust this value for slower typing)
+                          deletionSpeed={0} // Slower deletion speed
+                          repeat={Infinity} // Repeat the animation indefinitely
+                        />
+                      </span>
+                    </h2>
+                    {/* <h2>Take the next step towards your {" "}
                  <TypeAnimation
                    sequence={[
                      
@@ -368,8 +360,54 @@ export const Home = () => {
                    repeat={Infinity}
                  />
                </h2> */}
-  
- </div>
+                    <Container>
+                      <BannerContent>
+                        <FormContainer action="/course-list">
+                          <FormInner>
+                            <InputGroup>
+                              <SearchIcon className="fa-solid fa-magnifying-glass" />
+                              <InputField
+                                type="text"
+                                placeholder="Search Course"
+                                value={searchKeyword}
+                                onChange={(e) =>
+                                  setSearchKeyword(e.target.value)
+                                }
+                              />
+                              <Select
+                                options={categoryOptions}
+                                value={selectedCategory}
+                                placeholder="Category"
+                                onChange={setSelectedCategory}
+                                styles={customSelectStyles}
+                              />
+                              <Select
+                                options={levelOptions}
+                                value={selectedLevel}
+                                placeholder="Levels"
+                                onChange={setSelectedLevel}
+                                styles={customSelectStyles}
+                              />
+                              <SearchButton
+                                type="button"
+                                onClick={handleSearch}
+                              >
+                                <i className="fas fa-arrow-right" />
+                              </SearchButton>
+                            </InputGroup>
+                          </FormInner>
+                        </FormContainer>
+                      </BannerContent>
+                    </Container>
+                    <ButtonContainer>
+                      <StyledButton onClick={handleAllCourses}>
+                        All Courses
+                      </StyledButton>
+                      <StyledButton primary onClick={loadChatbot}>
+                        AI Assist
+                      </StyledButton>{" "}
+                    </ButtonContainer>
+                  </div>
 
                   {/* <div className="container my-4">
                     <div className="banner-content">
@@ -410,45 +448,7 @@ export const Home = () => {
                       </form>
                     </div>
                   </div> */}
- <Container>
-    <BannerContent>
-      <FormContainer action="/course-list">
-        <FormInner>
-          <InputGroup>
-            <SearchIcon className="fa-solid fa-magnifying-glass" />
-            <InputField
-              type="text"
-              placeholder="Search Course"
-              value={searchKeyword}
-              onChange={(e) => setSearchKeyword(e.target.value)}
-            />
-           <Select
-  options={categoryOptions}
-  value={selectedCategory}
-  placeholder="Category"
-  onChange={setSelectedCategory}
-  styles={customSelectStyles}
-/>
-<Select
-  options={levelOptions}
-  value={selectedLevel}
-  placeholder="Levels"
-  onChange={setSelectedLevel}
-  styles={customSelectStyles}
-/>
-            <SearchButton type="button" onClick={handleSearch}>
-              <i className="fas fa-arrow-right" />
-            </SearchButton>
-          </InputGroup>
-        </FormInner>
-      </FormContainer>
-    </BannerContent>
-  </Container>
-  <ButtonContainer>
-                    <StyledButton onClick={handleAllCourses}>All Courses</StyledButton>
-                    <StyledButton primary onClick={loadChatbot}>
-      AI Assist
-    </StyledButton>                  </ButtonContainer>
+
                   {/* <div className="trust-user">
                     <p>
                       Trusted by Users <br />
@@ -708,12 +708,8 @@ export const Home = () => {
         {/* <TrendingCourse /> */}
         {/* Trending Course */}
 
-       
-
         {/* Share knowledge */}
-        <section
-          className="section share-knowledge"
-        >
+        <section className="section share-knowledge">
           <div className="container">
             <div className="row">
               <div className="col-md-6">
@@ -725,10 +721,10 @@ export const Home = () => {
                 <div className="join-mentor aos" data-aos="fade-up">
                   <h2>Want to share your knowledge? Join us a Trainer</h2>
                   <p>
-                    Share your expertise and inspire the next generation
-                    by joining UltraAura as an instructor. Shape the future
-                    of education with flexible teaching opportunities and a global reach.
-
+                    Share your expertise and inspire the next generation by
+                    joining UltraAura as an instructor. Shape the future of
+                    education with flexible teaching opportunities and a global
+                    reach.
                   </p>
                   <ul className="course-list">
                     <li>
@@ -738,7 +734,6 @@ export const Home = () => {
                     <li>
                       <i className="fa-solid fa-circle-check" />
                       100% Online platform
-
                     </li>
                   </ul>
                   <div className="all-btn all-category d-flex align-items-center">
@@ -762,12 +757,15 @@ export const Home = () => {
                     <div className="col-lg-7 col-md-12">
                       <div className="top-instructors">
                         <p>
-                          Collaborate with UltraAura to expand educational opportunities
-                          and make a lasting impact. Partner with us to drive innovation
-                          and empower learners worldwide.
+                          Collaborate with UltraAura to expand educational
+                          opportunities and make a lasting impact. Partner with
+                          us to drive innovation and empower learners worldwide.
                         </p>
                         <div className="all-btn all-category d-flex align-items-center">
-                          <Link to="/partner-signin" className="btn btn-primary">
+                          <Link
+                            to="/partner-signin"
+                            className="btn btn-primary"
+                          >
                             Partner with US
                           </Link>
                         </div>
@@ -810,9 +808,9 @@ export const Home = () => {
           </div>
         </section>
         {/* /Become a instructor */}
- {/* Companies */}
- <PartnerList/>
- <section className="section lead-companies">
+        {/* Companies */}
+        <PartnerList />
+        <section className="section lead-companies">
           <div className="container">
             <div className="section-header aos" data-aos="fade-up">
               <div className="section-sub-head feature-head text-center">

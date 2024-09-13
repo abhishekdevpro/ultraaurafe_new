@@ -1750,11 +1750,11 @@ html.menu-opened body {
   display: flex;
   justify-content: center;align-items: center;
   border: 2px solid green; */
-  height: 20vh; /* Full viewport height */
+  height: 40vh; /* Full viewport height */
   display: flex;
-  /* flex-direction: column; */
+  flex-direction: column;
   justify-content: center;
-  align-items: end;
+  align-items: center;
   text-align: center;
   /* padding: 0 20px;  */
   /* border: 2px solid green; */
@@ -1780,8 +1780,17 @@ html.menu-opened body {
 .home-slide-text h1 span {
   color: #6255a4;
 }
+/* .girl-slide-img img {
+  width: 100%;
+} */
 .girl-slide-img img {
   width: 100%;
+}
+
+@media (max-width: 768px) { /* Adjust the width as per your mobile screen size preference */
+  .girl-slide-img img {
+    display: none;
+  }
 }
 .location-search .form-control {
   padding-right: 160px;
