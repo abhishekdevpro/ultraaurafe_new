@@ -1203,7 +1203,7 @@ const InnerPage = ({ courses = [] }) => {
                     </Link>
                     <div className="course-name">
                       <h4>
-                        <Link to={`/instructor/instructor-profile/${course.instructor_id}`}>
+                        <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
                           {course.trainer_first_name}{" "}
                           {course.trainer_last_name}
                         </Link>

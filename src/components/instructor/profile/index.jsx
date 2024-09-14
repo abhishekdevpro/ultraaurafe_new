@@ -738,23 +738,17 @@ const InstructorProfile = () => {
       {/* Header component would go here */}
       <Header/>
       {/* Breadcrumb */}
-      <div className="breadcrumb-bar">
+      {/* <div className="breadcrumb-bar">
         <div className="container">
           <div className="row">
             <div className="col-md-12 col-12">
               <div className="breadcrumb-list">
-                <nav aria-label="breadcrumb" className="page-breadcrumb">
-                  <ol className="breadcrumb">
-                    <li className="breadcrumb-item"></li>
-                    <li className="breadcrumb-item"></li>
-                    <li className="breadcrumb-item active" aria-current="page"></li>
-                  </ol>
-                </nav>
+              
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Instructor Banner */}
       <div className="page-banner instructor-bg-blk">

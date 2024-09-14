@@ -1084,6 +1084,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Icon01, Icon02 } from "../imagepath"; // Assuming these icons are available
+import { toast } from "react-toastify";
 
 // Styled components remain unchanged
 // ... (all your styled components here)
@@ -1094,7 +1095,8 @@ const DynamicCourseGrid = () => {
   const [loading, setLoading] = useState(true);
   const [activeLevel, setActiveLevel] = useState("ALL");
   const [displayCount,] = useState(6);
-  const navigate = useNavigate()
+  const [isClassAdded, setIsClassAdded] = useState([]);
+  const {navigate} = useNavigate()
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -1158,6 +1160,36 @@ const DynamicCourseGrid = () => {
   //     navigate("/course-list");
   //   }
   // };
+  const toggleClass = async (index, courseId) => {
+    const updatedClasses = [...isClassAdded];
+    updatedClasses[index] = !updatedClasses[index];
+    setIsClassAdded(updatedClasses);
+
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        toast.error("Please log in to add courses to favorites.")
+        navigate('/login');
+        return;
+      }
+      await axios.post(
+        'https://api.novajobs.us/api/students/course-favorite',
+        { course_id: courseId },
+        {
+          headers: {
+            'Authorization': `${token}`,
+            'Content-Type': 'application/json',
+          }
+        }
+      );
+      // Show success toast
+      toast.success('Course added to favorites!');
+    } catch (error) {
+      console.error('Failed to add course to favorites:', error);
+      // Show error toast
+      toast.error('Failed to add course to favorites. Please try again.');
+    }
+  };
 
 const handleAllCoursesClick = () => {
   navigate('/course-list')
@@ -1228,6 +1260,11 @@ const handleAllCoursesClick = () => {
                         {course.trainer_first_name} {course.trainer_last_name}
                       </InstructorName>
                     </Link>
+                    <div className="course-share d-flex align-items-center justify-content-center">
+                                          <Link to="#" onClick={() => toggleClass(course.id)}>
+                                            <i className={`fa-regular fa-heart ${isClassAdded[course.id] ? 'color-active' : ''}`} />
+                                          </Link>
+                                        </div>
                   </InstructorInfo>
                   <Link to={`/course-info/${course.id}`}>
                     <CourseTitle>{course.course_title}</CourseTitle>

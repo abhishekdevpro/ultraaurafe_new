@@ -154,6 +154,7 @@ import CertificationPage from "./components/pages/FooterLinks/Certifications.jsx
 import AIResumePage from "./components/pages/FooterLinks/Ai-Resume.jsx";
 import PartnersPage from "./components/pages/FooterLinks/Partners.jsx";
 import SkillAssessmentsPage from "./components/pages/FooterLinks/Skillpage.jsx";
+import Login2 from "./components/pages/partnerwithus/PartnerLogin2.jsx";
 const Approuter = () => {
   return (
     <BrowserRouter>
@@ -183,6 +184,7 @@ const Approuter = () => {
         <Route path="/vendor-dashboard" element={<VendorDashboard />} />
         <Route path="/vendor-setting" element={<VendorSetting/>}/>
         <Route path="/vendor/vendor-dashboard" element={<VendorDashboard/>}/>
+        <Route path="/vendor/verify/:token" element={<Login2/>}/>
 
 
         {/* Pages */}
