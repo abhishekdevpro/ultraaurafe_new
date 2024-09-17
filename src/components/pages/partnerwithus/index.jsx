@@ -45,6 +45,7 @@ const Partnerwithus = () => {
 
           if (response.data) {
               toast.success("Registration successful! pls check the email for the verification")
+              setFormData(' ')
             //   navigate("/partner-signin"); // Adjust the path as needed
           }
       } catch (error) {
