@@ -36,6 +36,173 @@ const ButtonWrapper = styled.div`
 `;
 
 
+const VideoSection = styled.div`
+  .video-sec {
+    margin-bottom: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .card {
+    border: none;
+  }
+
+  .card-body {
+    padding: 0;
+  }
+
+ .video-thumbnail {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.video-thumbnail img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.play-icon {
+  position: absolute; /* Absolute positioning to center within the container */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  z-index: 10; /* Ensures the play icon is on top of the image */
+}
+
+.play-icon i {
+  font-size: 24px;
+  color: #333;
+}
+
+.video-thumbnail:hover .play-icon {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+video {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
+}
+
+.video-details {
+  padding: 20px;
+}
+
+  .course-fee {
+    margin-bottom: 20px;
+    text-align: center;
+
+    h2 {
+      font-size: 28px;
+      color: #4CAF50;
+      margin-bottom: 5px;
+    }
+
+    p {
+      font-size: 14px;
+      color: #666;
+
+      span {
+        text-decoration: line-through;
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .btn-wish, .btn-enroll {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+
+  .btn-wish {
+    background-color: #f0f0f0;
+    color: #333;
+
+    &:hover {
+      background-color: #e0e0e0;
+    }
+  }
+
+  .btn-enroll {
+    background-color: #4CAF50;
+    color: white;
+
+    &:hover {
+      background-color: #45a049;
+    }
+
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .video-thumbnail {
+      padding-top: 75%; /* 4:3 Aspect Ratio for smaller screens */
+    }
+
+    .play-icon {
+      width: 50px;
+      height: 50px;
+
+      i {
+        font-size: 20px;
+      }
+    }
+
+    .course-fee {
+      h2 {
+        font-size: 24px;
+      }
+
+      p {
+        font-size: 12px;
+      }
+    }
+  }
+
+  @media (max-width: 576px) {
+    .video-details {
+      padding: 15px;
+    }
+
+    .course-fee {
+      h2 {
+        font-size: 22px;
+      }
+    }
+
+    .btn-wish, .btn-enroll {
+      font-size: 14px;
+    }
+  }
+`;
+
+
 const SidebarSection = ({ courseId, courseData,courseFeatureData}) => {
   console.log(courseData,"from sidebar")
   const [showPopup, setShowPopup] = useState(false);
@@ -182,129 +349,84 @@ const SidebarSection = ({ courseId, courseData,courseFeatureData}) => {
     <div className="col-lg-4">
       <div className="sidebar-sec">
         {/* Video Section */}
-        <div className="video-sec vid-bg">
-          <div className="card">
-            <div className="card-body">
-              {videoUrl ? (
-                <video width="100%" controls>
-                  <source src={videoUrl} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              ) : (
-                <button onClick={handleVideoPlay} className="video-thumbnail btn btn-link" data-fancybox="">
-                  <div className="play-icon">
-                    <i className="fa-solid fa-play" />
-                  </div>
-                  <img className="" src={Video2} alt="Video Thumbnail" />
-                </button>
-              )}
-
-              <div className="video-details">
-                <div className="course-fee">
-                  <h2>FREE</h2>
-                  <p><span>$99.00</span> 50% off</p>
-                </div>
-                <div className="row gx-2">
-                  {/* <div className="col-md-6 addHeart">
-                    <Link to="" className="btn btn-wish w-100">
-                      <i className="feather icon-heart me-2" />
-                      Add to Wishlist
-                    </Link>
-                  </div> */}
-              <div className="col-md-6 addHeart">
-      {isFavorite && localStorage.getItem("token") ? (
-        <button 
-          className="btn btn-danger w-100" 
-          onClick={() => toggleClass(courseData.course_id, isFavorite)}>
-          <i className="feather icon-heart me-2" />
-          Remove
-        </button>
-      ) : (
-        <button 
-          className="btn btn-wish w-100" 
-          onClick={() => toggleClass(courseData.course_id, isFavorite)}>
-          <i className="feather icon-heart me-2" />
-          Add to Wishlist
-        </button>
-      )}
-    </div>
-                  <div className="col-md-6 addHeart">
-                    <Link to="#" className="btn btn-wish w-100">
-                      <i className="feather icon-share-2 me-2" />
-                      Share
-                    </Link>
-                  </div>
-                </div>
-                {/* Conditional Button Rendering */}
-                {/* {!courseData.is_student_enroll ? (
-                  <button onClick={handleEnrollClick} className="btn btn-enroll w-100">
-                    Enroll Now
-                  </button>
+        <VideoSection>
+          <div className="video-sec vid-bg">
+            <div className="card">
+              <div className="card-body">
+                {videoUrl ? (
+                  <video controls>
+                    <source src={videoUrl} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
                 ) : (
-                  <button className="btn btn-enroll w-100" disabled>
-                    Enrolled
+                  <button onClick={handleVideoPlay} className="video-thumbnail" data-fancybox="">
+                    <div className="play-icon">
+                      <i className="fa-solid fa-play" />
+                    </div>
+                    <img src={Video2} alt="Video Thumbnail" />
                   </button>
                 )}
-                
-              {!courseData.is_student_enroll ? (
-                //  <button className="btn btn-enroll w-100" disabled>
-                //   </button>
-                " "
-                ) : (
-                  <Link to={`/student/student-skilltest/${courseData.course_id}/${courseData.course_title}`} className="btn btn-enroll w-100">
-                  Take Test
-                </Link>
-                )}
 
-                {!courseData.is_certificate ? (
-                 ""
-                ) : (
-                 <button onClick={handleDownload} className="btn btn-enroll w-100">
-                    Download Certificate
-                  </button>
-                )} */}
+                <div className="video-details">
+                  <div className="course-fee">
+                    <h2>FREE</h2>
+                    <p><span>$99.00</span> 50% off</p>
+                  </div>
+                  <div className="row gx-2">
+                    <div className="col-md-6 addHeart">
+                      {isFavorite && localStorage.getItem("token") ? (
+                        <button 
+                          className="btn btn-danger w-100" 
+                          onClick={() => toggleClass(courseData.course_id, isFavorite)}>
+                          <i className="feather icon-heart me-2" />
+                          Remove
+                        </button>
+                      ) : (
+                        <button 
+                          className="btn btn-wish w-100" 
+                          onClick={() => toggleClass(courseData.course_id, isFavorite)}>
+                          <i className="feather icon-heart me-2" />
+                          Add to Wishlist
+                        </button>
+                      )}
+                    </div>
+                    <div className="col-md-6 addHeart">
+                      <Link to="#" className="btn btn-wish w-100">
+                        <i className="feather icon-share-2 me-2" />
+                        Share
+                      </Link>
+                    </div>
+                  </div>
+                  <ButtonWrapper>
+                    {token && courseData.is_student_enroll ? (
+                      <button className="btn-enroll w-100" disabled>
+                        Enrolled
+                      </button>
+                    ) : (
+                      <button onClick={handleEnrollClick} className="btn-enroll w-100">
+                        Enroll Now
+                      </button>
+                    )}
 
-<ButtonWrapper>
-    {/* Enroll Button */}
-    {token && courseData.is_student_enroll ? (
-      
-       <button className="btn-enroll w-100" disabled>
-       Enrolled
-     </button>
-    ) : (
-      <button onClick={handleEnrollClick} className="btn-enroll w-100">
-        Enroll Now
-      </button>
-    )}
+                    {token && (
+                      <Link to={`/student/student-skilltest/${courseData.course_id}/${courseData.course_title}`}>
+                        <button className="btn-enroll w-100">
+                          Take Test
+                        </button>
+                      </Link>
+                    )}
 
-    {/* Take Test Button */}
-    {token  ? (
-      <Link
-        to={`/student/student-skilltest/${courseData.course_id}/${courseData.course_title}`}
-      >
-        <button  
-        className="btn-enroll w-100"
-        >
-        Take Test
-        </button>
-      </Link>
-    ) : null}
-
-    {/* Download Certificate Button */}
-    {token && courseData.is_student_enroll && courseData.is_certificate  ? (
-      <button onClick={handleDownload} className="btn-enroll w-100">
-        Download Certificate
-      </button>
-    ) : null}
-  </ButtonWrapper>
-
-
-
+                    {token && courseData.is_student_enroll && courseData.is_certificate && (
+                      <button onClick={handleDownload} className="btn-enroll w-100">
+                        Download Certificate
+                      </button>
+                    )}
+                  </ButtonWrapper>
                 </div>
-                
+              </div>
             </div>
           </div>
-        </div>
+        </VideoSection>
 
         {/* Checkout Popup */}
         <Modal show={showPopup} onHide={() => setShowPopup(false)}>

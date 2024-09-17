@@ -487,9 +487,10 @@
 //   );
 // }
 import React, { useEffect, useRef, useState } from "react";
-import { Home, LogOut, Moon, User } from "react-feather";
+import { Home, LogOut, User } from "react-feather";
 import { Link } from "react-router-dom";
-import logo5 from "../../../assets/logo5.png";
+// import logo5 from "../../../assets/logo5.png";
+import logo5 from "../../../assets/logo5.png"
 import useOnClickOutside from "../../../hooks/useOnClickOutside";
 import PropTypes from "prop-types"; 
 
@@ -799,7 +800,7 @@ export default function StudentHeader( ) {
                     <Star size={14} color={"#FF875A"} className="headerIcon me-1" />{" "}
                     Subscription
                   </Link> */}
-                  <div className="dropdown-item text night-mode">
+                  {/* <div className="dropdown-item text night-mode">
                     <span>
                       <Moon size={14} className="headerIcon" /> Night Mode{" "}
                     </span>
@@ -810,7 +811,7 @@ export default function StudentHeader( ) {
                         id="night-mode"
                       />
                     </div>
-                  </div>
+                  </div> */}
                   <Link className="dropdown-item text" to="/home">
                     <LogOut
                       size={14}

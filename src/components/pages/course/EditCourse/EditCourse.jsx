@@ -574,11 +574,15 @@ const EditCourse = () => {
             Authorization: `${token}`,
           },
         });
+        console.log(response,"RDDDD");
         const { data } = response.data;
+        console.log(data,"data hu");
         setCourseData({
           course_title: data.course_title,
-          category: data.category,
-          level: data.level,
+          category_id: data.course_category_id, // Add this
+  category_name: data.course_category_name,
+  level_id: data.course_level_id, // Add this
+  level_name: data.course_level_name,
           course_description: data.course_description,
           course_banner_image: data.course_banner_image,
           course_intro_video: data.course_intro_video_url,
@@ -598,7 +602,6 @@ const EditCourse = () => {
         navigate("/instructor/instructor-dashboard");
       }
     };
-
     const fetchCategoryOptions = async () => {
       try {
         const response = await axios.get('https://api.novajobs.us/api/trainers/course-categories');
@@ -662,6 +665,7 @@ const EditCourse = () => {
           }
         }
       }
+      console.log(formData,"FDDDd");
       const token = localStorage.getItem("trainerToken");
       const response = await axios.patch(`https://api.novajobs.us/api/trainers/update-course/${id}`, formData, {
         headers: {
@@ -682,6 +686,7 @@ const EditCourse = () => {
     navigate(`/add-section/${id}`);
   };
 
+  console.log(courseData,"CD hu");
 
 
 
@@ -733,7 +738,6 @@ const EditCourse = () => {
       </components.DropdownIndicator>
     );
   };
-
 
   return (
     <div className="main-wrapper">
@@ -787,102 +791,6 @@ const EditCourse = () => {
                   </div>
 
                   <div className="widget-content multistep-form">
-                    {/* {activeTab === "basic" && (
-                      <div className="add-course-info">
-                        <div className="add-course-inner-header">
-                          <h4>Basic Information</h4>
-                        </div>
-                        <div className="add-course-form">
-                          <form action="#">
-                            <div className="input-block">
-                              <label className="add-course-label">Course Title</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Course Title"
-                                name="course_title"
-                                value={courseData.course_title}
-                                onChange={handleInputChange}
-                              />
-                            </div>
-                            <div className="input-block">
-                              <label className="add-course-label">Courses Category</label>
-                              <Select
-                                options={categoryOptions}
-                                onChange={handleSelectChange("category")}
-                                value={categoryOptions.find(option => option.value === courseData.category)}
-                                placeholder="Select Category"
-                                styles={selectStyle}
-                              />
-                            </div>
-                            <div className="input-block">
-                              <label className="add-course-label">Courses Level</label>
-                              <Select
-                                options={levelOptions}
-                                onChange={handleSelectChange("level")}
-                                value={levelOptions.find(option => option.value === courseData.level)}
-                                placeholder="Select Level"
-                                styles={selectStyle}
-                              />
-                            </div>
-                            <div className="input-block">
-                              <label className="add-course-label">Course Language</label>
-                              <Select
-                                options={languageOptions}
-                                onChange={handleSelectChange("course_language")}
-                                value={languageOptions.find(option => option.value === courseData.course_language)}
-                                placeholder="Select Language"
-                                styles={selectStyle}
-                              />
-                            </div>
-                            <div className="input-block mb-0">
-                              <label className="add-course-label">Course Description</label>
-                              <textarea
-                                className="form-control"
-                                name="course_description"
-                                value={courseData.course_description}
-                                onChange={handleInputChange}
-                                rows="4"
-                              ></textarea>
-                            </div>
-                            <div className="input-block">
-                              <label className="add-course-label">Learning Objectives</label>
-                              <textarea
-                                className="form-control"
-                                name="learning_objectives"
-                                value={courseData.learning_objectives}
-                                onChange={handleInputChange}
-                              ></textarea>
-                            </div>
-                            <div className="input-block">
-                              <label className="add-course-label">Target Audience</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                name="target_audience"
-                                value={courseData.target_audience}
-                                onChange={handleInputChange}
-                              />
-                            </div>
-                            <div className="input-block">
-                              <label className="add-course-label">Time Spent on Course</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                name="time_spent_on_course"
-                                value={courseData.time_spent_on_course}
-                                onChange={handleInputChange}
-                              />
-                            </div>
-                          </form>
-                        </div>
-                        <div className="widget-btn">
-                          <Link to="#" className="btn btn-info-light next_btn" onClick={() => setActiveTab("media")}>
-                            Continue
-                          </Link>
-                        </div>
-                      </div>
-                    )} */}
                     {activeTab === "basic" && (
                       <div className="add-course-info">
                         <div className="add-course-inner-header">
@@ -906,7 +814,7 @@ const EditCourse = () => {
                               <StyledSelect
                                 options={categoryOptions}
                                 onChange={handleSelectChange("category")}
-                                value={categoryOptions.find(option => option.value === courseData.category)}
+                                value={categoryOptions.find(option => option.label === courseData.category)}
                                 placeholder="Select Category"
                                 styles={customStyles}
                                 components={{ DropdownIndicator }}
@@ -926,7 +834,7 @@ const EditCourse = () => {
                               />
                             </div>
                             <div className="input-block">
-                              <label className="add-course-label">Courses Level</label>
+                              <label className="add-course-label">Course Language</label>
                               <StyledSelect
                                 options={languageOptions}
                                 onChange={handleSelectChange("level")}

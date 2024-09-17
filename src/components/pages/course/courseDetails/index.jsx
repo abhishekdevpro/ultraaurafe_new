@@ -69,10 +69,10 @@
 // //                         <Link to="/home"></Link>
 // //                       </li>
 // //                       <li className="breadcrumb-item" aria-current="page">
-                        
+
 // //                       </li>
 // //                       <li className="breadcrumb-item" aria-current="page">
-                        
+
 // //                       </li>
 // //                       <li className="breadcrumb-item" aria-current="page">
 // //                       </li>
@@ -101,16 +101,16 @@
 // //                       </h5>
 // //                       <p>{courseData.data.trainer_job_title || "Instructor Title"}</p>
 // //                     </div>
-              //       <div className="rating mb-0">
-              //         <i className="fas fa-star filled me-1" />
-              //         <i className="fas fa-star filled me-1" />
-              //         <i className="fas fa-star filled me-1" />
-              //         <i className="fas fa-star filled me-1" />
-              //         <i className="fas fa-star me-1" />
-              //         <span className="d-inline-block average-rating">
-              //           <span>{courseData.rating || "4.5"}</span> 
-              //         </span>
-              // </div>
+//       <div className="rating mb-0">
+//         <i className="fas fa-star filled me-1" />
+//         <i className="fas fa-star filled me-1" />
+//         <i className="fas fa-star filled me-1" />
+//         <i className="fas fa-star filled me-1" />
+//         <i className="fas fa-star me-1" />
+//         <span className="d-inline-block average-rating">
+//           <span>{courseData.rating || "4.5"}</span>
+//         </span>
+// </div>
 // //                   </div>
 // //                   <span className="web-badge mb-3">{courseData.data.course_category_name }</span>
 // //                 </div>
@@ -364,7 +364,7 @@
 //   return (
 //     <div className="main-wrapper">
 //       {token ? <CourseHeader activeMenu={"CourseDetails"} /> : <Header />}
-      
+
 //       <div className="breadcrumb-bar">
 //         <div className="container">
 //           <div className="row">
@@ -415,7 +415,7 @@
 //                       <i className="fas fa-star filled me-1" />
 //                       <i className="fas fa-star me-1" />
 //                       <span className="d-inline-block average-rating">
-//                         <span className="rating text-white">({courseData.data.rating})</span> 
+//                         <span className="rating text-white">({courseData.data.rating})</span>
 //                       </span>
 //               </div>
 //                 </div>
@@ -424,7 +424,7 @@
 //                 </span>
 //               </div>
 //               <h2>{courseData.data.course_title || "Course Title"}</h2>
-              
+
 //               {/* Course description with styled-components */}
 //               <CourseDescriptionWrapper
 //                 dangerouslySetInnerHTML={{ __html: courseData.data.course_description || "" }}
@@ -543,7 +543,7 @@
 //   return (
 //     <div className="main-wrapper">
 //       {token ? <CourseHeader activeMenu={"CourseDetails"} /> : <Header />}
-      
+
 //       <div className="breadcrumb-bar">
 //         <div className="container">
 //           <div className="row">
@@ -589,7 +589,7 @@
 //                       <i className="fas fa-star filled me-1" />
 //                       <i className="fas fa-star me-1" />
 //                       <span className="d-inline-block average-rating">
-//                         <span className="rating text-white">({courseData.data.rating})</span> 
+//                         <span className="rating text-white">({courseData.data.rating})</span>
 //                       </span>
 //               </div>
 //                 </div>
@@ -598,7 +598,7 @@
 //                 </span>
 //               </div>
 //               <h2>{courseData.data.course_title || "Course Title"}</h2>
-              
+
 //               {/* Course description with styled-components */}
 //               <CourseDescriptionWrapper>
 //                 <div dangerouslySetInnerHTML={{ __html: displayedDescription }} />
@@ -637,13 +637,14 @@
 // export default CourseDetails;
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams, Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { useParams, Link } from "react-router-dom";
+import styled from "styled-components";
 import CourseHeader from "../header";
 import DetailsContent from "./detailsContent";
 import { Icon1, People, Timer, User1 } from "../../../imagepath";
 import Footer from "../../../footer";
 import Header from "../../../header";
+import { Target } from "react-feather";
 
 // Styled Components
 const CourseDescriptionWrapper = styled.div`
@@ -656,7 +657,8 @@ const CourseDescriptionWrapper = styled.div`
     margin-bottom: 15px;
   }
 
-  ul, ol {
+  ul,
+  ol {
     padding-left: 20px;
     margin-bottom: 15px;
   }
@@ -707,58 +709,64 @@ const CourseDetails = () => {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div className="alert alert-warning">{error}</div>;
-  if (!courseData) return <div className="alert alert-info">No course content available at this time.</div>;
+  if (!courseData)
+    return (
+      <div className="alert alert-info">
+        No course content available at this time.
+      </div>
+    );
 
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
 
   const toggleDescription = () => {
     setIsExpanded(!isExpanded);
   };
 
   const truncateDescription = (description) => {
-    const tempDiv = document.createElement('div');
+    const tempDiv = document.createElement("div");
     tempDiv.innerHTML = description;
     const textContent = tempDiv.textContent || tempDiv.innerText;
     const words = textContent.split(/\s+/);
     if (words.length <= 100) return description;
-    
-    let truncated = '';
+
+    let truncated = "";
     let wordCount = 0;
     let insideTag = false;
-    
+
     for (let i = 0; i < description.length; i++) {
-      if (description[i] === '<') insideTag = true;
+      if (description[i] === "<") insideTag = true;
       if (!insideTag) wordCount++;
       truncated += description[i];
-      if (description[i] === '>') insideTag = false;
+      if (description[i] === ">") insideTag = false;
       if (wordCount >= 100 && !insideTag) break;
     }
-    
-    return truncated + '...';
+
+    return truncated + "...";
   };
 
   const courseDescription = courseData.data.course_description || "";
-  const displayedDescription = isExpanded ? courseDescription : truncateDescription(courseDescription);
+  const displayedDescription = isExpanded
+    ? courseDescription
+    : truncateDescription(courseDescription);
 
   return (
     <div className="main-wrapper">
       {token ? <CourseHeader activeMenu={"CourseDetails"} /> : <Header />}
       {/* <section className="page-content course-sec"> */}
-      
+{/* 
       <div className="breadcrumb-bar">
         <div className="container">
           <div className="row">
             <div className="col-md-12 col-12">
               <div className="breadcrumb-list">
                 <nav aria-label="breadcrumb" className="page-breadcrumb">
-                  <ol className="breadcrumb">
-                  </ol>
+                  <ol className="breadcrumb"></ol>
                 </nav>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="inner-banner">
         <div className="container">
@@ -767,18 +775,25 @@ const CourseDetails = () => {
               <div className="instructor-wrap border-bottom-0 m-0">
                 <div className="about-instructor align-items-center">
                   <div className="abt-instructor-img">
-                    <Link to={`/instructor/instructor-profile/${courseData.data.trainer_id}`}>
+                    <Link
+                      to={`/instructor/instructor-profile/${courseData.data.trainer_id}`}
+                    >
                       <img src={User1} alt="Instructor" className="img-fluid" />
                     </Link>
                   </div>
                   <div className="instructor-detail me-3">
                     <h5>
-                      <Link to={`/instructor/instructor-profile/${courseData.data.trainer_id}`}>
-                        {courseData.data.trainer_first_name || "Instructor Name"}{" "}
+                      <Link
+                        to={`/instructor/instructor-profile/${courseData.data.trainer_id}`}
+                      >
+                        {courseData.data.trainer_first_name ||
+                          "Instructor Name"}{" "}
                         {courseData.data.trainer_last_name || ""}
                       </Link>
                     </h5>
-                    <p>{courseData.data.trainer_job_title || "Instructor Title"}</p>
+                    <p>
+                      {courseData.data.trainer_job_title || "Instructor Title"}
+                    </p>
                   </div>
                   {/* <div className="rating mb-0">
                     <i className="fas fa-star filled me-1" />
@@ -791,27 +806,35 @@ const CourseDetails = () => {
                     </span>
                   </div> */}
                   <div className="rating mb-0">
-  {Array.from({ length: 5 }).map((_, index) => (
-    <i
-      key={index}
-      className={`fas fa-star ${index < courseData.data.rating ? 'filled' : 'unfilled'} me-1`}
-    />
-  ))}
-  <span className="d-inline-block average-rating">
-    <span className="rating text-white">({courseData.data.rating})</span>
-  </span>
-</div>
-
+                    {Array.from({ length: 5 }).map((_, index) => (
+                      <i
+                        key={index}
+                        className={`fas fa-star ${
+                          index < courseData.data.rating ? "filled" : "unfilled"
+                        } me-1`}
+                      />
+                    ))}
+                    <span className="d-inline-block average-rating">
+                      <span className="rating text-white">
+                        ({courseData.data.rating})
+                      </span>
+                    </span>
+                  </div>
                 </div>
                 <span className="web-badge mb-3">
-                  {courseData.data.category}
+                  {courseData.course_category_name
+                    ? courseData.data.course_category_name
+                    : "Graduates"}
                 </span>
               </div>
               <h2>{courseData.data.course_title || "Course Title"}</h2>
-              
+
               <CourseDescriptionWrapper>
-                <div dangerouslySetInnerHTML={{ __html: displayedDescription }} />
-                {courseDescription.length > truncateDescription(courseDescription).length && (
+                <div
+                  dangerouslySetInnerHTML={{ __html: displayedDescription }}
+                />
+                {courseDescription.length >
+                  truncateDescription(courseDescription).length && (
                   <ReadMoreButton onClick={toggleDescription}>
                     {isExpanded ? "Show Less" : "Read More"}
                   </ReadMoreButton>
@@ -821,7 +844,7 @@ const CourseDetails = () => {
               <div className="course-info d-flex align-items-center border-bottom-0 m-0 p-0">
                 <div className="cou-info">
                   <img src={Icon1} alt="Lessons" />
-                  <p>{courseData.data.total_lectures || "12 Lessons"}+</p>
+                  <p>{courseData.data.total_lectures || " No Lessons"}</p>
                 </div>
                 <div className="cou-info">
                   <img src={Timer} alt="Duration" />
@@ -829,14 +852,22 @@ const CourseDetails = () => {
                 </div>
                 <div className="cou-info">
                   <img src={People} alt="Enrolled Students" />
-                  <p>{`${courseData.data.enrolled_student_count} students enrolled` || "32 students enrolled"}</p>
+                  <p>
+                    {`${courseData.data.enrolled_student_count} students enrolled` ||
+                      "32 students enrolled"}
+                  </p>
+                </div>
+                <div className="cou-info">
+                  <Target size={24} color="#000" />{" "}
+                  {/* Adjust size and color */}
+                  <p>{`${courseData.data.target_audience}`}</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-  {/* </section> */}
+      {/* </section> */}
       <DetailsContent courseFeatureData={courseData.data} />
       <Footer />
     </div>
