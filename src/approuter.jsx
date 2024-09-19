@@ -155,6 +155,7 @@ import AIResumePage from "./components/pages/FooterLinks/Ai-Resume.jsx";
 import PartnersPage from "./components/pages/FooterLinks/Partners.jsx";
 import SkillAssessmentsPage from "./components/pages/FooterLinks/Skillpage.jsx";
 import Login2 from "./components/pages/partnerwithus/PartnerLogin2.jsx";
+import Coming from "./components/instructor/ComingSoon.jsx";
 const Approuter = () => {
   return (
     <BrowserRouter>
@@ -284,6 +285,10 @@ const Approuter = () => {
         <Route
           path="/instructor/instructor-dashboard"
           element={<Dashboard />}
+        />
+        <Route
+          path="/instructor/coming-soon"
+          element={<Coming />}
         />
         <Route
           path="/instructor/instructor-list"

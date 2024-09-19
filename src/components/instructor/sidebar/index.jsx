@@ -105,7 +105,7 @@ export default function InstructorSidebar() {
               </li> */}
               <li className={`nav-item ${location.pathname === '/instructor/instructor-reviews' ? 'active' : ''}`}>
 
-                <Link to="" className="nav-link">
+                <Link to="/instructor/coming-soon" className="nav-link">
                   <i className="bx bxs-star" />
                   Reviews
                 </Link>
@@ -117,7 +117,7 @@ export default function InstructorSidebar() {
                 </Link>
               </li> */}
               <li className={`nav-item ${location.pathname === '/instructor/instructor-orders' ? 'active' : ''}`}>
-                <Link to="" className="nav-link">
+                <Link to="/instructor/coming-soon" className="nav-link">
                   <i className="bx bxs-cart" />
                   Order History
                 </Link>
@@ -137,7 +137,7 @@ export default function InstructorSidebar() {
               </li> */}
               <li className={`nav-item ${location.pathname === '/instructor/instructor-chat' ? 'active' : ''}`}>
 
-                <Link to="" className="nav-link">
+                <Link to="/instructor/coming-soon" className="nav-link">
                   <i className="bx bxs-chat" />
                   Messages
                 </Link>
