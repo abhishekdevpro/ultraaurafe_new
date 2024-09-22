@@ -1079,11 +1079,217 @@ const AllCoursesButtonBottom = styled(AllCoursesButton)`
 // };
 
 // export default DynamicCourseGrid;
+// import React, { useState, useEffect } from "react";
+// import axios from "axios";
+// import { Link, useNavigate} from "react-router-dom";
+// import styled from "styled-components";
+// import { Icon01, Icon02 } from "../imagepath"; // Assuming these icons are available
+// import { toast } from "react-toastify";
+
+// // Styled components remain unchanged
+// // ... (all your styled components here)
+
+// const DynamicCourseGrid = () => {
+//   const [courses, setCourses] = useState([]);
+//   const [levels, setLevels] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [activeLevel, setActiveLevel] = useState("ALL");
+//   const [displayCount,] = useState(6);
+//   const [isClassAdded, setIsClassAdded] = useState([]);
+//   const navigate = useNavigate();
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         const [coursesResponse, levelsResponse] = await Promise.all([
+//           axios.get("https://api.novajobs.us/api/trainers/all-courses"),
+//           axios.get("https://api.novajobs.us/api/trainers/course-level")
+//         ]);
+//         setCourses(coursesResponse.data.data);
+//         setLevels([{ id: "ALL", name: "ALL" }, ...levelsResponse.data.data]);
+//       } catch (error) {
+//         console.error("Error fetching data:", error);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchData();
+//   }, []);
+
+//   const normalizedActiveLevel = activeLevel.toLowerCase();
+
+//   const filteredCourses = courses.filter(course => 
+//     normalizedActiveLevel === "all" || course.course_level_name.toLowerCase() === normalizedActiveLevel
+//   );
+
+//   const limitedCourses = filteredCourses.slice(0, displayCount);
+//   const toggleClass = async (index, courseId) => {
+//     const updatedClasses = [...isClassAdded];
+//     updatedClasses[index] = !updatedClasses[index];
+//     setIsClassAdded(updatedClasses);
+
+//     try {
+//       const token = localStorage.getItem('token');
+//       if (!token) {
+//         toast.error("Please log in to add courses to favorites.")
+//         navigate('/login');
+//         return;
+//       }
+//       await axios.post(
+//         'https://api.novajobs.us/api/students/course-favorite',
+//         { course_id: courseId },
+//         {
+//           headers: {
+//             'Authorization': `${token}`,
+//             'Content-Type': 'application/json',
+//           }
+//         }
+//       );
+//       // Show success toast
+//       toast.success('Course added to favorites!');
+//     } catch (error) {
+//       console.error('Failed to add course to favorites:', error);
+//       // Show error toast
+//       toast.error('Failed to add course to favorites. Please try again.');
+//     }
+//   };
+
+// // const handleAllCoursesClick = () => {
+// //   // navigate('/course-list')
+// //   const selectedLevel = levels.find(level =>
+// //     level.name.toLowerCase().trim() === activeLevel.toLowerCase().trim()
+// //   );
+// //   console.log(selectedLevel);
+// //   if (selectedLevel) {
+// //     const url =
+// //       selectedLevel.id !== "ALL"
+// //         ? `/course-list?course_level_id=${selectedLevel.id}`
+// //         : "/course-list";
+// //     console.log(selectedLevel);
+// //     console.log("Navigating to:", url);
+// //     // navigate(url); // This should navigate correctly
+//     // window.location.href = url;
+    
+// //   } else {
+// //     console.log("No matching level found, navigating to: /course-list");
+// //     navigate("/course-list");
+// //   }
+// // };
+
+// const handleAllCoursesClick = () => {
+//   // const navigate = useNavigate();
+  
+//   const selectedLevel = levels.find(level =>
+//     level.name.toLowerCase().trim() === activeLevel.toLowerCase().trim()
+//   );
+
+//   console.log(selectedLevel);
+
+//   if (selectedLevel) {
+//     const url =
+//       selectedLevel.id !== "ALL"
+//         ? `/course-list?course_level_id=${selectedLevel.id}`
+//         : "/course-list";
+    
+//     console.log("Navigating to:", url);
+//     navigate(url);
+//     // window.location.href = url;
+
+//   } else {
+//     console.log("No matching level found, navigating to: /course-list");
+//     navigate("/course-list");
+//     // window.location.href('/course-list');
+
+//   }
+// };
+
+//   if (loading) {
+//     return <Container>Loading...</Container>;
+//   }
+
+//   return (
+//     <Container>
+//       <Header>
+//         <Title>Our Popular Online Courses</Title>
+//         <AllCoursesButton to={'/course-list'}>All Courses</AllCoursesButton>
+//       </Header>
+
+//       <LevelFilter>
+//         {levels.map((level) => (
+//           <LevelButton
+//             key={level.id}
+//             onClick={() => setActiveLevel(level.name)}
+//             active={activeLevel === level.name}
+//           >
+//             {level.name}
+//           </LevelButton>
+//         ))}
+//       </LevelFilter>
+
+//       {limitedCourses.length === 0 ? (
+//         <NoCoursesMessage>No courses available for this level.</NoCoursesMessage>
+//       ) : (
+//         <>
+//           <CourseGrid>
+//             {limitedCourses.map((course) => (
+//               <CourseCard key={course.id}>
+//                 <Link to={`/course-info/${course.id}`}>
+//                   <CourseImage
+//                     src={`https://api.novajobs.us${course.course_banner_image}`}
+//                     alt={course.course_title}
+//                   />
+//                 </Link>
+//                 <CourseContent>
+//                   <InstructorInfo>
+//                     <InstructorAvatar
+//                       src="https://cdn.pixabay.com/photo/2015/03/04/22/35/avatar-659652_640.png"
+//                       alt="Instructor"
+//                     />
+//                     <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
+//                       <InstructorName>
+//                         {course.trainer_first_name} {course.trainer_last_name}
+//                       </InstructorName>
+//                     </Link>
+//                     <div className="course-share d-flex align-items-center justify-content-center">
+//                                           <Link to="#" onClick={() => toggleClass(course.id)}>
+//                                             <i className={`fa-regular fa-heart ${isClassAdded[course.id] ? 'color-active' : ''}`} />
+//                                           </Link>
+//                                         </div>
+//                   </InstructorInfo>
+//                   <Link to={`/course-info/${course.id}`}>
+//                     <CourseTitle>{course.course_title}</CourseTitle>
+//                   </Link>
+//                   <CourseStats>
+//                     <StatItem>
+//                       <img src={Icon01} alt="Students" />
+//                       <span>{course.students_counts} students</span>
+//                     </StatItem>
+//                     <StatItem>
+//                       <img src={Icon02} alt="Duration" />
+//                       <span>{course.time_spent_on_course}</span>
+//                     </StatItem>
+//                   </CourseStats>
+//                   <CoursePrice>${course.course_price}</CoursePrice>
+//                 </CourseContent>
+//               </CourseCard>
+//             ))}
+//           </CourseGrid>
+//           <AllCoursesButtonBottom onClick={handleAllCoursesClick}>
+//             {activeLevel=='ALL'? "All Courses" : `All ${activeLevel} Courses`}
+//           </AllCoursesButtonBottom>
+//         </>
+//       )}
+//     </Container>
+//   );
+// };
+
+// export default DynamicCourseGrid;
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Icon01, Icon02 } from "../imagepath"; // Assuming these icons are available
+import { Icon01, Icon02 } from "../imagepath";
 import { toast } from "react-toastify";
 
 // Styled components remain unchanged
@@ -1096,7 +1302,8 @@ const DynamicCourseGrid = () => {
   const [activeLevel, setActiveLevel] = useState("ALL");
   const [displayCount,] = useState(6);
   const [isClassAdded, setIsClassAdded] = useState([]);
-  const {navigate} = useNavigate()
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -1124,42 +1331,6 @@ const DynamicCourseGrid = () => {
 
   const limitedCourses = filteredCourses.slice(0, displayCount);
 
-  // const handleAllCoursesClick = () => {
-  //   console.log(levels)
-  //   const selectedLevel = levels.find(level => level.name.toLowerCase().trim() === activeLevel.toLowerCase().trim());
-  //   console.log(selectedLevel);
-  //   if (selectedLevel && selectedLevel.id !== "ALL") {
-  //     navigate(`/course-list?course_level_id=${selectedLevel.id}`);
-  //     console.log(`localhost:3000/course-list?course_level_id=${selectedLevel.id}`)
-  //   } else {
-  //     navigate("/course-list");
-  //   }
-  // };
-  // const handleAllCoursesClick = () => {
-  //   console.log("Active Level:", activeLevel);
-  //   console.log("Levels:", levels);
-
-  //   const selectedLevel = levels.find(level => 
-  //     level.name.toLowerCase().trim() === activeLevel.toLowerCase().trim()
-  //   );
-
-  //   console.log("Selected Level:", selectedLevel);
-
-  //   if (selectedLevel) {
-  //     if (selectedLevel.id !== "ALL") {
-  //       const url = `/course-list?course_level_id=${selectedLevel.id}`;
-  //       console.log("Navigating to:", url);
-  //       navigate(url);
-        // window.location.href = `/course-list?course_level_id=${selectedLevel.id}`;
-  //     } else {
-  //       console.log("Navigating to: /course-list");
-  //       navigate("/course-list");
-  //     }
-  //   } else {
-  //     console.log("No matching level found, navigating to: /course-list");
-  //     navigate("/course-list");
-  //   }
-  // };
   const toggleClass = async (index, courseId) => {
     const updatedClasses = [...isClassAdded];
     updatedClasses[index] = !updatedClasses[index];
@@ -1182,36 +1353,28 @@ const DynamicCourseGrid = () => {
           }
         }
       );
-      // Show success toast
       toast.success('Course added to favorites!');
     } catch (error) {
       console.error('Failed to add course to favorites:', error);
-      // Show error toast
       toast.error('Failed to add course to favorites. Please try again.');
     }
   };
 
-const handleAllCoursesClick = () => {
-  navigate('/course-list')
-  const selectedLevel = levels.find(level =>
-    level.name.toLowerCase().trim() === activeLevel.toLowerCase().trim()
-  );
-  console.log(selectedLevel);
-  if (selectedLevel) {
-    const url =
-      selectedLevel.id !== "ALL"
-        ? `/course-list?course_level_id=${selectedLevel.id}`
-        : "/course-list";
-    console.log(selectedLevel);
+  const handleAllCoursesClick = () => {
+    const selectedLevel = levels.find(level =>
+      level.name.toLowerCase().trim() === activeLevel.toLowerCase().trim()
+    );
+
+    console.log("Selected level:", selectedLevel);
+
+    let url = "/course-list";
+    if (selectedLevel && selectedLevel.id !== "ALL") {
+      url += `?course_level_id=${selectedLevel.id}`;
+    }
+
     console.log("Navigating to:", url);
-    // navigate(url); // This should navigate correctly
-    window.location.href = url;
-    
-  } else {
-    console.log("No matching level found, navigating to: /course-list");
-    navigate("/course-list");
-  }
-};
+    navigate(url);
+  };
 
   if (loading) {
     return <Container>Loading...</Container>;
@@ -1221,7 +1384,7 @@ const handleAllCoursesClick = () => {
     <Container>
       <Header>
         <Title>Our Popular Online Courses</Title>
-        <AllCoursesButton to={'/course-list'}>All Courses</AllCoursesButton>
+        <AllCoursesButton onClick={handleAllCoursesClick}>All Courses</AllCoursesButton>
       </Header>
 
       <LevelFilter>
@@ -1261,10 +1424,10 @@ const handleAllCoursesClick = () => {
                       </InstructorName>
                     </Link>
                     <div className="course-share d-flex align-items-center justify-content-center">
-                                          <Link to="#" onClick={() => toggleClass(course.id)}>
-                                            <i className={`fa-regular fa-heart ${isClassAdded[course.id] ? 'color-active' : ''}`} />
-                                          </Link>
-                                        </div>
+                      <Link to="#" onClick={() => toggleClass(course.id)}>
+                        <i className={`fa-regular fa-heart ${isClassAdded[course.id] ? 'color-active' : ''}`} />
+                      </Link>
+                    </div>
                   </InstructorInfo>
                   <Link to={`/course-info/${course.id}`}>
                     <CourseTitle>{course.course_title}</CourseTitle>
@@ -1285,7 +1448,7 @@ const handleAllCoursesClick = () => {
             ))}
           </CourseGrid>
           <AllCoursesButtonBottom onClick={handleAllCoursesClick}>
-            {activeLevel=='ALL'? "All Courses" : `All ${activeLevel} Courses`}
+            {activeLevel === 'ALL' ? "All Courses" : `All ${activeLevel} Courses`}
           </AllCoursesButtonBottom>
         </>
       )}

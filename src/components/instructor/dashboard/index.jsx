@@ -452,7 +452,8 @@ export const Dashboard = () => {
                     ))}
                   </div>
                 ) : (
-                  <p>No courses available</p>
+                  ""
+                  // <p>No courses available</p>
                 )}
               </div>
               {/* /Dashboard Grid */}

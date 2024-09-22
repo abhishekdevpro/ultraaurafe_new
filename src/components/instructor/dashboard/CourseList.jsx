@@ -91,12 +91,12 @@ const CourseTable = () => {
 
                       Edit
                     </button>
-                    {/* <button
-                      className="btn btn-secondary action-btn"
-                      onClick={() => handleDuplicateCourse(course.id)}
+                    <button
+                      className="btn btn-secondary danger-btn"
+                      // onClick={() => handleDuplicateCourse(course.id)}
                     >
-                      Duplicate
-                    </button> */}
+                      Request Delete
+                    </button>
                   </td>
                 </tr>
               ))
