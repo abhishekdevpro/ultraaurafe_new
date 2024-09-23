@@ -42,7 +42,9 @@ export default function VendorSidebar() {
                 alt="Profile"
                             className="img-fluid"
                           />
+
                 </Link>
+             <p> Company Logo </p>
               </div>
             </div>
             <div className="profile-group">

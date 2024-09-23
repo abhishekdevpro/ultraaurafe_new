@@ -685,7 +685,7 @@ const CourseDetails = () => {
   const [error, setError] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const { courseid } = useParams();
-
+  
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
@@ -748,7 +748,8 @@ const CourseDetails = () => {
   const displayedDescription = isExpanded
     ? courseDescription
     : truncateDescription(courseDescription);
-
+   
+    console.log(courseData.data.learning_objectives,"Lo");
   return (
     <div className="main-wrapper">
       {token ? <CourseHeader activeMenu={"CourseDetails"} /> : <Header />}

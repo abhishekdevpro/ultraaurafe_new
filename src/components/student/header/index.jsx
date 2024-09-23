@@ -488,7 +488,7 @@
 // }
 import React, { useEffect, useRef, useState } from "react";
 import { Home, LogOut, User } from "react-feather";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import logo5 from "../../../assets/logo5.png";
 import logo5 from "../../../assets/logo5.png"
 import useOnClickOutside from "../../../hooks/useOnClickOutside";
@@ -507,7 +507,7 @@ export default function StudentHeader( ) {
   // const wish = useRef();
   // const notification = useRef();
   const profile = useRef();
-
+  const navigate = useNavigate()
   useEffect(() => {
     const token = localStorage.getItem('token');
     const fetchProfile = async () => {
@@ -541,6 +541,8 @@ export default function StudentHeader( ) {
     setMobileMenu(false);
   };
 
+
+
  
 
   
@@ -568,6 +570,11 @@ export default function StudentHeader( ) {
 
   if (!profileData) {
     return <div>Loading...</div>;
+  }
+
+  const handleLogout =()=> {
+    localStorage.removeItem('trainerToken')
+    navigate('/home')
   }
 
   return (
@@ -812,11 +819,12 @@ export default function StudentHeader( ) {
                       />
                     </div>
                   </div> */}
-                  <Link className="dropdown-item text" to="/home">
+                  <Link className="dropdown-item text">
                     <LogOut
                       size={14}
                       color={"#FF875A"}
                       className="headerIcon me-1"
+                      onClick={handleLogout}
                     />{" "}
                     Logout
                   </Link>

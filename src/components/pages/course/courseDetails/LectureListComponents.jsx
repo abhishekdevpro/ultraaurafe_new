@@ -333,7 +333,33 @@ const ResourceLink = styled.a`
     font-size: 14px;
   }
 `;
+const LectureContent = styled.div`
+  padding: 16px;
+  background-color: #ffffff;
+  border-top: 1px solid #e9ecef;
+  height: 300px; // Set a fixed height
+  overflow-y: auto; // Enable vertical scrolling
+  scrollbar-width: thin; // For Firefox
+  scrollbar-color: #888 #f1f1f1; // For Firefox
 
+  /* Webkit browsers like Chrome/Safari */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+`;
 const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loadingStates }) => {
   const [expandedLectures, setExpandedLectures] = useState({});
 
@@ -343,7 +369,10 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
       [lectureId]: !prev[lectureId],
     }));
   };
-
+  
+  const renderLectureContent = (content) => {
+    return { __html: content };
+  };
   return (
     <LectureList>
       {section.lectures && section.lectures.length > 0 ? (
@@ -370,6 +399,10 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
               </div>
             </LectureHeader>
             {expandedLectures[lecture.id] && (lecture.lecture_resources_pdf || lecture.lecture_resources_link) && (
+              <>
+                  {lecture.lecture_content && (
+                <LectureContent dangerouslySetInnerHTML={renderLectureContent(lecture.lecture_content)} />
+              )}
               <ResourceList>
                 {lecture.lecture_resources_pdf &&
                   lecture.lecture_resources_pdf.map((pdf, index) => (
@@ -389,7 +422,13 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
                       </ResourceLink>
                     </ResourceItem>
                   ))}
+                  {
+                    console.log(lecture.lecture_content,"content")
+                  }
+
+                  
               </ResourceList>
+              </>
             )}
           </LectureItem>
         ))

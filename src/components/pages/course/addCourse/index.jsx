@@ -524,13 +524,13 @@ const handleSave = debounce(async () => {
             )}
           </div>
         </div>
-        <div className="input-block">
+        {/* <div className="input-block">
           <div className="add-image-box">
             <Link to="#">
               <i className="far fa-image" />
             </Link>
           </div>
-        </div>
+        </div> */}
         <div className="input-block">
           <label className="add-course-label">Course Intro Video (MP4)</label>
           <div className="relative-form">
@@ -554,13 +554,13 @@ const handleSave = debounce(async () => {
             )}
           </div>
         </div>
-        <div className="input-block">
+        {/* <div className="input-block">
           <div className="add-image-box add-video-box">
             <Link to="#">
               <i className="fas fa-circle-play" />
             </Link>
           </div>
-        </div>
+        </div> */}
         <div className="widget-btn">
           <Link
             className="btn btn-black prev_btn"

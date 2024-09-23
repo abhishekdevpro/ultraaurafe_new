@@ -1,18 +1,37 @@
 /* eslint-disable no-unused-vars */
-import React, { useRef, useState } from "react";
-import PropTypes from 'prop-types'; // Import PropTypes
+import React, { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types"; // Import PropTypes
 import { Home, LogOut, Package, ShoppingCart } from "react-feather";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
-import {
-  logo,
-  User17,
-} from "../imagepath"; // Assuming you'll replace this with the appropriate vendor image
+import { logo, User17 } from "../imagepath"; // Assuming you'll replace this with the appropriate vendor image
 import DarkMode from "../common/darkMode";
 import vendorMenuData from "../header/menu-data"; // Assuming a separate menu data file for vendors
 import logo5 from "../../assets/logo5.png";
+import axios from "axios";
 
-export function VendorHeader({ activeMenu }) {
+export function VendorHeader() {
+  const [Profile ,setProfileData] =useState("")
+
+  const token = localStorage.getItem("vendorToken")
+
+
+  useEffect(() => {
+    axios
+      .get("https://api.novajobs.us/api/vendors/profile",{
+        headers: {
+          Authorization:token,}
+      })
+      .then((response) => {
+        const data = response.data.data;
+        setProfileData(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching profile data:", error);
+      });
+  }, []);
+
+  console.log(Profile, "from navbar header");
   const [navbar, setNavbar] = useState(false);
 
   const [showCart, setShowCart] = useState(false);
@@ -70,8 +89,12 @@ export function VendorHeader({ activeMenu }) {
       setNavbar(false);
     }
   };
+  const navigate = useNavigate();
   window.addEventListener("scroll", changeHeaderBackground);
-
+  const handleLogout = () => {
+    localStorage.removeItem("vendorToken");
+    navigate("/login");
+  };
   return (
     <header className="header header-page">
       <div className="header-fixed">
@@ -84,11 +107,7 @@ export function VendorHeader({ activeMenu }) {
         >
           <div className="container">
             <div className="navbar-header">
-              <Link
-                id="mobile_btn"
-                to="#"
-                onClick={openMobileMenu}
-              >
+              <Link id="mobile_btn" to="#" onClick={openMobileMenu}>
                 <span className="bar-icon">
                   <span></span>
                   <span></span>
@@ -96,7 +115,12 @@ export function VendorHeader({ activeMenu }) {
                 </span>
               </Link>
               <Link to="/" className=" ">
-                <img src={logo5} className="rounded-3" alt="Logo" style={{ height: "50px", width: "200px" }} />
+                <img
+                  src={logo5}
+                  className="rounded-3"
+                  alt="Logo"
+                  style={{ height: "50px", width: "200px" }}
+                />
               </Link>
             </div>
             <div className="main-menu-wrapper">
@@ -113,23 +137,6 @@ export function VendorHeader({ activeMenu }) {
                   <i className="fas fa-times"></i>
                 </Link>
               </div>
-
-              <ul className="main-nav">
-                {vendorMenuData.map((item) => (
-                  <li key={item.id} className="has-submenu">
-                    <Link to={item.link}>{item.title}</Link>
-                    {item.sub_menus.length > 0 && (
-                      <ul className="submenu">
-                        {item.sub_menus.map((sub, i) => (
-                          <li key={i}>
-                            <Link to={sub.link}>{sub.title}</Link>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                ))}
-              </ul>
             </div>
             <ul className="nav header-navbar-rht">
               <DarkMode />
@@ -143,7 +150,14 @@ export function VendorHeader({ activeMenu }) {
                   onClick={profileClick}
                 >
                   <span className="user-img">
-                    <img src={User17} alt="Vendor Image" />
+                    <img
+                      src={
+                        Profile?.photo
+                          ? `https://api.novajobs.us/${Profile.photo}`
+                          : User17
+                      }
+                      alt="Vendor Image"
+                    />
                     <span className="status online"></span>
                   </span>
                 </Link>
@@ -159,35 +173,38 @@ export function VendorHeader({ activeMenu }) {
                   <div className="user-header">
                     <div className="avatar avatar-sm">
                       <img
-                        src={User17}
+                        src={
+                          Profile?.photo
+                            ? `https://api.novajobs.us/${Profile.photo}`
+                            : User17
+                        }
                         alt="Vendor Image"
                         className="avatar-img rounded-circle"
                       />
                     </div>
                     <div className="user-text">
-                      <h6>John Doe</h6> {/* Replace with vendor's name */}
+                      <h6>
+                        {Profile.first_name} {Profile.last_name}
+                      </h6>{" "}
+                      {/* Replace with vendor's name */}
                       <p className="text-muted text mb-0">Vendor</p>
                     </div>
                   </div>
-                  <Link
-                    className="dropdown-item"
-                    to="/vendor/dashboard"
-                  >
-                    <Home size={14} color={"#FF875A"} className="feather-home me-1" />{" "}
+                  <Link className="dropdown-item" to="/vendor/dashboard">
+                    <Home
+                      size={14}
+                      color={"#FF875A"}
+                      className="feather-home me-1"
+                    />{" "}
                     Dashboard
                   </Link>
-                  <Link
-                    className="dropdown-item text"
-                    to="/vendor/products"
-                  >
-                    <Package size={14} color={"#FF875A"} className="feather-package me-1" />{" "}
-                    My Products
-                  </Link>
-                  <Link
-                    className="dropdown-item text"
-                    to="/vendor/orders"
-                  >
-                    <ShoppingCart size={14} color={"#FF875A"} className="feather-shopping-cart me-1" />{" "}
+
+                  <Link className="dropdown-item text" to="/vendor/orders">
+                    <ShoppingCart
+                      size={14}
+                      color={"#FF875A"}
+                      className="feather-shopping-cart me-1"
+                    />{" "}
                     Orders
                   </Link>
                   <Link className="dropdown-item text" to="/home">
@@ -195,6 +212,7 @@ export function VendorHeader({ activeMenu }) {
                       size={14}
                       color={"#FF875A"}
                       className="headerIcon me-1"
+                      onClick={handleLogout}
                     />{" "}
                     Logout
                   </Link>
