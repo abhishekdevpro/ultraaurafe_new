@@ -923,9 +923,18 @@ const StatItem = styled.div`
 `;
 
 const CoursePrice = styled.div`
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #ff4081;
+  .discounted-price {
+    font-size: 1.5rem;
+    color: #ff4d4f;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .original-price {
+    font-size: 1.2rem;
+    color: #999;
+    text-decoration: line-through;
+  }
 `;
 
 const LevelFilter = styled(CategoryFilter)`
@@ -1442,7 +1451,10 @@ const DynamicCourseGrid = () => {
                       <span>{course.time_spent_on_course}</span>
                     </StatItem>
                   </CourseStats>
-                  <CoursePrice>${course.course_price}</CoursePrice>
+                  <CoursePrice>
+    <span className="discounted-price">${course.after_discount_price}</span>
+    <span className="original-price">${course.course_price}</span>
+  </CoursePrice>
                 </CourseContent>
               </CourseCard>
             ))}

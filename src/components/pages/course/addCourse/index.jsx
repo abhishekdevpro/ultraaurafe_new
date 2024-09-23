@@ -109,7 +109,17 @@ const handleFileChange = (e) => {
     [name]: file
   }));
 };
-
+useEffect(() => {
+  if (courseData.course_price && courseData.discount_percent) {
+    const price = parseFloat(courseData.course_price);
+    const discount = parseFloat(courseData.discount_percent);
+    const discountedPrice = price - (price * (discount / 100));
+    setCourseData(prevData => ({
+      ...prevData,
+      after_discount_price: discountedPrice.toFixed(2)
+    }));
+  }
+}, [courseData.course_price, courseData.discount_percent]);
   
 
   // const handleSave = async () => {
@@ -598,7 +608,7 @@ const handleSave = debounce(async () => {
                                 onChange={handleInputChange}
                               ></textarea>
                             </div>
-                            <div className="input-block">
+                            {/* <div className="input-block">
                               <label className="add-course-label">
                                 Course Price
                               </label>
@@ -636,7 +646,40 @@ const handleSave = debounce(async () => {
                                 value={courseData.after_discount_price}
                                 onChange={handleInputChange}
                               />
-                            </div>
+                            </div> */}
+      <div className="input-block">
+        <label className="add-course-label">Course Price</label>
+        <input
+          type="number"
+          className="form-control"
+          placeholder="0"
+          name="course_price"
+          value={courseData.course_price}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div className="input-block">
+        <label className="add-course-label">Discount Percent</label>
+        <input
+          type="number"
+          className="form-control"
+          placeholder="0"
+          name="discount_percent"
+          value={courseData.discount_percent}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div className="input-block">
+        <label className="add-course-label">Price After Discount</label>
+        <input
+          type="number"
+          className="form-control"
+          placeholder="0"
+          name="after_discount_price"
+          value={courseData.after_discount_price}
+          readOnly
+        />
+      </div>
                             <div className="input-block">
                               <label className="add-course-label">
                                 Coupon Code
