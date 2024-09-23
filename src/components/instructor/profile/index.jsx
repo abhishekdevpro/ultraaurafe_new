@@ -819,7 +819,7 @@ const InstructorProfile = () => {
                                 <img className="img-fluid" alt={course.course_title} src={`https://api.novajobs.us${course.course_banner_image}`} />
                               </Link>
                               <div className="price">
-                                <h3>${course.course_price} <span>${course.after_discount_price}</span></h3>
+                                <h3>${course.after_discount_price} <span>${course.course_price}</span></h3>
                               </div>
                             </div>
                             <div className="product-content">
