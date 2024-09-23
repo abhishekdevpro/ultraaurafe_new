@@ -24,6 +24,7 @@ const ProgressText = styled.p`
 `;
 
 const CourseProgressBar = ({ progress }) => {
+  console.log(progress,"progress");
   const progressPercentage = Math.round(progress * 100);
 
   return (

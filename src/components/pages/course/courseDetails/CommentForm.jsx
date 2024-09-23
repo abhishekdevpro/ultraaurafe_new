@@ -1,8 +1,137 @@
+// // import React, { useState } from 'react';
+// // import PropTypes from 'prop-types'; // Import PropTypes
+// // import axios from 'axios';
+// // import { toast } from 'react-toastify';
+// // import { useNavigate } from 'react-router-dom';
+
+// // // CommentForm component
+// // const CommentForm = ({ courseId }) => {
+// //   const [comment, setComment] = useState('');
+// //   const navigate = useNavigate();
+
+// //   const handleSubmit = async (event) => {
+// //     event.preventDefault();
+
+// //     const token = localStorage.getItem('token');
+
+// //     // Check if the user is logged in
+// //     if (!token) {
+// //       toast.error('You need to log in first.');
+// //       navigate('/login'); // Redirect to the login screen
+// //       return;
+// //     }
+
+// //     const commentData = {
+// //       comment,
+// //     };
+
+// //     try {
+// //       const response = await axios.post(
+// //         `https://api.novajobs.us/api/trainers/comment/${courseId}`,
+// //         commentData,
+// //         {
+// //           headers: {
+// //             Authorization: `Bearer ${token}`, // Use Bearer token convention
+// //             'Content-Type': 'application/json',
+// //           },
+// //         }
+// //       );
+
+// //       if (response.status === 200) {
+// //         toast.success('Comment posted successfully!');
+// //         // Reset form field
+// //         setComment('');
+// //       } else {
+// //         toast.error('Failed to post comment.');
+// //       }
+// //     } catch (error) {
+// //       console.error('Error posting comment:', error);
+// //       toast.error('An error occurred while posting your comment.');
+// //     }
+// //   };
+
+// //   return (
+// //     <div className="card p-4 shadow-lg rounded-lg bg-white">
+// //       <h5 className="text-xl font-semibold mb-4">Post A Comment</h5>
+// //       <form onSubmit={handleSubmit}>
+// //         <div className="mb-4">
+// //           <textarea
+// //             rows={4}
+// //             className="w-full p-2 border rounded-md"
+// //             placeholder="Your Comments"
+// //             value={comment}
+// //             onChange={(e) => setComment(e.target.value)}
+// //             required
+// //           />
+// //         </div>
+// //         <div>
+// //           <button
+// //             className="w-full py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600"
+// //             type="submit"
+// //           >
+// //             Submit
+// //           </button>
+// //         </div>
+// //       </form>
+// //     </div>
+// //   );
+// // };
+
+// // // PropTypes for validation
+// // CommentForm.propTypes = {
+// //   courseId: PropTypes.string.isRequired, // Ensure courseId is a required string
+// // };
+
+// // export default CommentForm;
 // import React, { useState } from 'react';
-// import PropTypes from 'prop-types'; // Import PropTypes
+// import PropTypes from 'prop-types';
 // import axios from 'axios';
 // import { toast } from 'react-toastify';
 // import { useNavigate } from 'react-router-dom';
+// import styled from 'styled-components'; // Import styled-components
+
+// // Styled components
+// const Card = styled.div`
+//   padding: 2rem;
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//   border-radius: 0.5rem;
+//   background-color: #ffffff;
+//   width: 100%; // Takes full width of its container
+//   margin: 0 auto; // Center the form
+// `;
+
+// const Title = styled.h5`
+//   font-size: 1.25rem;
+//   font-weight: 600;
+//   margin-bottom: 1rem;
+//   text-align: left; // Center the title text
+// `;
+
+// const TextArea = styled.textarea`
+//   width: 100%;
+//   padding: 1rem;
+//   border: 1px solid #ddd;
+//   border-radius: 0.375rem;
+//   resize: none;
+//   font-size: 1rem;
+//   line-height: 1.5;
+// `;
+
+// const SubmitButton = styled.button`
+//   width: 100%;
+//   padding: 0.75rem;
+//   background-color: #1d4ed8; // Primary blue color
+//   color: #ffffff;
+//   font-weight: 600;
+//   border: none;
+//   border-radius: 0.375rem;
+//   cursor: pointer;
+//   transition: background-color 0.3s ease;
+
+//   &:hover {
+//     background-color: #2563eb; // Darker blue on hover
+//   }
+// `;
 
 // // CommentForm component
 // const CommentForm = ({ courseId }) => {
@@ -14,16 +143,13 @@
 
 //     const token = localStorage.getItem('token');
 
-//     // Check if the user is logged in
 //     if (!token) {
 //       toast.error('You need to log in first.');
-//       navigate('/login'); // Redirect to the login screen
+//       navigate('/login');
 //       return;
 //     }
 
-//     const commentData = {
-//       comment,
-//     };
+//     const commentData = { comment };
 
 //     try {
 //       const response = await axios.post(
@@ -31,7 +157,7 @@
 //         commentData,
 //         {
 //           headers: {
-//             Authorization: `Bearer ${token}`, // Use Bearer token convention
+//             Authorization: `${token}`,
 //             'Content-Type': 'application/json',
 //           },
 //         }
@@ -39,7 +165,6 @@
 
 //       if (response.status === 200) {
 //         toast.success('Comment posted successfully!');
-//         // Reset form field
 //         setComment('');
 //       } else {
 //         toast.error('Failed to post comment.');
@@ -51,35 +176,27 @@
 //   };
 
 //   return (
-//     <div className="card p-4 shadow-lg rounded-lg bg-white">
-//       <h5 className="text-xl font-semibold mb-4">Post A Comment</h5>
+//     <Card>
+//       <Title>Post A Comment</Title>
 //       <form onSubmit={handleSubmit}>
-//         <div className="mb-4">
-//           <textarea
+//         <div style={{ marginBottom: '1rem' }}>
+//           <TextArea
 //             rows={4}
-//             className="w-full p-2 border rounded-md"
 //             placeholder="Your Comments"
 //             value={comment}
 //             onChange={(e) => setComment(e.target.value)}
 //             required
 //           />
 //         </div>
-//         <div>
-//           <button
-//             className="w-full py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600"
-//             type="submit"
-//           >
-//             Submit
-//           </button>
-//         </div>
+//         <SubmitButton type="submit">Submit</SubmitButton>
 //       </form>
-//     </div>
+//     </Card>
 //   );
 // };
 
 // // PropTypes for validation
 // CommentForm.propTypes = {
-//   courseId: PropTypes.string.isRequired, // Ensure courseId is a required string
+//   courseId: PropTypes.string.isRequired,
 // };
 
 // export default CommentForm;
@@ -88,7 +205,8 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components'; // Import styled-components
+import styled from 'styled-components';
+import { Star } from 'lucide-react';
 
 // Styled components
 const Card = styled.div`
@@ -96,15 +214,15 @@ const Card = styled.div`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 0.5rem;
   background-color: #ffffff;
-  width: 100%; // Takes full width of its container
-  margin: 0 auto; // Center the form
+  width: 100%;
+  margin: 0 auto;
 `;
 
 const Title = styled.h5`
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  text-align: left; // Center the title text
+  text-align: left;
 `;
 
 const TextArea = styled.textarea`
@@ -120,7 +238,7 @@ const TextArea = styled.textarea`
 const SubmitButton = styled.button`
   width: 100%;
   padding: 0.75rem;
-  background-color: #1d4ed8; // Primary blue color
+  background-color: #1d4ed8;
   color: #ffffff;
   font-weight: 600;
   border: none;
@@ -129,13 +247,26 @@ const SubmitButton = styled.button`
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #2563eb; // Darker blue on hover
+    background-color: #2563eb;
   }
+`;
+
+const StarRating = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+`;
+
+const StarIcon = styled(Star)`
+  cursor: pointer;
+  transition: color 0.2s;
+  color: ${(props) => (props.filled ? '#FFD700' : '#ddd')};
 `;
 
 // CommentForm component
 const CommentForm = ({ courseId }) => {
   const [comment, setComment] = useState('');
+  const [rating, setRating] = useState(0);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -150,9 +281,10 @@ const CommentForm = ({ courseId }) => {
     }
 
     const commentData = { comment };
+    const ratingData = { stars: rating, content: comment };
 
     try {
-      const response = await axios.post(
+      const commentResponse = await axios.post(
         `https://api.novajobs.us/api/trainers/comment/${courseId}`,
         commentData,
         {
@@ -163,22 +295,44 @@ const CommentForm = ({ courseId }) => {
         }
       );
 
-      if (response.status === 200) {
-        toast.success('Comment posted successfully!');
+      const ratingResponse = await axios.post(
+        `https://api.novajobs.us/api/students/ratings/${courseId}`,
+        ratingData,
+        {
+          headers: {
+            Authorization: `${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      if (commentResponse.status === 200 && ratingResponse.status === 200) {
+        toast.success('Comment and rating posted successfully!');
         setComment('');
+        setRating(0);
       } else {
-        toast.error('Failed to post comment.');
+        toast.error('Failed to post comment and rating.');
       }
     } catch (error) {
-      console.error('Error posting comment:', error);
-      toast.error('An error occurred while posting your comment.');
+      console.error('Error posting comment and rating:', error);
+      toast.error('An error occurred while posting your comment and rating.');
     }
   };
 
   return (
     <Card>
-      <Title>Post A Comment</Title>
+      <Title>Post A Comment and Rating</Title>
       <form onSubmit={handleSubmit}>
+        <StarRating>
+          {[1, 2, 3, 4, 5].map((star) => (
+            <StarIcon
+              key={star}
+              size={24}
+              filled={star <= rating}
+              onClick={() => setRating(star)}
+            />
+          ))}
+        </StarRating>
         <div style={{ marginBottom: '1rem' }}>
           <TextArea
             rows={4}

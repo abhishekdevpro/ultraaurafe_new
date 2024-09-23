@@ -8,10 +8,32 @@ import Footer from "../footer";
 
 //import { useParams, useNavigate } from "react-router-dom";
 import CourseTable from "./../instructor/dashboard/CourseList";
+import { useEffect, useState } from "react";
+import axios from "axios";
 //import axios from 'axios';
 // import productImg from "../../../assets/Product.png"; // Placeholder image for products
 
 export const VendorDashboard = () => {
+  const [profile ,setProfileData] =useState("")
+
+  const token = localStorage.getItem("vendorToken")
+
+
+  useEffect(() => {
+    axios
+      .get("https://api.novajobs.us/api/vendors/profile",{
+        headers: {
+          Authorization:token,}
+      })
+      .then((response) => {
+        const data = response.data.data;
+        setProfileData(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching profile data:", error);
+      });
+  }, []);
+
  {/* const { id } = useParams()
   console.log(id, "trainer id")
   const [isClassAdded, setIsClassAdded] = useState([false]);
@@ -65,7 +87,7 @@ export const VendorDashboard = () => {
   } */}
   return (
     <div className="main-wrapper">
-      <VendorHeader activeMenu={"Dashboard"} />
+      <VendorHeader Profile={profile} />
       {/* Breadcrumb */}
       <div className="breadcrumb-bar breadcrumb-bar-info">
         <div className="container">
@@ -99,7 +121,7 @@ export const VendorDashboard = () => {
             {/* Student Dashboard */}
             <div className="col-xl-9 col-lg-9">
               {/* Dashboard Grid */}
-              <div className="row justify-content-center">
+              {/* <div className="row justify-content-center">
                 <div className="col-lg-4 col-md-6 d-flex">
                   <div className="card dash-info flex-fill">
                     <div className="card-body">
@@ -148,7 +170,21 @@ export const VendorDashboard = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
+
+<div className="row justify-content-center">
+  {profile ? (
+    <div className="col-lg-12 col-md-10 d-flex">
+      <div className="card dash-info flex-fill">
+        <div className="card-body">
+          <h2>About Us</h2>
+          <p>{profile.about}</p>
+        </div>
+      </div>
+    </div>
+  ) : null}
+</div>
+
               <CourseTable />
 
               {/* /Dashboard Grid */}

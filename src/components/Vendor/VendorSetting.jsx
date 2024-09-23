@@ -5,6 +5,7 @@ import Footer from "../footer";
 import { Link } from "react-router-dom";
 import VendorSidebar from "./VendorSidebar";
 import VendorHeader from "./VendorHeader";
+import { toast } from "react-toastify";
 
 const VendorSetting = () => {
   const token = localStorage.getItem("vendorToken");
@@ -31,6 +32,7 @@ const VendorSetting = () => {
       })
       .then((response) => {
         const data = response.data.data;
+        console.log(data,"setting data");
         setProfileData({
           first_name: data.first_name,
           last_name: data.last_name,
@@ -81,9 +83,11 @@ const VendorSetting = () => {
       })
       .then((response) => {
         console.log("Profile updated successfully:", response.data);
+        toast.success("Profile updated successfully")
       })
       .catch((error) => {
         console.error("Error updating profile:", error);
+        toast.error("Error updating profile")
       });
   };
 

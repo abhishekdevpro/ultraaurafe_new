@@ -367,14 +367,10 @@ const Register = () => {
                     Welcome to <br />
                     UltraAura.
                   </h2>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam.
-                  </p>
+    
                 </div>
               </div>
-              <div className="welcome-login">
+              {/* <div className="welcome-login">
                 <div className="login-banner">
                   <img src={logo5} className="img-fluid" alt="Logo" />
                 </div>
@@ -405,7 +401,7 @@ const Register = () => {
                     aliqua. Ut enim ad minim veniam.
                   </p>
                 </div>
-              </div>
+              </div> */}
             </OwlCarousel>
           </div>
           {/* /Login Banner */}
