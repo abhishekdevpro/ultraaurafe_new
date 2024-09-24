@@ -546,25 +546,97 @@ const EditCourse = () => {
   const mobileSidebar = useSelector((state) => state.sidebarSlice.expandMenu);
   const [activeTab, setActiveTab] = useState("basic");
   const [courseData, setCourseData] = useState({
-    course_title: "",
-    category: "",
-    level: "",
-    course_description: "",
-    course_banner_image: null,
-    course_intro_video: null,
-    requirements: "",
-    course_price: 0,
-    after_discount_price: 0,
-    coupon_code: "",
-    course_language: "",
-    discount_percent: 0,
-    learning_objectives: "",
-    target_audience: "",
-    time_spent_on_course: "",
+    course_title: '',
+    category_id: '',
+    category_name: '',
+    level_id: '',
+    level_name: '',
+    course_description: '',
+    course_banner_image: '',
+    course_intro_video: '',
+    requirements: '',
+    course_price: '',
+    after_discount_price: '',
+    coupon_code: '',
+    course_language: '',
+    discount_percent: '',
+    learning_objectives: '',
+    target_audience: '',
+    time_spent_on_course: '',
   });
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [levelOptions, setLevelOptions] = useState([]);
 
+  // useEffect(() => {
+  //   const fetchCourseData = async () => {
+  //     try {
+  //       const token = localStorage.getItem("trainerToken");
+  //       const response = await axios.get(`https://api.novajobs.us/api/trainers/courses/${id}`, {
+  //         headers: {
+  //           Authorization: `${token}`,
+  //         },
+  //       });
+  //       console.log(response,"RDDDD");
+  //       const { data } = response.data;
+  //       console.log(data,"data hu");
+  //       setCourseData({
+  //         course_title: data.course_title,
+  //         category_id: data.course_category_id, // Add this
+  // category_name: data.course_category_name,
+  // level_id: data.course_level_id, // Add this
+  // level_name: data.course_level_name,
+  //         course_description: data.course_description,
+  //         course_banner_image: data.course_banner_image,
+  //         course_intro_video: data.course_intro_video_url,
+  //         requirements: data.requirements,
+  //         course_price: data.course_price,
+  //         after_discount_price: data.after_discount_price,
+  //         coupon_code: data.coupon_code,
+  //         course_language: data.course_language,
+  //         discount_percent: data.discount_percent,
+  //         learning_objectives: data.learning_objectives,
+  //         target_audience: data.target_audience,
+  //         time_spent_on_course: data.time_spent_on_course,
+  //       });
+  //     } catch (error) {
+  //       console.error("Error fetching course data:", error);
+  //       toast.error('Error fetching course data. Please try again.');
+  //       navigate("/instructor/instructor-dashboard");
+  //     }
+  //   };
+  //   console.log(courseData,"haan mai hu");
+  //   const fetchCategoryOptions = async () => {
+  //     try {
+  //       const response = await axios.get('https://api.novajobs.us/api/trainers/course-categories');
+  //       const options = response.data.data.map(category => ({
+  //         value: category.id,
+  //         label: category.name
+  //       }));
+  //       setCategoryOptions(options);
+  //     } catch (error) {
+  //       console.error("Error fetching category options:", error);
+  //       toast.error('Error fetching categories. Please try again.');
+  //     }
+  //   };
+
+  //   const fetchLevelOptions = async () => {
+  //     try {
+  //       const response = await axios.get('https://api.novajobs.us/api/trainers/course-level');
+  //       const options = response.data.data.map(level => ({
+  //         value: level.id,
+  //         label: level.name
+  //       }));
+  //       setLevelOptions(options);
+  //     } catch (error) {
+  //       console.error("Error fetching level options:", error);
+  //       toast.error('Error fetching levels. Please try again.');
+  //     }
+  //   };
+
+  //   fetchCourseData();
+  //   fetchCategoryOptions();
+  //   fetchLevelOptions();
+  // }, [id, navigate]);
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
@@ -574,15 +646,13 @@ const EditCourse = () => {
             Authorization: `${token}`,
           },
         });
-        console.log(response,"RDDDD");
         const { data } = response.data;
-        console.log(data,"data hu");
         setCourseData({
           course_title: data.course_title,
-          category_id: data.course_category_id, // Add this
-  category_name: data.course_category_name,
-  level_id: data.course_level_id, // Add this
-  level_name: data.course_level_name,
+          category_id: data.course_category_id,
+          category_name: data.course_category_name,
+          level_id: data.course_level_id,
+          level_name: data.course_level_name,
           course_description: data.course_description,
           course_banner_image: data.course_banner_image,
           course_intro_video: data.course_intro_video_url,
@@ -602,6 +672,7 @@ const EditCourse = () => {
         navigate("/instructor/instructor-dashboard");
       }
     };
+
     const fetchCategoryOptions = async () => {
       try {
         const response = await axios.get('https://api.novajobs.us/api/trainers/course-categories');
@@ -633,8 +704,7 @@ const EditCourse = () => {
     fetchCourseData();
     fetchCategoryOptions();
     fetchLevelOptions();
-  }, [id, navigate]);
-  
+  }, []);
   const handleInputChange = ({ target: { name, value } }) => {
     setCourseData(prevState => ({ ...prevState, [name]: value }));
   };

@@ -4,6 +4,7 @@ import axios from 'axios';
 import Footer from "../footer";
 import { AdminHeader } from "./AdminHeader";
 import AdminSidebar from "./AdminSidebar";
+import { Link } from 'react-router-dom';
 
 const Wrapper = styled.div`
   padding: 1rem;
@@ -161,8 +162,17 @@ const AdminCourseList = () => {
                         <tbody>
                           {currentCourses.map((course) => (
                             <tr key={course.id}>
-                              <Td>{course.course_title}</Td>
-                              <Td>{`${course.trainer_first_name} ${course.trainer_last_name}`}</Td>
+                              <Td>
+                             <Link to={`/course-info/${course.id}`}>
+                                {course.course_title}
+                             </Link>    
+                            </Td>
+                              <Td>
+                                 <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
+                                {`${course.trainer_first_name} ${course.trainer_last_name}`}
+                                </Link>
+                                
+                                </Td>
                               <Td>${course.course_price}</Td>
                               <Td>{course.enrolled_student_count}</Td>
                               <Td>{new Date(course.created_at).toLocaleDateString()}</Td>

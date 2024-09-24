@@ -60,9 +60,9 @@ const DetailsContent = ({ courseFeatureData }) => {
     checkIfShouldShowModal();
   }, [courseid]);
 
+  const token = localStorage.getItem("token");
   const handleRatingSubmit = async () => {
     try {
-      const token = localStorage.getItem("token");
       if (!token) {
         console.error("No token found");
         return;
@@ -113,7 +113,7 @@ const DetailsContent = ({ courseFeatureData }) => {
         <div className="container">
           <div className="row">
             <div className="col-lg-8">
-            {courseData.is_student_enroll && (
+            {token && courseData.is_student_enroll && (
     <CourseProgressBar progress={courseData.course_progress} />
   )}
               <CourseContent courseData={courseData} />

@@ -170,6 +170,7 @@ import axios from 'axios';
 import Footer from "../footer";
 import { AdminHeader } from "./AdminHeader";
 import AdminSidebar from "./AdminSidebar";
+import { Link } from 'react-router-dom';
 
 const Wrapper = styled.div`
   padding: 1rem;
@@ -341,7 +342,13 @@ const TrainerList = () => {
                         <tbody>
                           {currentTrainers.map(({ trainer }) => (
                             <tr key={trainer.id}>
-                              <Td>{`${trainer.first_name} ${trainer.last_name}`}</Td>
+                             
+                             <Td>
+                             <Link to={`/instructor/instructor-profile/${trainer.id}`}>
+                              {`${trainer.first_name} ${trainer.last_name}`}
+                             </Link>
+                               
+                              </Td>
                               <Td>{trainer.email}</Td>
                               <Td>{trainer.phone}</Td>
                               <Td>{new Date(trainer.created_at).toLocaleDateString()}</Td>
