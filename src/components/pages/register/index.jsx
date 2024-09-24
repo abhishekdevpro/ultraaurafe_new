@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OwlCarousel from "react-owl-carousel";
-import {NetIcon1, NetIcon2 } from "../../imagepath";
+// import {NetIcon1, NetIcon2 } from "../../imagepath";
 import axios from "axios";
 import logo5 from '../../../assets/logo5.png'
 import { toast } from "react-toastify";
@@ -611,6 +611,7 @@ const Register = () => {
                     </label>
                   </div>
                   <div className="d-grid">
+                    {/* {console.log(userType,"Role")} */}
                     <button
                       className="btn btn-primary btn-start"
                       type="submit"
@@ -621,7 +622,7 @@ const Register = () => {
                 </form>
               </div>
               <div className="google-bg text-center">
-                <span>
+                {/* <span>
                   <Link to="#">Or sign in with</Link>
                 </span>
                 <div className="sign-google">
@@ -639,7 +640,7 @@ const Register = () => {
                       </Link>
                     </li>
                   </ul>
-                </div>
+                </div> */}
                 <p className="mb-0">
                   Already have an account? <Link to="/login">Sign in</Link>
                 </p>

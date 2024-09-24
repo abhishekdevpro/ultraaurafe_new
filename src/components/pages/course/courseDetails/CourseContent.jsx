@@ -157,6 +157,8 @@ const VideoModal = ({ isOpen, onClose, lecture, streamingUrl, error, courseId, s
               controlsList="nodownload"
               onTimeUpdate={handleTimeUpdate}
               onLoadedMetadata={handleLoadedMetadata}
+              onContextMenu={(e) => e.preventDefault()} // disables right-click
+              onTouchStart={(e) => e.preventDefault()} 
               // eslint-disable-next-line no-undef
               onError={() => setError('Video failed to load.')}
             />
