@@ -641,7 +641,7 @@ import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 import CourseHeader from "../header";
 import DetailsContent from "./detailsContent";
-import { Icon1, People, Timer, User1 } from "../../../imagepath";
+import { Icon1, People, Timer } from "../../../imagepath";
 import Footer from "../../../footer";
 import Header from "../../../header";
 import { Target } from "react-feather";
@@ -779,7 +779,7 @@ const CourseDetails = () => {
                     <Link
                       to={`/instructor/instructor-profile/${courseData.data.trainer_id}`}
                     >
-                      <img src={User1} alt="Instructor" className="img-fluid" />
+                      <img src={`https://api.novajobs.us${courseData.data.trainer_photo}`} alt="Instructor" className="img-fluid" />
                     </Link>
                   </div>
                   <div className="instructor-detail me-3">

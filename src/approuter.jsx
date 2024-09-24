@@ -156,6 +156,8 @@ import PartnersPage from "./components/pages/FooterLinks/Partners.jsx";
 import SkillAssessmentsPage from "./components/pages/FooterLinks/Skillpage.jsx";
 import Login2 from "./components/pages/partnerwithus/PartnerLogin2.jsx";
 import Coming from "./components/instructor/ComingSoon.jsx";
+import AdminLogin from "./components/Admin/AdminLogin.jsx";
+import AdminDashboard from "./components/Admin/AdminDasboard.jsx";
 const Approuter = () => {
   return (
     <BrowserRouter>
@@ -563,6 +565,11 @@ const Approuter = () => {
         <Route path="/student/student-setting" element={<StudentSetting />} />
         <Route path="/student/student-ticket" element={<StudentTicket />} />
         {/* student routes ends*/}
+        {/* Admin routes starts*/}
+        <Route path="/admin/login" element={<AdminLogin />} /> 
+        <Route path="/admin/dashboard" element={<AdminDashboard />} /> 
+        {/* Admin routes ends*/}
+        
       </Routes>
     </BrowserRouter>
   );

@@ -1,11 +1,14 @@
 
 import React, { useState, useEffect } from "react";
-import Footer from "../../footer";
-import { InstructorHeader } from "../../instructor/header";
-import InstructorSidebar from "../sidebar";
-import { Link, useParams } from "react-router-dom";
-import CourseTable from "./CourseList";
+import Footer from "../footer";
+// import { InstructorHeader } from "../../instructor/header";
+// import InstructorSidebar from "../sidebar";
+import { useParams } from "react-router-dom";
+// import CourseTable from "./CourseList";
 import axios from 'axios';
+import { AdminHeader } from "./AdminHeader";
+import AdminSidebar from "./AdminSidebar";
+// import CourseTable from "../instructor/dashboard/CourseList";
 
 export const Dashboard = () => {
   const { id } = useParams();
@@ -42,23 +45,25 @@ export const Dashboard = () => {
 
   return (
     <div className="main-wrapper">
-      <InstructorHeader activeMenu={"Dashboard"} />
+      {/* <InstructorHeader activeMenu={"Dashboard"} />
+       */}
+       <AdminHeader />
       {/* Breadcrumb */}
       <div className="breadcrumb-bar breadcrumb-bar-info">
         <div className="container">
           <div className="row">
             <div className="col-md-12 col-12">
               <div className="breadcrumb-list">
-                <h2 className="breadcrumb-title">Dashboard</h2>
+                <h2 className="breadcrumb-title">Admin Dashboard</h2>
                 <nav aria-label="breadcrumb" className="page-breadcrumb">
-                  <ol className="breadcrumb">
+                  {/* <ol className="breadcrumb">
                     <li className="breadcrumb-item">
                       <Link to="/home">Home</Link>
                     </li>
                     <li className="breadcrumb-item active" aria-current="page">
                       Dashboard
                     </li>
-                  </ol>
+                  </ol> */}
                 </nav>
               </div>
             </div>
@@ -71,7 +76,7 @@ export const Dashboard = () => {
         <div className="container">
           <div className="row">
             {/* Sidebar */}
-            <InstructorSidebar />
+            <AdminSidebar />
             {/* /Sidebar */}
             {/* Student Dashboard */}
             <div className="col-xl-9 col-lg-9">
@@ -96,7 +101,7 @@ export const Dashboard = () => {
                 )}
               </div>
               {/* /Dashboard Grid */}
-              <CourseTable />
+              {/* <CourseTable /> */}
             </div>
             {/* /Student Dashboard */}
           </div>
