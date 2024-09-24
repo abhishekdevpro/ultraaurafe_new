@@ -37,6 +37,7 @@ import { TypeAnimation } from "react-type-animation";
 // import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import PartnerList from "./PartnerList";
+import SubHeader from "../header/Sub-header";
 // Container for the search bar
 const Container = styled.div`
   margin-bottom: 1rem;
@@ -304,6 +305,7 @@ export const Home = () => {
     <>
       <div className="main-wrapper">
         <Header />
+        <SubHeader />
         {/* banner */}
         <section className="home-slide d-flex align-items-center">
           <div className="container">
