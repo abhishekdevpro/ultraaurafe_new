@@ -1,14 +1,10 @@
 
 import React, { useState, useEffect } from "react";
 import Footer from "../footer";
-// import { InstructorHeader } from "../../instructor/header";
-// import InstructorSidebar from "../sidebar";
 import { useParams } from "react-router-dom";
-// import CourseTable from "./CourseList";
 import axios from 'axios';
 import { AdminHeader } from "./AdminHeader";
 import AdminSidebar from "./AdminSidebar";
-// import CourseTable from "../instructor/dashboard/CourseList";
 
 export const Dashboard = () => {
   const { id } = useParams();
@@ -45,10 +41,8 @@ export const Dashboard = () => {
 
   return (
     <div className="main-wrapper">
-      {/* <InstructorHeader activeMenu={"Dashboard"} />
-       */}
+      
        <AdminHeader />
-      {/* Breadcrumb */}
       <div className="breadcrumb-bar breadcrumb-bar-info">
         <div className="container">
           <div className="row">
@@ -56,14 +50,6 @@ export const Dashboard = () => {
               <div className="breadcrumb-list">
                 <h2 className="breadcrumb-title">Admin Dashboard</h2>
                 <nav aria-label="breadcrumb" className="page-breadcrumb">
-                  {/* <ol className="breadcrumb">
-                    <li className="breadcrumb-item">
-                      <Link to="/home">Home</Link>
-                    </li>
-                    <li className="breadcrumb-item active" aria-current="page">
-                      Dashboard
-                    </li>
-                  </ol> */}
                 </nav>
               </div>
             </div>

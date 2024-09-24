@@ -158,6 +158,9 @@ import Login2 from "./components/pages/partnerwithus/PartnerLogin2.jsx";
 import Coming from "./components/instructor/ComingSoon.jsx";
 import AdminLogin from "./components/Admin/AdminLogin.jsx";
 import AdminDashboard from "./components/Admin/AdminDasboard.jsx";
+import TrainerList from "./components/Admin/Trainer-List.jsx";
+import StudentList from "./components/Admin/Student-List.jsx";
+import AdminCourseList from "./components/Admin/AdminCourse-List.jsx";
 const Approuter = () => {
   return (
     <BrowserRouter>
@@ -568,6 +571,9 @@ const Approuter = () => {
         {/* Admin routes starts*/}
         <Route path="/admin/login" element={<AdminLogin />} /> 
         <Route path="/admin/dashboard" element={<AdminDashboard />} /> 
+        <Route path="/admin/trainer-list" element={<TrainerList />} /> 
+        <Route path="/admin/student-list" element={<StudentList />} /> 
+        <Route path="/admin/course-list" element={<AdminCourseList />} /> 
         {/* Admin routes ends*/}
         
       </Routes>
