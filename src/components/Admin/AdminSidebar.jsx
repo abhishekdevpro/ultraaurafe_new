@@ -63,41 +63,41 @@ export default function AdminSidebar() {
                 </Link>
               </li>
               <li className={`nav-item ${location.pathname === '/admin/trainers' ? 'active' : ''}`}>
-                <Link to="/admin/trainers" className="nav-link">
+                <Link to="/admin/trainer-list" className="nav-link">
                   <i className="bx bxs-user-voice" />
                   Trainers
                 </Link>
               </li>
-              <li className={`nav-item ${location.pathname === '/admin/add-trainer' ? 'active' : ''}`}>
+              {/* <li className={`nav-item ${location.pathname === '/admin/add-trainer' ? 'active' : ''}`}>
                 <Link to="/admin/add-trainer" className="nav-link">
                   <i className="bx bxs-user-plus" />
                   Add Trainer
                 </Link>
-              </li>
+              </li> */}
               <li className={`nav-item ${location.pathname === '/admin/students' ? 'active' : ''}`}>
-                <Link to="/admin/students" className="nav-link">
+                <Link to="/admin/student-list" className="nav-link">
                   <i className="bx bxs-group" />
                   Students
                 </Link>
               </li>
-              <li className={`nav-item ${location.pathname === '/admin/add-student' ? 'active' : ''}`}>
+              {/* <li className={`nav-item ${location.pathname === '/admin/add-student' ? 'active' : ''}`}>
                 <Link to="/admin/add-student" className="nav-link">
                   <i className="bx bxs-user-plus" />
                   Add Student
                 </Link>
-              </li>
+              </li> */}
               <li className={`nav-item ${location.pathname === '/admin/students' ? 'active' : ''}`}>
                 <Link to="/admin/students" className="nav-link">
                   <i className="bx bxs-group" />
                   Partners
                 </Link>
               </li>
-              <li className={`nav-item ${location.pathname === '/admin/add-student' ? 'active' : ''}`}>
+              {/* <li className={`nav-item ${location.pathname === '/admin/add-student' ? 'active' : ''}`}>
                 <Link to="/admin/add-student" className="nav-link">
                   <i className="bx bxs-user-plus" />
                   Add Partners
                 </Link>
-              </li>
+              </li> */}
             </ul>
             <h3>Account Settings</h3>
             <ul>
