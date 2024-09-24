@@ -128,7 +128,7 @@ const ScrollText = styled.div`
 
 // Content for the subheader
 const content = `
-  Update : Partners added - SCOPE - Empowering Citizens of South Florida... Innovative education and employment program for a stronger Hallandale Beach community.
+  Update : Partners added - SCOPE - Empowering Citizens of South Florida... Innovative education and employment program for a stronger Hallandale Beach community || 
   AGI Tax Experts - Launch your career with AGI Tax Experts! Comprehensive training and placement opportunities available through our portal.
 `;
 
