@@ -276,30 +276,30 @@ export const Home = () => {
     navigate("/course-list");
   };
 
-  const loadChatbot = () => {
-    // Check if the script is already added to avoid duplicate injections
-    if (document.getElementById("chatling-embed-script")) return;
+  // const loadChatbot = () => {
+  //   // Check if the script is already added to avoid duplicate injections
+  //   if (document.getElementById("chatling-embed-script")) return;
 
-    // Create and append the chatbot configuration script
-    const configScript = document.createElement("script");
-    configScript.type = "text/javascript";
-    configScript.text = `window.chtlConfig = { chatbotId: "5594648998" };`;
-    document.body.appendChild(configScript);
+  //   // Create and append the chatbot configuration script
+  //   const configScript = document.createElement("script");
+  //   configScript.type = "text/javascript";
+  //   configScript.text = `window.chtlConfig = { chatbotId: "5594648998" };`;
+  //   document.body.appendChild(configScript);
 
-    // Create and append the chatbot embed script
-    const embedScript = document.createElement("script");
-    embedScript.id = "chatling-embed-script";
-    embedScript.async = true;
-    embedScript.src = "https://chatling.ai/js/embed.js";
-    embedScript.onload = () => {
-      // Optionally, add initialization code here if required
-      console.log("Chatbot script loaded");
-    };
-    embedScript.onerror = () => {
-      console.error("Failed to load the chatbot script");
-    };
-    document.body.appendChild(embedScript);
-  };
+  //   // Create and append the chatbot embed script
+  //   const embedScript = document.createElement("script");
+  //   embedScript.id = "chatling-embed-script";
+  //   embedScript.async = true;
+  //   embedScript.src = "https://chatling.ai/js/embed.js";
+  //   embedScript.onload = () => {
+  //     // Optionally, add initialization code here if required
+  //     console.log("Chatbot script loaded");
+  //   };
+  //   embedScript.onerror = () => {
+  //     console.error("Failed to load the chatbot script");
+  //   };
+  //   document.body.appendChild(embedScript);
+  // };
 
   return (
     <>
@@ -405,9 +405,9 @@ export const Home = () => {
                       <StyledButton onClick={handleAllCourses}>
                         All Courses
                       </StyledButton>
-                      <StyledButton primary onClick={loadChatbot}>
+                     {/* <StyledButton primary onClick={loadChatbot}>
                         AI Assist
-                      </StyledButton>{" "}
+                      </StyledButton>{" "} */}
                     </ButtonContainer>
                   </div>
 
