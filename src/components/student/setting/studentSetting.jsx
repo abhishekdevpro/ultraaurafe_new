@@ -9,7 +9,9 @@ import { User16 } from "../../imagepath";
 
 import axios from "axios";
 import { useState,useEffect } from "react";
-
+import StudentSettingPageHeader from "./settingPageHeader";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const StudentSetting = () => {
   const token = localStorage.getItem("token");
 
@@ -78,13 +80,36 @@ const StudentSetting = () => {
     }));
   };
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const formData = new FormData();
+  //   for (const key in profileData) {
+  //     formData.append(key, profileData[key]);
+  //   }
+
+  //   axios
+  //     .patch("https://api.novajobs.us/api/students/edit-profile", formData, {
+  //       headers: {
+  //         Authorization: token,
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //     })
+  //     .then((response) => {
+  //       console.log("Profile updated successfully:", response.data);
+  //       toast.success("Profile updated successfully")
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error updating profile:", error);
+  //       toast.error("Error updating profile")
+  //     });
+  // };
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
     for (const key in profileData) {
       formData.append(key, profileData[key]);
     }
-
+  
     axios
       .patch("https://api.novajobs.us/api/students/edit-profile", formData, {
         headers: {
@@ -94,12 +119,14 @@ const StudentSetting = () => {
       })
       .then((response) => {
         console.log("Profile updated successfully:", response.data);
+        toast.success("Profile updated successfully"); // Success toast
       })
       .catch((error) => {
         console.error("Error updating profile:", error);
+        toast.error("Error updating profile"); // Failure toast
       });
   };
-
+  
   return (
     <div className="main-wrapper">
       <StudentHeader activeMenu={"Settings"} />
@@ -128,9 +155,15 @@ const StudentSetting = () => {
         <div className="container">
           <div className="row">
             <StudentSidebar />
+            
             <div className="col-xl-9 col-lg-9">
               <div className="settings-widget card-details">
                 <div className="settings-menu p-0">
+                <div className="profile-heading">
+                    <h3>Settings</h3>
+                    <p>You have full control to manage your own account settings</p>
+                  </div>
+                  <StudentSettingPageHeader />
                   <div className="edit-profile-info px-4 p-3">
                     <h5>Personal Details</h5>
                     <p>Edit your personal information</p>

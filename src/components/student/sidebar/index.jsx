@@ -1,7 +1,7 @@
 import React from "react";
 import StickyBox from "react-sticky-box";
 import { User16 } from "../../imagepath";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { useState,useEffect } from "react";
@@ -10,7 +10,7 @@ export default function StudentSidebar() {
   const location = useLocation();
 
   const token = localStorage.getItem("token");
-
+  const navigate = useNavigate()
   const [profileData, setProfileData] = useState({
     first_name: "",
     last_name: "",
@@ -59,7 +59,10 @@ export default function StudentSidebar() {
         console.error("Error fetching profile data:", error);
       });
   }, [token]);
-
+  const handleLogout =() =>{
+    localStorage.removeItem("token")
+    navigate('/')
+  }
   return (
     <div className="col-xl-3 col-lg-3 theiaStickySidebar">
       <StickyBox offsetTop={20} offsetBottom={20}>
@@ -119,14 +122,14 @@ export default function StudentSidebar() {
               </li>
               <li className={`nav-item ${location.pathname === '/student/student-reviews' ? 'active' : ''}`}>
 
-                <Link to="" className="nav-link">
+                <Link to="/student/student-reviews" className="nav-link">
                   <i className="bx bxs-star" />
                   Reviews
                 </Link>
               </li>
               <li className={`nav-item ${location.pathname === '/student/student-quiz' ? 'active' : ''}`}>
 
-                <Link to="" className="nav-link">
+                <Link to="/student/student-quiz" className="nav-link">
                   <i className="bx bxs-shapes" />
                   My Quiz Attempts
                 </Link>
@@ -144,13 +147,13 @@ export default function StudentSidebar() {
                   Question &amp; Answer
                 </Link>
               </li>
-              <li className={`nav-item ${location.pathname === '/student/student-referral' ? 'active' : ''}`}>
+              {/* <li className={`nav-item ${location.pathname === '/student/student-referral' ? 'active' : ''}`}>
 
                 <Link to="" className="nav-link">
                   <i className="bx bxs-user-plus" />
                   Referrals
                 </Link>
-              </li>
+              </li> */}
               <li className={`nav-item ${location.pathname === '/student/student-messages' ? 'active' : ''}`}>
                 <Link to="" className="nav-link">
                   <i className="bx bxs-chat" />
@@ -158,13 +161,13 @@ export default function StudentSidebar() {
                 </Link>
               </li>
 
-              <li className={`nav-item ${location.pathname === '/student/student-ticket' ? 'active' : ''}`}>
+              {/* <li className={`nav-item ${location.pathname === '/student/student-ticket' ? 'active' : ''}`}>
 
                 <Link to="" className="nav-link">
                   <i className="bx bxs-coupon" />
                   Support Tickets
                 </Link>
-              </li>
+              </li> */}
             </ul>
             <h3>Account Settings</h3>
             <ul>
@@ -174,8 +177,10 @@ export default function StudentSidebar() {
                   Settings
                 </Link>
               </li>
+             
               <li className="nav-item">
-                <Link to="/home" className="nav-link">
+                <Link to="/home" className="nav-link"
+                onClick={handleLogout}>
                   <i className="bx bxs-log-out" />
                   Logout
                 </Link>

@@ -27,7 +27,6 @@ import PrivacyPolicy from "./components/pages/policy";
 import ChatOnline from "./components/pages/chatOnline";
 import Document from "./components/pages/doc";
 import ReturnPolicy from "./components/pages/return";
-import AboutUS from "./components/pages/about";
 import PricingPlan from "./components/pages/pricingPlan";
 import PricingPlan2 from "./components/pages/pricingPlan/pricingPlan2";
 import Register from "./components/pages/register";
@@ -146,6 +145,22 @@ import ForgotPasswordVendor from "./components/pages/forgotPassword/Vendor-Forge
 import NewPasswordVendor from "./components/pages/newPassword/Vendor-ResetPassword.jsx";
 import VendorSetting from "./components/Vendor/VendorSetting.jsx";
 import SkillTest from "./components/student/StudentSkillsTest/index.jsx";
+import AboutUs from "./components/pages/FooterLinks/Aboutus.jsx";
+import Careers from "./components/pages/FooterLinks/Careers.jsx";
+import TrainerPage from "./components/pages/FooterLinks/TrainersPage.jsx";
+import Students from "./components/pages/FooterLinks/StudentsPage.jsx";
+import RefundPolicy from "./components/pages/FooterLinks/RefundPolicy.jsx";
+import CertificationPage from "./components/pages/FooterLinks/Certifications.jsx";
+import AIResumePage from "./components/pages/FooterLinks/Ai-Resume.jsx";
+import PartnersPage from "./components/pages/FooterLinks/Partners.jsx";
+import SkillAssessmentsPage from "./components/pages/FooterLinks/Skillpage.jsx";
+import Login2 from "./components/pages/partnerwithus/PartnerLogin2.jsx";
+import Coming from "./components/instructor/ComingSoon.jsx";
+import AdminLogin from "./components/Admin/AdminLogin.jsx";
+import AdminDashboard from "./components/Admin/AdminDasboard.jsx";
+import TrainerList from "./components/Admin/Trainer-List.jsx";
+import StudentList from "./components/Admin/Student-List.jsx";
+import AdminCourseList from "./components/Admin/AdminCourse-List.jsx";
 const Approuter = () => {
   return (
     <BrowserRouter>
@@ -175,6 +190,7 @@ const Approuter = () => {
         <Route path="/vendor-dashboard" element={<VendorDashboard />} />
         <Route path="/vendor-setting" element={<VendorSetting/>}/>
         <Route path="/vendor/vendor-dashboard" element={<VendorDashboard/>}/>
+        <Route path="/vendor/verify/:token" element={<Login2/>}/>
 
 
         {/* Pages */}
@@ -217,7 +233,15 @@ const Approuter = () => {
         <Route path="/return-policy" element={<ReturnPolicy/>} />
         <Route path="/document" element={<Document/>} />
         <Route path="/chat-online" element={<ChatOnline/>} />
-        <Route path="/about-us" element={<AboutUS/>} />
+        <Route path="/about-us" element={<AboutUs/>} />
+        <Route path="/careers" element={<Careers/>} />
+        <Route path="/trainers" element={<TrainerPage/>} />
+        <Route path="/studentspage" element={<Students/>} />
+        <Route path="/refund" element={<RefundPolicy/>} />
+        <Route path="/certifications" element={<CertificationPage/>} />
+        <Route path="/ai-resume" element={<AIResumePage/>} />
+        <Route path="/partners" element={<PartnersPage/>} />
+        <Route path="/skilltests" element={<SkillAssessmentsPage/>} />
         <Route path="/setting-edit-profile" element={<StudentEditProfile />} />
 
         <Route path="/view-invoice" element={<ViewInvoice />} />
@@ -268,6 +292,10 @@ const Approuter = () => {
           element={<Dashboard />}
         />
         <Route
+          path="/instructor/coming-soon"
+          element={<Coming />}
+        />
+        <Route
           path="/instructor/instructor-list"
           element={<InstructorList />}
         />
@@ -282,7 +310,7 @@ const Approuter = () => {
         />
        
         <Route
-          path="/instructor/instructor-profile"
+          path="/instructor/instructor-profile/:id"
           element={<InstructorProfile />}
         />
         <Route
@@ -540,6 +568,14 @@ const Approuter = () => {
         <Route path="/student/student-setting" element={<StudentSetting />} />
         <Route path="/student/student-ticket" element={<StudentTicket />} />
         {/* student routes ends*/}
+        {/* Admin routes starts*/}
+        <Route path="/admin/login" element={<AdminLogin />} /> 
+        <Route path="/admin/dashboard" element={<AdminDashboard />} /> 
+        <Route path="/admin/trainer-list" element={<TrainerList />} /> 
+        <Route path="/admin/student-list" element={<StudentList />} /> 
+        <Route path="/admin/course-list" element={<AdminCourseList />} /> 
+        {/* Admin routes ends*/}
+        
       </Routes>
     </BrowserRouter>
   );

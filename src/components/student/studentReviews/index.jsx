@@ -1,11 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import StudentHeader from "../header";
 import StudentSidebar from "../sidebar";
 import Footer from "../../footer";
-import { User16 } from "../../imagepath";
 import { Link } from "react-router-dom";
+import { User16 } from "../../imagepath";
 
 const StudentReviews = () => {
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const token = localStorage.getItem('token')
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get("https://api.novajobs.us/api/students/ratings", {
+          headers: {
+            Authorization: `${token}`, // Replace with your actual token
+          },
+        });
+        setReviews(response.data.data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReviews();
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
   return (
     <div className="main-wrapper">
       <StudentHeader activeMenu={"Reviews"} />
@@ -36,7 +64,7 @@ const StudentReviews = () => {
       <div className="page-content">
         <div className="container">
           <div className="row">
-            {/* sidebar */}
+            {/* Sidebar */}
             <StudentSidebar />
             {/* /Sidebar */}
             {/* Student Profile */}
@@ -47,167 +75,42 @@ const StudentReviews = () => {
                     <h3>Reviews</h3>
                   </div>
                   <div className="checkout-form">
-                    {/* Review */}
-                    <div className="review-wrap">
-                      <div className="review-user-info">
-                        <div className="reviewer">
-                          <div className="review-img">
-                            <Link to="#">
-                              <img src={User16} alt="img" />
-                            </Link>
+                    {/* Reviews */}
+                    {reviews.map((review) => (
+                      <div className="review-wrap" key={review.id}>
+                        <div className="review-user-info">
+                          <div className="reviewer">
+                            <div className="review-img">
+                              <Link to="#">
+                                <img src={User16} alt="img" />
+                              </Link>
+                            </div>
+                            <div className="reviewer-info">
+                              {/* <h6>
+                                <Link to="#">Student {review.student_id}</Link>
+                              </h6> */}
+                              <p>{new Date(review.created_at).toLocaleDateString()}</p>
+                            </div>
                           </div>
-                          <div className="reviewer-info">
-                            <h6>
-                              <Link to="#">Ronald Richard</Link>
-                            </h6>
-                            <p>6 months ago</p>
-                          </div>
-                        </div>
-                        <div className="reviewer-rating">
-                          <i className="fa-solid fa-star filled" />
-                          <i className="fa-solid fa-star filled" />
-                          <i className="fa-solid fa-star filled" />
-                          <i className="fa-solid fa-star filled" />
-                          <i className="fa-solid fa-star filled" />
-                        </div>
-                      </div>
-                      <div className="review-content">
-                        <p>
-                          This is the second Photoshop course I have completed
-                          with Cristian. Worth every penny and recommend it
-                          highly. To get the most out of this course, its best
-                          to to take the Beginner to Advanced course first. The
-                          sound and video quality is of a good standard. Thank
-                          you Cristian.
-                        </p>
-                        <div className="review-action">
-                          <Link to="#">Edit</Link>
-                          <Link to="#">Delete</Link>
-                        </div>
-                      </div>
-                    </div>
-                    {/* /Review */}
-                    {/* Review */}
-                    <div className="review-wrap">
-                      <div className="review-user-info">
-                        <div className="reviewer">
-                          <div className="review-img">
-                            <Link to="#">
-                              <img src={User16} alt="img" />
-                            </Link>
-                          </div>
-                          <div className="reviewer-info">
-                            <h6>
-                              <Link to="#">Ronald Richard</Link>
-                            </h6>
-                            <p>8 months ago</p>
+                          <div className="reviewer-rating">
+                            {[...Array(review.stars)].map((_, index) => (
+                              <i key={index} className="fa-solid fa-star filled" />
+                            ))}
+                            {[...Array(5 - review.stars)].map((_, index) => (
+                              <i key={index} className="fa-solid fa-star" />
+                            ))}
                           </div>
                         </div>
-                        <div className="reviewer-rating">
-                          <i className="fa-solid fa-star filled" />
-                          <i className="fa-solid fa-star filled" />
-                          <i className="fa-solid fa-star filled" />
-                          <i className="fa-solid fa-star filled" />
-                          <i className="fa-solid fa-star" />
-                        </div>
-                      </div>
-                      <div className="review-content">
-                        <p>
-                          I&apos;ve been using this LMS for several months for my
-                          online courses, and it&apos;s been a game-changer. The
-                          interface is incredibly user-friendly, making it easy
-                          for both instructors and students to navigate through
-                          the courses. The variety of tools available for
-                          creating interactive and engaging content has
-                          significantly enhanced the learning experience.
-                        </p>
-                        <div className="review-action">
-                          <Link to="#">Edit</Link>
-                          <Link to="#">Delete</Link>
-                        </div>
-                      </div>
-                    </div>
-                    {/* /Review */}
-                    {/* Review */}
-                    <div className="review-wrap">
-                      <div className="review-user-info">
-                        <div className="reviewer">
-                          <div className="review-img">
-                            <Link to="#">
-                              <img src={User16} alt="img" />
-                            </Link>
+                        {/* <div className="review-content">
+                          <p>{review.content}</p>
+                          <div className="review-action">
+                            <Link to="#">Edit</Link>
+                            <Link to="#">Delete</Link>
                           </div>
-                          <div className="reviewer-info">
-                            <h6>
-                              <Link to="#">Ronald Richard</Link>
-                            </h6>
-                            <p>9 months ago</p>
-                          </div>
-                        </div>
-                        <div className="reviewer-rating">
-                          <i className="fa-solid fa-star filled" />
-                          <i className="fa-solid fa-star filled" />
-                          <i className="fa-solid fa-star filled" />
-                          <i className="fa-solid fa-star filled" />
-                          <i className="fa-solid fa-star" />
-                        </div>
+                        </div> */}
                       </div>
-                      <div className="review-content">
-                        <p>
-                          Any time I&apos;ve had a question or encountered a minor
-                          issue, the customer support team has been quick to
-                          respond and incredibly helpful. Moreover, the
-                          reliability of this LMS has impressed me—downtime is
-                          nearly non-existent, ensuring that students have
-                          access to their courses 24/7.
-                        </p>
-                        <div className="review-action">
-                          <Link to="#">Edit</Link>
-                          <Link to="#">Delete</Link>
-                        </div>
-                      </div>
-                    </div>
-                    {/* /Review */}
-                    {/* Review */}
-                    <div className="review-wrap">
-                      <div className="review-user-info">
-                        <div className="reviewer">
-                          <div className="review-img">
-                            <Link to="#">
-                              <img src={User16} alt="img" />
-                            </Link>
-                          </div>
-                          <div className="reviewer-info">
-                            <h6>
-                              <Link to="#">Ronald Richard</Link>
-                            </h6>
-                            <p>1 year ago</p>
-                          </div>
-                        </div>
-                        <div className="reviewer-rating">
-                          <i className="fa-solid fa-star filled" />
-                          <i className="fa-solid fa-star filled" />
-                          <i className="fa-solid fa-star filled" />
-                          <i className="fa-solid fa-star filled" />
-                          <i className="fa-solid fa-star" />
-                        </div>
-                      </div>
-                      <div className="review-content">
-                        <p>
-                          From the onset, my experience with this LMS Website
-                          has been nothing short of extraordinary. As a learner
-                          who has navigated through various online platforms,
-                          the sophistication and user-centric design of this
-                          website set a new benchmark for what digital education
-                          should look like.
-                        </p>
-                        <div className="review-action">
-                          <Link to="#">Edit</Link>
-                          <Link to="#">Delete</Link>
-                        </div>
-                      </div>
-                    </div>
-                    {/* /Review */}
+                    ))}
+                    {/* /Reviews */}
                   </div>
                 </div>
               </div>

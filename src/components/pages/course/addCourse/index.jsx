@@ -11,8 +11,16 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
+import { debounce } from 'lodash';
+
+// import InstructorSidebar from "../../../instructor/sidebar";
+
 
 const AddCourse = () => {
+  const [errors, setErrors] = useState({
+    courseBannerImage: "",
+    courseIntroVideo: ""
+  });
   const navigate = useNavigate();
   const mobileSidebar = useSelector((state) => state.sidebarSlice.expandMenu);
   const [activeTab, setActiveTab] = useState("basic");
@@ -21,21 +29,21 @@ const AddCourse = () => {
     return savedData
       ? JSON.parse(savedData)
       : {
-        course_title: "Web development",
-        category: "Hardware",
-        level: "Level 02",
-        course_description: "<p>Dummy course</p>",
+        course_title: "",
+        course_category_name: "",
+        course_level_name: "",
+        course_description: "",
         course_banner_image: null,
         course_intro_video: null,
-        requirements: "laptop",
+        requirements: "",
         course_price: 0,
         after_discount_price: 0,
-        coupon_code: "summy",
-        course_language: "English",
+        coupon_code: "",
+        course_language: "",
         discount_percent: 0,
-        learning_objectives: "dummy",
-        target_audience: "students",
-        time_spent_on_course: "10 hours",
+        learning_objectives: "",
+        target_audience: "",
+        time_spent_on_course: "",
       };
   });
 
@@ -48,7 +56,12 @@ const AddCourse = () => {
   };
 
   const handleSelectChange = (name) => (selectedOption) => {
-    setCourseData({ ...courseData, [name]: selectedOption.value });
+    setCourseData(prevData => ({
+      ...prevData,
+      [`${name}_name`]: selectedOption.label,
+      [`${name}_id`]: selectedOption.value
+    }));
+    console.log(`Updated ${name}:`, selectedOption); // Debugging log
   };
 
   const handleEditorChange = (value) => {
@@ -56,43 +69,124 @@ const AddCourse = () => {
   };
 
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setCourseData({ ...courseData, [e.target.name]: file });
-  };
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+  //   setCourseData({ ...courseData, [e.target.name]: file });
+  // };
 
-  const handleSave = async () => {
-    try {
-      const formData = new FormData();
-      for (const key in courseData) {
-        if (key === "course_banner_image" || key === "course_intro_video") {
-          formData.append(key, courseData[key], courseData[key]?.name);
-        } else {
-          formData.append(key, courseData[key]);
-        }
-      }
-      const token = localStorage.getItem("trainerToken");
-      const response = await axios.post(
-        "https://api.novajobs.us/api/trainers/create-course",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: token,
-          },
-        }
-      );
-      console.log("Course saved successfully:", response.data);
-      toast.success("Course created successfully!");
-      // sessionStorage.removeItem('courseData'); // Clear the session storage after successful save
-      setTimeout(() => {
-        navigate(`/instructor/instructor-dashboard`);
-      }, 2000);
-    } catch (error) {
-      console.error("Error saving course:", error);
-      toast.error("Failed to create section. Please try again.");
+const handleFileChange = (e) => {
+  const { name, files } = e.target;
+  const file = files[0];
+  
+  if (name === "course_banner_image") {
+    if (file && !["image/jpeg", "image/png"].includes(file.type)) {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        // courseBannerImage: "Invalid file type. Only JPEG and PNG are allowed."
+      }));
+      toast.error("Invalid file type. Only JPEG and PNG are allowed.");
+      return;
+    } else {
+      setErrors(prevErrors => ({ ...prevErrors, courseBannerImage: "" }));
     }
-  };
+  }
+
+  if (name === "course_intro_video") {
+    if (file && file.type !== "video/mp4") {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        // courseIntroVideo: "Invalid file type. Only MP4 is allowed."
+      }));
+      toast.error("Invalid file type. Only MP4 is allowed.");
+      return;
+    } else {
+      setErrors(prevErrors => ({ ...prevErrors, courseIntroVideo: "" }));
+    }
+  }
+
+  setCourseData(prevData => ({
+    ...prevData,
+    [name]: file
+  }));
+};
+useEffect(() => {
+  if (courseData.course_price && courseData.discount_percent) {
+    const price = parseFloat(courseData.course_price);
+    const discount = parseFloat(courseData.discount_percent);
+    const discountedPrice = price - (price * (discount / 100));
+    setCourseData(prevData => ({
+      ...prevData,
+      after_discount_price: discountedPrice.toFixed(2)
+    }));
+  }
+}, [courseData.course_price, courseData.discount_percent]);
+  
+
+  // const handleSave = async () => {
+  //   try {
+  //     const formData = new FormData();
+  //     for (const key in courseData) {
+  //       if (key === "course_banner_image" || key === "course_intro_video") {
+  //         formData.append(key, courseData[key], courseData[key]?.name);
+  //       } else {
+  //         formData.append(key, courseData[key]);
+  //       }
+  //     }
+  //     const token = localStorage.getItem("trainerToken");
+  //     const response = await axios.post(
+  //       "https://api.novajobs.us/api/trainers/create-course",
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //           Authorization: token,
+  //         },
+  //       }
+  //     );
+  //     console.log("Course saved successfully:", response.data);
+  //     toast.success("Course created successfully!");
+  //     // sessionStorage.removeItem('courseData'); // Clear the session storage after successful save
+  //     setTimeout(() => {
+  //       navigate(`/instructor/instructor-dashboard`);
+  //     }, 2000);
+  //   } catch (error) {
+  //     console.error("Error saving course:", error);
+  //     toast.error("Failed to create section. Please try again.");
+  //   }
+  // };
+
+const handleSave = debounce(async () => {
+  console.log('check');
+  try {
+    const formData = new FormData();
+    for (const key in courseData) {
+      if (key === "course_banner_image" || key === "course_intro_video") {
+        formData.append(key, courseData[key], courseData[key]?.name);
+      } else {
+        formData.append(key, courseData[key]);
+      }
+    }
+    const token = localStorage.getItem("trainerToken");
+    const response = await axios.post(
+      "https://api.novajobs.us/api/trainers/create-course",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: token,
+        },
+      }
+    );
+    console.log("Course saved successfully:", response.data);
+    toast.success("Course created successfully!");
+    setTimeout(() => {
+      navigate(`/instructor/instructor-dashboard`);
+    }, 2000);
+  } catch (error) {
+    console.error("Error saving course:", error);
+    toast.error("Failed to create section. Please try again.");
+  }
+}, 3000); // Adjust the debounce delay as needed (3000 ms = 3 seconds)
 
   const token = localStorage.getItem("trainerToken");
 
@@ -172,10 +266,10 @@ const AddCourse = () => {
     <div className="main-wrapper">
       <CourseHeader activeMenu={"AddCourse"} />
 
-      <section className="page-content course-sec ">
+      <section className="">
         <div className="container">
-          <div className="row align-items-center">
-            <div className="col-md-12 border border-danger">
+          {/* <div className="row align-items-center">
+            <div className="col-md-12">
               <div className="add-course-header">
                 <h2>Add New Course</h2>
                 <div className="add-course-btns">
@@ -186,7 +280,7 @@ const AddCourse = () => {
                         className="btn btn-black"
                       >
                         Back to Course
-                      </Link> */}
+                      </Link> 
                     </li>
                     <li>
                       <button
@@ -200,9 +294,31 @@ const AddCourse = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
+           <div className="breadcrumb-bar breadcrumb-bar-info">
+        <div className="container">
           <div className="row">
-            <div className="col-md-12">
+            <div className="col-md-12 col-12">
+              <div className="breadcrumb-list">
+                <h2 className="breadcrumb-title">Add New Course</h2>
+                <nav aria-label="breadcrumb" className="page-breadcrumb">
+                  <ol className="breadcrumb">
+                    <li className="breadcrumb-item">
+                      <Link to="/home">Home</Link>
+                    </li>
+                    <li className="breadcrumb-item active" aria-current="page">
+                      Add New Course
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+          
+          <div className="row">
+          <div className="col-md-12">
               <div className="card">
                 <div className="widget-set">
                   <div className="widget-setcount">
@@ -258,9 +374,9 @@ const AddCourse = () => {
                               <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Course Title"
+                                placeholder="Title of your Course"
                                 name="course_title"
-                                value={courseData.course_title}
+                                // value={courseData.course_title}
                                 onChange={handleInputChange}
                               />
                             </div>
@@ -271,6 +387,7 @@ const AddCourse = () => {
                               <div className="w-full">
                                 <select className="w-100 p-2 rounded-2 border">
                                   <label>Slect</label>
+                        
                                   {categoryOptions.map(option => (
                                     <option key={option.value} value={option.value} className="w-full">
                                       {option.label}
@@ -344,7 +461,7 @@ const AddCourse = () => {
                               <textarea
                                 className="form-control"
                                 name="learning_objectives"
-                                value={courseData.learning_objectives}
+                                // value={courseData.learning_objectives}
                                 onChange={handleInputChange}
                               ></textarea>
                             </div>
@@ -356,6 +473,7 @@ const AddCourse = () => {
                                 type="text"
                                 className="form-control"
                                 name="target_audience"
+                                placeholder="Target Audience"
                                 value={courseData.target_audience}
                                 onChange={handleInputChange}
                               />
@@ -368,6 +486,7 @@ const AddCourse = () => {
                                 type="text"
                                 className="form-control"
                                 name="time_spent_on_course"
+                                placeholder="Time spent on courses"
                                 value={courseData.time_spent_on_course}
                                 onChange={handleInputChange}
                               />
@@ -386,135 +505,91 @@ const AddCourse = () => {
                       </div>
                     )}
 
-                    {/* {activeTab === "media" && (
-                      <div className="add-course-info">
-                        <div className="add-course-inner-header">
-                          <h4>Courses Media</h4>
-                        </div>
-                        <div className="add-course-form">
-                          <form action="#">
-                            <div className="input-block">
-                              <label className="add-course-label">Course cover image</label>
-                              <div className="relative-form">
-                                <span>{courseData.course_banner_image ? courseData.course_banner_image.name : "No File Selected"}</span>
-                                <label className="relative-file-upload">
-                                  Upload File <input type="file" onChange={handleFileChange} />
-                                </label>
-                              </div>
-                            </div>
-                            <div className="input-block">
-                              <div className="add-image-box">
-                                <Link to="#">
-                                  <i className="far fa-image" />
-                                </Link>
-                              </div>
-                            </div>
-                            <div className="input-block">
-                              <label className="add-course-label">Course Intro Video </label>
-                              <div className="relative-form">
-                                <span>{courseData.course_intro_video ? courseData.course_intro_video.name : "No File Selected"}</span>
-                                <label className="relative-file-upload">
-                                  Upload File <input type="file" name="course_intro_video" onChange={handleFileChange} accept=".mp4" />
-                                </label>
-                              </div>
-                              </div>
-                            <div className="input-block">
-                              <div className="add-image-box add-video-box">
-                                <Link to="#">
-                                  <i className="fas fa-circle-play" />
-                                </Link>
-                              </div>
-                            </div>
-                          </form>
-                        </div>
-                        <div className="widget-btn">
-                          <Link className="btn btn-black prev_btn" onClick={() => setActiveTab("basic")}>Previous</Link>
-                          <Link className="btn btn-info-light next_btn" onClick={() => setActiveTab("settings")}>Continue</Link>
-                        </div>
-                      </div>
-                    )} */}
                     {activeTab === "media" && (
-                      <div className="add-course-info">
-                        <div className="add-course-inner-header">
-                          <h4>Courses Media</h4>
-                        </div>
-                        <div className="add-course-form">
-                          <form action="#">
-                            <div className="input-block">
-                              <label className="add-course-label">
-                                Course cover image
-                              </label>
-                              <div className="relative-form">
-                                <span>
-                                  {courseData.course_banner_image
-                                    ? courseData.course_banner_image.name
-                                    : "No File Selected"}
-                                </span>
-                                <label className="relative-file-upload">
-                                  Upload File{" "}
-                                  <input
-                                    type="file"
-                                    name="course_banner_image"
-                                    onChange={handleFileChange}
-                                    required
-                                  />
-                                </label>
-                              </div>
-                            </div>
-                            <div className="input-block">
-                              <div className="add-image-box">
-                                <Link to="#">
-                                  <i className="far fa-image" />
-                                </Link>
-                              </div>
-                            </div>
-                            <div className="input-block">
-                              <label className="add-course-label">
-                                Course Intro Video (MP4)
-                              </label>
-                              <div className="relative-form">
-                                <span>
-                                  {courseData.course_intro_video
-                                    ? courseData.course_intro_video.name
-                                    : "No File Selected"}
-                                </span>
-                                <label className="relative-file-upload">
-                                  Upload File{" "}
-                                  <input
-                                    type="file"
-                                    name="course_intro_video"
-                                    onChange={handleFileChange}
-                                    accept=".mp4"
-                                    readOnly
-                                  />
-                                </label>
-                              </div>
-                            </div>
-                            <div className="input-block">
-                              <div className="add-image-box add-video-box">
-                                <Link to="#">
-                                  <i className="fas fa-circle-play" />
-                                </Link>
-                              </div>
-                            </div>
-                          </form>
-                        </div>
-                        <div className="widget-btn">
-                          <Link
-                            className="btn btn-black prev_btn"
-                            onClick={() => setActiveTab("basic")}
-                          >
-                            Previous
-                          </Link>
-                          <Link
-                            className="btn btn-info-light next_btn"
-                            onClick={() => setActiveTab("settings")}
-                          >
-                            Continue
-                          </Link>
-                        </div>
-                      </div>
-                    )}
+  <div className="add-course-info">
+    <div className="add-course-inner-header">
+      <h4>Courses Media</h4>
+    </div>
+    <div className="add-course-form">
+      <form>
+        <div className="input-block">
+          <label className="add-course-label">Course cover image</label>
+          <div className="relative-form">
+            <span>
+              {courseData.course_banner_image
+                ? courseData.course_banner_image.name
+                : "No File Selected"}
+            </span>
+            <label className="relative-file-upload">
+              Upload File
+              <input
+                type="file"
+                name="course_banner_image"
+                onChange={handleFileChange}
+                required
+              />
+            </label>
+            {errors.courseBannerImage && (
+              <p className="error-text">{errors.courseBannerImage}</p>
+            )}
+          </div>
+        </div>
+        {/* <div className="input-block">
+          <div className="add-image-box">
+            <Link to="#">
+              <i className="far fa-image" />
+            </Link>
+          </div>
+        </div> */}
+        <div className="input-block">
+          <label className="add-course-label">Course Intro Video (MP4)</label>
+          <div className="relative-form">
+            <span>
+              {courseData.course_intro_video
+                ? courseData.course_intro_video.name
+                : "No File Selected"}
+            </span>
+            <label className="relative-file-upload">
+              Upload File
+              <input
+                type="file"
+                name="course_intro_video"
+                onChange={handleFileChange}
+                accept=".mp4"
+                readOnly
+              />
+            </label>
+            {errors.courseIntroVideo && (
+              <p className="error-text">{errors.courseIntroVideo}</p>
+            )}
+          </div>
+        </div>
+        {/* <div className="input-block">
+          <div className="add-image-box add-video-box">
+            <Link to="#">
+              <i className="fas fa-circle-play" />
+            </Link>
+          </div>
+        </div> */}
+        <div className="widget-btn">
+          <Link
+            className="btn btn-black prev_btn"
+            onClick={() => setActiveTab("basic")}
+          >
+            Previous
+          </Link>
+          <Link
+            className="btn btn-info-light next_btn"
+            onClick={() => setActiveTab("settings")}
+          >
+            Continue
+          </Link>
+        </div>
+      </form>
+    </div>
+  </div>
+)}
+
                     {activeTab === "settings" && (
                       <div className="add-course-info">
                         <div className="add-course-inner-header">
@@ -533,7 +608,7 @@ const AddCourse = () => {
                                 onChange={handleInputChange}
                               ></textarea>
                             </div>
-                            <div className="input-block">
+                            {/* <div className="input-block">
                               <label className="add-course-label">
                                 Course Price
                               </label>
@@ -571,7 +646,40 @@ const AddCourse = () => {
                                 value={courseData.after_discount_price}
                                 onChange={handleInputChange}
                               />
-                            </div>
+                            </div> */}
+      <div className="input-block">
+        <label className="add-course-label">Course Price</label>
+        <input
+          type="number"
+          className="form-control"
+          placeholder="0"
+          name="course_price"
+          value={courseData.course_price}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div className="input-block">
+        <label className="add-course-label">Discount Percent</label>
+        <input
+          type="number"
+          className="form-control"
+          placeholder="0"
+          name="discount_percent"
+          value={courseData.discount_percent}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div className="input-block">
+        <label className="add-course-label">Price After Discount</label>
+        <input
+          type="number"
+          className="form-control"
+          placeholder="0"
+          name="after_discount_price"
+          value={courseData.after_discount_price}
+          readOnly
+        />
+      </div>
                             <div className="input-block">
                               <label className="add-course-label">
                                 Coupon Code
@@ -608,6 +716,7 @@ const AddCourse = () => {
               </div>
             </div>
           </div>
+            
         </div>
       </section>
 

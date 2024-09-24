@@ -1,6 +1,7 @@
 
 import React, { useState } from "react";
-import { LoginImg, logo } from "../../imagepath";
+// import { LoginImg } from "../../imagepath";
+import logo5 from '../../../assets/logo5.png'
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import OwlCarousel from "react-owl-carousel";
@@ -94,23 +95,17 @@ const ForgotPassword = () => {
           {/* Login Banner */}
           <div className="col-md-6 login-bg">
             <OwlCarousel {...settings} className="owl-carousel login-slide owl-theme">
-              {[...Array(3)].map((_, i) => (
-                <div key={i} className="welcome-login">
+                <div className="welcome-login">
                   <div className="login-banner">
-                    <img src={LoginImg} className="img-fluid" alt="Logo" />
+                    <img src={logo5} className="img-fluid" alt="Logo" />
                   </div>
                   <div className="mentor-course text-center">
                     <h2>
                       Welcome to <br />
                       Ultraaura Courses.
                     </h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
-                    </p>
                   </div>
                 </div>
-              ))}
             </OwlCarousel>
           </div>
           {/* /Login Banner */}
@@ -119,7 +114,7 @@ const ForgotPassword = () => {
             <div className="login-wrapper">
               <div className="loginbox">
                 <div className="img-logo">
-                  <img src={logo} className="img-fluid" alt="Logo" />
+                  {/* <img src={logo5} className="img-fluid" alt="Logo" /> */}
                   <div className="back-home">
                     <Link to="/home">Back to Home</Link>
                   </div>

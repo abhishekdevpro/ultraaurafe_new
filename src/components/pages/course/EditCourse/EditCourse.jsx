@@ -416,10 +416,129 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Footer from "../../../footer";
 import CourseHeader from "../header";
-import Select from "react-select";
 import { useSelector } from "react-redux";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Select, { components } from "react-select";
+
+import styled from 'styled-components';
+import FeatherIcon from 'feather-icons-react';
+import ReactQuill from "react-quill";
+import { debounce } from "lodash";
+
+// Styled components
+const HeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    align-items: flex-start;
+  }
+`;
+
+const Title = styled.h2`
+  margin: 0;
+  font-size: 24px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 15px;
+  }
+`;
+
+const ButtonGroup = styled.ul`
+  display: flex;
+    gap: 0.25rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  & > li {
+    margin-left: 10px;
+
+    @media (max-width: 768px) {
+      margin-left: 0;
+      &:nth-child(2) {
+        display: none; /* Hide the Save Changes button on smaller screens */
+      }
+    }
+  }
+
+  & > li > a,
+  & > li > button {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 16px;
+
+    @media (max-width: 768px) {
+      padding: 2px;
+      justify-content: center;
+      font-size: 8px;
+
+      & > span {
+        display: none; /* Hide the text on smaller screens */
+      }
+    }
+  }
+
+  & > li > a > svg,
+  & > li > button > svg {
+    margin-right: 8px;
+
+    @media (max-width: 768px) {
+      margin-right: 0;
+    }
+  }
+`;
+const StyledSelect = styled(Select)`
+  .select__control {
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    min-height: 44px;
+    box-shadow: none;
+
+    &:hover {
+      border-color: #b3b3b3;
+    }
+  }
+
+  .select__indicator-separator {
+    display: none;
+  }
+
+  .select__dropdown-indicator {
+    color: #333;
+  }
+
+  .select__menu {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e5e5;
+  }
+
+  .select__option {
+    background-color: ${props => props.mobileSidebar === "disabled" ? "#fff" : "#000"};
+    color: ${props => props.mobileSidebar === "disabled" ? "#000" : "#fff"};
+    font-size: 14px;
+
+    &:hover {
+      background-color: ${props => props.mobileSidebar === "disabled" ? "#FFDEDA" : "#2b2838"};
+    }
+  }
+`;
+
+const DropdownIcon = styled(FeatherIcon)`
+  width: 18px;
+  height: 18px;
+`;
+
+
 
 const EditCourse = () => {
   const { id } = useParams();
@@ -427,23 +546,97 @@ const EditCourse = () => {
   const mobileSidebar = useSelector((state) => state.sidebarSlice.expandMenu);
   const [activeTab, setActiveTab] = useState("basic");
   const [courseData, setCourseData] = useState({
-    course_title: "",
-    category: "",
-    level: "",
-    course_description: "",
-    course_banner_image: null,
-    course_intro_video: null,
-    requirements: "",
-    course_price: 0,
-    after_discount_price: 0,
-    coupon_code: "",
-    course_language: "",
-    discount_percent: 0,
-    learning_objectives: "",
-    target_audience: "",
-    time_spent_on_course: "",
+    course_title: '',
+    category_id: '',
+    category_name: '',
+    level_id: '',
+    level_name: '',
+    course_description: '',
+    course_banner_image: '',
+    course_intro_video: '',
+    requirements: '',
+    course_price: '',
+    after_discount_price: '',
+    coupon_code: '',
+    course_language: '',
+    discount_percent: '',
+    learning_objectives: '',
+    target_audience: '',
+    time_spent_on_course: '',
   });
+  const [categoryOptions, setCategoryOptions] = useState([]);
+  const [levelOptions, setLevelOptions] = useState([]);
 
+  // useEffect(() => {
+  //   const fetchCourseData = async () => {
+  //     try {
+  //       const token = localStorage.getItem("trainerToken");
+  //       const response = await axios.get(`https://api.novajobs.us/api/trainers/courses/${id}`, {
+  //         headers: {
+  //           Authorization: `${token}`,
+  //         },
+  //       });
+  //       console.log(response,"RDDDD");
+  //       const { data } = response.data;
+  //       console.log(data,"data hu");
+  //       setCourseData({
+  //         course_title: data.course_title,
+  //         category_id: data.course_category_id, // Add this
+  // category_name: data.course_category_name,
+  // level_id: data.course_level_id, // Add this
+  // level_name: data.course_level_name,
+  //         course_description: data.course_description,
+  //         course_banner_image: data.course_banner_image,
+  //         course_intro_video: data.course_intro_video_url,
+  //         requirements: data.requirements,
+  //         course_price: data.course_price,
+  //         after_discount_price: data.after_discount_price,
+  //         coupon_code: data.coupon_code,
+  //         course_language: data.course_language,
+  //         discount_percent: data.discount_percent,
+  //         learning_objectives: data.learning_objectives,
+  //         target_audience: data.target_audience,
+  //         time_spent_on_course: data.time_spent_on_course,
+  //       });
+  //     } catch (error) {
+  //       console.error("Error fetching course data:", error);
+  //       toast.error('Error fetching course data. Please try again.');
+  //       navigate("/instructor/instructor-dashboard");
+  //     }
+  //   };
+  //   console.log(courseData,"haan mai hu");
+  //   const fetchCategoryOptions = async () => {
+  //     try {
+  //       const response = await axios.get('https://api.novajobs.us/api/trainers/course-categories');
+  //       const options = response.data.data.map(category => ({
+  //         value: category.id,
+  //         label: category.name
+  //       }));
+  //       setCategoryOptions(options);
+  //     } catch (error) {
+  //       console.error("Error fetching category options:", error);
+  //       toast.error('Error fetching categories. Please try again.');
+  //     }
+  //   };
+
+  //   const fetchLevelOptions = async () => {
+  //     try {
+  //       const response = await axios.get('https://api.novajobs.us/api/trainers/course-level');
+  //       const options = response.data.data.map(level => ({
+  //         value: level.id,
+  //         label: level.name
+  //       }));
+  //       setLevelOptions(options);
+  //     } catch (error) {
+  //       console.error("Error fetching level options:", error);
+  //       toast.error('Error fetching levels. Please try again.');
+  //     }
+  //   };
+
+  //   fetchCourseData();
+  //   fetchCategoryOptions();
+  //   fetchLevelOptions();
+  // }, [id, navigate]);
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
@@ -456,8 +649,10 @@ const EditCourse = () => {
         const { data } = response.data;
         setCourseData({
           course_title: data.course_title,
-          category: data.category,
-          level: data.level,
+          category_id: data.course_category_id,
+          category_name: data.course_category_name,
+          level_id: data.course_level_id,
+          level_name: data.course_level_name,
           course_description: data.course_description,
           course_banner_image: data.course_banner_image,
           course_intro_video: data.course_intro_video_url,
@@ -471,7 +666,6 @@ const EditCourse = () => {
           target_audience: data.target_audience,
           time_spent_on_course: data.time_spent_on_course,
         });
-        console
       } catch (error) {
         console.error("Error fetching course data:", error);
         toast.error('Error fetching course data. Please try again.');
@@ -479,9 +673,38 @@ const EditCourse = () => {
       }
     };
 
+    const fetchCategoryOptions = async () => {
+      try {
+        const response = await axios.get('https://api.novajobs.us/api/trainers/course-categories');
+        const options = response.data.data.map(category => ({
+          value: category.id,
+          label: category.name
+        }));
+        setCategoryOptions(options);
+      } catch (error) {
+        console.error("Error fetching category options:", error);
+        toast.error('Error fetching categories. Please try again.');
+      }
+    };
+
+    const fetchLevelOptions = async () => {
+      try {
+        const response = await axios.get('https://api.novajobs.us/api/trainers/course-level');
+        const options = response.data.data.map(level => ({
+          value: level.id,
+          label: level.name
+        }));
+        setLevelOptions(options);
+      } catch (error) {
+        console.error("Error fetching level options:", error);
+        toast.error('Error fetching levels. Please try again.');
+      }
+    };
+
     fetchCourseData();
-  }, [id, navigate]);
-  
+    fetchCategoryOptions();
+    fetchLevelOptions();
+  }, []);
   const handleInputChange = ({ target: { name, value } }) => {
     setCourseData(prevState => ({ ...prevState, [name]: value }));
   };
@@ -495,7 +718,10 @@ const EditCourse = () => {
     setCourseData({ ...courseData, [e.target.name]: file });
   };
 
-  const handleSave = async () => {
+  const handleQuillChange = (name) => (content) => {
+    setCourseData({ ...courseData, [name]: content });
+  };
+  const handleSave = debounce (async () => {
     try {
       const formData = new FormData();
       for (const key in courseData) {
@@ -509,6 +735,7 @@ const EditCourse = () => {
           }
         }
       }
+      console.log(formData,"FDDDd");
       const token = localStorage.getItem("trainerToken");
       const response = await axios.patch(`https://api.novajobs.us/api/trainers/update-course/${id}`, formData, {
         headers: {
@@ -523,25 +750,18 @@ const EditCourse = () => {
       console.error("Error updating course:", error);
       toast.error('Error updating course. Please try again.');
     }
-  };
+  },500);
 
   const handleAddSection = () => {
     navigate(`/add-section/${id}`);
   };
 
-  const categoryOptions = [
-    { label: "Hardware", value: "Hardware" },
-    { label: "Category 02", value: "Category 02" },
-    { label: "Category 03", value: "Category 03" },
-    { label: "Category 04", value: "Category 04" },
-  ];
+  console.log(courseData,"CD hu");
 
-  const levelOptions = [
-    { label: "Beginner", value: "Beginner" },
-    { label: "Level 02", value: "Level 02" },
-    { label: "Level 03", value: "Level 03" },
-    { label: "Level 04", value: "Level 04" },
-  ];
+
+
+
+  
 
   const languageOptions = [
     { label: "English", value: "English" },
@@ -550,29 +770,43 @@ const EditCourse = () => {
     { label: "German", value: "German" },
   ];
 
-  const selectStyle = {
-    menu: (base) => ({ ...base, marginTop: "0px" }),
-    menuList: (base) => ({ ...base, padding: "0" }),
-    option: (provided) => ({
+  // const selectStyle = {
+  //   menu: (base) => ({ ...base, marginTop: "0px" }),
+  //   menuList: (base) => ({ ...base, padding: "0" }),
+  //   option: (provided) => ({
+  //     ...provided,
+  //     backgroundColor: mobileSidebar === "disabled" ? "#fff" : "#000",
+  //     color: mobileSidebar === "disabled" ? "#000" : "#fff",
+  //     fontSize: "14px",
+  //     "&:hover": {
+  //       backgroundColor: mobileSidebar === "disabled" ? "#FFDEDA" : "#2b2838",
+  //     },
+  //   }),
+  //   indicatorSeparator: (base) => ({
+  //     ...base,
+  //     display: "none",
+  //   }),
+  //   dropdownIndicator: (base, state) => ({
+  //     ...base,
+  //     color: "black",
+  //     transform: state.selectProps.menuIsOpen ? "rotate(-180deg)" : "rotate(0)",
+  //     transition: "250ms",
+  //     display: "none",
+  //   }),
+  // };
+  const customStyles = {
+    control: (provided) => ({
       ...provided,
-      backgroundColor: mobileSidebar === "disabled" ? "#fff" : "#000",
-      color: mobileSidebar === "disabled" ? "#000" : "#fff",
-      fontSize: "14px",
-      "&:hover": {
-        backgroundColor: mobileSidebar === "disabled" ? "#FFDEDA" : "#2b2838",
-      },
+      minHeight: '44px',
     }),
-    indicatorSeparator: (base) => ({
-      ...base,
-      display: "none",
-    }),
-    dropdownIndicator: (base, state) => ({
-      ...base,
-      color: "black",
-      transform: state.selectProps.menuIsOpen ? "rotate(-180deg)" : "rotate(0)",
-      transition: "250ms",
-      display: "none",
-    }),
+  };
+
+  const DropdownIndicator = (props) => {
+    return (
+      <components.DropdownIndicator {...props}>
+        <DropdownIcon icon="chevron-down" />
+      </components.DropdownIndicator>
+    );
   };
 
   return (
@@ -581,33 +815,31 @@ const EditCourse = () => {
 
       <section className="page-content course-sec">
         <div className="container">
-          <div className="row align-items-center">
+        <div className="row align-items-center">
             <div className="col-md-12">
-              <div className="add-course-header">
-                <h2>Edit Course</h2>
-                <div className="add-course-btns">
-                  <ul className="nav">
-                  <li>
-                      <button onClick={handleAddSection} className=" btn btn-primary">
-                        Add Section
-                      </button>
-                    </li>
-                    
-                    <li>
-                      <button onClick={handleSave} className="btn btn-success-dark">
-                        Save Changes
-                      </button>
-                    </li>
-
-                    <li>
-                      <Link to="/instructor/instructor-dashboard" className="btn btn-black">
-                        Back to Course
-                      </Link>
-                    </li>
-
-                  </ul>
-                </div>
-              </div>
+            <HeaderWrapper>
+      <Title>Edit Course</Title>
+      <ButtonGroup>
+        <li>
+          <button onClick={handleAddSection} className="btn btn-primary">
+            <FeatherIcon icon="plus-circle" />
+            <span>Add Section</span>
+          </button>
+        </li>
+        <li>
+          <button onClick={handleSave} className="btn btn-success-dark">
+            <FeatherIcon icon="save" />
+            <span>Save Changes</span>
+          </button>
+        </li>
+        <li>
+          <Link to="/instructor/instructor-dashboard" className="btn btn-black">
+            <FeatherIcon icon="arrow-left" />
+            <span>Back to Course</span>
+          </Link>
+        </li>
+      </ButtonGroup>
+    </HeaderWrapper>
             </div>
           </div>
           <div className="row">
@@ -649,52 +881,71 @@ const EditCourse = () => {
                             </div>
                             <div className="input-block">
                               <label className="add-course-label">Courses Category</label>
-                              <Select
+                              <StyledSelect
                                 options={categoryOptions}
                                 onChange={handleSelectChange("category")}
-                                value={categoryOptions.find(option => option.value === courseData.category)}
+                                value={categoryOptions.find(option => option.label === courseData.category)}
                                 placeholder="Select Category"
-                                styles={selectStyle}
+                                styles={customStyles}
+                                components={{ DropdownIndicator }}
+                                mobileSidebar={mobileSidebar}
                               />
                             </div>
                             <div className="input-block">
                               <label className="add-course-label">Courses Level</label>
-                              <Select
+                              <StyledSelect
                                 options={levelOptions}
                                 onChange={handleSelectChange("level")}
                                 value={levelOptions.find(option => option.value === courseData.level)}
                                 placeholder="Select Level"
-                                styles={selectStyle}
+                                styles={customStyles}
+                                components={{ DropdownIndicator }}
+                                mobileSidebar={mobileSidebar}
                               />
                             </div>
                             <div className="input-block">
                               <label className="add-course-label">Course Language</label>
-                              <Select
+                              <StyledSelect
                                 options={languageOptions}
-                                onChange={handleSelectChange("course_language")}
-                                value={languageOptions.find(option => option.value === courseData.course_language)}
-                                placeholder="Select Language"
-                                styles={selectStyle}
+                                onChange={handleSelectChange("level")}
+                                value={levelOptions.find(option => option.value === courseData.level)}
+                                placeholder="Select Level"
+                                styles={customStyles}
+                                components={{ DropdownIndicator }}
+                                mobileSidebar={mobileSidebar}
                               />
                             </div>
                             <div className="input-block mb-0">
                               <label className="add-course-label">Course Description</label>
-                              <textarea
-                                className="form-control"
-                                name="course_description"
+                              <ReactQuill
                                 value={courseData.course_description}
-                                onChange={handleInputChange}
-                                rows="4"
-                              ></textarea>
+                                onChange={handleQuillChange("course_description")}
+                                modules={{
+                                  toolbar: [
+                                    [{ header: [1, 2, false] }],
+                                    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                                    [{ list: 'ordered' }, { list: 'bullet' }],
+                                    ['link', 'image'],
+                                    ['clean']
+                                  ],
+                                }}
+                              />
                             </div>
                             <div className="input-block">
                               <label className="add-course-label">Learning Objectives</label>
-                              <textarea
-                                className="form-control"
-                                name="learning_objectives"
+                              <ReactQuill
                                 value={courseData.learning_objectives}
-                                onChange={handleInputChange}
-                              ></textarea>
+                                onChange={handleQuillChange("learning_objectives")}
+                                modules={{
+                                  toolbar: [
+                                    [{ header: [1, 2, false] }],
+                                    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                                    [{ list: 'ordered' }, { list: 'bullet' }],
+                                    ['link', 'image'],
+                                    ['clean']
+                                  ],
+                                }}
+                              />
                             </div>
                             <div className="input-block">
                               <label className="add-course-label">Target Audience</label>
@@ -760,7 +1011,7 @@ const EditCourse = () => {
                       </div>
                     )}
 
-                    {activeTab === "settings" && (
+                    {/* {activeTab === "settings" && (
                       <div className="add-course-info">
                         <div className="add-course-inner-header">
                           <h4>Course Settings</h4>
@@ -831,11 +1082,92 @@ const EditCourse = () => {
                           </Link>
                         </div>
                       </div>
-                       )}
+                       )} */}
+                        {activeTab === "settings" && (
+                      <div className="add-course-info">
+                        <div className="add-course-inner-header">
+                          <h4>Course Settings</h4>
+                        </div>
+                        <div className="add-course-form">
+                          <form action="#">
+                            <div className="input-block">
+                              <label className="add-course-label">Requirements</label>
+                              <ReactQuill
+                                value={courseData.requirements}
+                                onChange={handleQuillChange("requirements")}
+                                modules={{
+                                  toolbar: [
+                                    [{ header: [1, 2, false] }],
+                                    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                                    [{ list: 'ordered' }, { list: 'bullet' }],
+                                    ['link', 'image'],
+                                    ['clean']
+                                  ],
+                                }}
+                              />
+                            </div>
+                            <div className="input-block">
+                              <label className="add-course-label">Course Price</label>
+                              <input
+                                type="number"
+                                className="form-control"
+                                placeholder="0"
+                                name="course_price"
+                                value={courseData.course_price}
+                                onChange={handleInputChange}
+                              />
+                            </div>
+                            <div className="input-block">
+                              <label className="add-course-label">Discount Percent</label>
+                              <input
+                                type="number"
+                                className="form-control"
+                                placeholder="0"
+                                name="discount_percent"
+                                value={courseData.discount_percent}
+                                onChange={handleInputChange}
+                              />
+                            </div>
+                            <div className="input-block">
+                              <label className="add-course-label">Price After Discount</label>
+                              <input
+                                type="number"
+                                className="form-control"
+                                placeholder="0"
+                                name="after_discount_price"
+                                value={courseData.after_discount_price}
+                                onChange={handleInputChange}
+                              />
+                            </div>
+                            <div className="input-block">
+                              <label className="add-course-label">Coupon Code</label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Enter coupon code"
+                                name="coupon_code"
+                                value={courseData.coupon_code}
+                                onChange={handleInputChange}
+                              />
+                            </div>
+                          </form>
+                        </div>
+                        <div className="widget-btn">
+                          <Link className="btn btn-black prev_btn" onClick={() => setActiveTab("media")}>
+                            Previous
+                          </Link>
+                          <Link className="btn btn-info-light next_btn" onClick={handleSave}>
+                            Save Changes
+                          </Link>
+                        </div>
+                      </div>
+                    )}
                        </div>
                      </div>
                    </div>
                  </div>
+
+              
                </div>
              </div>
            </section>

@@ -1,15 +1,15 @@
 /* eslint-disable no-unused-vars */
-import React, { useRef, useState } from "react";
-import { Home, LogOut, Moon, Star } from "react-feather";
-import { Link } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { Home, LogOut, Star } from "react-feather";
+import { Link, useNavigate } from "react-router-dom";
 import useOnClickOutside from "../../../hooks/useOnClickOutside";
 import {
   logo,
   User17,
 } from "../../imagepath";
 import DarkMode from "../../common/darkMode";
-import menu_data from "../../header/menu-data";
 import logo5 from "../../../assets/logo5.png"
+import { Button } from "react-bootstrap";
 // eslint-disable-next-line react/prop-types
 export function InstructorHeader({ activeMenu }) {
   console.log(activeMenu === "Dashboard", "activeMenu");
@@ -19,6 +19,7 @@ export function InstructorHeader({ activeMenu }) {
   const [showWish, setShowWish] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [trainerData, setTrainerData] = useState(null);
 
   // Mobile Menu toggle
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -31,7 +32,7 @@ export function InstructorHeader({ activeMenu }) {
   const [mobileSubMenu42, setMobileSubMenu42] = useState(false);
   const [mobileSubMenu43, setMobileSubMenu43] = useState(false);
   const [mobileSubMenu5, setMobileSubMenu5] = useState(false);
-
+  const navigate = useNavigate()
   const openMobileMenu = () => {
     document.body.classList.add("menu-opened");
     setMobileMenu(true);
@@ -99,6 +100,30 @@ export function InstructorHeader({ activeMenu }) {
     setShowCart(!showCart);
     console.log(showCart);
   };
+  useEffect(() => {
+    const fetchTrainerData = async () => {
+      try {
+        const token = localStorage.getItem("trainerToken"); // Function to get the token
+        const response = await fetch('https://api.novajobs.us/api/trainers/profile', {
+          method: 'GET',
+          headers: {
+            'Authorization': `${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        const result = await response.json();
+        if (result.status === 'success') {
+          setTrainerData(result.data);
+        } else {
+          console.error(result.message);
+        }
+      } catch (error) {
+        console.error('Error fetching trainer data:', error);
+      }
+    };
+
+    fetchTrainerData();
+  }, []);
 
   const wishClick = (e) => {
     e.preventDefault();
@@ -124,6 +149,10 @@ export function InstructorHeader({ activeMenu }) {
       setNavbar(false);
     }
   };
+  const handleLogout =()=> {
+    localStorage.removeItem('trainerToken')
+    navigate('/home')
+  }
   window.addEventListener("scroll", changeHeaderBackground);
 
   return (
@@ -167,40 +196,23 @@ export function InstructorHeader({ activeMenu }) {
                   <i className="fas fa-times"></i>
                 </Link>
               </div>
-              <ul className="main-nav">
-                {menu_data.map((item) => (
-                  <li key={item.id} className="has-submenu">
-                    <Link to={item.link}>{item.title}</Link>
-                    {item.sub_menus.length > 0 && (
-                      <ul className="submenu">
-                        {item.sub_menus.map((sub, i) => (
-                          <li key={i}>
-                            <Link to={sub.link}>{sub.title}</Link>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                ))}
-              </ul>
+           
             </div>
             <ul className="nav header-navbar-rht">
               <DarkMode />
               <li className="nav-item user-nav">
-                <Link
+              <Link
                   to="#"
-                  className={
-                    showProfile ? "dropdown-toggle show" : "dropdown-toggle"
-                  }
+                  className={showProfile ? "dropdown-toggle show" : "dropdown-toggle"}
                   data-bs-toggle="dropdown"
                   onClick={profileClick}
                 >
                   <span className="user-img">
-                    <img src={User17} alt="" />
+                    <img src={`https://api.novajobs.us${trainerData?.photo}`} alt="User" />
                     <span className="status online"></span>
                   </span>
                 </Link>
-                <div
+                {/* <div
                   ref={profile}
                   className={
                     showProfile
@@ -245,6 +257,37 @@ export function InstructorHeader({ activeMenu }) {
                     />{" "}
                     Logout
                   </Link>
+                </div> */}
+                 <div
+                  ref={profile}
+                  className={showProfile ? "users dropdown-menu dropdown-menu-right show modalPosition" : "users dropdown-menu dropdown-menu-right"}
+                  data-popper-placement="bottom-end"
+                >
+                  <div className="user-header">
+                    <div className="avatar avatar-sm">
+                      <img
+                        src={`https://api.novajobs.us${trainerData?.photo}`}
+                        alt="User Image"
+                        className="avatar-img rounded-circle"
+                      />
+                    </div>
+                    <div className="user-text">
+                      <h6>{trainerData?.first_name} {trainerData?.last_name}</h6>
+                      <p className="text-muted text mb-0">{trainerData?.jobtitle}</p>
+                    </div>
+                  </div>
+                  <Link className="dropdown-item" to="/instructor/instructor-dashboard">
+                    <Home size={14} color={"#FF875A"} className="feather-home me-1" /> Dashboard
+                  </Link>
+                  <Link className="dropdown-item text" to="/instructor/instructor-settings">
+                    <Star size={14} color={"#FF875A"} className="feather-star me-1" /> Edit Profile
+                  </Link>
+                  <button 
+                  onClick={handleLogout} 
+                  className="dropdown-item text">
+                    <LogOut size={14} color={"#FF875A"} className="headerIcon me-1"
+                    /> Logout
+                  </button>
                 </div>
               </li>
             </ul>

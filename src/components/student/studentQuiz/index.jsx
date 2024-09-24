@@ -1,10 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import StudentHeader from "../header";
 import StudentSidebar from "../sidebar";
 import Footer from "../../footer";
 import { Link } from "react-router-dom";
 
 const StudentQuiz = () => {
+  const [quizAttempts, setQuizAttempts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    const fetchQuizAttempts = async () => {
+      try {
+        const response = await axios.get("https://api.novajobs.us/api/students/skill-assessment-history", {
+          headers: {
+            Authorization: `${token}`, // Replace with actual token
+          },
+        });
+        setQuizAttempts(response.data.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching quiz attempts:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchQuizAttempts();
+  }, [token]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="main-wrapper">
       <StudentHeader activeMenu={"My Quiz Attempts"} />
@@ -35,7 +63,7 @@ const StudentQuiz = () => {
       <div className="page-content">
         <div className="container">
           <div className="row">
-            {/* sidebar */}
+            {/* Sidebar */}
             <StudentSidebar />
             {/* /Sidebar */}
             {/* Student Quiz */}
@@ -47,13 +75,12 @@ const StudentQuiz = () => {
                   </div>
                   <div className="checkout-form">
                     <div className="table-responsive custom-table">
-                      {/* Referred Users*/}
+                      {/* Quiz Attempts Table */}
                       <table className="table table-nowrap mb-0">
                         <thead>
                           <tr>
                             <th>Quiz Info</th>
-                            <th>Question</th>
-                            <th>Total Marks</th>
+                            <th>Questions</th>
                             <th>Correct Answers</th>
                             <th>Incorrect Answers</th>
                             <th>Earned Marks</th>
@@ -62,192 +89,42 @@ const StudentQuiz = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>
-                              <div className="quiz-table">
-                                <p>March 12, 2024 05:40 PM</p>
-                                <p>
-                                  Quiz <i className="bx bx-info-circle" />
-                                </p>
-                                <p>
-                                  <span>Student</span> : studentdemo{" "}
-                                </p>
-                              </div>
-                            </td>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1(50%)</td>
-                            <td>
-                              <span className="resut-badge badge-light-danger">
-                                Fail
-                              </span>
-                            </td>
-                            <td>
-                              <Link
-                                to="/student/student-quiz-details"
-                                className="btn btn-light-danger quiz-view"
-                              >
-                                Details
-                              </Link>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="quiz-table">
-                                <p>March 05, 2024 04:15 PM</p>
-                                <p>
-                                  Quiz <i className="bx bx-info-circle" />
-                                </p>
-                                <p>
-                                  <span>Student</span> : studentdemo{" "}
-                                </p>
-                              </div>
-                            </td>
-                            <td>3</td>
-                            <td>3</td>
-                            <td>2</td>
-                            <td>1</td>
-                            <td>2(67%)</td>
-                            <td>
-                              <span className="resut-badge badge-light-danger">
-                                Fail
-                              </span>
-                            </td>
-                            <td>
-                              <Link
-                                to="/student/student-quiz-details"
-                                className="btn btn-light-danger quiz-view"
-                              >
-                                Details
-                              </Link>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="quiz-table">
-                                <p>February 27, 2024 03:20 PM</p>
-                                <p>
-                                  Quiz <i className="bx bx-info-circle" />
-                                </p>
-                                <p>
-                                  <span>Student</span> : studentdemo{" "}
-                                </p>
-                              </div>
-                            </td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>2(40%)</td>
-                            <td>
-                              <span className="resut-badge badge-light-danger">
-                                Fail
-                              </span>
-                            </td>
-                            <td>
-                              <Link
-                                to="/student/student-quiz-details"
-                                className="btn btn-light-danger quiz-view"
-                              >
-                                Details
-                              </Link>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="quiz-table">
-                                <p>February 16, 2024 02:40 PM</p>
-                                <p>
-                                  Quiz <i className="bx bx-info-circle" />
-                                </p>
-                                <p>
-                                  <span>Student</span> : studentdemo{" "}
-                                </p>
-                              </div>
-                            </td>
-                            <td>3</td>
-                            <td>3</td>
-                            <td>3</td>
-                            <td>0</td>
-                            <td>3(100%)</td>
-                            <td>
-                              <span className="resut-badge badge-light-success">
-                                Pass
-                              </span>
-                            </td>
-                            <td>
-                              <Link
-                                to="/student/student-quiz-details"
-                                className="btn btn-light-danger quiz-view"
-                              >
-                                Details
-                              </Link>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="quiz-table">
-                                <p>January 19, 2024 11:00 AM</p>
-                                <p>
-                                  Quiz <i className="bx bx-info-circle" />
-                                </p>
-                                <p>
-                                  <span>Student</span> : studentdemo{" "}
-                                </p>
-                              </div>
-                            </td>
-                            <td>3</td>
-                            <td>3</td>
-                            <td>0</td>
-                            <td>3</td>
-                            <td>0(0%)</td>
-                            <td>
-                              <span className="resut-badge badge-light-danger">
-                                Fail
-                              </span>
-                            </td>
-                            <td>
-                              <Link
-                                to="/student/student-quiz-details"
-                                className="btn btn-light-danger quiz-view"
-                              >
-                                Details
-                              </Link>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="quiz-table">
-                                <p>January 08, 2024 09:30 AM</p>
-                                <p>
-                                  Quiz <i className="bx bx-info-circle" />
-                                </p>
-                                <p>
-                                  <span>Student</span> : studentdemo{" "}
-                                </p>
-                              </div>
-                            </td>
-                            <td>3</td>
-                            <td>3</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>1(33%)</td>
-                            <td>
-                              <span className="resut-badge badge-light-danger">
-                                Fail
-                              </span>
-                            </td>
-                            <td>
-                              <Link
-                                to="/student/student-quiz-details"
-                                className="btn btn-light-danger quiz-view"
-                              >
-                                Details
-                              </Link>
-                            </td>
-                          </tr>
+                          {quizAttempts.map((attempt, index) => (
+                            <tr key={index}>
+                              <td>
+                                <div className="quiz-table">
+                                  <p>{new Date(attempt.start_date_time).toLocaleString()}</p>
+                                  <p>
+                                    <span>Skill</span> : {attempt.skill_name}
+                                  </p>
+                                </div>
+                              </td>
+                              <td>{attempt.results.total_question || 0}</td>
+                              <td>{attempt.results.right_answer || 0}</td>
+                              <td>{attempt.results.wrong_answer || 0}</td>
+                              <td>{(Number(attempt.results.Percentage) || 0).toFixed(2)}%</td>
+
+                              <td>
+                                <span
+                                  className={`resut-badge ${
+                                    attempt.results.Percentage >= 50
+                                      ? "badge-light-success"
+                                      : "badge-light-danger"
+                                  }`}
+                                >
+                                  {attempt.results.Percentage >= 50 ? 'Pass' : 'Fail'}
+                                </span>
+                              </td>
+                              <td>
+                                <Link
+                                  to={`/course-info/${attempt.skill_id}`}
+                                  className="btn btn-light-danger quiz-view"
+                                >
+                                  Details
+                                </Link>
+                              </td>
+                            </tr>
+                          ))}
                         </tbody>
                       </table>
                     </div>

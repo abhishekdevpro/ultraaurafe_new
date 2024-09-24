@@ -35,7 +35,7 @@ const SettingsPageHeader = () => {
               Change Password
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
               to="/instructor/instructor-setting-notifications"
               className={
@@ -48,8 +48,8 @@ const SettingsPageHeader = () => {
               <i className="bx bx-bell" />
               Notifications
             </Link>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <Link
               to="/instructor/instructor-setting-withdraw"
               className={
@@ -61,8 +61,8 @@ const SettingsPageHeader = () => {
               <i className="bx bx-wallet-alt" />
               Withdraw
             </Link>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <Link
               to="/instructor/instructor-delete-account"
               className={
@@ -74,7 +74,7 @@ const SettingsPageHeader = () => {
               <i className="bx bx-error-alt" />
               Delete Account
             </Link>
-          </li>
+          </li> */}
         </ul>
       </div>
     </div>

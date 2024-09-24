@@ -341,7 +341,7 @@ const StudentWishlist = () => {
                                     <div className="course-group-img d-flex">
                                       <Link to={`/instructor/instructor-profile/${course.instructor_id}`}>
                                         <img
-                                          src={course.instructor_image}
+                                          src={`https://api.novajobs.us${course.trainer_photo}`}
                                           alt={course.trainer_first_name}
                                           className="img-fluid"
                                         />
@@ -349,21 +349,21 @@ const StudentWishlist = () => {
                                       <div className="course-name">
                                         <h4>
                                           <Link to={`/instructor/instructor-profile/${course.instructor_id}`}>
-                                            {course.instructor_name}
+                                            {course.trainer_first_name}{" "}{course.trainer_last_name}
                                           </Link>
                                         </h4>
                                         <p>Instructor</p>
                                       </div>
                                     </div>
                                     <div className="course-share d-flex align-items-center justify-content-center">
-                                      <button onClick={() => toggleWishlist(course.id)}>
+                                      <div onClick={() => toggleWishlist(course.id)}>
                                         <i className="fa-solid fa-heart " />
-                                      </button>
+                                      </div>
                                     </div>
                                   </div>
                                   <h3 className="title instructor-text">
-                                    <Link to={`/course-details/${course.id}`}>
-                                      {course.title}
+                                    <Link to={`/course-info/${course.id}`}>
+                                      {course.course_title}
                                     </Link>
                                   </h3>
                                   <div className="course-info d-flex align-items-center">

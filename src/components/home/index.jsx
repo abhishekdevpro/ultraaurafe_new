@@ -11,14 +11,11 @@ import {
   Icon02,
   Icon03,
   Icon04,
-
   Join,
   PencilIcon,
   Share,
-
 } from "../imagepath";
 import { useSelector } from "react-redux";
-import TopCategory from "./slider/topCategory";
 // import Loginbg from "../../assets/img/banner.png";
 // import TrendingCourse from "./slider/trendingCourse";
 import Companies from "./slider/companies";
@@ -34,26 +31,171 @@ import { Link } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
-import CountUp from "react-countup";
 import FeaturedCourses from "./FeaturedCourses";
 import { useNavigate } from "react-router-dom";
 import { TypeAnimation } from "react-type-animation";
 // import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import PartnerList from "./PartnerList";
+import SubHeader from "../header/Sub-header";
+// Container for the search bar
+const Container = styled.div`
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem;
+`;
 
-// const options = [
-//   { label: "Category", value: "Category" },
-//   { label: "Angular", value: "Angular" },
-//   { label: "Node Js", value: "Node Js" },
-//   { label: "React", value: "React" },
-//   { label: "Python", value: "Python" },
-// ];
-// const levelOptions = [
-//   { value: 'undergraduates', label: 'Undergraduates' },
-//   { value: 'graduates', label: 'Graduates' },
-//   { value: 'professionals', label: 'Professionals' },
-//   { value: 'home-care', label: 'Home Care' },
-//   { value: 'special-kids', label: 'Special Kids' },
-// ];
+// Form inner styling
+const FormInner = styled.div`
+  padding: 12px;
+  background-color: #fff;
+  border-radius: 35px;
+  width: 100%;
+  border: 0;
+  max-width: 740px;
+
+  @media (max-width: 768px) {
+    border-radius: 25px;
+  }
+`;
+
+// Input group styling
+const InputGroup = styled.div`
+  background: #fff;
+  border-radius: 130px;
+  padding-left: 12px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  flex-direction: row; /* Ensure elements stay in one row */
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    border-radius: 50px;
+    padding-left: 8px;
+  }
+`;
+
+// Select component wrapper
+
+// Button styling
+const SearchButton = styled.button`
+  background: #f66962;
+  border-radius: 50px;
+  font-weight: bold;
+  border: 1px solid #f66962;
+  font-size: 18px;
+  padding: 10px 15px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  margin-left: 0.5rem;
+
+  &:hover,
+  &:focus {
+    background: #fc7f50;
+    border-color: #fc7f50;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+`;
+
+// Search icon styling (hidden on mobile)
+const SearchIcon = styled.i`
+  display: flex;
+  align-items: center;
+  color: #f66962;
+  padding-right: 10px;
+
+  @media (max-width: 768px) {
+    display: none; /* Hide search icon on mobile */
+  }
+`;
+
+// Arrow icon replaced with search icon on mobile
+
+// Input field styling
+const InputField = styled.input`
+  background: #fff;
+  border-radius: 40px;
+  border: 0;
+  height: 44px;
+  color: #000;
+  font-size: 16px;
+  margin-right: 10px;
+  flex-grow: 2;
+
+  &::placeholder {
+    color: #a2a2a2;
+  }
+`;
+
+// Form container
+const FormContainer = styled.form`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;
+
+const BannerContent = styled.div`
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: center;
+`;
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 1rem;
+`;
+
+const StyledButton = styled.button`
+  background: ${(props) => (props.primary ? "#f66962" : "#ffffff")};
+  color: ${(props) => (props.primary ? "#ffffff" : "#f66962")};
+  border: 2px solid #f66962;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: ${(props) => (props.primary ? "#fc7f50" : "#f66962")};
+    color: #ffffff;
+  }
+`;
+
+const customSelectStyles = {
+  container: (base) => ({
+    ...base,
+    width: "200px",
+    padding: "5px",
+  }),
+  menu: (base) => ({
+    ...base,
+    zIndex: 10000,
+  }),
+  control: (base) => ({
+    ...base,
+    borderRadius: "40px",
+    border: "1px solid #ddd",
+    boxShadow: "none",
+    "&:hover": {
+      borderColor: "#f66962",
+    },
+  }),
+  placeholder: (base) => ({
+    ...base,
+    color: "#a2a2a2",
+  }),
+};
 
 export const Home = () => {
   // const [setValue] = useState(null);
@@ -64,54 +206,17 @@ export const Home = () => {
   const [levelOptions, setLevelOptions] = useState([]);
   // const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const navigate = useNavigate(); // Initialize useNavigate
-  const mobileSidebar = useSelector(
-    (state) => state.sidebarSlice.expandMenu
-  );
-  const formatValue = (value) => `${Math.floor(value)}`;
+  const mobileSidebar = useSelector((state) => state.sidebarSlice.expandMenu);
+  // const formatValue = (value) => `${Math.floor(value)}`;
   // const navigate = useNavigate();
-  const animatedText = ["Career", "Development", "Growth", "Learning", "Certifications"]; // Array of texts for animation
+  const animatedText = [
+    "Career",
+    "Development",
+    "Growth",
+    "Learning",
+    "Certifications",
+  ]; // Array of texts for animation
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
-  const style = {
-    control: (baseStyles, state) => ({
-      ...baseStyles,
-      backgroundColor: "#FFDEDA",
-      border: state.isFocused ? 0 : 0,
-      paddingLeft: "5px",
-      paddingTop: "5px",
-      paddingBottom: "5px",
-      // This line disable the blue border
-      boxShadow: state.isFocused ? 0 : 0,
-      borderRadius: state.isSelected ? "0" : "10px",
-      fontSize: "14px",
-      "&:hover": {
-        border: state.isFocused ? 0 : 0,
-        color: "black",
-      },
-      // eslint-disable-next-line no-dupe-keys
-      borderRadius: "50px",
-      outline: "none",
-    }),
-    menu: (base) => ({ ...base, marginTop: "2px" }),
-    option: (provided) => ({
-      ...provided,
-      backgroundColor: mobileSidebar === 'disabled' ? "#fff" : "#000",
-      color: mobileSidebar === 'disabled' ? '#000' : '#fff',
-      fontSize: "14px",
-      "&:hover": {
-        backgroundColor: mobileSidebar === 'disabled' ? "#FFDEDA" : "#2b2838",
-      },
-    }),
-    indicatorSeparator: (base) => ({
-      ...base,
-      display: "none",
-    }),
-    dropdownIndicator: (base, state) => ({
-      ...base,
-      color: "black",
-      transform: state.selectProps.menuIsOpen ? "rotate(-180deg)" : "rotate(0)",
-      transition: "250ms",
-    }),
-  };
 
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
@@ -122,65 +227,93 @@ export const Home = () => {
     return () => clearInterval(interval);
   }, []);
   useEffect(() => {
-    console.log(mobileSidebar, 'gg');
-
-
+    console.log(mobileSidebar, "gg");
   }, [mobileSidebar]);
 
   useEffect(() => {
     // Fetch categories from API
-    fetch('https://api.novajobs.us/api/trainers/course-categories')
-      .then(response => response.json())
-      .then(data => {
-        const categories = data.data.map(category => ({
+    fetch("https://api.novajobs.us/api/trainers/course-categories")
+      .then((response) => response.json())
+      .then((data) => {
+        const categories = data.data.map((category) => ({
           label: category.name,
-          value: category.id
+          value: category.id,
         }));
         setCategoryOptions(categories);
       })
-      .catch(error => {
-        console.error('Error fetching categories:', error);
+      .catch((error) => {
+        console.error("Error fetching categories:", error);
       });
   }, []);
   useEffect(() => {
     // Fetch levels from API
-    fetch('https://api.novajobs.us/api/trainers/course-level')
-      .then(response => response.json())
-      .then(data => {
-        const levels = data.data.map(level => ({
+    fetch("https://api.novajobs.us/api/trainers/course-level")
+      .then((response) => response.json())
+      .then((data) => {
+        const levels = data.data.map((level) => ({
           label: level.name,
-          value: level.id
+          value: level.id,
         }));
         setLevelOptions(levels);
       })
-      .catch(error => {
-        console.error('Error fetching levels:', error);
+      .catch((error) => {
+        console.error("Error fetching levels:", error);
       });
   }, []);
 
   const handleSearch = () => {
     const queryParams = new URLSearchParams();
     if (searchKeyword) queryParams.append("title_keywords", searchKeyword);
-    if (selectedCategory) queryParams.append("course_category_id", selectedCategory.value);
-    if (selectedLevel) queryParams.append("course_level_id", selectedLevel.value);
+    if (selectedCategory)
+      queryParams.append("course_category_id", selectedCategory.value);
+    if (selectedLevel)
+      queryParams.append("course_level_id", selectedLevel.value);
 
     navigate(`/course-list?${queryParams.toString()}`); // Use navigate for routing
   };
+
+  const handleAllCourses = () => {
+    navigate("/course-list");
+  };
+
+  // const loadChatbot = () => {
+  //   // Check if the script is already added to avoid duplicate injections
+  //   if (document.getElementById("chatling-embed-script")) return;
+
+  //   // Create and append the chatbot configuration script
+  //   const configScript = document.createElement("script");
+  //   configScript.type = "text/javascript";
+  //   configScript.text = `window.chtlConfig = { chatbotId: "5594648998" };`;
+  //   document.body.appendChild(configScript);
+
+  //   // Create and append the chatbot embed script
+  //   const embedScript = document.createElement("script");
+  //   embedScript.id = "chatling-embed-script";
+  //   embedScript.async = true;
+  //   embedScript.src = "https://chatling.ai/js/embed.js";
+  //   embedScript.onload = () => {
+  //     // Optionally, add initialization code here if required
+  //     console.log("Chatbot script loaded");
+  //   };
+  //   embedScript.onerror = () => {
+  //     console.error("Failed to load the chatbot script");
+  //   };
+  //   document.body.appendChild(embedScript);
+  // };
 
   return (
     <>
       <div className="main-wrapper">
         <Header />
+        <SubHeader />
         {/* banner */}
-        <section
-          className="home-slide d-flex align-items-center"
-        >
+        <section className="home-slide d-flex align-items-center">
           <div className="container">
             <div className="row ">
               <div className="col-md-7">
                 <div className="home-slide-face aos" data-aos="fade-up">
                   {console.log(currentTextIndex)}
-               {/* <div className="home-slide-text text-center">
+                  {/* <div className="home-slide-text text-center">
   <h5 className="d-none d-md-block">Empowering Futures: Anytime, Anywhere</h5>
   <h2>
     Take the next step towards your{" "}
@@ -191,10 +324,30 @@ export const Home = () => {
   </h2>
   <p className="d-none d-md-block">Own your future by learning new skills online</p>
 </div> */}
- <div className="home-slide-text text-center">
-  
-  <h2 className="mb-2 " style={{fontWeight:"700"}}> Empowering Futures: Anytime, Anywhere</h2>
-   <h2>Take the next step towards your {" "}
+                  <div className="home-slide-text text-center">
+                    {/* <h2 className="mb-2 " style={{fontWeight:"700"}}> Empowering Futures: Anytime, Anywhere</h2> */}
+                    <h2 className="mb-2" style={{ fontWeight: "700" }}>
+                      Empowering Futures:
+                      <span>
+                        <TypeAnimation
+                          sequence={[
+                            "Anytime", // Types "Anytime"
+                            1500, // Pause for 1.5 seconds after typing "Anytime"
+                            "", // Clears the text
+                            500, // Short pause before typing the next word
+                            "Anywhere", // Types "Anywhere"
+                            1500, // Pause for 1.5 seconds after typing "Anywhere"
+                            "", // Clears the text
+                            500, // Short pause before repeating
+                          ]}
+                          // wrapper="span"
+                          speed={-15} // Slower typing speed (adjust this value for slower typing)
+                          deletionSpeed={0} // Slower deletion speed
+                          repeat={Infinity} // Repeat the animation indefinitely
+                        />
+                      </span>
+                    </h2>
+                    {/* <h2>Take the next step towards your {" "}
                  <TypeAnimation
                    sequence={[
                      
@@ -208,11 +361,57 @@ export const Home = () => {
                    speed={50}
                    repeat={Infinity}
                  />
-               </h2>
-  
- </div>
+               </h2> */}
+                    <Container>
+                      <BannerContent>
+                        <FormContainer action="/course-list">
+                          <FormInner>
+                            <InputGroup>
+                              <SearchIcon className="fa-solid fa-magnifying-glass" />
+                              <InputField
+                                type="text"
+                                placeholder="Search Course"
+                                value={searchKeyword}
+                                onChange={(e) =>
+                                  setSearchKeyword(e.target.value)
+                                }
+                              />
+                              <Select
+                                options={categoryOptions}
+                                value={selectedCategory}
+                                placeholder="Category"
+                                onChange={setSelectedCategory}
+                                styles={customSelectStyles}
+                              />
+                              <Select
+                                options={levelOptions}
+                                value={selectedLevel}
+                                placeholder="Levels"
+                                onChange={setSelectedLevel}
+                                styles={customSelectStyles}
+                              />
+                              <SearchButton
+                                type="button"
+                                onClick={handleSearch}
+                              >
+                                <i className="fas fa-arrow-right" />
+                              </SearchButton>
+                            </InputGroup>
+                          </FormInner>
+                        </FormContainer>
+                      </BannerContent>
+                    </Container>
+                    <ButtonContainer>
+                      <StyledButton onClick={handleAllCourses}>
+                        All Courses
+                      </StyledButton>
+                     {/* <StyledButton primary onClick={loadChatbot}>
+                        AI Assist
+                      </StyledButton>{" "} */}
+                    </ButtonContainer>
+                  </div>
 
-                  <div className="container my-4">
+                  {/* <div className="container my-4">
                     <div className="banner-content">
                       <form className="form" action="/course-list">
                         <div className="form-inner">
@@ -250,9 +449,9 @@ export const Home = () => {
                         </div>
                       </form>
                     </div>
-                  </div>
+                  </div> */}
 
-                  <div className="trust-user">
+                  {/* <div className="trust-user">
                     <p>
                       Trusted by Users <br />
                       Now Live worldwide
@@ -280,7 +479,7 @@ export const Home = () => {
                         <i className="fas fa-star filled me-1" />
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="col-md-5 d-flex align-items-center">
@@ -415,7 +614,7 @@ export const Home = () => {
         {/* Home banner bottom */}
 
         {/* Top Category with Owl Carousel */}
-        <TopCategory />
+        {/* <TopCategory /> */}
         {/* Top Category with Owl Carousel */}
 
         {/* What's new Featured Course */}
@@ -511,26 +710,8 @@ export const Home = () => {
         {/* <TrendingCourse /> */}
         {/* Trending Course */}
 
-        {/* Companies */}
-        <section className="section lead-companies">
-          <div className="container">
-            <div className="section-header aos" data-aos="fade-up">
-              <div className="section-sub-head feature-head text-center">
-                <span>Trusted By</span>
-                <h2>We Work with Some of the Best - Globally</h2>
-              </div>
-            </div>
-            <div className="lead-group aos" data-aos="fade-up">
-              <Companies />
-            </div>
-          </div>
-        </section>
-        {/* Companies */}
-
         {/* Share knowledge */}
-        <section
-          className="section share-knowledge"
-        >
+        <section className="section share-knowledge">
           <div className="container">
             <div className="row">
               <div className="col-md-6">
@@ -542,10 +723,10 @@ export const Home = () => {
                 <div className="join-mentor aos" data-aos="fade-up">
                   <h2>Want to share your knowledge? Join us a Trainer</h2>
                   <p>
-                    Share your expertise and inspire the next generation
-                    by joining UltraAura as an instructor. Shape the future
-                    of education with flexible teaching opportunities and a global reach.
-
+                    Share your expertise and inspire the next generation by
+                    joining UltraAura as an instructor. Shape the future of
+                    education with flexible teaching opportunities and a global
+                    reach.
                   </p>
                   <ul className="course-list">
                     <li>
@@ -555,7 +736,6 @@ export const Home = () => {
                     <li>
                       <i className="fa-solid fa-circle-check" />
                       100% Online platform
-
                     </li>
                   </ul>
                   <div className="all-btn all-category d-flex align-items-center">
@@ -579,12 +759,15 @@ export const Home = () => {
                     <div className="col-lg-7 col-md-12">
                       <div className="top-instructors">
                         <p>
-                          Collaborate with UltraAura to expand educational opportunities
-                          and make a lasting impact. Partner with us to drive innovation
-                          and empower learners worldwide.
+                          Collaborate with UltraAura to expand educational
+                          opportunities and make a lasting impact. Partner with
+                          us to drive innovation and empower learners worldwide.
                         </p>
                         <div className="all-btn all-category d-flex align-items-center">
-                          <Link to="/partner-signin" className="btn btn-primary">
+                          <Link
+                            to="/partner-signin"
+                            className="btn btn-primary"
+                          >
                             Partner with US
                           </Link>
                         </div>
@@ -627,178 +810,22 @@ export const Home = () => {
           </div>
         </section>
         {/* /Become a instructor */}
-
-        {/* B
-        <section
-          className="section latest-blog"
-        >
+        {/* Companies */}
+        <PartnerList />
+        <section className="section lead-companies">
           <div className="container">
             <div className="section-header aos" data-aos="fade-up">
-              <div className="section-sub-head feature-head text-center mb-0">
-                <h2>Latest Blogs</h2>
-                <div className="section-text aos" data-aos="fade-up">
-                </div>
+              <div className="section-sub-head feature-head text-center">
+                <span>Trusted By</span>
+                <h2>We Work with Some of the Best - Globally</h2>
               </div>
             </div>
-            <Blog />
-            <div className="enroll-group aos" data-aos="fade-up">
-              <div className="row ">
-                <div className="col-lg-4 col-md-6">
-                  <div className="total-course d-flex align-items-center">
-                    <div className="blur-border">
-                      <div className="enroll-img ">
-                        <img src={Icon7} alt="" className="img-fluid" />
-                      </div>
-                    </div>
-                    <div className="course-count">
-                      <h3>
-                        <span className="counterUp">253,085</span>
-                      </h3>
-                      <p>STUDENTS ENROLLED</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-md-6">
-                  <div className="total-course d-flex align-items-center">
-                    <div className="blur-border">
-                      <div className="enroll-img ">
-                        <img src={Icon8} alt="" className="img-fluid" />
-                      </div>
-                    </div>
-                    <div className="course-count">
-                      <h3>
-                        <span className="counterUp">1,205</span>
-                      </h3>
-                      <p>TOTAL COURSES</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-md-6">
-                  <div className="total-course d-flex align-items-center">
-                    <div className="blur-border">
-                      <div className="enroll-img ">
-                        <img src={Icon9} alt="" className="img-fluid" />
-                      </div>
-                    </div>
-                    <div className="course-count">
-                      <h3>
-                        <span className="counterUp">127</span>
-                      </h3>
-                      <p>COUNTRIES</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="lab-course">
-              <div className="section-header aos" data-aos="fade-up">
-                <div className="section-sub-head feature-head text-center">
-                  <h2>
-                    Unlimited access to 360+ courses <br />
-                    and 1,600+ hands-on labs
-                  </h2>
-                </div>
-              </div>
-              <div className="icon-group aos" data-aos="fade-up">
-                <div className="offset-lg-1 col-lg-12">
-                  <div className="row">
-                    <div className="col-lg-1 col-3">
-                      <div className="total-course d-flex align-items-center">
-                        <div className="blur-border">
-                          <div className="enroll-img ">
-                            <img src={Icon9} alt="" className="img-fluid" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-1 col-3">
-                      <div className="total-course d-flex align-items-center">
-                        <div className="blur-border">
-                          <div className="enroll-img ">
-                            <img src={Icon10} alt="" className="img-fluid" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-1 col-3">
-                      <div className="total-course d-flex align-items-center">
-                        <div className="blur-border">
-                          <div className="enroll-img ">
-                            <img src={Icon16} alt="" className="img-fluid" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-1 col-3">
-                      <div className="total-course d-flex align-items-center">
-                        <div className="blur-border">
-                          <div className="enroll-img ">
-                            <img src={Icon12} alt="" className="img-fluid" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-1 col-3">
-                      <div className="total-course d-flex align-items-center">
-                        <div className="blur-border">
-                          <div className="enroll-img ">
-                            <img src={Icon13} alt="" className="img-fluid" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-1 col-3">
-                      <div className="total-course d-flex align-items-center">
-                        <div className="blur-border">
-                          <div className="enroll-img ">
-                            <img src={Icon14} alt="" className="img-fluid" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-1 col-3">
-                      <div className="total-course d-flex align-items-center">
-                        <div className="blur-border">
-                          <div className="enroll-img ">
-                            <img src={Icon15} alt="" className="img-fluid" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-1 col-3">
-                      <div className="total-course d-flex align-items-center">
-                        <div className="blur-border">
-                          <div className="enroll-img ">
-                            <img src={Icon16} alt="" className="img-fluid" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-1 col-3">
-                      <div className="total-course d-flex align-items-center">
-                        <div className="blur-border">
-                          <div className="enroll-img ">
-                            <img src={Icon17} alt="" className="img-fluid" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-1 col-3">
-                      <div className="total-course d-flex align-items-center">
-                        <div className="blur-border">
-                          <div className="enroll-img ">
-                            <img src={Icon18} alt="" className="img-fluid" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="lead-group aos" data-aos="fade-up">
+              <Companies />
             </div>
           </div>
         </section>
-         /Blog */}
+        {/* Companies */}
 
         {/* Footer */}
         <Footer />

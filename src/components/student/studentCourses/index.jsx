@@ -9,6 +9,34 @@ import StudentSidebar from "../sidebar";
 import Footer from "../../footer";
 import { ToastContainer, toast } from 'react-toastify';  // Import Toast components
 import 'react-toastify/dist/ReactToastify.css';  // Import Toast styles
+import styled from 'styled-components';
+
+const StartLessonButton = styled.button`
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+  padding: 12px 20px; /* Adjusted padding for balanced appearance */
+  text-align: center; /* Center the text */
+  font-size: 16px; /* Increased font size for better readability */
+  font-weight: bold; /* Bold font for emphasis */
+  margin: 12px 0; /* Adjusted margin for better spacing */
+  cursor: pointer; /* Pointer cursor on hover */
+  border-radius: 8px; /* Rounded corners */
+  border: 2px solid transparent; /* Border for better focus outline */
+  width: 100%; /* Full width for better responsiveness */
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease; /* Added transition for background color and transform */
+
+  &:hover {
+    background-color: #45a049; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly scale up on hover for emphasis */
+  }
+
+  &:focus {
+    outline: none; /* Remove default outline */
+    border: 2px solid #2e7d32; /* Custom outline on focus */
+    background-color: #45a049; /* Retain hover color on focus */
+  }
+`;
+
 
 const DynamicCourseList = () => {
   const [courses, setCourses] = useState([]);
@@ -214,7 +242,7 @@ const DynamicCourseList = () => {
                                         <div className="course-group-img d-flex">
                                           <div className="course-name">
                                             <h4>
-                                              <Link to="/instructor/instructor-profile">
+                                              <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
                                                 {course.trainer_first_name}
                                               </Link>
                                             </h4>
@@ -239,8 +267,9 @@ const DynamicCourseList = () => {
                                         </div>
                                         <div className="course-view d-flex align-items-center">
                                           <img src={Icon2} alt="Icon" />
-                                          <p>{course.time_spent_on_course}</p>
+                                          <p>{course.course_level_name}</p>
                                         </div>
+                                  
                                       </div>
                                       <div className="rating mb-0">
                                         {[...Array(5)].map((star, index) => (
@@ -252,6 +281,14 @@ const DynamicCourseList = () => {
                                         <span className="d-inline-block average-rating">
                                           {course.rating}
                                         </span>
+
+                                      </div>
+                                      <div>
+                                        <Link to={`/course-info/${course.id}`}>
+                                        <StartLessonButton>
+                                          Start the Lesson
+                                        </StartLessonButton>
+                                        </Link>
                                       </div>
                                     </div>
                                   </div>
