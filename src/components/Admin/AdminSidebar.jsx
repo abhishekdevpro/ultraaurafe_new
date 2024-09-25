@@ -102,7 +102,7 @@ export default function AdminSidebar() {
             <h3>Account Settings</h3>
             <ul>
               <li className={`nav-item ${location.pathname === '/admin/settings' ? 'active' : ''}`}>
-                <Link to="/admin/settings" className="nav-link">
+                <Link to="" className="nav-link">
                   <i className="bx bxs-cog" />
                   Settings
                 </Link>

@@ -1233,7 +1233,7 @@ const InnerPage = ({ courses = [] }) => {
                 </StatItem>
               </CourseStats>
               <CoursePrice>
-                ${course.course_price}
+                ${course.after_discount_price}
                 {course.discount_percent > 0 && (
                   <span
                     style={{
@@ -1242,7 +1242,7 @@ const InnerPage = ({ courses = [] }) => {
                       color: "#666",
                     }}
                   >
-                    ${course.after_discount_price}
+                    ${course.course_price}
                   </span>
                 )}
               </CoursePrice>

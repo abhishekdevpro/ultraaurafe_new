@@ -80,6 +80,31 @@ const ScrollText = styled.div`
   }
 `;
 
+// const CloseButton = styled.button`
+//   background: #f44336;
+//   border: none;
+//   cursor: pointer;
+//   position: absolute;
+//   right: 20px;
+//   top: 50%;
+//   transform: translateY(-50%);
+//   padding: 10px;
+//   border-radius: 50%;
+//   color: white;
+//   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+//   transition: background-color 0.3s ease, transform 0.2s ease;
+
+//   &:hover {
+//     background-color: #d32f2f;
+//     transform: translateY(-50%) scale(1.1);
+//   }
+
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+
+  
+// `;
 const CloseButton = styled.button`
   background: #f44336;
   border: none;
@@ -102,6 +127,17 @@ const CloseButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  /* Media queries for responsiveness */
+  @media (max-width: 768px) {
+    right: 15px; /* Adjust position on medium screens */
+    padding: 8px; /* Reduce padding on smaller screens */
+    top: 45%; /* Adjust top positioning */
+  }
+
+  @media (max-width: 480px) {
+    display: none; /* Hide the button on small screens */
+  }
 `;
 
 const content = `

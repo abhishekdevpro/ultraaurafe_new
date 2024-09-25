@@ -123,7 +123,7 @@ export function AdminHeader() {
                   <Link className="dropdown-item" to="/admin/dashboard">
                     <Home size={14} color={"#FF875A"} className="feather-home me-1" /> Dashboard
                   </Link>
-                  <Link className="dropdown-item text" to="/admin/settings">
+                  <Link className="dropdown-item text" to="">
                     <Star size={14} color={"#FF875A"} className="feather-star me-1" /> Edit Profile
                   </Link>
                   <button 
