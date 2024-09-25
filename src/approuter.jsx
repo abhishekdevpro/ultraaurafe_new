@@ -161,6 +161,9 @@ import AdminDashboard from "./components/Admin/AdminDasboard.jsx";
 import TrainerList from "./components/Admin/Trainer-List.jsx";
 import StudentList from "./components/Admin/Student-List.jsx";
 import AdminCourseList from "./components/Admin/AdminCourse-List.jsx";
+import AddStudentForm from "./components/Admin/AddStudent.jsx";
+import AddTrainerForm from "./components/Admin/AddTrainer.jsx";
+import VendorProfile from "./components/Vendor/VendorPRofile.jsx";
 const Approuter = () => {
   return (
     <BrowserRouter>
@@ -186,16 +189,7 @@ const Approuter = () => {
         <Route path="/blog-modern" element={<BlogModern />} />
         <Route path="/blog-details" element={<BlogDetails />} />
 
-        {/* Vendor */}
-        <Route path="/vendor-dashboard" element={<VendorDashboard />} />
-        <Route path="/vendor-setting" element={<VendorSetting/>}/>
-        <Route path="/vendor/vendor-dashboard" element={<VendorDashboard/>}/>
-        <Route path="/vendor/verify/:token" element={<Login2/>}/>
-
-
         {/* Pages */}
-        <Route path="/partner-signin" element={<PartnerLogin/>}/>
-        <Route path="/partner-signup" element={<Partnerwithus/>}/>
         <Route path="/page-notification" element={<Notification />} />
         <Route path="/pricing-plan" element={<PricingPlan />} />
         <Route path="/pricing-plan2" element={<PricingPlan2 />} />
@@ -227,7 +221,6 @@ const Approuter = () => {
         <Route path="/register4" element={<RegisterFour />} />
         <Route path="/register5" element={<RegisterFive />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/vendor-forgot-password" element={<ForgotPasswordVendor />} />
         <Route path="/term-condition" element={<TermsCondition />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/return-policy" element={<ReturnPolicy/>} />
@@ -574,8 +567,20 @@ const Approuter = () => {
         <Route path="/admin/trainer-list" element={<TrainerList />} /> 
         <Route path="/admin/student-list" element={<StudentList />} /> 
         <Route path="/admin/course-list" element={<AdminCourseList />} /> 
+        <Route path="/admin/add-student" element={<AddStudentForm />} /> 
+        <Route path="/admin/add-trainer" element={<AddTrainerForm />} /> 
         {/* Admin routes ends*/}
-        
+
+
+         {/* Vendor Routes Start */}
+        <Route path="/partner-signin" element={<PartnerLogin/>}/>
+        <Route path="/partner-signup" element={<Partnerwithus/>}/>
+        <Route path="/vendor/verify/:token" element={<Login2/>}/>
+        <Route path="/vendor-forgot-password" element={<ForgotPasswordVendor />} />
+        <Route path="/vendor/vendor-setting" element={<VendorSetting/>}/>
+        <Route path="/vendor/vendor-dashboard" element={<VendorDashboard/>}/>
+        <Route path="/vendor/vendor-profile" element={<VendorProfile/>}/>
+         {/* Vendor Routes ends  */}
       </Routes>
     </BrowserRouter>
   );

@@ -71,7 +71,7 @@ export default function VendorSidebar() {
                 </Link>
               </li>
               <li className={`nav-item ${location.pathname === '/vendor-setting' ? 'active' : ''}`}>
-                <Link to="/vendor-setting" className="nav-link">
+                <Link to="/vendor/vendor-profile" className="nav-link">
                   <i className="bx bxs-user" />
                   My Profile
                 </Link>
@@ -110,7 +110,7 @@ export default function VendorSidebar() {
             <h3>Account Settings</h3>
             <ul>
               <li className={`nav-item ${location.pathname === '/vendor/vendor-settings' ? 'active' : ''}`}>
-                <Link to="/vendor-setting" className="nav-link">
+                <Link to="/vendor/vendor-setting" className="nav-link">
                   <i className="bx bxs-cog" />
                   Settings
                 </Link>

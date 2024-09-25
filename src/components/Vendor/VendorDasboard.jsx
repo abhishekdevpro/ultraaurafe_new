@@ -177,7 +177,7 @@ export const VendorDashboard = () => {
     <div className="col-lg-12 col-md-10 d-flex">
       <div className="card dash-info flex-fill">
         <div className="card-body">
-          <h2>About Us</h2>
+          <h2>About Institute</h2>
           <p>{profile.about}</p>
         </div>
       </div>

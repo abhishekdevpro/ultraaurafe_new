@@ -68,26 +68,26 @@ export default function AdminSidebar() {
                   Trainers
                 </Link>
               </li>
-              {/* <li className={`nav-item ${location.pathname === '/admin/add-trainer' ? 'active' : ''}`}>
+              <li className={`nav-item ${location.pathname === '/admin/add-trainer' ? 'active' : ''}`}>
                 <Link to="/admin/add-trainer" className="nav-link">
                   <i className="bx bxs-user-plus" />
                   Add Trainer
                 </Link>
-              </li> */}
+              </li>
               <li className={`nav-item ${location.pathname === '/admin/students' ? 'active' : ''}`}>
                 <Link to="/admin/student-list" className="nav-link">
                   <i className="bx bxs-group" />
                   Students
                 </Link>
               </li>
-              {/* <li className={`nav-item ${location.pathname === '/admin/add-student' ? 'active' : ''}`}>
+              <li className={`nav-item ${location.pathname === '/admin/add-student' ? 'active' : ''}`}>
                 <Link to="/admin/add-student" className="nav-link">
                   <i className="bx bxs-user-plus" />
                   Add Student
                 </Link>
-              </li> */}
+              </li>
               <li className={`nav-item ${location.pathname === '/admin/students' ? 'active' : ''}`}>
-                <Link to="/admin/students" className="nav-link">
+                <Link to="" className="nav-link">
                   <i className="bx bxs-group" />
                   Partners
                 </Link>
