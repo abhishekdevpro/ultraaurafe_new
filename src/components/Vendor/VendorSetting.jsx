@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import VendorSidebar from "./VendorSidebar";
 import VendorHeader from "./VendorHeader";
 import { toast } from "react-toastify";
+import ReactQuill from "react-quill";
 
 const VendorSetting = () => {
   const token = localStorage.getItem("vendorToken");
@@ -32,7 +33,7 @@ const VendorSetting = () => {
       })
       .then((response) => {
         const data = response.data.data;
-        console.log(data,"setting data");
+        console.log(data, "setting data");
         setProfileData({
           first_name: data.first_name,
           last_name: data.last_name,
@@ -83,11 +84,11 @@ const VendorSetting = () => {
       })
       .then((response) => {
         console.log("Profile updated successfully:", response.data);
-        toast.success("Profile updated successfully")
+        toast.success("Profile updated successfully");
       })
       .catch((error) => {
         console.error("Error updating profile:", error);
-        toast.error("Error updating profile")
+        toast.error("Error updating profile");
       });
   };
 
@@ -129,9 +130,16 @@ const VendorSetting = () => {
                   <form onSubmit={handleSubmit}>
                     <div className="course-group profile-upload-group mb-0 d-flex">
                       <div className="course-group-img profile-edit-field d-flex align-items-center">
-                        <Link to="/student/student-profile" className="profile-pic">
+                        <Link
+                          to="/student/student-profile"
+                          className="profile-pic"
+                        >
                           <img
-                            src={profileData.photo ? (profileData.photo) : `https://api.novajobs.us/${profileData.photo}`}
+                            src={
+                              profileData.photo
+                                ? profileData.photo
+                                : `https://api.novajobs.us/${profileData.photo}`
+                            }
                             alt="Profile"
                             className="img-fluid"
                           />
@@ -141,7 +149,10 @@ const VendorSetting = () => {
                           <div className="new-employee-field">
                             <div className="d-flex align-items-center mt-2">
                               <div className="image-upload mb-0">
-                                <input type="file" onChange={handleFileChange} />
+                                <input
+                                  type="file"
+                                  onChange={handleFileChange}
+                                />
                                 <div className="image-uploads">
                                   <i className="bx bx-cloud-upload" />
                                 </div>
@@ -196,97 +207,107 @@ const VendorSetting = () => {
                         </div>
                         <div className="col-md-6">
                           <div className="input-block">
-                            <                              label className="form-label">Phone</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                name="phone"
-                                value={profileData.phone}
-                                onChange={handleChange}
-                                readOnly
-                              />
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="input-block">
-                              <label className="form-label">Institute Name</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                name="instituteName"
-                                value={profileData.instituteName}
-                                onChange={handleChange}
-                              />
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="input-block">
-                              <label className="form-label">Website</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                name="website"
-                                value={profileData.website}
-                                onChange={handleChange}
-                              />
-                            </div>
-                          </div>
-                          <div className="col-md-12">
-                            <div className="input-block">
-                              <label className="form-label">Email</label>
-                              <input
-                                type="email"
-                                className="form-control"
-                                name="email"
-                                value={profileData.email}
-                                onChange={handleChange}
-                                readOnly
-                              />
-                            </div>
-                          </div>
-                          <div className="col-md-12">
-                            <div className="input-block">
-                              <label className="form-label">About</label>
-                              <textarea
-                                className="form-control"
-                                style={{ height: "150px" }}
-                                name="about"
-                                value={profileData.about}
-                                onChange={handleChange}
-                              />
-                            </div>
-                          </div>
-                          <div className="col-md-12">
-                            <div className="input-block">
-                              <label className="form-label">Location</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                name="location"
-                                value={profileData.location}
-                                onChange={handleChange}
-                              />
-                            </div>
-                          </div>
-                          <div className="col-md-12">
-                            <button className="btn btn-primary" type="submit">
-                              Update Profile
-                            </button>
+                            <label className="form-label">Phone</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              name="phone"
+                              value={profileData.phone}
+                              onChange={handleChange}
+                              readOnly
+                            />
                           </div>
                         </div>
+                        <div className="col-md-6">
+                          <div className="input-block">
+                            <label className="form-label">Institute Name</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              name="instituteName"
+                              value={profileData.instituteName}
+                              onChange={handleChange}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-6">
+                          <div className="input-block">
+                            <label className="form-label">Website</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              name="website"
+                              value={profileData.website}
+                              onChange={handleChange}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-12">
+                          <div className="input-block">
+                            <label className="form-label">Email</label>
+                            <input
+                              type="email"
+                              className="form-control"
+                              name="email"
+                              value={profileData.email}
+                              onChange={handleChange}
+                              readOnly
+                            />
+                          </div>
+                        </div>
+                        {/* <div className="col-md-12">
+                          <div className="input-block">
+                            <label className="form-label">About</label>
+                            <textarea
+                              className="form-control"
+                              style={{ height: "150px" }}
+                              name="about"
+                              value={profileData.about}
+                              onChange={handleChange}
+                            />
+                          </div>
+                        </div> */}
+                         <div className="col-md-12 mb-4">
+      <div className="input-block">
+        <label className="form-label">About</label>
+        <ReactQuill
+          theme="snow"
+          value={profileData.about}
+          onChange={(content) => handleChange({ target: { name: 'about', value: content } })}
+          style={{ height: "120px" }} // Adjust the editor height if needed
+        />
+      </div>
+    </div>
+                        <div className="col-md-12">
+                          <div className="input-block">
+                            <label className="form-label">Location</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              name="location"
+                              value={profileData.location}
+                              onChange={handleChange}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-12">
+                          <button className="btn btn-primary" type="submit">
+                            Update Profile
+                          </button>
+                        </div>
                       </div>
-                    </form>
-                  </div>
+                    </div>
+                  </form>
                 </div>
               </div>
-              {/* /Vendor Settings */}
             </div>
+            {/* /Vendor Settings */}
           </div>
         </div>
-        <Footer />
       </div>
-    );
-  };
+      <Footer />
+    </div>
+  );
+};
 
-  export default VendorSetting;
-
+export default VendorSetting;

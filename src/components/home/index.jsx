@@ -405,7 +405,7 @@ export const Home = () => {
                       <StyledButton onClick={handleAllCourses}>
                         All Courses
                       </StyledButton>
-                     {/* <StyledButton primary onClick={loadChatbot}>
+                      {/* <StyledButton primary onClick={loadChatbot}>
                         AI Assist
                       </StyledButton>{" "} */}
                     </ButtonContainer>

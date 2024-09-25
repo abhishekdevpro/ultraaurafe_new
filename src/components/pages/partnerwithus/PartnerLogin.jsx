@@ -44,7 +44,7 @@ const Login = () => {
                 localStorage.setItem("vendorToken", token);
     
                 toast.success("Login successful!");
-                navigate("/vendor-dashboard"); // Adjust the path as needed
+                navigate("/vendor/vendor-dashboard"); // Adjust the path as needed
             }
         } catch (error) {
             console.error("Login failed", error);
