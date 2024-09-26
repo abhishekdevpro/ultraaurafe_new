@@ -53,7 +53,7 @@ export default function VendorSidebar() {
                   <Link to="/vendor/vendor-profile">{profile.first_name}{" "}{profile.last_name}</Link>
                 </h4>
                 <p>Vendor</p>
-                <Link to="/add-course" className="add-course btn-primary">
+                <Link to="/vendor/add-course" className="add-course btn-primary">
                   Add New Courses
                 </Link>
               </div>

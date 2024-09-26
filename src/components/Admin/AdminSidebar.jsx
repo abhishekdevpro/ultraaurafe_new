@@ -1,19 +1,22 @@
 import React from "react";
 import StickyBox from "react-sticky-box";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import profilelogo from "../../assets/img/profile-pro.png";
 
 export default function AdminSidebar() {
   const location = useLocation();
-
+  const navigate = useNavigate();
   // Placeholder admin data
   const admin = {
     first_name: "Admin",
     last_name: "User",
     photo: null
   };
-
+const handleLogout =()=>{
+  localStorage.removeItem('adminToken');
+  navigate('/')
+}
   return (
     <div className="col-xl-3 col-lg-3 theiaStickySidebar">
       <StickyBox offsetTop={20} offsetBottom={20}>
@@ -30,12 +33,23 @@ export default function AdminSidebar() {
                 </Link>
               </div>
             </div>
-            <div className="profile-group">
+            {/* <div className="profile-group">
               <div className="profile-name text-center">
                 <h4>
                   <Link to="/admin/profile">{admin.first_name} {admin.last_name}</Link>
                 </h4>
                 <p>UltraAura Admin</p>
+              </div>
+            </div> */}
+             <div className="profile-group">
+              <div className="profile-name text-center">
+                <h4>
+                  <Link to="/vendor/vendor-profile">{admin.first_name}{" "}{admin.last_name}</Link>
+                </h4>
+                <p>Admin</p>
+                <Link to="/admin/add-course" className="add-course btn-primary">
+                  Add New Courses
+                </Link>
               </div>
             </div>
           </div>
@@ -45,7 +59,7 @@ export default function AdminSidebar() {
             <h3>Dashboard</h3>
             <ul>
               <li className={`nav-item ${location.pathname === '/admin/dashboard' ? 'active' : ''}`}>
-                <Link to="/admin/dashboard" className="nav-link">
+                <Link to="/admin/admin-dashboard" className="nav-link">
                   <i className="bx bxs-dashboard" />
                   Dashboard
                 </Link>
@@ -56,12 +70,7 @@ export default function AdminSidebar() {
                   Course List
                 </Link>
               </li>
-              <li className={`nav-item ${location.pathname === '/admin/add-course' ? 'active' : ''}`}>
-                <Link to="/admin/add-course" className="nav-link">
-                  <i className="bx bxs-plus-circle" />
-                  Add Course
-                </Link>
-              </li>
+              
               <li className={`nav-item ${location.pathname === '/admin/trainers' ? 'active' : ''}`}>
                 <Link to="/admin/trainer-list" className="nav-link">
                   <i className="bx bxs-user-voice" />
@@ -108,7 +117,9 @@ export default function AdminSidebar() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/login" className="nav-link">
+                <Link  className="nav-link"
+                 onClick={handleLogout}
+                >
                   <i className="bx bxs-log-out" />
                   Logout
                 </Link>

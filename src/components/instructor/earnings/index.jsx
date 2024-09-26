@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import Footer from "../../footer";
-import { InstructorHeader } from "../header";
 import { course28, course29, course30 } from "../../imagepath";
 import Chart from "react-apexcharts";
 import { initialSettings } from "../../common/dateRangePicker";
 import DateRangePicker from "react-bootstrap-daterangepicker";
 import InstructorSidebar from "../sidebar";
 import { Link } from "react-router-dom";
+import { InstructorHeader } from "../header";
 
 const InstructorEarnings = () => {
   const [chartOptions] = useState({

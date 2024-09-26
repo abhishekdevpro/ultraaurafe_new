@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Header from "../header";
 import {
-  bannerimg,
+  // bannerimg,
   Become1,
   Become2,
   CertificateIcon,
@@ -38,6 +38,7 @@ import { TypeAnimation } from "react-type-animation";
 import styled from "styled-components";
 import PartnerList from "./PartnerList";
 import SubHeader from "../header/Sub-header";
+import home from './home-bg2.png'
 // Container for the search bar
 const Container = styled.div`
   margin-bottom: 1rem;
@@ -484,7 +485,7 @@ export const Home = () => {
               </div>
               <div className="col-md-5 d-flex align-items-center">
                 <div className="girl-slide-img aos" data-aos="fade-up">
-                  <img src={bannerimg} alt="" />
+                  <img src={home} alt="" />
                 </div>
               </div>
             </div>

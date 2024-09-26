@@ -1,10 +1,3 @@
-// import React, { useState, useEffect } from 'react';
-// import styled from 'styled-components';
-// import axios from 'axios';
-// import Footer from "../footer";
-// import { AdminHeader } from "./AdminHeader";
-// import AdminSidebar from "./AdminSidebar";
-// import { Link } from 'react-router-dom';
 
 const Wrapper = styled.div`
   padding: 1rem;
@@ -67,8 +60,8 @@ const PaginationWrapper = styled.div`
 `;
 
 const PageButton = styled.button`
-  background-color: ${props => props.active ? '#4CAF50' : '#f1f1f1'};
-  color: ${props => props.active ? 'white' : 'black'};
+  background-color: ${(props) => (props.active ? "#4CAF50" : "#f1f1f1")};
+  color: ${(props) => (props.active ? "white" : "black")};
   border: 1px solid #ddd;
   padding: 8px 16px;
   text-align: center;
@@ -80,7 +73,7 @@ const PageButton = styled.button`
   border-radius: 4px;
 
   &:hover {
-    background-color: ${props => props.active ? '#45a049' : '#ddd'};
+    background-color: ${(props) => (props.active ? "#45a049" : "#ddd")};
   }
 
   &:disabled {
@@ -89,146 +82,39 @@ const PageButton = styled.button`
   }
 `;
 
-// const AdminCourseList = () => {
-//   const [allCourses, setAllCourses] = useState([]);
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const token = localStorage.getItem('adminToken');
-//   const coursesPerPage = 15;
-
-//   useEffect(() => {
-//     const fetchCourses = async () => {
-//       try {
-//         const response = await axios.get('https://api.novajobs.us/api/trainers/all-courses', {
-//           headers: {
-//             Authorization: `${token}`
-//           }
-//         });
-//         setAllCourses(response.data.data);
-//       } catch (error) {
-//         console.error('Error fetching courses:', error);
-//       }
-//     };
-
-//     fetchCourses();
-//   }, [token]);
-
-//   const indexOfLastCourse = currentPage * coursesPerPage;
-//   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
-//   const currentCourses = allCourses.slice(indexOfFirstCourse, indexOfLastCourse);
-//   const totalPages = Math.ceil(allCourses.length / coursesPerPage);
-
-//   const handlePageChange = (newPage) => {
-//     setCurrentPage(newPage);
-//   };
-
-//   return (
-//     <div className="main-wrapper">
-//       <AdminHeader />
-//       <div className="breadcrumb-bar breadcrumb-bar-info">
-//         <div className="container">
-//           <div className="row">
-//             <div className="col-md-12 col-12">
-//               <div className="breadcrumb-list">
-//                 <h2 className="breadcrumb-title">Admin Dashboard</h2>
-//                 <nav aria-label="breadcrumb" className="page-breadcrumb">
-//                 </nav>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//       <div className="page-content">
-//         <div className="container">
-//           <div className="row">
-//             <AdminSidebar />
-//             <div className="col-xl-9 col-lg-9">
-//               <Wrapper>
-//                 <Card>
-//                   <CardHeader>
-//                     <CardTitle>Course List</CardTitle>
-//                   </CardHeader>
-//                   <CardContent>
-//                     <TableWrapper>
-//                       <Table>
-//                         <thead>
-//                           <tr>
-//                             <Th>Course Title</Th>
-//                             <Th>Trainer Name</Th>
-//                             <Th>Price</Th>
-//                             <Th>Enrolled Students</Th>
-//                             <Th>Created At</Th>
-//                           </tr>
-//                         </thead>
-//                         <tbody>
-//                           {currentCourses.map((course) => (
-//                             <tr key={course.id}>
-//                               <Td>
-//                              <Link to={`/course-info/${course.id}`}>
-//                                 {course.course_title}
-//                              </Link>    
-//                             </Td>
-//                               <Td>
-//                                  <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
-//                                 {`${course.trainer_first_name} ${course.trainer_last_name}`}
-//                                 </Link>
-                                
-//                                 </Td>
-//                               <Td>${course.course_price}</Td>
-//                               <Td>{course.enrolled_student_count}</Td>
-//                               <Td>{new Date(course.created_at).toLocaleDateString()}</Td>
-//                             </tr>
-//                           ))}
-//                         </tbody>
-//                       </Table>
-//                     </TableWrapper>
-//                     <PaginationWrapper>
-//                       <PageButton 
-//                         onClick={() => handlePageChange(currentPage - 1)} 
-//                         disabled={currentPage === 1}
-//                       >
-//                         Previous
-//                       </PageButton>
-//                       {[...Array(totalPages).keys()].map((page) => (
-//                         <PageButton
-//                           key={page + 1}
-//                           onClick={() => handlePageChange(page + 1)}
-//                           active={currentPage === page + 1}
-//                         >
-//                           {page + 1}
-//                         </PageButton>
-//                       ))}
-//                       <PageButton 
-//                         onClick={() => handlePageChange(currentPage + 1)} 
-//                         disabled={currentPage === totalPages}
-//                       >
-//                         Next
-//                       </PageButton>
-//                     </PaginationWrapper>
-//                   </CardContent>
-//                 </Card>
-//               </Wrapper>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//       <Footer />
-//     </div>
-//   );
-// };
-
-// export default AdminCourseList;
-
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import axios from "axios";
 import Footer from "../footer";
 import { AdminHeader } from "./AdminHeader";
 import AdminSidebar from "./AdminSidebar";
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 // ... (previous styled components remain the same)
+const EditButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  background-color: #3182ce; /* Blue */
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 
+  &:hover {
+    background-color: #2b6cb0; /* Darker Blue */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+  }
+
+  i {
+    margin-right: 8px; /* Space between icon and text */
+  }
+`;
 const ActionButton = styled.button`
   padding: 6px 12px;
   border: none;
@@ -238,7 +124,7 @@ const ActionButton = styled.button`
   transition: background-color 0.3s;
 
   &.activate {
-    background-color: #4CAF50;
+    background-color: #4caf50;
     color: white;
 
     &:hover {
@@ -255,11 +141,15 @@ const ActionButton = styled.button`
     }
   }
 `;
+const Buttons = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
 
 const AdminCourseList = () => {
   const [allCourses, setAllCourses] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const token = localStorage.getItem('adminToken');
+  const token = localStorage.getItem("adminToken");
   const coursesPerPage = 15;
 
   useEffect(() => {
@@ -268,49 +158,61 @@ const AdminCourseList = () => {
 
   const fetchCourses = async () => {
     try {
-      const response = await axios.get('https://api.novajobs.us/api/trainers/all-courses', {
-        headers: {
-          Authorization: `${token}`
+      const response = await axios.get(
+        "https://api.novajobs.us/api/trainers/all-courses",
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
         }
-      });
+      );
       setAllCourses(response.data.data);
-      console.log(response.data.data,"ressssss");
+      console.log(response.data.data, "ressssss");
     } catch (error) {
-      console.error('Error fetching courses:', error);
+      console.error("Error fetching courses:", error);
     }
   };
 
   const handleActivateDeactivate = async (courseId, currentStatus) => {
-    console.log(currentStatus,"Sccc");
-    const url = currentStatus 
-  ? `https://api.novajobs.us/api/uaadmin/course-deactive/${courseId}` 
-  : `https://api.novajobs.us/api/uaadmin/course-active/${courseId}`;
-console.log(url,"FFFfff");
+    console.log(currentStatus, "Sccc");
+    const url = currentStatus
+      ? `https://api.novajobs.us/api/uaadmin/course-deactive/${courseId}`
+      : `https://api.novajobs.us/api/uaadmin/course-active/${courseId}`;
+    console.log(url, "FFFfff");
     try {
       await axios.get(url, {
         headers: {
-          Authorization: `${token}`
-        }
+          Authorization: `${token}`,
+        },
       });
       // Refresh the course list after activation/deactivation
-      toast.success(`Course ${currentStatus === 'active' ? 'deactivated' : 'activated'} successfully!`);
+      toast.success(
+        `Course ${
+          currentStatus === "active" ? "deactivated" : "activated"
+        } successfully!`
+      );
       fetchCourses();
     } catch (error) {
-      console.error('Error activating/deactivating course:', error);
-      toast.error('Error activating/deactivating course. Please try again.');
-
+      console.error("Error activating/deactivating course:", error);
+      toast.error("Error activating/deactivating course. Please try again.");
     }
   };
 
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
-  const currentCourses = allCourses.slice(indexOfFirstCourse, indexOfLastCourse);
+  const currentCourses = allCourses.slice(
+    indexOfFirstCourse,
+    indexOfLastCourse
+  );
   const totalPages = Math.ceil(allCourses.length / coursesPerPage);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
-
+  const navigate = useNavigate();
+  const handleClick = (courseId) => {
+    navigate(`/edit-course/${courseId}`);
+  };
   return (
     <div className="main-wrapper">
       <AdminHeader />
@@ -320,8 +222,7 @@ console.log(url,"FFFfff");
             <div className="col-md-12 col-12">
               <div className="breadcrumb-list">
                 <h2 className="breadcrumb-title">Admin Dashboard</h2>
-                <nav aria-label="breadcrumb" className="page-breadcrumb">
-                </nav>
+                <nav aria-label="breadcrumb" className="page-breadcrumb"></nav>
               </div>
             </div>
           </div>
@@ -357,25 +258,51 @@ console.log(url,"FFFfff");
                               <Td>
                                 <Link to={`/course-info/${course.id}`}>
                                   {course.course_title}
-                                </Link>    
+                                </Link>
                               </Td>
                               <Td>
-                                <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
+                                <Link
+                                  to={`/instructor/instructor-profile/${course.trainer_id}`}
+                                >
                                   {`${course.trainer_first_name} ${course.trainer_last_name}`}
                                 </Link>
                               </Td>
                               <Td>${course.course_price}</Td>
                               <Td>{course.enrolled_student_count}</Td>
-                              <Td>{new Date(course.created_at).toLocaleDateString()}</Td>
-                              <Td>{course.is_active === 1 ? "Active": "InActive"}</Td>
                               <Td>
-                                {console.log(course.is_active,"jhcbjh")}
-                                <ActionButton
-                                  className={course.is_active === 1 ? 'deactivate' : 'activate'}
-                                  onClick={() => handleActivateDeactivate(course.id, course.is_active)}
-                                >
-                                  {course.is_active === 1 ? 'Deactivate' : 'Activate'}
-                                </ActionButton>
+                                {new Date(
+                                  course.created_at
+                                ).toLocaleDateString()}
+                              </Td>
+                              <Td>
+                                {course.is_active === 1 ? "Active" : "InActive"}
+                              </Td>
+                              <Td>
+                                {console.log(course.is_active, "jhcbjh")}
+                                <Buttons>
+                                  <ActionButton
+                                    className={
+                                      course.is_active === 1
+                                        ? "deactivate"
+                                        : "activate"
+                                    }
+                                    onClick={() =>
+                                      handleActivateDeactivate(
+                                        course.id,
+                                        course.is_active
+                                      )
+                                    }
+                                  >
+                                    {course.is_active === 1
+                                      ? "Deactivate"
+                                      : "Activate"}
+                                  </ActionButton>
+                                  <EditButton
+                                    onClick={() => handleClick(course.id)}
+                                  >
+                                    Edit 
+                                  </EditButton>
+                                </Buttons>
                               </Td>
                             </tr>
                           ))}
@@ -383,8 +310,8 @@ console.log(url,"FFFfff");
                       </Table>
                     </TableWrapper>
                     <PaginationWrapper>
-                      <PageButton 
-                        onClick={() => handlePageChange(currentPage - 1)} 
+                      <PageButton
+                        onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
                       >
                         Previous
@@ -398,8 +325,8 @@ console.log(url,"FFFfff");
                           {page + 1}
                         </PageButton>
                       ))}
-                      <PageButton 
-                        onClick={() => handlePageChange(currentPage + 1)} 
+                      <PageButton
+                        onClick={() => handlePageChange(currentPage + 1)}
                         disabled={currentPage === totalPages}
                       >
                         Next

@@ -15,9 +15,9 @@ import {
   User4,
   User5,
 } from "../../imagepath";
-import { InstructorHeader } from "../../instructor/header";
 import { useSelector } from "react-redux";
 import Select from "react-select";
+import { InstructorHeader } from "../header";
 
 export default function InstructorGrid() {
   const mobileSidebar = useSelector(

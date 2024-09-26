@@ -2,6 +2,7 @@ import React from "react";
 import Footer from "../footer";
 import { AdminHeader } from "./AdminHeader";
 import AdminSidebar from "./AdminSidebar";
+import CourseTable from "../instructor/dashboard/CourseList";
 
 export const Dashboard = () => {
   return (
@@ -53,6 +54,7 @@ export const Dashboard = () => {
                 </div>
               </div>
             </div>
+            <CourseTable />
             </div>
             {/* /Sidebar */}
           </div>
