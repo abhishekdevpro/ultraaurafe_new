@@ -1,11 +1,11 @@
 
 import React, { useState, useEffect } from "react";
-import { InstructorHeader } from "../header";
 import InstructorSidebar from "../sidebar";
 import Footer from "../../footer";
 import SettingsPageHeader from "./settingsPageHeader";
 import axios from "axios";
 import {toast} from 'react-toastify'
+import { InstructorHeader } from "../header";
 
 const InstructorSettings = () => {
   const [formData, setFormData] = useState({

@@ -50,7 +50,7 @@ const AdminLogin = () => {
           draggable: true,
         });
         setTimeout(() => {
-          navigate("/admin/dashboard"); // Adjust this route as needed
+          navigate("/admin/admin-dashboard"); // Adjust this route as needed
         }, 3000);
       }
     } catch (error) {

@@ -1652,11 +1652,17 @@ const Header = () => {
         </>
       ) : (
         <>
+          <Link className="header__nav-link header__sign-button" to="/about-us">
+            About us
+          </Link>
           <Link className="header__nav-link header__sign-button" to="/login">
             Sign In
           </Link>
           <Link className="header__nav-link header__login-button" to="/register">
             Sign Up
+          </Link>
+          <Link className="header__nav-link header__login-button" to="/partner-signin">
+            Partner With Us
           </Link>
         </>
       )}

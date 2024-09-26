@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import Select from "react-select";
 import Footer from "../../footer";
 import { User11 } from "../../imagepath";
-import { InstructorHeader } from "../header";
 import InstructorSidebar from "../sidebar";
 import { useSelector } from "react-redux";
+import { InstructorHeader } from "../header";
 export default function InstructorEditProfile() {
   const mobileSidebar = useSelector(
     (state) => state.sidebarSlice.expandMenu

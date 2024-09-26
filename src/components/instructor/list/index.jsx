@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { InstructorHeader } from "../../instructor/header";
 import Footer from "../../footer";
 import {
   Icon1,
@@ -17,6 +16,7 @@ import { Filter, Grid, List, Search } from "react-feather";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Select from "react-select";
+import { InstructorHeader } from "../header";
 export const InstructorList = () => {
   const mobileSidebar = useSelector(
     (state) => state.sidebarSlice.expandMenu

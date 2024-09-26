@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../../footer";
-import { InstructorHeader } from "../header";
 import InstructorSidebar from "../sidebar";
 import Select from "react-select";
 import { Download, MoreVertical } from "react-feather";
 import { useSelector } from "react-redux";
+import { InstructorHeader } from "../header";
 export default function InstructorPayouts() {
   const mobileSidebar = useSelector(
     (state) => state.sidebarSlice.expandMenu

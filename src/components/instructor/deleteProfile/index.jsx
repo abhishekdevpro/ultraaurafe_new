@@ -1,8 +1,8 @@
 import React from "react";
-import { InstructorHeader } from "../../instructor/header";
 import Footer from "../../footer";
 import { Link } from "react-router-dom";
 import InstructorSidebar from "../sidebar";
+import { InstructorHeader } from "../header";
 
 export default function InstructorDeleteProfile() {
   return (

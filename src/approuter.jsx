@@ -563,12 +563,13 @@ const Approuter = () => {
         {/* student routes ends*/}
         {/* Admin routes starts*/}
         <Route path="/admin/login" element={<AdminLogin />} /> 
-        <Route path="/admin/dashboard" element={<AdminDashboard />} /> 
+        <Route path="/admin/admin-dashboard" element={<AdminDashboard />} /> 
         <Route path="/admin/trainer-list" element={<TrainerList />} /> 
         <Route path="/admin/student-list" element={<StudentList />} /> 
         <Route path="/admin/course-list" element={<AdminCourseList />} /> 
         <Route path="/admin/add-student" element={<AddStudentForm />} /> 
         <Route path="/admin/add-trainer" element={<AddTrainerForm />} /> 
+        <Route path="/admin/add-course" element={<AddCourse />} /> 
         {/* Admin routes ends*/}
 
 
@@ -579,7 +580,9 @@ const Approuter = () => {
         <Route path="/vendor-forgot-password" element={<ForgotPasswordVendor />} />
         <Route path="/vendor/vendor-setting" element={<VendorSetting/>}/>
         <Route path="/vendor/vendor-dashboard" element={<VendorDashboard/>}/>
-        <Route path="/vendor/vendor-profile" element={<VendorProfile/>}/>
+         <Route path="/vendor/vendor-profile" element={<VendorProfile/>}/>
+         <Route path="/vendor/add-course" element={<AddCourse/>}/>
+
          {/* Vendor Routes ends  */}
       </Routes>
     </BrowserRouter>

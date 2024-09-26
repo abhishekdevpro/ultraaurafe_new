@@ -702,7 +702,6 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../../footer';
-import Header from '../../header';
 import {
   EmailIcon,
   Icon1,
@@ -710,6 +709,7 @@ import {
   Icon2,
   PhoneIcon,
 } from "../../imagepath";
+import Header from '../../header';
 
 const InstructorProfile = () => {
   const [profileData, setProfileData] = useState(null);
