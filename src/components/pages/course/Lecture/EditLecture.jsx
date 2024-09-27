@@ -253,7 +253,7 @@
 //           formData.append(key, lectureData[key]);
 //         }
 //       }
-      
+
 //       const token = localStorage.getItem("trainerToken");
 //       const response = await axios.patch(
 //         `https://api.novajobs.us/api/trainers/lectureupdate/${courseid}/${sectionid}/${lectureid}`,
@@ -389,9 +389,9 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import "react-toastify/dist/ReactToastify.css";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import Footer from "../../../footer";
 import CourseHeader from "../header";
 
@@ -406,11 +406,14 @@ const EditLecture = () => {
   });
   const [currentVideo, setCurrentVideo] = useState(null);
   const navigate = useNavigate();
-
+  const token =
+    localStorage.getItem("trainerToken") ||
+    localStorage.getItem("vendorToken") ||
+    localStorage.getItem("adminToken");
+  console.log(currentVideo);
   useEffect(() => {
     const fetchLectureData = async () => {
       try {
-        const token = localStorage.getItem("trainerToken");
         const response = await axios.get(
           `https://api.novajobs.us/api/trainers/get-lecture/${lectureid}`,
           {
@@ -467,15 +470,17 @@ const EditLecture = () => {
             formData.append(`lecture_resources_pdf[${index}]`, file);
           });
         } else if (key === "lecture_resources_link") {
-          formData.append(key, lectureData[key].split(",").map(link => link.trim()));
+          formData.append(
+            key,
+            lectureData[key].split(",").map((link) => link.trim())
+          );
         } else if (key === "lecture_video" && lectureData[key]) {
           formData.append(key, lectureData[key]);
         } else if (lectureData[key]) {
           formData.append(key, lectureData[key]);
         }
       }
-      
-      const token = localStorage.getItem("trainerToken");
+
       const response = await axios.patch(
         `https://api.novajobs.us/api/trainers/lectureupdate/${courseid}/${sectionid}/${lectureid}`,
         formData,
@@ -516,7 +521,10 @@ const EditLecture = () => {
                 <div className="add-course-btns">
                   <ul className="nav">
                     <li>
-                      <Link to={`/course-details/${courseid}`} className="btn btn-black">
+                      <Link
+                        to={`/course-details/${courseid}`}
+                        className="btn btn-black"
+                      >
                         Back to Course
                       </Link>
                     </li>
@@ -537,7 +545,9 @@ const EditLecture = () => {
                       <div className="add-course-form">
                         <form>
                           <div className="input-block">
-                            <label className="add-course-label">Lecture Name</label>
+                            <label className="add-course-label">
+                              Lecture Name
+                            </label>
                             <input
                               type="text"
                               className="form-control"
@@ -548,22 +558,30 @@ const EditLecture = () => {
                             />
                           </div>
                           <div className="input-block">
-                            <label className="add-course-label">Lecture Content</label>
+                            <label className="add-course-label">
+                              Lecture Content
+                            </label>
                             <ReactQuill
                               value={lectureData.lecture_content}
                               onChange={handleQuillChange}
                               modules={{
                                 toolbar: [
                                   [{ header: [1, 2, false] }],
-                                  ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                                  [{ list: 'ordered' }, { list: 'bullet' }],
-                                  ['link', 'image'],
-                                  ['clean']
+                                  [
+                                    "bold",
+                                    "italic",
+                                    "underline",
+                                    "strike",
+                                    "blockquote",
+                                  ],
+                                  [{ list: "ordered" }, { list: "bullet" }],
+                                  ["link", "image"],
+                                  ["clean"],
                                 ],
                               }}
                             />
                           </div>
-                          <div className="input-block">
+                          {/* <div className="input-block">
                             <label className="add-course-label">Lecture Video</label>
                             {currentVideo && (
                               <div>
@@ -572,8 +590,8 @@ const EditLecture = () => {
                                   Your browser does not support the video tag.
                                 </video>
                               </div>
-                            )}
-                            {/* <div className="relative-form">
+                            )} */}
+                          {/* <div className="relative-form">
                               <span>{lectureData.lecture_video ? lectureData.lecture_video.name : "No Video Selected"}</span>
                               <label className="relative-file-upload">
                                 Upload Video
@@ -585,11 +603,42 @@ const EditLecture = () => {
                                 />
                               </label>
                             </div> */}
-                          </div>
-                          <div className="input-block">
-                            <label className="add-course-label">Resources (PDF only)</label>
+                          {/* </div> */}
+                          {/* <div className="input-block">
+                            <label className="add-course-label">
+                              Resources (PDF only)
+                            </label>
                             <div className="relative-form">
-                              <span>{lectureData.lecture_resources_pdf.length > 0 ? `${lectureData.lecture_resources_pdf.length} file(s) selected` : "No PDF Selected"}</span>
+                              <span>
+                                {lectureData.lecture_resources_pdf.length > 0
+                                  ? `${lectureData.lecture_resources_pdf.length} file(s) selected`
+                                  : "No PDF Selected"}
+                              </span>
+                              <label className="relative-file-upload">
+                                Upload PDF
+                                <input
+                                  type="file"
+                                  name="lecture_resources_pdf"
+                                  accept=".pdf"
+                                  multiple
+                                  onChange={handleFileChange}
+                                />
+                              </label>
+                            </div>
+                          </div> */}
+                          <div className="input-block">
+                            <label className="add-course-label">
+                              Resources (PDF only)
+                            </label>
+                            <div className="relative-form">
+                              <span>
+                                {Array.isArray(
+                                  lectureData.lecture_resources_pdf
+                                ) &&
+                                lectureData.lecture_resources_pdf.length > 0
+                                  ? `${lectureData.lecture_resources_pdf.length} file(s) selected`
+                                  : "No PDF Selected"}
+                              </span>
                               <label className="relative-file-upload">
                                 Upload PDF
                                 <input
@@ -603,7 +652,9 @@ const EditLecture = () => {
                             </div>
                           </div>
                           <div className="input-block">
-                            <label className="add-course-label">Resource Links</label>
+                            <label className="add-course-label">
+                              Resource Links
+                            </label>
                             <textarea
                               className="form-control"
                               name="lecture_resources_link"
@@ -615,7 +666,10 @@ const EditLecture = () => {
                         </form>
                       </div>
                       <div className="widget-btn">
-                        <button className="btn btn-info-light" onClick={handleSave}>
+                        <button
+                          className="btn btn-info-light"
+                          onClick={handleSave}
+                        >
                           Save Changes
                         </button>
                       </div>

@@ -312,13 +312,13 @@ console.log(profileData,"profile");
                   <p>Student</p>
                   </div>
                 </ProfileInfo>
-                <NavItem to="/home">
+                <NavItem to="/student/student-dashboard">
                   <Home size={20} /> Dashboard
                 </NavItem>
                 <NavItem to="/profile">
                   <User size={20} /> Profile
                 </NavItem>
-                <NavItem to="#" onClick={handleLogout}>
+                <NavItem  onClick={handleLogout}>
                   <LogOut size={20} /> Logout
                 </NavItem>
               </ProfileMenu>

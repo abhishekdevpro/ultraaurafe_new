@@ -148,7 +148,11 @@ const CourseTable = () => {
 
   // Function to handle course edit
   const handleEditCourse = (courseId) => {
-    navigate(`/edit-course/${courseId}`);
+    navigate(`/course-details/${courseId}`);
+    // const handleEditCourse = (courseId) => {
+    //   navigate(localStorage.getItem('trainerToken') 
+    //   ? `/course-details/${courseId}` 
+    //   : `/edit-course/${courseId}`);
     console.log(`Edit course with ID: ${courseId}`);
   };
 

@@ -24,7 +24,9 @@ const AddCourse = () => {
   const mobileSidebar = useSelector((state) => state.sidebarSlice.expandMenu);
   const [activeTab, setActiveTab] = useState("basic");
   const [error, setError] = useState({});
- const [courseData, setCourseData] = useState({
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [courseData, setCourseData] = useState({
     course_title: "",
     course_category_name: "",
     course_level_name: "",
@@ -46,7 +48,6 @@ const AddCourse = () => {
     setCourseData({ ...courseData, [e.target.name]: e.target.value });
   };
 
- 
   const handleSelectChange = (name) => (selectedOption) => {
     if (selectedOption) {
       setCourseData((prevData) => ({
@@ -66,13 +67,14 @@ const AddCourse = () => {
   const handleFileChange = (e) => {
     const { name, files } = e.target;
     const file = files[0];
-  
+
     // Only validate the file if it exists (skip validation if no file is uploaded)
     if (name === "course_banner_image" && file) {
       if (!["image/jpeg", "image/png"].includes(file.type)) {
         setErrors((prevErrors) => ({
           ...prevErrors,
-          courseBannerImage: "Invalid file type. Only JPEG and PNG are allowed.",
+          courseBannerImage:
+            "Invalid file type. Only JPEG and PNG are allowed.",
         }));
         toast.error("Invalid file type. Only JPEG and PNG are allowed.");
         return;
@@ -80,7 +82,7 @@ const AddCourse = () => {
         setErrors((prevErrors) => ({ ...prevErrors, courseBannerImage: "" }));
       }
     }
-  
+
     if (name === "course_intro_video" && file) {
       if (file.type !== "video/mp4") {
         setErrors((prevErrors) => ({
@@ -93,14 +95,14 @@ const AddCourse = () => {
         setErrors((prevErrors) => ({ ...prevErrors, courseIntroVideo: "" }));
       }
     }
-  
+
     // Update the course data even if the file is not present (for optional file fields)
     setCourseData((prevData) => ({
       ...prevData,
       [name]: file || "", // Set the file or empty string if not uploaded
     }));
   };
-  
+
   useEffect(() => {
     if (courseData.course_price && courseData.discount_percent) {
       const price = parseFloat(courseData.course_price);
@@ -113,81 +115,39 @@ const AddCourse = () => {
     }
   }, [courseData.course_price, courseData.discount_percent]);
 
-  // const handleSave = async () => {
-  //   try {
-  //     const formData = new FormData();
-  //     for (const key in courseData) {
-  //       if (key === "course_banner_image" || key === "course_intro_video") {
-  //         formData.append(key, courseData[key], courseData[key]?.name);
-  //       } else {
-  //         formData.append(key, courseData[key]);
-  //       }
-  //     }
-  //     const token = localStorage.getItem("trainerToken");
-  //     const response = await axios.post(
-  //       "https://api.novajobs.us/api/trainers/create-course",
-  //       formData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //           Authorization: token,
-  //         },
-  //       }
-  //     );
-  //     console.log("Course saved successfully:", response.data);
-  //     toast.success("Course created successfully!");
-  //     // sessionStorage.removeItem('courseData'); // Clear the session storage after successful save
-  //     setTimeout(() => {
-  //       navigate(`/instructor/instructor-dashboard`);
-  //     }, 2000);
-  //   } catch (error) {
-  //     console.error("Error saving course:", error);
-  //     toast.error("Failed to create section. Please try again.");
-  //   }
-  // };
+  const trainerToken = localStorage.getItem("trainerToken");
+  const vendorToken = localStorage.getItem("vendorToken");
+  const adminToken = localStorage.getItem("adminToken");
 
-  // const handleSave = debounce(async () => {
-  //   console.log("check");
-  //   try {
-  //     const formData = new FormData();
-  //     for (const key in courseData) {
-  //       if (key === "course_banner_image" || key === "course_intro_video") {
-  //         formData.append(key, courseData[key], courseData[key]?.name);
-  //       } else {
-  //         formData.append(key, courseData[key]);
-  //       }
-  //     }
-  //     console.log(formData, "gvjhdbkhvjh ");
-  //     const token = localStorage.getItem("trainerToken");
-  //     const response = await axios.post(
-  //       "https://api.novajobs.us/api/trainers/create-course",
-  //       formData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //           Authorization: token,
-  //         },
-  //       }
-  //     );
-  //     console.log("Course saved successfully:", response.data);
-  //     toast.success("Course created successfully!");
-  //     setTimeout(() => {
-  //       navigate(`/instructor/instructor-dashboard`);
-  //     }, 2000);
-  //   } catch (error) {
-  //     toast.error("Failed to create section. Please try again.");
-  //     console.error("Error saving course:", error);
-  //   }
-  // }, 3000); // Adjust the debounce delay as needed (3000 ms = 3 seconds)
+  let token; // Determine which token is present and set it for authorization
+  let role; // Define a role variable to store the role
+
+  // Determine which token to use and set the corresponding role
+  if (trainerToken) {
+    token = trainerToken;
+    role = "instructor"; // Set role to 'trainer'
+  } else if (vendorToken) {
+    token = vendorToken;
+    role = "vendor"; // Set role to 'vendor'
+  } else if (adminToken) {
+    token = adminToken;
+    role = "admin"; // Set role to 'admin'
+  } else {
+    throw new Error("No valid token found for authentication");
+  }
+
+  console.log(token, role);
   const handleSave = debounce(async () => {
     console.log("check");
     await saveCourse();
   }, 3000); // Adjust the debounce delay as needed
-  
+
   // const saveCourse = async () => {
   //   try {
   //     const formData = new FormData();
   //     console.log(courseData); // Log courseData to check its structure
+
+  //     // Append courseData to formData
   //     for (const key in courseData) {
   //       if (key === "course_banner_image" || key === "course_intro_video") {
   //         // Ensure courseData[key] is a file object
@@ -199,23 +159,22 @@ const AddCourse = () => {
   //       }
   //     }
   //     console.log(formData, "FormData contents");
-  
-  //     const token = localStorage.getItem("trainerToken");
+
   //     const response = await axios.post(
   //       "https://api.novajobs.us/api/trainers/create-course",
   //       formData,
   //       {
   //         headers: {
   //           "Content-Type": "multipart/form-data",
-  //           Authorization: token,
+  //           Authorization: token, // Set the appropriate token
   //         },
   //       }
   //     );
-  
+
   //     console.log("Course saved successfully:", response.data);
   //     toast.success("Course created successfully!");
   //     setTimeout(() => {
-  //       navigate(`/instructor/instructor-dashboard`);
+  //       navigate(`/${role}/${role}-dashboard`);
   //     }, 2000);
   //   } catch (error) {
   //     console.error("Error details:", error.response ? error.response.data : error.message);
@@ -223,10 +182,11 @@ const AddCourse = () => {
   //   }
   // };
   const saveCourse = async () => {
+    setIsLoading(true);
     try {
       const formData = new FormData();
       console.log(courseData); // Log courseData to check its structure
-  
+
       // Append courseData to formData
       for (const key in courseData) {
         if (key === "course_banner_image" || key === "course_intro_video") {
@@ -239,30 +199,7 @@ const AddCourse = () => {
         }
       }
       console.log(formData, "FormData contents");
-  
-      // Retrieve tokens
-      const trainerToken = localStorage.getItem("trainerToken");
-      const vendorToken = localStorage.getItem("vendorToken");
-      const adminToken = localStorage.getItem("adminToken");
-  
-     let token; // Determine which token is present and set it for authorization
-      let role; // Define a role variable to store the role
 
-// Determine which token to use and set the corresponding role
-if (trainerToken) {
-  token = trainerToken;
-  role = "instructor"; // Set role to 'trainer'
-} else if (vendorToken) {
-  token = vendorToken;
-  role = "vendor"; // Set role to 'vendor'
-} else if (adminToken) {
-  token = adminToken;
-  role = "admin"; // Set role to 'admin'
-} else {
-  throw new Error("No valid token found for authentication");
-}
-
-console.log(token);
       const response = await axios.post(
         "https://api.novajobs.us/api/trainers/create-course",
         formData,
@@ -273,20 +210,22 @@ console.log(token);
           },
         }
       );
-  
+
       console.log("Course saved successfully:", response.data);
       toast.success("Course created successfully!");
       setTimeout(() => {
         navigate(`/${role}/${role}-dashboard`);
       }, 2000);
     } catch (error) {
-      console.error("Error details:", error.response ? error.response.data : error.message);
+      console.error(
+        "Error details:",
+        error.response ? error.response.data : error.message
+      );
       toast.error("Failed to create section. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
-  
-  
-  const token = localStorage.getItem("trainerToken");
 
   const [categoryOptions, setCategoryOptions] = useState([]);
 
@@ -583,7 +522,7 @@ console.log(token);
                                 </span>
                               )}
                             </div>
-                            
+
                             <div className="input-block">
                               <label
                                 className="add-course-label"
@@ -1008,10 +947,25 @@ console.log(token);
                             Previous
                           </Link>
                           <Link
-                            className="btn btn-info-light next_btn"
+                            to="#" // Use '#' to prevent navigation
+                            className={`btn ${
+                              isLoading ? "btn-secondary" : "btn-info-light"
+                            } next_btn`}
                             onClick={handleSave}
+                            disabled={isLoading}
                           >
-                            Save Course
+                            {isLoading ? (
+                              <>
+                                <span
+                                  className="spinner-border spinner-border-sm me-2"
+                                  role="status"
+                                  aria-hidden="true"
+                                ></span>
+                                Saving...
+                              </>
+                            ) : (
+                              "Save Course"
+                            )}
                           </Link>
                         </div>
                       </div>
