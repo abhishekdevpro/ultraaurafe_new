@@ -406,7 +406,7 @@ const EditLecture = () => {
   });
   const [currentVideo, setCurrentVideo] = useState(null);
   const navigate = useNavigate();
-
+console.log(currentVideo);
   useEffect(() => {
     const fetchLectureData = async () => {
       try {
@@ -563,7 +563,7 @@ const EditLecture = () => {
                               }}
                             />
                           </div>
-                          <div className="input-block">
+                          {/* <div className="input-block">
                             <label className="add-course-label">Lecture Video</label>
                             {currentVideo && (
                               <div>
@@ -572,7 +572,7 @@ const EditLecture = () => {
                                   Your browser does not support the video tag.
                                 </video>
                               </div>
-                            )}
+                            )} */}
                             {/* <div className="relative-form">
                               <span>{lectureData.lecture_video ? lectureData.lecture_video.name : "No Video Selected"}</span>
                               <label className="relative-file-upload">
@@ -585,7 +585,7 @@ const EditLecture = () => {
                                 />
                               </label>
                             </div> */}
-                          </div>
+                          {/* </div> */}
                           <div className="input-block">
                             <label className="add-course-label">Resources (PDF only)</label>
                             <div className="relative-form">

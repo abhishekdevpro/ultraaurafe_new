@@ -386,7 +386,7 @@ const AddSection = () => {
 
   const handleSave = debounce(async () => {
     try {
-      const token = localStorage.getItem("trainerToken");
+      const token = localStorage.getItem("trainerToken") || localStorage.getItem('adminToken') || localStorage.getItem('vendorToken');
       const response = await axios.post(
         `https://api.novajobs.us/api/trainers/${id}/section`,
         sectionData,

@@ -187,6 +187,8 @@ import 'react-quill/dist/quill.snow.css'; // Import Quill styles
 
 const AddLecture = () => {
   const { courseid, sectionid } = useParams();
+  const token = localStorage.getItem("trainerToken") || localStorage.getItem('vendorToken') || localStorage.getItem('adminToken');
+
   console.log(courseid, sectionid, "id hu bhai");
 
   const [lectureData, setLectureData] = useState({
@@ -219,7 +221,6 @@ const AddLecture = () => {
           formData.append(key, lectureData[key]);
         }
       }
-      const token = localStorage.getItem("trainerToken");
       const response = await axios.post(
         `https://api.novajobs.us/api/trainers/${courseid}/${sectionid}/upload`,
         formData,

@@ -173,14 +173,16 @@ const Approuter = () => {
         <Route path="/home2" element={<Home2 />} />
         <Route path="/home3" element={<Home3 />} />
         <Route path="/home4" element={<Home4 />} />
-        {/* routes added by me  */}
+
+        
+        {/* routes for course creation and edit  */}
         <Route path="/add-section/:id" element={<AddSection />} />
         <Route path="/edit-section/:courseid/:sectionid" element={<EditSection />} />
         <Route path="/add-lecture/:courseid/:sectionid" element={<AddLecture />} />
         <Route path="/edit-lecture/:courseid/:sectionid/:lectureid" element={<EditLecture />} />
         <Route path="/edit-course/:id" element={<EditCourse />} />
         <Route path="/course-details/:id" element={<SectionsList />} />
-
+         {/* routes added by me  */}
 
         {/* Blog */}
         <Route path="/blog-list" element={<BlogList />} />

@@ -113,115 +113,34 @@ const AddCourse = () => {
     }
   }, [courseData.course_price, courseData.discount_percent]);
 
-  // const handleSave = async () => {
-  //   try {
-  //     const formData = new FormData();
-  //     for (const key in courseData) {
-  //       if (key === "course_banner_image" || key === "course_intro_video") {
-  //         formData.append(key, courseData[key], courseData[key]?.name);
-  //       } else {
-  //         formData.append(key, courseData[key]);
-  //       }
-  //     }
-  //     const token = localStorage.getItem("trainerToken");
-  //     const response = await axios.post(
-  //       "https://api.novajobs.us/api/trainers/create-course",
-  //       formData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //           Authorization: token,
-  //         },
-  //       }
-  //     );
-  //     console.log("Course saved successfully:", response.data);
-  //     toast.success("Course created successfully!");
-  //     // sessionStorage.removeItem('courseData'); // Clear the session storage after successful save
-  //     setTimeout(() => {
-  //       navigate(`/instructor/instructor-dashboard`);
-  //     }, 2000);
-  //   } catch (error) {
-  //     console.error("Error saving course:", error);
-  //     toast.error("Failed to create section. Please try again.");
-  //   }
-  // };
-
-  // const handleSave = debounce(async () => {
-  //   console.log("check");
-  //   try {
-  //     const formData = new FormData();
-  //     for (const key in courseData) {
-  //       if (key === "course_banner_image" || key === "course_intro_video") {
-  //         formData.append(key, courseData[key], courseData[key]?.name);
-  //       } else {
-  //         formData.append(key, courseData[key]);
-  //       }
-  //     }
-  //     console.log(formData, "gvjhdbkhvjh ");
-  //     const token = localStorage.getItem("trainerToken");
-  //     const response = await axios.post(
-  //       "https://api.novajobs.us/api/trainers/create-course",
-  //       formData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //           Authorization: token,
-  //         },
-  //       }
-  //     );
-  //     console.log("Course saved successfully:", response.data);
-  //     toast.success("Course created successfully!");
-  //     setTimeout(() => {
-  //       navigate(`/instructor/instructor-dashboard`);
-  //     }, 2000);
-  //   } catch (error) {
-  //     toast.error("Failed to create section. Please try again.");
-  //     console.error("Error saving course:", error);
-  //   }
-  // }, 3000); // Adjust the debounce delay as needed (3000 ms = 3 seconds)
+        const trainerToken = localStorage.getItem("trainerToken");
+        const vendorToken = localStorage.getItem("vendorToken");
+        const adminToken = localStorage.getItem("adminToken");
+    
+       let token; // Determine which token is present and set it for authorization
+        let role; // Define a role variable to store the role
+  
+  // Determine which token to use and set the corresponding role
+  if (trainerToken) {
+    token = trainerToken;
+    role = "instructor"; // Set role to 'trainer'
+  } else if (vendorToken) {
+    token = vendorToken;
+    role = "vendor"; // Set role to 'vendor'
+  } else if (adminToken) {
+    token = adminToken;
+    role = "admin"; // Set role to 'admin'
+  } else {
+    throw new Error("No valid token found for authentication");
+  }
+  
+  console.log(token,role);
   const handleSave = debounce(async () => {
     console.log("check");
     await saveCourse();
   }, 3000); // Adjust the debounce delay as needed
+
   
-  // const saveCourse = async () => {
-  //   try {
-  //     const formData = new FormData();
-  //     console.log(courseData); // Log courseData to check its structure
-  //     for (const key in courseData) {
-  //       if (key === "course_banner_image" || key === "course_intro_video") {
-  //         // Ensure courseData[key] is a file object
-  //         if (courseData[key] instanceof File) {
-  //           formData.append(key, courseData[key], courseData[key]?.name);
-  //         }
-  //       } else {
-  //         formData.append(key, courseData[key]);
-  //       }
-  //     }
-  //     console.log(formData, "FormData contents");
-  
-  //     const token = localStorage.getItem("trainerToken");
-  //     const response = await axios.post(
-  //       "https://api.novajobs.us/api/trainers/create-course",
-  //       formData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //           Authorization: token,
-  //         },
-  //       }
-  //     );
-  
-  //     console.log("Course saved successfully:", response.data);
-  //     toast.success("Course created successfully!");
-  //     setTimeout(() => {
-  //       navigate(`/instructor/instructor-dashboard`);
-  //     }, 2000);
-  //   } catch (error) {
-  //     console.error("Error details:", error.response ? error.response.data : error.message);
-  //     toast.error("Failed to create section. Please try again.");
-  //   }
-  // };
   const saveCourse = async () => {
     try {
       const formData = new FormData();
@@ -240,29 +159,6 @@ const AddCourse = () => {
       }
       console.log(formData, "FormData contents");
   
-      // Retrieve tokens
-      const trainerToken = localStorage.getItem("trainerToken");
-      const vendorToken = localStorage.getItem("vendorToken");
-      const adminToken = localStorage.getItem("adminToken");
-  
-     let token; // Determine which token is present and set it for authorization
-      let role; // Define a role variable to store the role
-
-// Determine which token to use and set the corresponding role
-if (trainerToken) {
-  token = trainerToken;
-  role = "instructor"; // Set role to 'trainer'
-} else if (vendorToken) {
-  token = vendorToken;
-  role = "vendor"; // Set role to 'vendor'
-} else if (adminToken) {
-  token = adminToken;
-  role = "admin"; // Set role to 'admin'
-} else {
-  throw new Error("No valid token found for authentication");
-}
-
-console.log(token);
       const response = await axios.post(
         "https://api.novajobs.us/api/trainers/create-course",
         formData,
@@ -286,7 +182,6 @@ console.log(token);
   };
   
   
-  const token = localStorage.getItem("trainerToken");
 
   const [categoryOptions, setCategoryOptions] = useState([]);
 

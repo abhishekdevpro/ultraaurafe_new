@@ -216,7 +216,7 @@ const VideoSection = styled.div`
 `;
 
 const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
-  console.log(courseData, "from sidebar");
+  console.log(courseFeatureData, "from sidebar");
   const [showPopup, setShowPopup] = useState(false);
   const [loading, setLoading] = useState(false);
   const [videoUrl, setVideoUrl] = useState(null);
@@ -400,12 +400,12 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                 )}
 
                 <div className="video-details">
-                  <div className="course-fee">
+                 {courseFeatureData.course_price == 0? <div className="course-fee">
                     <h2>FREE</h2>
                     <p>
                       <span>$99.00</span> 50% off
                     </p>
-                  </div>
+                  </div>: " "}
                   <div className="row gx-2">
                     <div className="col-md-6 addHeart">
                       {isFavorite && localStorage.getItem("token") ? (
@@ -611,6 +611,7 @@ SidebarSection.propTypes = {
   courseId: PropTypes.number.isRequired,
   courseFeatureData: PropTypes.shape({
     enrolled_student_count: PropTypes.number.isRequired,
+    course_price: PropTypes.number.isRequired,
     time_spent_on_course: PropTypes.string.isRequired,
     total_lectures: PropTypes.number.isRequired,
     course_level_name: PropTypes.string.isRequired,
