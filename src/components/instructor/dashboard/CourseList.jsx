@@ -117,6 +117,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import FeatherIcon from 'feather-icons-react';
+import { toast } from 'react-toastify';
 
 const CourseTable = () => {
   const [courses, setCourses] = useState([]);
@@ -147,14 +148,19 @@ const CourseTable = () => {
   console.log(courses, 'courses hu');
 
   // Function to handle course edit
-  const handleEditCourse = (courseId) => {
-    navigate(`/course-details/${courseId}`);
-    // const handleEditCourse = (courseId) => {
-    //   navigate(localStorage.getItem('trainerToken') 
-    //   ? `/course-details/${courseId}` 
-    //   : `/edit-course/${courseId}`);
-    console.log(`Edit course with ID: ${courseId}`);
+  const handleEditCourse = (courseId, isActive) => {
+    if (localStorage.getItem("adminToken") || isActive) {
+      // Admin can edit the course regardless of the active status
+      // or if the course is active, allow the user to edit it
+      navigate(`/course-details/${courseId}`);
+      console.log(`Edit course with ID: ${courseId}`);
+    } else {
+      console.log(`Course with ID: ${courseId} is not active and cannot be edited.`);
+      // Optionally show an alert or message to the user
+      toast.error('This course is not active and cannot be edited.');
+    }
   };
+  
 
   return (
     <div className="instructor-course-table">
@@ -169,6 +175,7 @@ const CourseTable = () => {
               <th>Title</th> {/* New column for Course Title */}
               <th>Enrolled</th>
               <th>Duration</th>
+              {localStorage.getItem('adminToken')?" " :<th>Status</th>}
               <th>Actions</th>
             </tr>
           </thead>
@@ -195,6 +202,7 @@ const CourseTable = () => {
                   <td>{course.course_title}</td> {/* Displaying the course title */}
                   <td>{course.enrolled_student_count || 0}</td>
                   <td>{course.time_spent_on_course}</td>
+                  {localStorage.getItem('adminToken')?" " :<td>{course.is_active==1?"Active":"InActive"}</td>}
                   <td>
                     <button
                       className="btn btn-primary action-btn"
@@ -203,11 +211,12 @@ const CourseTable = () => {
                       <FeatherIcon icon="edit" className="me-2" />
                       Edit
                     </button>
-                    <button
+                    {localStorage.getItem("adminToken")?"":
+                      (<button
                       className="btn btn-secondary danger-btn"
                     >
                       Request Delete
-                    </button>
+                    </button>)}
                   </td>
                 </tr>
               ))
