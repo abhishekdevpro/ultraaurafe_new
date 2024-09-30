@@ -185,10 +185,12 @@
 //     loadingStates: PropTypes.objectOf(PropTypes.bool).isRequired
 //   };
 // export default LectureListComponent;
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Play, ChevronDown, ChevronUp, FileText, Link as LinkIcon } from 'lucide-react';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const LectureList = styled.ul`
   list-style-type: none;
@@ -360,19 +362,124 @@ const LectureContent = styled.div`
     background: #555;
   }
 `;
+
+// const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loadingStates }) => {
+//   const [expandedLectures, setExpandedLectures] = useState({});
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+//   useEffect(() => {
+//     const token = localStorage.getItem('token');
+//     setIsLoggedIn(!!token);
+//   }, []);
+
+//   const toggleLecture = (lectureId) => {
+//     setExpandedLectures((prev) => ({
+//       ...prev,
+//       [lectureId]: !prev[lectureId],
+//     }));
+//   };
+
+//   const renderLectureContent = (content) => {
+//     return { __html: content };
+//   };
+
+//   return (
+//     <LectureList>
+//       {section.lectures && section.lectures.length > 0 ? (
+//         section.lectures.map((lecture) => (
+//           <LectureItem key={lecture.id}>
+//             <LectureHeader onClick={() => toggleLecture(lecture.id)}>
+//               <LectureName>
+//                 <StyledPlay size={20} />
+//                 {lecture.lecture_name}
+//               </LectureName>
+//               <div>
+//                 <PreviewButton
+//                   onClick={(e) => {
+//                     e.stopPropagation();
+//                     if (isLoggedIn) {
+//                       handlePreviewClick(lecture, section.id);
+//                     } else {
+//                       alert("Please log in to preview this lecture.");
+//                     }
+//                   }}
+//                   disabled={loadingStates[lecture.id] || !isLoggedIn}
+//                 >
+//                   {loadingStates[lecture.id] ? 'Loading...' : 'Preview'}
+//                 </PreviewButton>
+//                 <ExpandButton>
+//                   {expandedLectures[lecture.id] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+//                 </ExpandButton>
+//               </div>
+//             </LectureHeader>
+//             {expandedLectures[lecture.id] && isLoggedIn && (
+//               <>
+//                 {lecture.lecture_content && (
+//                   <LectureContent dangerouslySetInnerHTML={renderLectureContent(lecture.lecture_content)} />
+//                 )}
+//                 {(lecture.lecture_resources_pdf || lecture.lecture_resources_link) && (
+//                   <ResourceList>
+//                     {lecture.lecture_resources_pdf &&
+//                       lecture.lecture_resources_pdf.map((pdf, index) => (
+//                         <ResourceItem key={`pdf-${index}`}>
+//                           <ResourceLink onClick={() => handlePDFClick(`https://api.novajobs.us/${pdf}`)}>
+//                             <FileText size={16} />
+//                             PDF Resource {index + 1}
+//                           </ResourceLink>
+//                         </ResourceItem>
+//                       ))}
+//                     {lecture.lecture_resources_link &&
+//                       lecture.lecture_resources_link.map((link, index) => (
+//                         <ResourceItem key={`link-${index}`}>
+//                           <ResourceLink href={link} target="_blank" rel="noopener noreferrer">
+//                             <LinkIcon size={16} />
+//                             External Resource {index + 1}
+//                           </ResourceLink>
+//                         </ResourceItem>
+//                       ))}
+//                   </ResourceList>
+//                 )}
+//               </>
+//             )}
+//             {expandedLectures[lecture.id] && !isLoggedIn && (
+//               toast.error("Please log in to access lecture content and resources")
+//             )}
+//           </LectureItem>
+//         ))
+//       ) : (
+//         <LectureItem>
+//           <LectureHeader>No lectures available for this section.</LectureHeader>
+//         </LectureItem>
+//       )}
+//     </LectureList>
+//   );
+// };
 const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loadingStates }) => {
   const [expandedLectures, setExpandedLectures] = useState({});
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(!!token);
+  }, []);
 
   const toggleLecture = (lectureId) => {
+    if (!isLoggedIn) {
+      toast.error("Please log in to access lecture content and resources");
+      navigate('/login');
+      return;
+    }
     setExpandedLectures((prev) => ({
       ...prev,
       [lectureId]: !prev[lectureId],
     }));
   };
-  
+
   const renderLectureContent = (content) => {
     return { __html: content };
   };
+
   return (
     <LectureList>
       {section.lectures && section.lectures.length > 0 ? (
@@ -387,9 +494,14 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
                 <PreviewButton
                   onClick={(e) => {
                     e.stopPropagation();
-                    handlePreviewClick(lecture, section.id);
+                    if (isLoggedIn) {
+                      handlePreviewClick(lecture, section.id);
+                    } else {
+                      toast.error("Please log in to preview this lecture.");
+                      navigate('/login');
+                    }
                   }}
-                  disabled={loadingStates[lecture.id]}
+                  disabled={loadingStates[lecture.id] || !isLoggedIn}
                 >
                   {loadingStates[lecture.id] ? 'Loading...' : 'Preview'}
                 </PreviewButton>
@@ -398,36 +510,33 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
                 </ExpandButton>
               </div>
             </LectureHeader>
-            {expandedLectures[lecture.id] && (lecture.lecture_resources_pdf || lecture.lecture_resources_link) && (
+            {expandedLectures[lecture.id] && (
               <>
-                  {lecture.lecture_content && (
-                <LectureContent dangerouslySetInnerHTML={renderLectureContent(lecture.lecture_content)} />
-              )}
-              <ResourceList>
-                {lecture.lecture_resources_pdf &&
-                  lecture.lecture_resources_pdf.map((pdf, index) => (
-                    <ResourceItem key={`pdf-${index}`}>
-                      <ResourceLink onClick={() => handlePDFClick(`https://api.novajobs.us/${pdf}`)}>
-                        <FileText size={16} />
-                        PDF Resource {index + 1}
-                      </ResourceLink>
-                    </ResourceItem>
-                  ))}
-                {lecture.lecture_resources_link &&
-                  lecture.lecture_resources_link.map((link, index) => (
-                    <ResourceItem key={`link-${index}`}>
-                      <ResourceLink href={link} target="_blank" rel="noopener noreferrer">
-                        <LinkIcon size={16} />
-                        External Resource {index + 1}
-                      </ResourceLink>
-                    </ResourceItem>
-                  ))}
-                  {
-                    console.log(lecture.lecture_content,"content")
-                  }
-
-                  
-              </ResourceList>
+                {lecture.lecture_content && (
+                  <LectureContent dangerouslySetInnerHTML={renderLectureContent(lecture.lecture_content)} />
+                )}
+                {(lecture.lecture_resources_pdf || lecture.lecture_resources_link) && (
+                  <ResourceList>
+                    {lecture.lecture_resources_pdf &&
+                      lecture.lecture_resources_pdf.map((pdf, index) => (
+                        <ResourceItem key={`pdf-${index}`}>
+                          <ResourceLink onClick={() => handlePDFClick(`https://api.novajobs.us/${pdf}`)}>
+                            <FileText size={16} />
+                            PDF Resource {index + 1}
+                          </ResourceLink>
+                        </ResourceItem>
+                      ))}
+                    {lecture.lecture_resources_link &&
+                      lecture.lecture_resources_link.map((link, index) => (
+                        <ResourceItem key={`link-${index}`}>
+                          <ResourceLink href={link} target="_blank" rel="noopener noreferrer">
+                            <LinkIcon size={16} />
+                            External Resource {index + 1}
+                          </ResourceLink>
+                        </ResourceItem>
+                      ))}
+                  </ResourceList>
+                )}
               </>
             )}
           </LectureItem>
@@ -440,6 +549,86 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
     </LectureList>
   );
 };
+// const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loadingStates }) => {
+//   const [expandedLectures, setExpandedLectures] = useState({});
+
+//   const toggleLecture = (lectureId) => {
+//     setExpandedLectures((prev) => ({
+//       ...prev,
+//       [lectureId]: !prev[lectureId],
+//     }));
+//   };
+  
+//   const renderLectureContent = (content) => {
+//     return { __html: content };
+//   };
+//   return (
+//     <LectureList>
+//       {section.lectures && section.lectures.length > 0 ? (
+//         section.lectures.map((lecture) => (
+//           <LectureItem key={lecture.id}>
+//             <LectureHeader onClick={() => toggleLecture(lecture.id)}>
+//               <LectureName>
+//                 <StyledPlay size={20} />
+//                 {lecture.lecture_name}
+//               </LectureName>
+//               <div>
+//                 <PreviewButton
+//                   onClick={(e) => {
+//                     e.stopPropagation();
+//                     handlePreviewClick(lecture, section.id);
+//                   }}
+//                   disabled={loadingStates[lecture.id]}
+//                 >
+//                   {loadingStates[lecture.id] ? 'Loading...' : 'Preview'}
+//                 </PreviewButton>
+//                 <ExpandButton>
+//                   {expandedLectures[lecture.id] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+//                 </ExpandButton>
+//               </div>
+//             </LectureHeader>
+//             {expandedLectures[lecture.id] && (lecture.lecture_resources_pdf || lecture.lecture_resources_link) && (
+//               <>
+//                   {lecture.lecture_content && (
+//                 <LectureContent dangerouslySetInnerHTML={renderLectureContent(lecture.lecture_content)} />
+//               )}
+//               <ResourceList>
+//                 {lecture.lecture_resources_pdf &&
+//                   lecture.lecture_resources_pdf.map((pdf, index) => (
+//                     <ResourceItem key={`pdf-${index}`}>
+//                       <ResourceLink onClick={() => handlePDFClick(`https://api.novajobs.us/${pdf}`)}>
+//                         <FileText size={16} />
+//                         PDF Resource {index + 1}
+//                       </ResourceLink>
+//                     </ResourceItem>
+//                   ))}
+//                 {lecture.lecture_resources_link &&
+//                   lecture.lecture_resources_link.map((link, index) => (
+//                     <ResourceItem key={`link-${index}`}>
+//                       <ResourceLink href={link} target="_blank" rel="noopener noreferrer">
+//                         <LinkIcon size={16} />
+//                         External Resource {index + 1}
+//                       </ResourceLink>
+//                     </ResourceItem>
+//                   ))}
+//                   {
+//                     console.log(lecture.lecture_content,"content")
+//                   }
+
+                  
+//               </ResourceList>
+//               </>
+//             )}
+//           </LectureItem>
+//         ))
+//       ) : (
+//         <LectureItem>
+//           <LectureHeader>No lectures available for this section.</LectureHeader>
+//         </LectureItem>
+//       )}
+//     </LectureList>
+//   );
+// };
 
 LectureListComponent.propTypes = {
   section: PropTypes.shape({
