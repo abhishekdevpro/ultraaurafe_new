@@ -1164,7 +1164,7 @@ const CourseList = () => {
 
               <InnerPage courses={courses} />
 
-              <div className="text-center">
+              <div className="text-center pt-4">
                 <button
                   className="btn btn-primary"
                   onClick={handleClearFilters}

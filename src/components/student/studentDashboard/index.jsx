@@ -861,7 +861,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import StudentHeader from "../header";
 import StudentSidebar from "../sidebar";
-import { Icon1, Icon2, User1 } from "../../imagepath";
+import { Icon1, Icon2} from "../../imagepath";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { toast } from "react-toastify";
@@ -900,6 +900,31 @@ const ExploreButton = styled.button`
 
   &:hover {
     background-color: #0056b3;
+  }
+`;
+const StartLessonButton = styled.button`
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 12px 0;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  width: 100%;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+
+  &:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+  }
+
+  &:focus {
+    outline: none;
+    border: 2px solid #2e7d32;
+    background-color: #45a049;
   }
 `;
 
@@ -1082,7 +1107,7 @@ const StudentDashboard = () => {
                                   to={`/instructor/instructor-profile/${course.trainer_id}`}
                                 >
                                   <img
-                                    src={User1}
+                                    src={`https://api.novajobs.us/${course.trainer_photo}`}
                                     alt="Instructor"
                                     className="img-fluid"
                                   />
@@ -1142,9 +1167,9 @@ const StudentDashboard = () => {
                             </div>
                             <div>
                               <Link to={`/course-info/${course.id}`}>
-                                <button className="btn btn-primary w-full">
+                                <StartLessonButton>
                                   Start the Lesson
-                                </button>
+                                </StartLessonButton>
                               </Link>
                             </div>
                           </div>

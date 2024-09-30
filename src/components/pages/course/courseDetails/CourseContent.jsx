@@ -96,7 +96,7 @@ const PDFViewer = styled.iframe`
   border: none;
 `;
 
-const VideoModal = ({ isOpen, onClose, lecture, streamingUrl, error, courseId, sectionId }) => {
+const VideoModal = ({ isOpen, onClose, lecture, streamingUrl, error, courseId, sectionId}) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
@@ -148,7 +148,9 @@ const VideoModal = ({ isOpen, onClose, lecture, streamingUrl, error, courseId, s
         </ModalHeader>
         <ModalBody>
           {error ? (
-            <ErrorMessage>{error}</ErrorMessage>
+            <ErrorMessage>
+              {error}
+            </ErrorMessage>
           ) : streamingUrl ? (
             <VideoPlayer
               src={streamingUrl}
@@ -207,7 +209,8 @@ PDFViewerModal.propTypes = {
   pdfUrl: PropTypes.string.isRequired,
 };
 
-const CourseContent = ({ courseData }) => {
+const CourseContent = ({ courseData}) => {
+  console.log(courseData);
   const [open, setOpen] = useState({});
   const [selectedLecture, setSelectedLecture] = useState(null);
   const [streamingUrl, setStreamingUrl] = useState(null);

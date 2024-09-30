@@ -1,32 +1,62 @@
-
-import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import axios from 'axios';
-import Footer from '../../footer';
-import {
-  Icon1,
-  Icon2,
-} from "../../imagepath";
-import Header from '../../header';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import Footer from "../../footer";
+import { Icon1, Icon2 } from "../../imagepath";
+import Header from "../../header";
+import dummy from "../../../assets/Online Course.png";
+import { toast } from "react-toastify";
 
 const InstructorProfile = () => {
+  const [isClassAdded, setIsClassAdded] = useState([]);
   const [profileData, setProfileData] = useState(null);
   const { id } = useParams(); // Assuming you're using react-router and have a route parameter for the trainer ID
-
+ const navigate = useNavigate();
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get(`https://api.novajobs.us/api/trainers/trainer-profile/${id}`);
-        console.log(response,"ghjk");
+        const response = await axios.get(
+          `https://api.novajobs.us/api/trainers/trainer-profile/${id}`
+        );
+        console.log(response, "ghjk");
         setProfileData(response.data.data);
       } catch (error) {
-        console.error('Error fetching profile data:', error);
+        console.error("Error fetching profile data:", error);
       }
     };
 
     fetchProfileData();
   }, [id]);
+  const toggleClass = async (courseId) => {
+    const updatedClasses = [...isClassAdded];
+    updatedClasses[courseId] = !updatedClasses[courseId];
+    setIsClassAdded(updatedClasses);
 
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        toast.error("Please log in to add courses to favorites.");
+        navigate("/login");
+        return;
+      }
+      await axios.post(
+        "https://api.novajobs.us/api/students/course-favorite",
+        { course_id: courseId },
+        {
+          headers: {
+            Authorization: `${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      // Show success toast
+      toast.success("Course added to favorites!");
+    } catch (error) {
+      console.error("Failed to add course to favorites:", error);
+      // Show error toast
+      toast.error("Failed to add course to favorites. Please try again.");
+    }
+  };
   if (!profileData) return <div>Loading...</div>;
 
   const { trainer, courses } = profileData;
@@ -34,7 +64,7 @@ const InstructorProfile = () => {
   return (
     <div className="main-wrapper">
       {/* Header component would go here */}
-      <Header/>
+      <Header />
       {/* Breadcrumb */}
       {/* <div className="breadcrumb-bar">
         <div className="container">
@@ -55,32 +85,46 @@ const InstructorProfile = () => {
             <div className="col-md-12 col-12">
               <div className="profile-info-blk">
                 <Link to="#" className="profile-info-img">
-                  <img src={`https://api.novajobs.us${trainer.photo}`} alt={`${trainer.first_name} ${trainer.last_name}`} className="img-fluid" />
+                  <img
+                    src={`https://api.novajobs.us${trainer.photo}`}
+                    alt={`${trainer.first_name} ${trainer.last_name}`}
+                    className="img-fluid"
+                  />
                 </Link>
                 <h4>
-                  <Link to="#">{trainer.first_name} {trainer.last_name}</Link>
+                  <Link to="#">
+                    {trainer.first_name} {trainer.last_name}
+                  </Link>
                   <span>{trainer.jobtitle}</span>
                 </h4>
                 <p>Instructor</p>
                 <ul className="list-unstyled inline-inline profile-info-social">
                   {trainer.facebook && (
                     <li className="list-inline-item">
-                      <Link to={trainer.facebook}><i className="fa-brands fa-facebook"></i></Link>
+                      <Link to={trainer.facebook}>
+                        <i className="fa-brands fa-facebook"></i>
+                      </Link>
                     </li>
                   )}
                   {trainer.twitter && (
                     <li className="list-inline-item">
-                      <Link to={trainer.twitter}><i className="fa-brands fa-twitter"></i></Link>
+                      <Link to={trainer.twitter}>
+                        <i className="fa-brands fa-twitter"></i>
+                      </Link>
                     </li>
                   )}
                   {trainer.linkedin && (
                     <li className="list-inline-item">
-                      <Link to={trainer.linkedin}><i className="fa-brands fa-linkedin"></i></Link>
+                      <Link to={trainer.linkedin}>
+                        <i className="fa-brands fa-linkedin"></i>
+                      </Link>
                     </li>
                   )}
                   {trainer.youtube && (
                     <li className="list-inline-item">
-                      <Link to={trainer.youtube}><i className="fa-brands fa-youtube"></i></Link>
+                      <Link to={trainer.youtube}>
+                        <i className="fa-brands fa-youtube"></i>
+                      </Link>
                     </li>
                   )}
                 </ul>
@@ -114,29 +158,68 @@ const InstructorProfile = () => {
                           <div className="product">
                             <div className="product-img">
                               <Link to={`/course-info/${course.id}`}>
-                                <img className="img-fluid" alt={course.course_title} src={`https://api.novajobs.us${course.course_banner_image}`} />
+                                <img
+                                  src={
+                                    course.course_banner_image
+                                      ? `https://api.novajobs.us${course.course_banner_image}`
+                                      : dummy
+                                  }
+                                  alt="Course Banner"
+                                  className="course-banner"
+                                />
                               </Link>
                               <div className="price">
-                                <h3>${course.after_discount_price} <span>${course.course_price}</span></h3>
+                                <h3>
+                                  ${course.after_discount_price}{" "}
+                                  <span>${course.course_price}</span>
+                                </h3>
                               </div>
                             </div>
                             <div className="product-content">
                               <div className="course-group d-flex">
                                 <div className="course-group-img d-flex">
-                                  <Link to={`/instructor-profile/${trainer.id}`}>
-                                    <img src={`https://api.novajobs.us${trainer.photo}`} alt={`${trainer.first_name} ${trainer.last_name}`} className="img-fluid" />
+                                  <Link
+                                    to={`/instructor-profile/${trainer.id}`}
+                                  >
+                                    <img
+                                      src={`https://api.novajobs.us${trainer.photo}`}
+                                      alt={`${trainer.first_name} ${trainer.last_name}`}
+                                      className="img-fluid"
+                                    />
                                   </Link>
                                   <div className="course-name">
-                                    <h4><Link to={`/instructor-profile/${trainer.id}`}>{trainer.first_name} {trainer.last_name}</Link></h4>
+                                    <h4>
+                                      <Link
+                                        to={`/instructor-profile/${trainer.id}`}
+                                      >
+                                        {trainer.first_name} {trainer.last_name}
+                                      </Link>
+                                    </h4>
                                     <p>Instructor</p>
                                   </div>
                                 </div>
-                                <div className="course-share d-flex align-items-center justify-content-center">
-                                  <Link to="#"><i className="fa-regular fa-heart"></i></Link>
-                                </div>
+                                {/* <div className="course-share d-flex align-items-center justify-content-center">
+                                  <Link to="#">
+                                    <i className="fa-regular fa-heart"></i>
+                                  </Link>
+                                </div> */}
+                                 <div className="course-share d-flex align-items-center justify-content-center">
+                                <Link
+                                  to="#"
+                                  onClick={() => toggleClass(course.id)}
+                                >
+                                  <i
+                                    className={`fa-regular fa-heart ${
+                                      isClassAdded[course.id] ? "color-active" : ""
+                                    }`}
+                                  />
+                                </Link>
+                              </div>
                               </div>
                               <h3 className="title instructor-text">
-                                <Link to={`/course-info/${course.id}`}>{course.course_title}</Link>
+                                <Link to={`/course-info/${course.id}`}>
+                                  {course.course_title}
+                                </Link>
                               </h3>
                               <div className="course-info d-flex align-items-center border-0 m-0">
                                 <div className="rating-img d-flex align-items-center">
@@ -150,14 +233,27 @@ const InstructorProfile = () => {
                               </div>
                               <div className="rating">
                                 {[...Array(5)].map((_, index) => (
-                                  <i key={index} className={`fas fa-star ${index < Math.floor(course.rating) ? 'filled' : ''}`}></i>
+                                  <i
+                                    key={index}
+                                    className={`fas fa-star ${
+                                      index < Math.floor(course.rating)
+                                        ? "filled"
+                                        : ""
+                                    }`}
+                                  ></i>
                                 ))}
                                 <span className="d-inline-block average-rating">
-                                  <span>{course.rating.toFixed(1)}</span> ({course.enrolled_student_count})
+                                  <span>{course.rating.toFixed(1)}</span> (
+                                  {course.enrolled_student_count})
                                 </span>
                               </div>
                               <div className="all-btn all-category d-flex align-items-center">
-                                <Link to={`/checkout/${course.id}`} className="btn btn-primary">BUY NOW</Link>
+                                <Link
+                                  to={`/checkout/${course.id}`}
+                                  className="btn btn-primary"
+                                >
+                                  BUY NOW
+                                </Link>
                               </div>
                             </div>
                           </div>
@@ -167,7 +263,6 @@ const InstructorProfile = () => {
                   </div>
                 </div>
               </div>
-              
             </div>
 
             <div className="col-lg-4">
@@ -178,10 +273,23 @@ const InstructorProfile = () => {
                   <div className="rating-grp">
                     <div className="rating">
                       {[...Array(5)].map((_, index) => (
-                        <i key={index} className={`fas fa-star ${index < Math.floor(trainer.rating || 0) ? 'filled' : ''}`}></i>
+                        <i
+                          key={index}
+                          className={`fas fa-star ${
+                            index < Math.floor(trainer.rating || 0)
+                              ? "filled"
+                              : ""
+                          }`}
+                        ></i>
                       ))}
                       <span className="d-inline-block average-rating">
-                        <span>{(trainer.rating || 0).toFixed(1)}</span> ({courses.reduce((total, course) => total + course.enrolled_student_count, 0)})
+                        <span>{(trainer.rating || 0).toFixed(1)}</span> (
+                        {courses.reduce(
+                          (total, course) =>
+                            total + course.enrolled_student_count,
+                          0
+                        )}
+                        )
                       </span>
                     </div>
                   </div>
@@ -200,7 +308,13 @@ const InstructorProfile = () => {
                         <img src={Icon1} alt="Total Students" />
                       </div>
                       <div className="list-content-blk flex-grow-1 ms-3">
-                        <h5>{courses.reduce((total, course) => total + course.enrolled_student_count, 0)}</h5>
+                        <h5>
+                          {courses.reduce(
+                            (total, course) =>
+                              total + course.enrolled_student_count,
+                            0
+                          )}
+                        </h5>
                         <p>Total Students</p>
                       </div>
                     </div>

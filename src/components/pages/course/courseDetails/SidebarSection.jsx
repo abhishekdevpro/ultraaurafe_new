@@ -18,6 +18,7 @@ import { Modal, Button, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import ShareButton from "./Sharebutton";
+import { Loader } from "lucide-react";
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -224,7 +225,8 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   const [isClassAdded, setIsClassAdded] = useState([]);
   const token = localStorage.getItem("token");
   const [isExpanded, setIsExpanded] = useState(false);
-
+  // const [showBanner, setShowBanner] = useState(false);
+  const [videoPlaying, setVideoPlaying] = useState(false);
   const toggleReadMore = () => {
     setIsExpanded(!isExpanded);
   };
@@ -352,6 +354,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
 
   const handleVideoPlay = async () => {
     setLoading(true);
+    // setShowBanner(true);
     try {
       const response = await axios.get(
         `https://api.novajobs.us/api/students/streaming/${courseId}`,
@@ -367,10 +370,14 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
       console.log("Video URL:", videoUrl);
     } catch (error) {
       console.error("Error fetching video:", error);
-      alert("Unable to fetch video. Please try again later.");
+      toast.error("Unable to fetch video. Please try again later.");
     } finally {
       setLoading(false);
     }
+    setTimeout(() => {
+      setLoading(false);
+      setVideoPlaying(true); // Set videoPlaying to true when play button is clicked
+    }, 2000);
   };
   const isFavorite = isClassAdded[courseData.course_id];
   return (
@@ -381,23 +388,32 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
           <div className="video-sec vid-bg">
             <div className="card">
               <div className="card-body">
-                {videoUrl ? (
-                  <video controls>
-                    <source src={videoUrl} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                ) : (
-                  <button
-                    onClick={handleVideoPlay}
-                    className="video-thumbnail"
-                    data-fancybox=""
-                  >
-                    <div className="play-icon">
-                      <i className="fa-solid fa-play" />
+              
+      {videoPlaying ? (
+              videoUrl ? (
+                <video controls onLoadStart={() => setLoading(true)} onLoadedData={() => setLoading(false)}>
+                  <source src={videoUrl} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <img src={`https://api.novajobs.us${courseFeatureData.course_banner_image}`} alt="Course Banner" className="course-banner" />
+              )
+            ) : (
+              <div className="video-thumbnail-container">
+                <button onClick={handleVideoPlay} className="video-thumbnail" data-fancybox="">
+                  {loading ? (
+                    <img src={Loader} alt="Loading..." className="loader" />
+                  ) : (
+                    <div className="default-thumbnail">
+                      <img src={Video2} alt="Default Thumbnail" className="default-image" />
+                      <div className="play-icon">
+                        <i className="fa-solid fa-play" />
+                      </div>
                     </div>
-                    <img src={Video2} alt="Video Thumbnail" />
-                  </button>
-                )}
+                  )}
+                </button>
+              </div>
+            )}
 
                 <div className="video-details">
                  {courseFeatureData.course_price == 0? <div className="course-fee">
@@ -616,6 +632,7 @@ SidebarSection.propTypes = {
     total_lectures: PropTypes.number.isRequired,
     course_level_name: PropTypes.string.isRequired,
     learning_objectives: PropTypes.string.isRequired,
+    course_banner_image: PropTypes.string.isRequired,
   }).isRequired,
   courseData: PropTypes.shape({
     course_id: PropTypes.number.isRequired,
