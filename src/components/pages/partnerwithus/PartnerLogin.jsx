@@ -161,13 +161,15 @@ const Login = () => {
                                             </button>
                                         </div>
                                     </form>
-                                    <div className="signup-link">
-                                        <p>Don’t have an account?{" "}
-                                            <Link to="/partner-signup">
-                                                Sign up
-                                            </Link>
-                                        </p>
-                                    </div>
+                                    <div className="signup-link text-center mt-4">
+    <p className="mb-0">
+        Don’t have an account?{" "}
+        <Link to="/partner-signup" className="text-primary fw-bold">
+            Sign up
+        </Link>
+    </p>
+</div>
+
                                 </div>
                             </div>
                             <div className="google-bg text-center">

@@ -13,6 +13,7 @@ import CommentsList from "./CommentList";
 import CourseProgressBar from "./CourseProgress";
 
 const DetailsContent = ({ courseFeatureData }) => {
+  console.log(courseFeatureData,"cfd");
   const [courseData, setCourseData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

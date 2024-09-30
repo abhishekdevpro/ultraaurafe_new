@@ -114,7 +114,7 @@ const Partnerwithus = () => {
                                             <Link to="/home">Back to Home</Link>
                                         </div>
                                     </div>
-                                    <h1>Sign into Your Account</h1>
+                                    <h1>Sign up into Your Account</h1>
                                     <form onSubmit={handleSubmit}>
                                         <div className="input-block">
                                             <label className="form-control-label">Your Company / Institute Name</label>
@@ -245,15 +245,22 @@ const Partnerwithus = () => {
                                         </div>
                                         <div className="d-grid">
                                             <button className="btn btn-start" type="submit">
-                                                Sign In
+                                                Sign up
                                             </button>
                                         </div>
+                                        
+                                        <div className="signup-link text-center mt-4">
+    <p className="mb-0">
+        Already have an account?{" "}
+        <Link to="/partner-signin" className="text-primary fw-bold">
+            Sign in
+        </Link>
+    </p>
+</div>
                                     </form>
                                 </div>
                             </div>
-                            <div className="google-bg text-center">
-                                {/* Social login options... */}
-                            </div>
+                           
                         </div>
                     </div>
                 </div>

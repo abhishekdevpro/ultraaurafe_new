@@ -206,7 +206,7 @@ const CourseTable = () => {
                   <td>
                     <button
                       className="btn btn-primary action-btn"
-                      onClick={() => handleEditCourse(course.id)}
+                      onClick={() => handleEditCourse(course.id,course.is_active)}
                     >
                       <FeatherIcon icon="edit" className="me-2" />
                       Edit
