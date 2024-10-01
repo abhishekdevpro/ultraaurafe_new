@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Home, LogOut, User, Menu, X } from "react-feather";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo5 from "../../../assets/logo5.png";
 // import DarkMode from "../../common/darkMode";
 import axios from "axios";
@@ -214,7 +214,6 @@ export default function StudentHeader() {
   const [profileData, setProfileData] = useState(null);
 
   const profile = useRef();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -276,8 +275,9 @@ export default function StudentHeader() {
   }
 
   const handleLogout = () => {
+    console.log("check");
     localStorage.removeItem('token');
-    navigate('/home');
+    window.location.href = '/login'
   };
 console.log(profileData,"profile");
   return (

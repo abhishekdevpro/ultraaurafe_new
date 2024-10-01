@@ -119,10 +119,9 @@ const AddCourse = () => {
   const vendorToken = localStorage.getItem("vendorToken");
   const adminToken = localStorage.getItem("adminToken");
 
-  let token; // Determine which token is present and set it for authorization
-  let role; // Define a role variable to store the role
+  let token; 
+  let role; 
 
-  // Determine which token to use and set the corresponding role
   if (trainerToken) {
     token = trainerToken;
     role = "instructor"; // Set role to 'trainer'

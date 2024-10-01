@@ -237,7 +237,7 @@
 // export default VendorHeader;
 import React, { useEffect, useRef, useState } from "react";
 import { Home, LogOut, ShoppingCart, Menu, X } from "react-feather";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import styled from 'styled-components';
 import logo5 from '../../assets/logo5.png'
@@ -444,7 +444,6 @@ export default function VendorHeader() {
   const [profileData, setProfileData] = useState(null);
 
   const profile = useRef();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('vendorToken');
@@ -507,7 +506,7 @@ export default function VendorHeader() {
 
   const handleLogout = () => {
     localStorage.removeItem('vendorToken');
-    navigate('/');
+    window.location.href = '/partner-signin'
   };
 
   return (
