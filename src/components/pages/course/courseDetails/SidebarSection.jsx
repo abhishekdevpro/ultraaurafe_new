@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Chapter,
@@ -227,8 +227,19 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   // const [showBanner, setShowBanner] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState(false);
+  const [showTestModal, setShowTestModal] = useState(false);
   const toggleReadMore = () => {
     setIsExpanded(!isExpanded);
+  };
+
+  const handleTakeTest = () => {
+    setShowTestModal(false);
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+      window.location.href = `/student/student-skilltest/${courseData.course_id}/${courseData.course_title}`;
+    }, 2000);
   };
 
   // The length at which content should be truncated
@@ -470,13 +481,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                       </button>
                     )}
 
-                    {token && (
-                      <Link
-                        to={`/student/student-skilltest/${courseData.course_id}/${courseData.course_title}`}
-                      >
-                        <button className="btn-enroll w-100">Take Test</button>
-                      </Link>
-                    )}
+            
 
                     {token &&
                       courseData.is_student_enroll &&
@@ -488,6 +493,14 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                           Download Certificate
                         </button>
                       )}
+                      {token && (
+          <button
+            className="btn-enroll w-100"
+            onClick={() => setShowTestModal(true)}
+          >
+            Take Test
+          </button>
+        )}
                   </ButtonWrapper>
                 </div>
               </div>
@@ -516,6 +529,27 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
             </Button>
           </Modal.Footer>
         </Modal>
+
+        <Modal show={showTestModal} onHide={() => setShowTestModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Action</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Are you sure you want to take the test for this course?</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowTestModal(false)}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleTakeTest}>
+            {loading ? (
+              <Spinner as="span" animation="border" size="sm" />
+            ) : (
+              'Confirm and Take Test'
+            )}
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
         {/* Include Section */}
         <div className="card include-sec">
