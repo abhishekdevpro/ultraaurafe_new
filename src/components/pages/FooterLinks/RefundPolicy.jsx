@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import PageHeader from '../header';
 import Footer from '../../footer';
@@ -52,6 +52,9 @@ const Section = styled.section`
 `;
 
 const RefundPolicy = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <PageHeader />
