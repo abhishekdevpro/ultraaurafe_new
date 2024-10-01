@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import StickyBox from "react-sticky-box";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation} from "react-router-dom";
 import vendorLogo from "../../assets/img/profile-pro.png"; // Placeholder logo for vendor
 import axios from "axios";
 
@@ -25,6 +25,11 @@ export default function VendorSidebar() {
         console.error("Error fetching profile data:", error);
       });
   }, []);
+  const handleLogout = () => {
+    localStorage.removeItem('vendorToken');
+    window.location.href = '/partner-signin'
+  };
+
 
   return (
     <div className="col-xl-3 col-lg-3 theiaStickySidebar">
@@ -157,7 +162,7 @@ export default function VendorSidebar() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/patnerwithus" className="nav-link">
+                <Link  className="nav-link" onClick={handleLogout}>
                   <i className="bx bxs-log-out" />
                   Logout
                 </Link>
