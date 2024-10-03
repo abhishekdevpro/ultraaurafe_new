@@ -434,7 +434,7 @@ export function AdminHeader() {
               <NavItem to="">
                 <Star size={20} /> Edit Profile
               </NavItem>
-              <NavItem as="button" onClick={handleLogout}>
+              <NavItem onClick={handleLogout}>
                 <LogOut size={20} /> Logout
               </NavItem>
             </ProfileMenu>

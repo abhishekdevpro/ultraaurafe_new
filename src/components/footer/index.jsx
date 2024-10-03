@@ -112,9 +112,43 @@ const FooterMenuList = styled.ul`
   }
 `;
 
+// const NewsletterForm = styled.form`
+//   display: flex;
+//   align-items: center;
+//   border:2px solid red;
+
+//   input {
+//     flex: 1;
+//     padding: 10px;
+//     font-size: 14px;
+//     border: 1px solid #ddd;
+//     border-radius: 4px 0 0 4px;
+//     margin-right: -1px;
+//   }
+
+//   button {
+//     padding: 10px 15px;
+//     font-size: 14px;
+//     background-color: #007bff;
+//     color: white;
+//     border: 1px solid #007bff;
+//     border-radius: 0 4px 4px 0;
+//     cursor: pointer;
+//     transition: background-color 0.3s ease;
+
+//     &:hover {
+//       background-color: #0056b3;
+//     }
+//   }
+// `;
 const NewsletterForm = styled.form`
   display: flex;
   align-items: center;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 10px;
+  box-sizing: border-box;
 
   input {
     flex: 1;
@@ -123,6 +157,17 @@ const NewsletterForm = styled.form`
     border: 1px solid #ddd;
     border-radius: 4px 0 0 4px;
     margin-right: -1px;
+    width: 100%;
+    box-sizing: border-box;
+
+    @media (max-width: 768px) {
+      font-size: 13px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 12px;
+      padding: 8px;
+    }
   }
 
   button {
@@ -137,6 +182,31 @@ const NewsletterForm = styled.form`
 
     &:hover {
       background-color: #0056b3;
+    }
+
+    @media (max-width: 768px) {
+      font-size: 13px;
+      padding: 9px 12px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 12px;
+      padding: 8px 10px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+
+    input {
+      border-radius: 4px;
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+
+    button {
+      border-radius: 4px;
+      width: 100%;
     }
   }
 `;
@@ -193,101 +263,8 @@ const CopyrightText = styled.p`
   color: #555;
 `;
 
-// Footer Component
-// const Footer = () => {
-//   return (
-//     <FooterWrapper>
-//       <FooterTop>
-//         <Container>
-//           <FooterContent>
-//             <CompanyInfoColumn>
-//               <FooterWidget>
-//                 <FooterLogo>
-//                   <img src={logo5} alt="logo" />
-//                 </FooterLogo>
-//                 <FooterAboutContent>
-//                    An AI enabled Edtech Company
-//                 </FooterAboutContent>
-//                 <FooterContactInfo>
-//                   <div className="footer-address">
-//                     <img src={Icon20} alt="" />
-//                     <p>
-//                       1509 Lady St, Columbia, SC 29201,<br /> United States
-//                     </p>
-//                   </div>
-//                   <p>
-//                     <img src={Icon19} alt="" />
-//                     info@ultraaura.education
-//                   </p>
-                 
-//                 </FooterContactInfo>
-//               </FooterWidget>
-//               <FooterWidget>
-//                 <FooterTitle>Newsletter</FooterTitle>
-//                 <NewsletterForm>
-//                   <input
-//                     type="email"
-//                     placeholder="Enter your email address"
-//                     name="email"
-//                   />
-//                   <button type="submit">Subscribe</button>
-//                 </NewsletterForm>
-//               </FooterWidget>
-//             </CompanyInfoColumn>
-//             <LinksColumn>
-//               <FooterWidget>
-//                 <FooterTitle>About us</FooterTitle>
-//                 <FooterMenuList>
-//                   <li><Link to="/about-us">About Us</Link></li>
-//                   <li><Link to="/careers">Careers</Link></li>
-//                   <li><Link to="/trainers">Trainers</Link></li>
-//                 </FooterMenuList>
-//               </FooterWidget>
-//               <FooterWidget>
-//                 <FooterTitle>For Students</FooterTitle>
-//                 <FooterMenuList>
-//                   <li><Link to="/studentspage">Students</Link></li>
-//                   <li><Link to="/refund">Refund Policy</Link></li>
-//                   <li><Link to="/skilltests">Skill Tests</Link></li>
-//                   <li><Link to="/certifications">Certifications</Link></li>
-//                   <li><Link to="/ai-resume">AI Resume Building</Link></li>
-//                 </FooterMenuList>
-//               </FooterWidget>
-//               <FooterWidget>
-//                 <FooterTitle>
-//                   <Link to={'/partners'}>Partner with UltraAura</Link>
-//                 </FooterTitle>
-//                 <FooterMenuList>
-//                   <li><Link to="/login">Student Login</Link></li>
-//                   <li><Link to="/login">Trainer Login</Link></li>
-//                   <li><Link to="/partner-signup">Partner Signup</Link></li>
-//                 </FooterMenuList>
-//               </FooterWidget>
-//             </LinksColumn>
-//           </FooterContent>
-//         </Container>
-//       </FooterTop>
-//       <FooterBottom>
-//         <Container>
-//           <Copyright>
-//             <PrivacyPolicy>
-//               <ul>
-//                 <li><Link to="/term-condition">Terms</Link></li>
-//                 <li><Link to="/privacy-policy">Privacy</Link></li>
-//               </ul>
-//             </PrivacyPolicy>
-//             <CopyrightText>© 2024 UltraAura. All rights reserved.</CopyrightText>
-//           </Copyright>
-//         </Container>
-//       </FooterBottom>
-//     </FooterWrapper>
-//   );
-// };
-
-// export default Footer;
 const Footer = () => {
   const [email, setEmail] = useState('');
-  const [subscriptionStatus, setSubscriptionStatus] = useState('');
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -298,12 +275,10 @@ const Footer = () => {
     try {
       const response = await axios.post('https://api.novajobs.us/api/jobseeker/user-subscribe', { email });
       if (response.status === 200) {
-        setSubscriptionStatus('Subscribed successfully!');
         toast.success('Subscribed successfully!');
         setEmail('');
       }
     } catch (error) {
-      setSubscriptionStatus('Subscription failed. Please try again.');
       toast.error('Subscription failed. Please try again.');
       console.error('Subscription error:', error);
     }
@@ -348,7 +323,7 @@ const Footer = () => {
                   />
                   <button type="submit">Subscribe</button>
                 </NewsletterForm>
-                {subscriptionStatus && <p>{subscriptionStatus}</p>}
+                {/* {subscriptionStatus && <p>{subscriptionStatus}</p>} */}
               </FooterWidget>
             </CompanyInfoColumn>
             <LinksColumn>
