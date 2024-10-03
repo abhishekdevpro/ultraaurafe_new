@@ -516,6 +516,7 @@ export function InstructorHeader() {
   const handleLogout = () => {
     localStorage.removeItem('trainerToken');
     navigate('/login');
+    window.location.href= '/login';
   };
 
   if (!trainerData) {

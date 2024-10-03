@@ -544,8 +544,8 @@ export default function VendorHeader() {
                 <NavItem to="/vendor/dashboard">
                   <Home size={20} /> Dashboard
                 </NavItem>
-                <NavItem to="/vendor/orders">
-                  <ShoppingCart size={20} /> Orders
+                <NavItem to="/vendor/dashboard">
+                  <ShoppingCart size={20} /> My Courses
                 </NavItem>
                 <NavItem to="#" onClick={handleLogout}>
                   <LogOut size={20} /> Logout

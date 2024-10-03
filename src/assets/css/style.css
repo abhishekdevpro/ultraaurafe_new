@@ -1785,6 +1785,7 @@ html.menu-opened body {
 } */
 .girl-slide-img img {
   width: 100%;
+  height: 100%;
 }
 
 @media (max-width: 768px) { /* Adjust the width as per your mobile screen size preference */

@@ -4,15 +4,15 @@ import {
   // bannerimg,
   Become1,
   Become2,
-  CertificateIcon,
-  CourseIcon,
-  GratuateIcon,
+  // CertificateIcon,
+  // CourseIcon,
+  // GratuateIcon,
   Icon01,
   Icon02,
   Icon03,
   Icon04,
   Join,
-  PencilIcon,
+  // PencilIcon,
   Share,
 } from "../imagepath";
 import { useSelector } from "react-redux";
@@ -32,13 +32,14 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
 import FeaturedCourses from "./FeaturedCourses";
-import { useNavigate } from "react-router-dom";
-import { TypeAnimation } from "react-type-animation";
 // import { useNavigate } from "react-router-dom";
+// import { TypeAnimation } from "react-type-animation";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import PartnerList from "./PartnerList";
 import SubHeader from "../header/Sub-header";
 import home from './home-bg2.png'
+// import HomePage from "./HeroSection.jsx";
 // Container for the search bar
 const Container = styled.div`
   margin-bottom: 1rem;
@@ -149,29 +150,6 @@ const BannerContent = styled.div`
   display: flex;
   justify-content: center;
 `;
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
-  gap: 1rem;
-`;
-
-const StyledButton = styled.button`
-  background: ${(props) => (props.primary ? "#f66962" : "#ffffff")};
-  color: ${(props) => (props.primary ? "#ffffff" : "#f66962")};
-  border: 2px solid #f66962;
-  border-radius: 25px;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background: ${(props) => (props.primary ? "#fc7f50" : "#f66962")};
-    color: #ffffff;
-  }
-`;
 
 const customSelectStyles = {
   container: (base) => ({
@@ -199,7 +177,6 @@ const customSelectStyles = {
 };
 
 export const Home = () => {
-  // const [setValue] = useState(null);
   const [searchKeyword, setSearchKeyword] = useState(""); // State for the search input
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [categoryOptions, setCategoryOptions] = useState([]);
@@ -218,7 +195,7 @@ export const Home = () => {
     "Certifications",
   ]; // Array of texts for animation
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
-
+console.log(currentTextIndex);
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
     const interval = setInterval(() => {
@@ -273,9 +250,9 @@ export const Home = () => {
     navigate(`/course-list?${queryParams.toString()}`); // Use navigate for routing
   };
 
-  const handleAllCourses = () => {
-    navigate("/course-list");
-  };
+  // const handleAllCourses = () => {
+  //   navigate("/course-list");
+  // };
 
   // const loadChatbot = () => {
   //   // Check if the script is already added to avoid duplicate injections
@@ -308,193 +285,351 @@ export const Home = () => {
         <Header />
         <SubHeader />
         {/* banner */}
-        <section className="home-slide d-flex align-items-center">
+        {/* <section className="home-slide d-flex align-items-center">
           <div className="container">
             <div className="row ">
-              <div className="col-md-7">
+              <div className="col-md-8">
                 <div className="home-slide-face aos" data-aos="fade-up">
-                  {console.log(currentTextIndex)}
-                  {/* <div className="home-slide-text text-center">
-  <h5 className="d-none d-md-block">Empowering Futures: Anytime, Anywhere</h5>
-  <h2>
-    Take the next step towards your{" "}
-    <span className="animated-text">
-      {animatedText[currentTextIndex]}
-    </span>{" "}
-    at Ultra Aura with technology-enabled learning.
-  </h2>
-  <p className="d-none d-md-block">Own your future by learning new skills online</p>
-</div> */}
-                  <div className="home-slide-text text-center">
-                    {/* <h2 className="mb-2 " style={{fontWeight:"700"}}> Empowering Futures: Anytime, Anywhere</h2> */}
-                    <h2 className="mb-2" style={{ fontWeight: "700" }}>
-                      Empowering Futures:
-                      <span>
-                        <TypeAnimation
-                          sequence={[
-                            "Anytime", // Types "Anytime"
-                            1500, // Pause for 1.5 seconds after typing "Anytime"
-                            "", // Clears the text
-                            500, // Short pause before typing the next word
-                            "Anywhere", // Types "Anywhere"
-                            1500, // Pause for 1.5 seconds after typing "Anywhere"
-                            "", // Clears the text
-                            500, // Short pause before repeating
-                          ]}
-                          // wrapper="span"
-                          speed={-15} // Slower typing speed (adjust this value for slower typing)
-                          deletionSpeed={0} // Slower deletion speed
-                          repeat={Infinity} // Repeat the animation indefinitely
-                        />
-                      </span>
-                    </h2>
-                    {/* <h2>Take the next step towards your {" "}
-                 <TypeAnimation
-                   sequence={[
-                     
-                     " at Ultra Aura with technology-enabled learning.",
-                     1000,
-                     " Own your future by learning new skills online",
-                     1000,
-                    
-                   ]}
-                   wrapper="span"
-                   speed={50}
-                   repeat={Infinity}
-                 />
-               </h2> */}
-                    <Container>
-                      <BannerContent>
-                        <FormContainer action="/course-list">
-                          <FormInner>
-                            <InputGroup>
-                              <SearchIcon className="fa-solid fa-magnifying-glass" />
-                              <InputField
-                                type="text"
-                                placeholder="Search Course"
-                                value={searchKeyword}
-                                onChange={(e) =>
-                                  setSearchKeyword(e.target.value)
-                                }
-                              />
-                              <Select
-                                options={categoryOptions}
-                                value={selectedCategory}
-                                placeholder="Category"
-                                onChange={setSelectedCategory}
-                                styles={customSelectStyles}
-                              />
-                              <Select
-                                options={levelOptions}
-                                value={selectedLevel}
-                                placeholder="Levels"
-                                onChange={setSelectedLevel}
-                                styles={customSelectStyles}
-                              />
-                              <SearchButton
-                                type="button"
-                                onClick={handleSearch}
-                              >
-                                <i className="fas fa-arrow-right" />
-                              </SearchButton>
-                            </InputGroup>
-                          </FormInner>
-                        </FormContainer>
-                      </BannerContent>
-                    </Container>
-                    <ButtonContainer>
-                      <StyledButton onClick={handleAllCourses}>
-                        All Courses
-                      </StyledButton>
-                      {/* <StyledButton primary onClick={loadChatbot}>
-                        AI Assist
-                      </StyledButton>{" "} */}
-                    </ButtonContainer>
-                  </div>
-
-                  {/* <div className="container my-4">
-                    <div className="banner-content">
-                      <form className="form" action="/course-list">
-                        <div className="form-inner">
-                          <div className="input-group homeSearch">
-                            <i className="fa-solid fa-magnifying-glass search-icon" />
-                            <input
-                              type="text"
-                              className="form-control"
-                              placeholder="Search Course"
-                              value={searchKeyword}
-                              onChange={(e) => setSearchKeyword(e.target.value)}
-                            />
-                            <span className="input-group-append mx-2">
-                              <Select
-                                options={categoryOptions}
-                                value={selectedCategory}
-                                placeholder="Category"
-                                onChange={setSelectedCategory}
-                                styles={style}
-                              />
-                            </span>
-                            <span className="input-group-append mx-2">
-                              <Select
-                                options={levelOptions}
-                                value={selectedLevel}
-                                placeholder="Levels"
-                                onChange={setSelectedLevel}
-                                styles={style}
-                              />
-                            </span>
-                            <button className="btn btn-primary rounded" type="button" onClick={handleSearch}>
-                              <i className="fas fa-arrow-right" />
-                            </button>
-                          </div>
+                <h1>Welcome to Ultra Aura</h1>
+      <p>
+        Where new possibilities become reality every day. Are you ready to
+        explore a new opportunity for yourself? Let’s get started.
+      </p>
+                <section className="section py-5" data-aos="fade-up">
+          <div className="container border border-danger">
+            <div className="row">
+              <div className="col-lg-6 col-md-6 d-flex">
+                <div className="student-mentor cube-instuctor ">
+                  <h4>Partner with US</h4>
+                  <div className="row">
+                    <div className="col-lg-7 col-md-12 ">
+                      <div className="top-instructors">
+                        <p>
+                          Collaborate with UltraAura to expand educational
+                          opportunities and make a lasting impact. Partner with
+                          us to drive innovation and empower learners worldwide.
+                        </p>
+                        <div className="all-btn all-category d-flex align-items-center">
+                          <Link
+                            to="/partner-signin"
+                            className="btn btn-primary"
+                          >
+                            Partner with US
+                          </Link>
                         </div>
-                      </form>
-                    </div>
-                  </div> */}
-
-                  {/* <div className="trust-user">
-                    <p>
-                      Trusted by Users <br />
-                      Now Live worldwide
-                    </p>
-                    <div className="trust-rating d-flex align-items-center">
-                      <div className="rate-head">
-                        <h2>
-                          <span className="d-flex">
-                            <CountUp
-                              start={0}
-                              end={1000}
-                              delay={1}
-                              format={formatValue}
-                            />
-                            +
-                          </span>
-                        </h2>
-                      </div>
-                      <div className="rating d-flex align-items-center">
-                        <h2 className="d-inline-block average-rating">4.4</h2>
-                        <i className="fas fa-star filled me-1" />
-                        <i className="fas fa-star filled me-1" />
-                        <i className="fas fa-star filled me-1" />
-                        <i className="fas fa-star filled me-1" />
-                        <i className="fas fa-star filled me-1" />
                       </div>
                     </div>
-                  </div> */}
+                    <div className="col-lg-2 col-md-4">
+                      <div className="mentor-img">
+                        <img className="img-fluid" alt="" src={Become2} />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="col-md-5 d-flex align-items-center">
+              <div className="col-lg-6 col-md-6 d-flex">
+                <div className="student-mentor yellow-mentor">
+                  <h4>Transform Access To Education</h4>
+                  <div className="row">
+                    <div className="col-lg-8 col-md-12">
+                      <div className="top-instructors">
+                        <p>
+                          Create an account to receive our newsletter, course
+                          recommendations and promotions.
+                        </p>
+                        <div className="all-btn all-category d-flex align-items-center">
+                          <Link to="/register" className="btn btn-primary">
+                            Sign up
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-2 col-md-4">
+                      <div className="mentor-img">
+                        <img className="img-fluid" alt="" src={Become1} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+                                  </div>
+              </div>
+              <div className="col-md-4 d-flex align-items-center">
                 <div className="girl-slide-img aos" data-aos="fade-up">
                   <img src={home} alt="" />
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
+       {/* <section className="home-slide py-5">
+  <div className="container">
+    <div className="row align-items-center">
+      <div className="col-lg-8 mb-4 mb-lg-0">
+        <div className="home-slide-face">
+          <h1 className="display-4 mb-4">Welcome to Ultra Aura</h1>
+          <p className="lead mb-5">
+            Where new possibilities become reality every day. Are you ready to
+            explore a new opportunity for yourself? Let's get started.
+          </p>
+          
+          <Container>
+            <BannerContent>
+              <FormContainer action="/course-list">
+                <FormInner>
+                  <InputGroup>
+                    <SearchIcon className="fa-solid fa-magnifying-glass" />
+                    <InputField
+                      type="text"
+                      placeholder="Search Course"
+                      value={searchKeyword}
+                      onChange={(e) => setSearchKeyword(e.target.value)}
+                    />
+                    <Select
+                      options={categoryOptions}
+                      value={selectedCategory}
+                      placeholder="Category"
+                      onChange={setSelectedCategory}
+                      styles={customSelectStyles}
+                    />
+                    <Select
+                      options={levelOptions}
+                      value={selectedLevel}
+                      placeholder="Levels"
+                      onChange={setSelectedLevel}
+                      styles={customSelectStyles}
+                    />
+                    <SearchButton type="button" onClick={handleSearch}>
+                      <i className="fas fa-arrow-right" />
+                    </SearchButton>
+                  </InputGroup>
+                </FormInner>
+              </FormContainer>
+            </BannerContent>
+          </Container>
+
+          <div className="row g-4">
+            {/* Use d-flex to ensure row items stretch 
+            <div className="col-md-6 d-flex">
+              <div className="card w-100 shadow-sm" style={{ backgroundColor: '#ffdeda' }}>
+                <div className="card-body d-flex flex-column">
+                  <h4 className="card-title">Partner with US</h4>
+                  <div className="row flex-grow-1">
+                    <div className="col-9 d-flex flex-column">
+                      <p className="card-text flex-grow-1">
+                        Collaborate with UltraAura to expand educational opportunities and make a lasting impact. Partner with us to drive innovation and empower learners worldwide.
+                      </p>
+                      <div className="mt-auto">
+                        <Link to="/partner-signin" className="btn btn-primary">
+                          Partner with US
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="col-3">
+                      <img className="img-fluid" alt="Partner illustration" src={Become2} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="col-md-6 d-flex">
+              <div className="card w-100 shadow-sm" style={{ backgroundColor: '#ffe88f' }}>
+                <div className="card-body d-flex flex-column">
+                  <h4 className="card-title">Transform Access To Education</h4>
+                  <div className="row flex-grow-1">
+                    <div className="col-9 d-flex flex-column">
+                      <p className="card-text flex-grow-1">
+                        Create an account to receive our newsletter, course recommendations and promotions.
+                      </p>
+                      <div className="mt-auto">
+                        <Link to="/register" className="btn btn-primary">
+                          Sign up
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="col-3">
+                      <img className="img-fluid" alt="Education illustration" src={Become1} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div className="col-lg-4 d-none d-lg-block">
+        <div className="girl-slide-img">
+          <img src={home} alt="Featured illustration" className="img-fluid" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section> */}
+<section className="home-slide py-5">
+  <div className="container">
+    <div className="row align-items-center">
+      <div className="col-lg-8 mb-4 mb-lg-0">
+        <div className="home-slide-face">
+          <h1 className="display-4 mb-4">Welcome to Ultra Aura</h1>
+          <p className="lead mb-5">
+            Where new possibilities become reality every day. Are you ready to
+            explore a new opportunity for yourself? Lets get started.
+          </p>
+          
+          {/* Your existing Container and form code here */}
+          <Container>
+            <BannerContent>
+              <FormContainer action="/course-list">
+                <FormInner>
+                  <InputGroup>
+                    <SearchIcon className="fa-solid fa-magnifying-glass" />
+                    <InputField
+                      type="text"
+                      placeholder="Search Course"
+                      value={searchKeyword}
+                      onChange={(e) => setSearchKeyword(e.target.value)}
+                    />
+                    <Select
+                      options={categoryOptions}
+                      value={selectedCategory}
+                      placeholder="Category"
+                      onChange={setSelectedCategory}
+                      styles={customSelectStyles}
+                    />
+                    <Select
+                      options={levelOptions}
+                      value={selectedLevel}
+                      placeholder="Levels"
+                      onChange={setSelectedLevel}
+                      styles={customSelectStyles}
+                    />
+                    <SearchButton type="button" onClick={handleSearch}>
+                      <i className="fas fa-arrow-right" />
+                    </SearchButton>
+                  </InputGroup>
+                </FormInner>
+              </FormContainer>
+            </BannerContent>
+          </Container>
+
+
+          <div className="row g-4">
+            <div className="col-md-6 d-flex">
+              <div className="card w-100 shadow-lg transition-transform hover-lift" 
+                   style={{ 
+                     backgroundColor: '#ffdeda',
+                     transition: 'transform 0.3s ease-in-out',
+                     boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)'
+                   }}>
+                <div className="card-body d-flex flex-column p-4">
+                  <h4 className="card-title mb-3">Partner with US</h4>
+                  <div className="row flex-grow-1">
+                    <div className="col-8 d-flex flex-column">
+                      <p className="card-text flex-grow-1">
+                        Collaborate with UltraAura to expand educational opportunities and make a lasting impact. Partner with us to drive innovation and empower learners worldwide.
+                      </p>
+                      <div className="mt-auto">
+                        <Link to="/partner-signin" className="btn btn-primary btn-lg">
+                          Partner with US
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="col-4 d-flex align-items-center">
+                      <img 
+                        className="img-fluid rounded transition-transform hover-scale" 
+                        alt="Partner illustration" 
+                        src={Become2}
+                        style={{
+                          width: '150px',
+                          height: '150px',
+                          objectFit: 'cover',
+                          transition: 'transform 0.3s ease-in-out'
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="col-md-6 d-flex">
+              <div className="card w-100 shadow-lg transition-transform hover-lift"
+                   style={{ 
+                     backgroundColor: '#ffe88f',
+                     transition: 'transform 0.3s ease-in-out',
+                     boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)'
+                   }}>
+                <div className="card-body d-flex flex-column p-4">
+                  <h4 className="card-title mb-3">Transform Access To Education</h4>
+                  <div className="row flex-grow-1">
+                    <div className="col-8 d-flex flex-column">
+                      <p className="card-text flex-grow-1">
+                        Create an account to receive our newsletter, course recommendations and promotions.
+                      </p>
+                      <div className="mt-auto">
+                        <Link to="/register" className="btn btn-primary btn-lg">
+                          Sign up
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="col-4 d-flex align-items-center">
+                      <img 
+                        className="img-fluid rounded transition-transform hover-scale" 
+                        alt="Education illustration" 
+                        src={Become1}
+                        style={{
+                          width: '150px',
+                          height: '150px',
+                          objectFit: 'cover',
+                          transition: 'transform 0.3s ease-in-out'
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div className="col-lg-4 d-none d-lg-block">
+        <div className="girl-slide-img">
+          <img src={home} alt="Featured illustration" className="img-fluid" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>{`
+  .transition-transform {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-10px);
+  }
+  
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+  
+  .btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+  }
+`}</style>
+        {/* <HomePage /> */}
         {/* /banner */}
 
         {/* Home banner bottom */}
-        <section className="section student-course">
+        {/* <section className="section student-course">
           <div className="container">
             <div className="course-widget">
               <div className="row">
@@ -510,14 +645,14 @@ export const Home = () => {
                         </div>
                         <div className="course-inner-content">
                           <h4>
-                            {/* <span>10</span>K */}
+                            {/* <span>10</span>K 
                             <span className="d-flex">
                               {/* <CountUp
                                 start={0}
                                 end={10}
                                 delay={1}
                                 duration={4}
-                              /> */}
+                              /> *
                               100+
                             </span>
                           </h4>
@@ -540,7 +675,7 @@ export const Home = () => {
                         <div className="course-inner-content">
                           <h4>
                             <span className="d-flex">
-                              {/* <CountUp start={0} end={200} delay={1} />+ */}
+                              {/* <CountUp start={0} end={200} delay={1} />+ 
                               50+
                             </span>
                           </h4>
@@ -569,7 +704,7 @@ export const Home = () => {
                                 delay={1}
                                 duration={5}
                               />
-                              K+ */}
+                              K+ 
                               100+
                             </span>
                           </h4>
@@ -598,7 +733,7 @@ export const Home = () => {
                                 delay={1}
                                 duration={2}
                               />
-                              K + */}
+                              K + 
                               100+
                             </span>
                           </h4>
@@ -611,7 +746,7 @@ export const Home = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
         {/* Home banner bottom */}
 
         {/* Top Category with Owl Carousel */}
