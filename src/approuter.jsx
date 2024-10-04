@@ -164,6 +164,7 @@ import AdminCourseList from "./components/Admin/AdminCourse-List.jsx";
 import AddStudentForm from "./components/Admin/AddStudent.jsx";
 import AddTrainerForm from "./components/Admin/AddTrainer.jsx";
 import VendorProfile from "./components/Vendor/VendorPRofile.jsx";
+import ProtectedRoute from "./ProtectedRoute.jsx";
 const Approuter = () => {
   return (
     <BrowserRouter>
@@ -176,12 +177,14 @@ const Approuter = () => {
 
         
         {/* routes for course creation and edit  */}
+        <Route element={<ProtectedRoute/>}>
         <Route path="/add-section/:id" element={<AddSection />} />
         <Route path="/edit-section/:courseid/:sectionid" element={<EditSection />} />
         <Route path="/add-lecture/:courseid/:sectionid" element={<AddLecture />} />
         <Route path="/edit-lecture/:courseid/:sectionid/:lectureid" element={<EditLecture />} />
         <Route path="/edit-course/:id" element={<EditCourse />} />
         <Route path="/course-details/:id" element={<SectionsList />} />
+        </Route>
          {/* routes added by me  */}
 
         {/* Blog */}
@@ -273,6 +276,7 @@ const Approuter = () => {
         <Route path="/purchase-history" element={<PurchaseHistory />} />
 
         {/* instructor routes starts */}
+        <Route element={<ProtectedRoute />}>
         <Route
           path="/instructor/instructor-list"
           element={<InstructorList />}
@@ -465,9 +469,11 @@ const Approuter = () => {
           path="/instructor/instructor-course"
           element={<InstructorCourse />}
         />
+        </Route>
         {/* instructor routes ends*/}
 
         {/* student routes starts*/}
+        <Route element={<ProtectedRoute />} >
         <Route path="/student/student-courses" element={<StudentCourses />} />
         <Route
           path="/student/student-dashboard"
@@ -562,8 +568,11 @@ const Approuter = () => {
         />
         <Route path="/student/student-setting" element={<StudentSetting />} />
         <Route path="/student/student-ticket" element={<StudentTicket />} />
+        </Route>
+
         {/* student routes ends*/}
         {/* Admin routes starts*/}
+        <Route element={<ProtectedRoute />}>
         <Route path="/admin/login" element={<AdminLogin />} /> 
         <Route path="/admin/admin-dashboard" element={<AdminDashboard />} /> 
         <Route path="/admin/trainer-list" element={<TrainerList />} /> 
@@ -572,10 +581,12 @@ const Approuter = () => {
         <Route path="/admin/add-student" element={<AddStudentForm />} /> 
         <Route path="/admin/add-trainer" element={<AddTrainerForm />} /> 
         <Route path="/admin/add-course" element={<AddCourse />} /> 
+        </Route>
         {/* Admin routes ends*/}
 
 
          {/* Vendor Routes Start */}
+         <Route element={<ProtectedRoute />}>
         <Route path="/partner-signin" element={<PartnerLogin/>}/>
         <Route path="/partner-signup" element={<Partnerwithus/>}/>
         <Route path="/vendor/verify/:token" element={<Login2/>}/>
@@ -584,7 +595,7 @@ const Approuter = () => {
         <Route path="/vendor/vendor-dashboard" element={<VendorDashboard/>}/>
          <Route path="/vendor/vendor-profile" element={<VendorProfile/>}/>
          <Route path="/vendor/add-course" element={<AddCourse/>}/>
-
+         </Route>
          {/* Vendor Routes ends  */}
       </Routes>
     </BrowserRouter>

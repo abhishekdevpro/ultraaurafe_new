@@ -93,12 +93,12 @@ const EditLecture = () => {
 
         // Append video file if it's changed
         if (videoFile && typeof videoFile !== "string") {
-          formData.append("video", videoFile);
+          formData.append("files", videoFile);
         }
 
         // Append PDF file if it's changed
         if (pdfFile && typeof pdfFile !== "string") {
-          formData.append("pdf", pdfFile);
+          formData.append("resources", pdfFile);
         }
 
         formData.append("links", lectureData.links);
