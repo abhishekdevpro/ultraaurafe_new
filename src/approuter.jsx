@@ -572,8 +572,8 @@ const Approuter = () => {
 
         {/* student routes ends*/}
         {/* Admin routes starts*/}
-        <Route element={<ProtectedRoute />}>
         <Route path="/admin/login" element={<AdminLogin />} /> 
+        <Route element={<ProtectedRoute />}>
         <Route path="/admin/admin-dashboard" element={<AdminDashboard />} /> 
         <Route path="/admin/trainer-list" element={<TrainerList />} /> 
         <Route path="/admin/student-list" element={<StudentList />} /> 
@@ -586,9 +586,9 @@ const Approuter = () => {
 
 
          {/* Vendor Routes Start */}
-         <Route element={<ProtectedRoute />}>
         <Route path="/partner-signin" element={<PartnerLogin/>}/>
         <Route path="/partner-signup" element={<Partnerwithus/>}/>
+         <Route element={<ProtectedRoute />}>
         <Route path="/vendor/verify/:token" element={<Login2/>}/>
         <Route path="/vendor-forgot-password" element={<ForgotPasswordVendor />} />
         <Route path="/vendor/vendor-setting" element={<VendorSetting/>}/>
