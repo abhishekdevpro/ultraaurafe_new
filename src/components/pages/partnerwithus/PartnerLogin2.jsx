@@ -26,7 +26,7 @@ const Login2 = () => {
                     const response = await axios.get(`https://api.novajobs.us/api/${userType}/verify-account/${token}`);
                     if (response.status === 200) {
                         toast.success(response.data.message || "Account verified successfully!");
-                        if (userType === "vendor") {
+                        if (userType === "vendors") {
                             navigate("/partner-signin");
                         } else {
                             navigate("/login");

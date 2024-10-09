@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import OwlCarousel from "react-owl-carousel";
-import { LoginImg, logo } from "../../imagepath";
+import { LoginImg} from "../../imagepath";
+import logo from '../../../assets/logo5.png'
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { toast } from 'react-toastify'; // Import toast for notifications
@@ -70,7 +71,7 @@ const NewPassword = () => {
         }
 
         if (formData.newPassword !== formData.confirmNewPassword) {
-            toast.error("Passwords do not match");
+            toast.error( "Passwords do not match");
             return;
         }
 
@@ -98,7 +99,7 @@ const NewPassword = () => {
             }
         } catch (err) {
             console.log(err);
-            toast.error("Error resetting password.");
+            toast.error(err.response.data.message ||"Error resetting password.");
         }
     };
 
