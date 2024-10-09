@@ -98,7 +98,7 @@ const NewPasswordVendor = () => {
             }
         } catch (err) {
             console.log(err);
-            toast.error("Error resetting password.");
+            toast.error(err.response.data.message || "Error resetting password.");
         }
     };
 

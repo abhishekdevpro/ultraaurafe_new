@@ -98,7 +98,7 @@ const NewPassword2 = () => {
             }
         } catch (err) {
             console.log(err);
-            toast.error("Error resetting password.");
+            toast.error(err.response.data.message || "Error resetting password.");
         }
     };
 
