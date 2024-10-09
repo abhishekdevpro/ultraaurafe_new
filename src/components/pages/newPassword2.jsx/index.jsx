@@ -90,7 +90,7 @@ const NewPassword2 = () => {
                 }
             );
 
-            if (response.status === 200) {
+            if (response.data.status === 200) {
                 toast.success("Password reset successfully!");
                 navigate("/login"); // Redirect to login page
             } else {
