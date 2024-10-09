@@ -52,7 +52,7 @@ const Partnerwithus = () => {
       }
     } catch (error) {
       console.error("Registration failed", error);
-      toast.error("Registration failed. Please try again.");
+      toast.error(`${error.response?.data?.message}`);
     }
   };
   var settings = {

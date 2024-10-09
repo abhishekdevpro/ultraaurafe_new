@@ -589,7 +589,8 @@ const Approuter = () => {
         <Route path="/partner-signin" element={<PartnerLogin/>}/>
         <Route path="/partner-signup" element={<Partnerwithus/>}/>
          <Route element={<ProtectedRoute />}>
-        <Route path="/vendor/verify/:token" element={<Login2/>}/>
+        {/* <Route path="/vendor/verify/:token" element={<Login2/>}/> */}
+        <Route path="/:userType/verify/:token" element={<Login2 />} />
         <Route path="/vendor-forgot-password" element={<ForgotPasswordVendor />} />
         <Route path="/vendor/vendor-setting" element={<VendorSetting/>}/>
         <Route path="/vendor/vendor-dashboard" element={<VendorDashboard/>}/>

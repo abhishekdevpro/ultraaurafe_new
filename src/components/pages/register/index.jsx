@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import OwlCarousel from "react-owl-carousel";
 // import {NetIcon1, NetIcon2 } from "../../imagepath";
 import axios from "axios";
@@ -61,7 +61,7 @@ const Register = () => {
     city_id: 0,
     qualification_id: 0,
   });
-  const navigate = useNavigate(); // Initialize useNavigate
+  // const navigate = useNavigate(); // Initialize useNavigate
   const onEyeClick = () => {
     seteye(!eye);
   };
@@ -250,7 +250,7 @@ const Register = () => {
       localStorage.setItem(tokenKey, response.data.token);
       
       // Show success message
-      toast.success('Registration successful! Redirecting to login...', {
+      toast.success(response?.data?.message ||'Registration successful!', {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -260,9 +260,9 @@ const Register = () => {
       });
 
       // Redirect after a short delay
-      setTimeout(() => {
-        navigate('/login');
-      }, 3000);
+      // setTimeout(() => {
+      //   navigate('/login');
+      // }, 3000);
     } catch (error) {
       console.error("Registration failed:", error);
       
