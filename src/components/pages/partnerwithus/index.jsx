@@ -47,7 +47,17 @@ const Partnerwithus = () => {
         toast.success(
           "Registration successful! pls check the email for the verification"
         );
-        setFormData(" ");
+        setFormData({
+          institute_name: "",
+          website: "",
+          email: "",
+          password: "",
+          first_name: "",
+          last_name: "",
+          designation: "",
+          phone: "",
+          location: "",
+        });
         //   navigate("/partner-signin"); // Adjust the path as needed
       }
     } catch (error) {
@@ -94,14 +104,13 @@ const Partnerwithus = () => {
                 </div>
                 <div className="mentor-course text-center">
                   <h2>
-                    Join Us as a partner and Grow with us with AI enabled online
-                    platform.
+                  Become a Partner and Scale Your Impact with UltraAura
                   </h2>
-                  <ul className="">
+                  {/* <ul className="">
                     <li>Signup</li>
                     <li>Add courses</li>
                     <li>You are Live Globally</li>
-                  </ul>
+                  </ul> */}
                 </div>
               </div>
             </OwlCarousel>

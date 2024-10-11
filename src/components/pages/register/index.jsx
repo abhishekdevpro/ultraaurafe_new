@@ -258,6 +258,17 @@ const Register = () => {
         pauseOnHover: true,
         draggable: true,
       });
+      setFormData({
+        first_name: "",
+    last_name: "",
+    phone: "",
+    email: "",
+    password: "",
+    country_id: 0,
+    state_id: 0,
+    city_id: 0,
+    qualification_id: 0, 
+      })
 
       // Redirect after a short delay
       // setTimeout(() => {

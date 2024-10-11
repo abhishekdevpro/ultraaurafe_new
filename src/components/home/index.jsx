@@ -475,10 +475,12 @@ console.log(currentTextIndex);
     <div className="row align-items-center">
       <div className="col-lg-8 mb-4 mb-lg-0">
         <div className="home-slide-face">
-          <h1 className="display-4 mb-4">Welcome to Ultra Aura</h1>
-          <p className="lead mb-5">
-            Where new possibilities become reality every day. Are you ready to
-            explore a new opportunity for yourself? Lets get started.
+        <h1 style={{ fontSize: '36px' }} className="mb-4 text-center font-bold">
+  Empower Your Learning Journey
+</h1>
+
+        <p className="lead mb-5">
+          Join a community of learners and educators committed to your growth and innovation.
           </p>
           
           {/* Your existing Container and form code here */}
@@ -531,7 +533,7 @@ console.log(currentTextIndex);
                   <div className="row flex-grow-1">
                     <div className="col-8 d-flex flex-column">
                       <p className="card-text flex-grow-1">
-                        Collaborate with UltraAura to expand educational opportunities and make a lasting impact. Partner with us to drive innovation and empower learners worldwide.
+                      Join Ultra Aura to expand educational opportunities, drive innovation, and empower learners globally.
                       </p>
                       <div className="mt-auto">
                         <Link to="/partner-signin" className="btn btn-primary btn-lg">
@@ -547,7 +549,7 @@ console.log(currentTextIndex);
                         style={{
                           width: '150px',
                           height: '150px',
-                          objectFit: 'cover',
+                          objectFit: 'contain',
                           transition: 'transform 0.3s ease-in-out'
                         }}
                       />
@@ -569,7 +571,7 @@ console.log(currentTextIndex);
                   <div className="row flex-grow-1">
                     <div className="col-8 d-flex flex-column">
                       <p className="card-text flex-grow-1">
-                        Create an account to receive our newsletter, course recommendations and promotions.
+                      Sign up to unlock exclusive updates, personalized course recommendations, and special offers.
                       </p>
                       <div className="mt-auto">
                         <Link to="/register" className="btn btn-primary btn-lg">
@@ -585,7 +587,7 @@ console.log(currentTextIndex);
                         style={{
                           width: '150px',
                           height: '150px',
-                          objectFit: 'cover',
+                          objectFit: 'contain',
                           transition: 'transform 0.3s ease-in-out'
                         }}
                       />
@@ -885,7 +887,7 @@ console.log(currentTextIndex);
           </div>
         </section>
 
-        <section className="section py-5" data-aos="fade-up">
+        {/* <section className="section py-5" data-aos="fade-up">
           <div className="container">
             <div className="row">
               <div className="col-lg-6 col-md-6 d-flex">
@@ -944,7 +946,7 @@ console.log(currentTextIndex);
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
         {/* /Become a instructor */}
         {/* Companies */}
         <PartnerList />
