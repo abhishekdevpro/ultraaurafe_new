@@ -25,11 +25,13 @@ const AddCourse = () => {
   const [activeTab, setActiveTab] = useState("basic");
   const [error, setError] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  // const [selectedLevels, setSelectedLevels] = useState([]);
+
 
   const [courseData, setCourseData] = useState({
     course_title: "",
-    course_category_name: "",
-    course_level_name: "",
+    course_category_name: [],
+    course_level_name: [],
     course_description: "",
     course_banner_image: null,
     course_intro_video: null,
@@ -48,18 +50,41 @@ const AddCourse = () => {
     setCourseData({ ...courseData, [e.target.name]: e.target.value });
   };
 
-  const handleSelectChange = (name) => (selectedOption) => {
-    if (selectedOption) {
+  // const handleSelectChange = (name) => (selectedOption) => {
+  //   if (selectedOption) {
+  //     setCourseData((prevData) => ({
+  //       ...prevData,
+  //       [`${name}_name`]: selectedOption.label,
+  //       [`${name}_id`]: selectedOption.value,
+  //     }));
+  //     console.log(`Updated ${name}:`, selectedOption); // Debugging log
+  //   } else {
+  //     console.warn(`No option selected for ${name}`);
+  //   }
+  // };
+  const handleSelectChange = (name) => (selectedOptions) => {
+    if (selectedOptions && selectedOptions.length > 0) {
+      const selectedLabels = selectedOptions.map((option) => option.label);
+      const selectedValues = selectedOptions.map((option) => option.value);
+  
       setCourseData((prevData) => ({
         ...prevData,
-        [`${name}_name`]: selectedOption.label,
-        [`${name}_id`]: selectedOption.value,
+        [`${name}_names`]: selectedLabels, // Store the array of selected labels
+        [`${name}_ids`]: selectedValues, // Store the array of selected ids
       }));
-      console.log(`Updated ${name}:`, selectedOption); // Debugging log
+  
+      console.log(`Updated ${name}:`, selectedOptions); // Debugging log
     } else {
-      console.warn(`No option selected for ${name}`);
+      console.warn(`No options selected for ${name}`);
+      setCourseData((prevData) => ({
+        ...prevData,
+        [`${name}_names`]: [], // Reset to empty array if no selection
+        [`${name}_ids`]: [], // Reset to empty array if no selection
+      }));
     }
   };
+  
+  
   const handleEditorChange = (value) => {
     setCourseData({ ...courseData, course_description: value });
   };
@@ -119,8 +144,8 @@ const AddCourse = () => {
   const vendorToken = localStorage.getItem("vendorToken");
   const adminToken = localStorage.getItem("adminToken");
 
-  let token; 
-  let role; 
+  let token;
+  let role;
 
   if (trainerToken) {
     token = trainerToken;
@@ -537,6 +562,7 @@ const AddCourse = () => {
                                   )}
                                   placeholder="Select Category"
                                   styles={selectStyle}
+                                  isMulti
                                 />
                               </div>
                             </div>
@@ -570,10 +596,16 @@ const AddCourse = () => {
                               </label>
                               <div className="">
                                 <Select
+                                  // options={levelOptions}
+                                  // onChange={handleSelectChange("course_level")}
+                                  // placeholder="Select Level"
+                                  // styles={selectStyle}
                                   options={levelOptions}
                                   onChange={handleSelectChange("course_level")}
+                                  // value={selectedLevels}
                                   placeholder="Select Level"
                                   styles={selectStyle}
+                                  isMulti // Enable multiple selections
                                 />
                               </div>
                             </div>
