@@ -41,6 +41,7 @@ const DropdownWrapper = styled.div`
     }
   `;
 const Register = () => {
+  const [loading, setLoading] = useState(false);
   const [eye, seteye] = useState(true);
   const [password, setPassword] = useState("");
   const [validationError, setValidationError] = useState("");
@@ -229,9 +230,12 @@ const Register = () => {
   
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const apiUrl = userType === "student"
-      ? "https://api.novajobs.us/api/students/register"
-      : "https://api.novajobs.us/api/trainers/register";
+    setLoading(true);
+
+    const apiUrl =
+      userType === "student"
+        ? "https://api.novajobs.us/api/students/register"
+        : "https://api.novajobs.us/api/trainers/register";
   
     const dataToSubmit = {
       ...formData,
@@ -245,12 +249,12 @@ const Register = () => {
       const response = await axios.post(apiUrl, dataToSubmit);
       console.log("Registration successful:", response.data);
       
-      // Store the token
-      const tokenKey = userType === "student" ? "studentToken" : "trainerToken";
-      localStorage.setItem(tokenKey, response.data.token);
+      // // Store the token
+      // const tokenKey = userType === "student" ? "studentToken" : "trainerToken";
+      // localStorage.setItem(tokenKey, response.data.token);
       
       // Show success message
-      toast.success(response?.data?.message ||'Registration successful!', {
+      toast.success(response?.data?.message || 'Registration successful!', {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -258,19 +262,21 @@ const Register = () => {
         pauseOnHover: true,
         draggable: true,
       });
+
+      // Reset form data
       setFormData({
         first_name: "",
-    last_name: "",
-    phone: "",
-    email: "",
-    password: "",
-    country_id: 0,
-    state_id: 0,
-    city_id: 0,
-    qualification_id: 0, 
-      })
+        last_name: "",
+        phone: "",
+        email: "",
+        password: "",
+        country_id: 0,
+        state_id: 0,
+        city_id: 0,
+        qualification_id: 0, 
+      });
 
-      // Redirect after a short delay
+      // Redirect after a short delay if needed
       // setTimeout(() => {
       //   navigate('/login');
       // }, 3000);
@@ -278,6 +284,7 @@ const Register = () => {
       console.error("Registration failed:", error);
       
       // Show error message
+      console.log(error.response?.data?.message);
       toast.error(error.response?.data?.message || 'Registration failed. Please try again.', {
         position: "top-right",
         autoClose: 5000,
@@ -286,8 +293,11 @@ const Register = () => {
         pauseOnHover: true,
         draggable: true,
       });
+    } finally {
+      setLoading(false);
     }
   };
+
   useEffect(() => {
     const fetchCountries = async () => {
       try {
@@ -623,12 +633,30 @@ const Register = () => {
                   </div>
                   <div className="d-grid">
                     {/* {console.log(userType,"Role")} */}
-                    <button
+                    {/* <button
                       className="btn btn-primary btn-start"
                       type="submit"
                     >
                       Create Account
-                    </button>
+                    </button> */}
+                     <button
+        className="btn btn-primary btn-start"
+        type="submit"
+        disabled={loading}
+      >
+        {loading ? (
+          <>
+            <span
+              className="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            {" Creating Account..."}
+          </>
+        ) : (
+          "Create Account"
+        )}
+      </button>
                   </div>
                 </form>
               </div>

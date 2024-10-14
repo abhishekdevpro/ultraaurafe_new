@@ -56,7 +56,8 @@ const HeadModuleWrapper = styled.div`
   }
 `;
 
-const CourseHeader = () => {
+const CourseHeader = ({courseId}) => {
+  console.log(courseId,"cid");
   return (
     <Header>
       <Navbar>
@@ -69,7 +70,7 @@ const CourseHeader = () => {
         </MenuWrapper>
 
         <HeadModuleWrapper>
-          <HeadModule />
+          <HeadModule courseId={courseId}/>
         </HeadModuleWrapper>
       </Navbar>
     </Header>
@@ -79,6 +80,7 @@ const CourseHeader = () => {
 // Add PropTypes validation
 CourseHeader.propTypes = {
   activeMenu: PropTypes.string.isRequired,
+  courseId:PropTypes.number.isRequired,
 };
 
 export default CourseHeader;
