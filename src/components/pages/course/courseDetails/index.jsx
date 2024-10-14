@@ -59,7 +59,7 @@ const CourseDetails = () => {
   
   return (
     <div className="main-wrapper">
-      {token ? <CourseHeader activeMenu={"CourseDetails"} /> : <Header />}
+      {token ? <CourseHeader activeMenu={"CourseDetails"} courseId={courseid} /> : <Header />}
       {/* <section className="page-content course-sec"> */}
 {/* 
       <div className="breadcrumb-bar">

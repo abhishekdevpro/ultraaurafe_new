@@ -11,6 +11,7 @@ import styled from "styled-components";
 import logo5 from "../../../assets/logo5.png";
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
   const [passwordType, setPasswordType] = useState("password");
   const [passwordInput, setPasswordInput] = useState("");
   const [email, setEmail] = useState("");
@@ -29,16 +30,58 @@ const Login = () => {
     setPasswordType(passwordType === "password" ? "text" : "password");
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const apiUrl = role === "student"
+  //     ? "https://api.novajobs.us/api/students/login"
+  //     : "https://api.novajobs.us/api/trainers/login";
+
+  //   try {
+  //     const response = await axios.post(apiUrl, {
+  //       email: email,
+  //       password: passwordInput
+  //     });
+
+  //     if (response.data) {
+  //       const tokenKey = role === "student" ? "token" : "trainerToken";
+  //       localStorage.setItem(tokenKey, response.data.data.token);
+
+  //       toast.success('Login successful!', {
+  //         position: "top-right",
+  //         autoClose: 3000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //       });
+  //       setTimeout(() => {
+  //         navigate(role === "student" ? "/student/student-setting" : `/instructor/instructor-dashboard`);
+  //       }, 3000);
+  //     }
+  //   } catch (error) {
+  //     console.error("Login failed", error);
+  //     toast.error('Login failed. Please check your credentials.', {
+  //       position: "top-right",
+  //       autoClose: 5000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //     });
+  //   }
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const apiUrl = role === "student"
-      ? "https://api.novajobs.us/api/students/login"
-      : "https://api.novajobs.us/api/trainers/login";
+    setLoading(true);
+    const apiUrl =
+      role === "student"
+        ? "https://api.novajobs.us/api/students/login"
+        : "https://api.novajobs.us/api/trainers/login";
 
     try {
       const response = await axios.post(apiUrl, {
         email: email,
-        password: passwordInput
+        password: passwordInput,
       });
 
       if (response.data) {
@@ -53,8 +96,13 @@ const Login = () => {
           pauseOnHover: true,
           draggable: true,
         });
+
         setTimeout(() => {
-          navigate(role === "student" ? "/student/student-setting" : `/instructor/instructor-dashboard`);
+          navigate(
+            role === "student"
+              ? "/student/student-setting"
+              : `/instructor/instructor-dashboard`
+          );
         }, 3000);
       }
     } catch (error) {
@@ -67,6 +115,8 @@ const Login = () => {
         pauseOnHover: true,
         draggable: true,
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -225,9 +275,27 @@ const Login = () => {
                       </label>
                     </div>
                     <div className="d-grid">
-                      <button className="btn btn-start" type="submit">
+                      {/* <button className="btn btn-start" type="submit">
                       {role ? `Sign in as ${role}` : "Sign in"}
-                      </button>
+                      </button> */}
+                        <button
+        className="btn btn-start"
+        type="submit"
+        disabled={loading}
+      >
+        {loading ? (
+          <>
+            <span
+              className="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            {" Loading..."}
+          </>
+        ) : (
+          role ? `Sign in as ${role}` : "Sign in"
+        )}
+      </button>
                     </div>
                     <SignUpText>
                       Do not have an account?{" "}

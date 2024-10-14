@@ -19,8 +19,7 @@ export default function CourseMessage() {
   return (
     <div className="main-wrapper">
       <StudentHeader />
-
-      <div className="course-student-header">
+      <div className="course-student-header ">
         <div className="container">
           <div className="student-group">
             <div className="course-group ">
