@@ -165,6 +165,9 @@ import AddStudentForm from "./components/Admin/AddStudent.jsx";
 import AddTrainerForm from "./components/Admin/AddTrainer.jsx";
 import VendorProfile from "./components/Vendor/VendorPRofile.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
+import AddCouponForm from "./components/Admin/AddCoupon.jsx";
+import CouponList from "./components/Admin/CouponList.jsx";
+import EditCouponForm from "./components/Admin/EditCoupon.jsx";
 const Approuter = () => {
   return (
     <BrowserRouter>
@@ -581,6 +584,9 @@ const Approuter = () => {
         <Route path="/admin/add-student" element={<AddStudentForm />} /> 
         <Route path="/admin/add-trainer" element={<AddTrainerForm />} /> 
         <Route path="/admin/add-course" element={<AddCourse />} /> 
+        <Route path="/admin/add-coupon" element={<AddCouponForm />} /> 
+        <Route path="/admin/coupon-list" element={<CouponList />} /> 
+        <Route path="/admin/edit-coupon/:id" element={<EditCouponForm />} /> 
         </Route>
         {/* Admin routes ends*/}
 
