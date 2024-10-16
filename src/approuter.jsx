@@ -168,6 +168,7 @@ import ProtectedRoute from "./ProtectedRoute.jsx";
 import AddCouponForm from "./components/Admin/AddCoupon.jsx";
 import CouponList from "./components/Admin/CouponList.jsx";
 import EditCouponForm from "./components/Admin/EditCoupon.jsx";
+import PaymentFailedPage from "./components/pages/error/Paymentfailed.jsx";
 const Approuter = () => {
   return (
     <BrowserRouter>
@@ -211,6 +212,7 @@ const Approuter = () => {
         <Route path="/course-lesson" element={<CourseLesson />} />
         <Route path="/come-soon" element={<ComingSoon />} />
         <Route path="/error-404" element={<Error404 />} />
+        <Route path="/payment-error" element={<PaymentFailedPage />} />
         <Route path="/error-500" element={<Error500 />} />
         <Route path="/under-construction" element={<UnderConstruction />} />
         <Route path="/faq" element={<Faq />} />
