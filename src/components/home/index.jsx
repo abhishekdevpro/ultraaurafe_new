@@ -528,34 +528,34 @@ console.log(currentTextIndex);
                      transition: 'transform 0.3s ease-in-out',
                      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)'
                    }}>
-                <div className="card-body d-flex flex-column p-4">
-                  <h4 className="card-title mb-3">Partner with US</h4>
-                  <div className="row flex-grow-1">
-                    <div className="col-8 d-flex flex-column">
-                      <p className="card-text flex-grow-1">
-                      Join Ultra Aura to expand educational opportunities, drive innovation, and empower learners globally.
-                      </p>
-                      <div className="mt-auto">
-                        <Link to="/partner-signin" className="btn btn-primary btn-lg">
-                          Partner with US
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="col-4 d-flex align-items-center">
-                      <img 
-                        className="img-fluid rounded transition-transform hover-scale" 
-                        alt="Partner illustration" 
-                        src={Become2}
-                        style={{
-                          width: '150px',
-                          height: '150px',
-                          objectFit: 'contain',
-                          transition: 'transform 0.3s ease-in-out'
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
+              <div className="card-body d-flex flex-column p-4">
+  <h4 className="card-title mb-3">Are you a Facilitator?</h4>
+  <div className="row flex-grow-1">
+    <div className="col-12 col-md-8 d-flex flex-column">
+      <p className="card-text flex-grow-1">
+        Partner with Ultra Aura to offer skills training and job placement opportunities that create a lasting impact on individuals and their families
+      </p>
+      <div className="mt-auto">
+        <Link to="/partner-signin" className="btn btn-primary btn-lg">
+          Partner with US
+        </Link>
+      </div>
+    </div>
+    <div className="col-md-4 d-none d-md-flex align-items-center">
+      <img
+        className="img-fluid rounded transition-transform hover-scale"
+        alt="Partner illustration"
+        src={Become2}
+        style={{
+          width: '150px',
+          height: '150px',
+          objectFit: 'contain',
+          transition: 'transform 0.3s ease-in-out'
+        }}
+      />
+    </div>
+  </div>
+</div>
               </div>
             </div>
             
@@ -566,12 +566,13 @@ console.log(currentTextIndex);
                      transition: 'transform 0.3s ease-in-out',
                      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)'
                    }}>
-                <div className="card-body d-flex flex-column p-4">
-                  <h4 className="card-title mb-3">Transform Access To Education</h4>
+                {/* <div className="card-body d-flex flex-column p-4">
+                  <h4 className="card-title mb-3">Are you a  Seeker?
+                  </h4>
                   <div className="row flex-grow-1">
                     <div className="col-8 d-flex flex-column">
                       <p className="card-text flex-grow-1">
-                      Sign up to unlock exclusive updates, personalized course recommendations, and special offers.
+                      A new day awaits! Choose from our wide range of specialized courses to unlock exciting new possibilities for your future
                       </p>
                       <div className="mt-auto">
                         <Link to="/register" className="btn btn-primary btn-lg">
@@ -579,7 +580,7 @@ console.log(currentTextIndex);
                         </Link>
                       </div>
                     </div>
-                    <div className="col-4 d-flex align-items-center">
+                    <div className="col-md-4 d-flex align-items-center">
                       <img 
                         className="img-fluid rounded transition-transform hover-scale" 
                         alt="Education illustration" 
@@ -593,7 +594,35 @@ console.log(currentTextIndex);
                       />
                     </div>
                   </div>
-                </div>
+                </div> */}
+                <div className="card-body d-flex flex-column p-4">
+  <h4 className="card-title mb-3">Are you a Seeker?</h4>
+  <div className="row flex-grow-1">
+    <div className="col-12 col-md-8 d-flex flex-column">
+      <p className="card-text flex-grow-1">
+        A new day awaits! Choose from our wide range of specialized courses to unlock exciting new possibilities for your future
+      </p>
+      <div className="mt-auto">
+        <Link to="/register" className="btn btn-primary btn-lg">
+          Sign up
+        </Link>
+      </div>
+    </div>
+    <div className="col-md-4 d-none d-md-flex align-items-center">
+      <img
+        className="img-fluid rounded transition-transform hover-scale"
+        alt="Education illustration"
+        src={Become1}
+        style={{
+          width: '150px',
+          height: '150px',
+          objectFit: 'contain',
+          transition: 'transform 0.3s ease-in-out'
+        }}
+      />
+    </div>
+  </div>
+</div>
               </div>
             </div>
           </div>

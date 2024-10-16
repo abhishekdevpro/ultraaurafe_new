@@ -32,6 +32,11 @@ const CourseDetails = () => {
       } catch (error) {
         console.error("Error fetching course data:", error);
         setError("Error loading course data. Please try again later.");
+        console.log(error.response);
+        if(error.response && error.response.status == 401){
+          window.location.href = '/login'
+        }
+
       } finally {
         setLoading(false);
       }
