@@ -142,6 +142,13 @@ export default function InstructorSidebar() {
                   Messages
                 </Link>
               </li>
+              <li className={`nav-item ${location.pathname === '/instructor/schedule-live-class' ? 'active' : ''}`}>
+
+                <Link to="/instructor/schedule-live-class" className="nav-link">
+                  <i className="bx bxs-chat" />
+                  Schedule Live Classes
+                </Link>
+              </li>
               {/* <li className={`nav-item ${location.pathname === '/instructor/instructor-notifications' ? 'active' : ''}`}>
                 <Link to="/instructor/instructor-notifications" className="nav-link">
                   <i className="bx bxs-bell" />

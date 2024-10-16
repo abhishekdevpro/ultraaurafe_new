@@ -169,6 +169,8 @@ import AddCouponForm from "./components/Admin/AddCoupon.jsx";
 import CouponList from "./components/Admin/CouponList.jsx";
 import EditCouponForm from "./components/Admin/EditCoupon.jsx";
 import PaymentFailedPage from "./components/pages/error/Paymentfailed.jsx";
+import ScheduleLiveClass from "./components/instructor/LiveClasses/ScheduleLiveClass.jsx";
+import JoinLiveClass from "./components/instructor/LiveClasses/JoinLiveClasses.jsx";
 const Approuter = () => {
   return (
     <BrowserRouter>
@@ -306,6 +308,10 @@ const Approuter = () => {
         <Route
           path="/instructor/instructor-grid"
           element={<InstructorGrid />}
+        />
+        <Route
+          path="/instructor/schedule-live-class"
+          element={<ScheduleLiveClass />}
         />
 
         <Route
@@ -489,6 +495,7 @@ const Approuter = () => {
         <Route path="/student/student-reviews" element={<StudentReviews />} />
         <Route path="/student/student-quiz" element={<StudentQuiz />} />
         <Route path="/student/student-quiz-details" element={<StudentQuizDetails />} />
+        <Route path="/student/join-live-classes" element={<JoinLiveClass />} />
         <Route
           path="/student/student-order-history"
           element={<StudentOrderHistory />}
