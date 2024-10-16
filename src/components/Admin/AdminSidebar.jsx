@@ -101,6 +101,18 @@ const handleLogout =()=>{
                   Partners
                 </Link>
               </li>
+              <li className={`nav-item ${location.pathname === '/admin/add-coupon' ? 'active' : ''}`}>
+                <Link to="/admin/add-coupon" className="nav-link">
+                  <i className="bx bxs-group" />
+                  Add Coupon
+                </Link>
+              </li>
+              <li className={`nav-item ${location.pathname === '/admin/coupon-list' ? 'active' : ''}`}>
+                <Link to="/admin/coupon-list" className="nav-link">
+                  <i className="bx bxs-group" />
+                  Coupon Lists
+                </Link>
+              </li>
               {/* <li className={`nav-item ${location.pathname === '/admin/add-student' ? 'active' : ''}`}>
                 <Link to="/admin/add-student" className="nav-link">
                   <i className="bx bxs-user-plus" />
