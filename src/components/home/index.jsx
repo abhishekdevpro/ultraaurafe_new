@@ -520,15 +520,15 @@ console.log(currentTextIndex);
           </Container>
 
 
-          <div className="row g-4">
+          {/* <div className="row g-4">
             <div className="col-md-6 d-flex">
               <div className="card w-100 shadow-lg transition-transform hover-lift" 
                    style={{ 
                      backgroundColor: '#ffdeda',
                      transition: 'transform 0.3s ease-in-out',
-                     boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)'
+                     boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
                    }}>
-              <div className="card-body d-flex flex-column p-4">
+              <div className="card-body d-flex flex-column p-4 rounded">
   <h4 className="card-title mb-3">Are you a Facilitator?</h4>
   <div className="row flex-grow-1">
     <div className="col-12 col-md-8 d-flex flex-column">
@@ -594,8 +594,8 @@ console.log(currentTextIndex);
                       />
                     </div>
                   </div>
-                </div> */}
-                <div className="card-body d-flex flex-column p-4">
+                </div> 
+                <div className="card-body d-flex flex-column p-4 rounded">
   <h4 className="card-title mb-3">Are you a Seeker?</h4>
   <div className="row flex-grow-1">
     <div className="col-12 col-md-8 d-flex flex-column">
@@ -625,7 +625,91 @@ console.log(currentTextIndex);
 </div>
               </div>
             </div>
+          </div> */}
+          <div className="row g-4">
+  <div className="col-md-6 d-flex">
+    <div
+      className="card w-100 shadow-lg transition-transform hover-lift"
+      style={{
+        backgroundColor: '#ffdeda',
+        transition: 'transform 0.3s ease-in-out',
+        boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
+        borderRadius: '15px' // Add border radius for rounded corners
+      }}
+    >
+      <div className="card-body d-flex flex-column p-4 rounded">
+        <h4 className="card-title mb-3">Are you a Facilitator?</h4>
+        <div className="row flex-grow-1">
+          <div className="col-12 col-md-8 d-flex flex-column">
+            <p className="card-text flex-grow-1">
+              Partner with Ultra Aura to offer skills training and job placement opportunities that create a lasting impact on individuals and their families
+            </p>
+            <div className="mt-auto">
+              <Link to="/partner-signin" className="btn btn-primary btn-lg">
+                Partner with US
+              </Link>
+            </div>
           </div>
+          <div className="col-md-4 d-none d-md-flex align-items-center">
+            <img
+              className="img-fluid rounded transition-transform hover-scale"
+              alt="Partner illustration"
+              src={Become2}
+              style={{
+                width: '150px',
+                height: '150px',
+                objectFit: 'contain',
+                transition: 'transform 0.3s ease-in-out'
+              }}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div className="col-md-6 d-flex">
+    <div
+      className="card w-100 shadow-lg transition-transform hover-lift"
+      style={{
+        backgroundColor: '#ffe88f',
+        transition: 'transform 0.3s ease-in-out',
+        boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
+        borderRadius: '15px' // Add border radius for rounded corners
+      }}
+    >
+      <div className="card-body d-flex flex-column p-4 rounded">
+        <h4 className="card-title mb-3">Are you a Seeker?</h4>
+        <div className="row flex-grow-1">
+          <div className="col-12 col-md-8 d-flex flex-column">
+            <p className="card-text flex-grow-1">
+              A new day awaits! Choose from our wide range of specialized courses to unlock exciting new possibilities for your future
+            </p>
+            <div className="mt-auto">
+              <Link to="/register" className="btn btn-primary btn-lg">
+                Sign up
+              </Link>
+            </div>
+          </div>
+          <div className="col-md-4 d-none d-md-flex align-items-center">
+            <img
+              className="img-fluid rounded transition-transform hover-scale"
+              alt="Education illustration"
+              src={Become1}
+              style={{
+                width: '150px',
+                height: '150px',
+                objectFit: 'contain',
+                transition: 'transform 0.3s ease-in-out'
+              }}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
         </div>
       </div>
       

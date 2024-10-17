@@ -504,7 +504,7 @@ const LevelButton = styled.button`
 const CourseGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 2rem;
+  gap: 1rem;
 `;
 
 // Course card with improved hover and scale effects
@@ -515,7 +515,7 @@ const CourseCard = styled.div`
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
   border: 2px solid #f0f0f0;
-  padding: 1rem;
+  padding: 0.5rem;
 
   &:hover {
     transform: translateY(-10px);
@@ -527,7 +527,7 @@ const CourseCard = styled.div`
 // Course image with hover zoom effect
 const CourseImage = styled.img`
   width: 100%;
-  height: 200px;
+  height: 130px;
   object-fit: contain;
   border-radius: 10px;
   transition: transform 0.3s;
@@ -539,13 +539,13 @@ const CourseImage = styled.img`
 
 // Course content styling
 const CourseContent = styled.div`
-  padding: 1rem;
+  padding: 1rem 0.5rem;
 `;
 
 const InstructorInfo = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   background: #f9f9f9;
   padding: 0.5rem 0.5rem;
   border-radius: 8px;
@@ -569,7 +569,7 @@ const InstructorName = styled.span`
 
 // Course title with hover effect
 const CourseTitle = styled.h3`
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: bold;
   margin-bottom: 1rem;
   color: #333;

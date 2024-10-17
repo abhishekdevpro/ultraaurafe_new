@@ -145,7 +145,7 @@ export default function InstructorSidebar() {
               <li className={`nav-item ${location.pathname === '/instructor/schedule-live-class' ? 'active' : ''}`}>
 
                 <Link to="/instructor/schedule-live-class" className="nav-link">
-                  <i className="bx bxs-chat" />
+                  <i className="bx bxs-video" />
                   Schedule Live Classes
                 </Link>
               </li>

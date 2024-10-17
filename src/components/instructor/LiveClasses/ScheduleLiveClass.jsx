@@ -1,46 +1,104 @@
 import React, { useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
-import styled from "styled-components";
+import { Modal, Button, Form, Card } from "react-bootstrap";
+import Select from "react-select";
 import { InstructorHeader } from "../../instructor/header";
 import Footer from "../../footer";
 import InstructorSidebar from "../sidebar";
 import { Link } from "react-router-dom";
 import LiveClassTable from "./LiveClassTable";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const ScheduleLiveClass = () => {
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState("");
   const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [course, setCourse] = useState("");
-  const [zoomId, setZoomId] = useState("");
-  const [zoomUrl, setZoomUrl] = useState("");
+  const [duration, setDuration] = useState('');
+  const [courses, setCourses] = useState([]);
+  const [course, setCourse] = useState(null);
+  const [isCoursesLoaded, setIsCoursesLoaded] = useState(false);
+  const token = localStorage.getItem("trainerToken");
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
-  const handleSubmit = () => {
-    // Handle form submission logic here
-    console.log({
-      title,
-      startDate,
-      endDate,
-      course,
-      zoomId,
-      zoomUrl,
-    });
-    setTitle("");
-  setStartDate("");
-  setEndDate("");
-  setCourse("");
-  setZoomId("");
-  setZoomUrl("");
-    handleClose();
+
+  const fetchCourses = async () => {
+    try {
+      const response = await axios.get('https://api.novajobs.us/api/trainers/courses', {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
+      const options = response.data.data.map((courseItem) => ({
+        value: courseItem.id,
+        label: courseItem.course_title,
+      }));
+      setCourses(options);
+      setIsCoursesLoaded(true);
+    } catch (error) {
+      console.error('Error fetching courses:', error);
+    }
   };
 
+  const handleMenuOpen = () => {
+    if (!isCoursesLoaded) {
+      fetchCourses();
+    }
+  };
+
+  // Function to format the date and time
+  const formatDate = (dateTimeString) => {
+    const date = new Date(dateTimeString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day} ${hours}:${minutes}:00`;
+  };
+
+  const handleSubmit = async () => {
+    // Format the start date before submitting
+    const formattedStartDate = formatDate(startDate);
+  
+    const classData = {
+      course_id: course ? course.value : null,
+      start_time: formattedStartDate,
+      duration: Number(duration),
+      title: title,
+    };
+  
+    try {
+      const response = await axios.post(
+        'https://api.novajobs.us/api/trainers/live-class',
+        classData,
+        {
+          headers: {
+            Authorization: `${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      toast.success(response.data.message || "Live Class Created Successfully");
+      console.log('Live class scheduled successfully:', response.data);
+  
+      setTitle("");
+      setStartDate("");
+      setCourse(null);
+      setDuration("");
+      handleClose();
+  
+      // Reload the page
+      window.location.reload();
+    } catch (error) {
+      console.error('Error scheduling live class:', error);
+      toast.error(error.response?.data?.message || "Error while scheduling the class");
+    }
+  };
+  
   return (
     <div className="main-wrapper">
       <InstructorHeader activeMenu={"Schedule Class"} />
-      {/* Breadcrumb */}
       <div className="breadcrumb-bar breadcrumb-bar-info">
         <div className="container">
           <div className="row">
@@ -62,45 +120,31 @@ const ScheduleLiveClass = () => {
           </div>
         </div>
       </div>
-      {/* /Breadcrumb */}
 
-      {/* Page Content */}
       <div className="page-content">
         <div className="container">
           <div className="row">
-            {/* Sidebar */}
             <InstructorSidebar />
-            {/* /Sidebar */}
+            <div className="col-xl-9 col-lg-8">
+              <Card className="shadow-sm">
+                <Card.Header className="bg-white">
+                  <h3 className="mb-0">Schedule a Live Class</h3>
+                </Card.Header>
+                <Card.Body>
+                  <Button variant="primary" onClick={handleShow} className="mb-4">
+                    Schedule New Class
+                  </Button>
 
-            {/* Main Content */}
-            <div className="col-xl-9 col-lg-9">
-              <div className="settings-widget card-details mb-0">
-                <div className="settings-menu p-0">
-                  <div className="profile-heading">
-                    <h3>Schedule a Live Class</h3>
-                  </div>
-                  <div className="checkout-form personal-address">
-                    <div className="row">
-                      <div className="col-sm-12">
-                        <StyledButton onClick={handleShow}>
-                          Schedule New Class
-                        </StyledButton>
-                      </div>
-                    </div>
-                        <LiveClassTable />
-                  </div>
-                </div>
-              </div>
+                  <LiveClassTable />
+                </Card.Body>
+              </Card>
             </div>
-            {/* /Main Content */}
           </div>
         </div>
       </div>
-      {/* /Page Content */}
 
       <Footer />
 
-      {/* Modal for Scheduling Class */}
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>Schedule a Live Class</Modal.Title>
@@ -108,7 +152,7 @@ const ScheduleLiveClass = () => {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3">
-              <Form.Label>Title</Form.Label>
+              <Form.Label>Topic</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter class title"
@@ -120,51 +164,39 @@ const ScheduleLiveClass = () => {
             <Form.Group className="mb-3">
               <Form.Label>Start Date</Form.Label>
               <Form.Control
-                type="date"
+                type="datetime-local"
+                name="startdate"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
+                required 
               />
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label>End Date</Form.Label>
-              <Form.Control
-                type="date"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Course</Form.Label>
+              <Form.Label>Duration</Form.Label>
               <Form.Select
-                value={course}
-                onChange={(e) => setCourse(e.target.value)}
+                value={duration}
+                onChange={(e) => setDuration(e.target.value)}
               >
-                <option value="" disabled>Select a course</option>
-                <option value="Course 1">Course 1</option>
-                <option value="Course 2">Course 2</option>
-                <option value="Course 3">Course 3</option>
+                <option value="">Select Duration</option>
+                <option value="10">10 minutes</option>
+                <option value="20">20 minutes</option>
+                <option value="30">30 minutes</option>
+                <option value="45">45 minutes</option>
+                <option value="60">60 minutes</option>
               </Form.Select>
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label>Zoom ID</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter Zoom ID"
-                value={zoomId}
-                onChange={(e) => setZoomId(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Zoom URL</Form.Label>
-              <Form.Control
-                type="url"
-                placeholder="Enter Zoom URL"
-                value={zoomUrl}
-                onChange={(e) => setZoomUrl(e.target.value)}
+              <Form.Label>Course</Form.Label>
+              <Select
+                value={course}
+                onChange={(selectedOption) => setCourse(selectedOption)}
+                options={courses}
+                onMenuOpen={handleMenuOpen}
+                placeholder="Select a course"
+                isLoading={!isCoursesLoaded && courses.length === 0}
+                classNamePrefix="react-select"
               />
             </Form.Group>
           </Form>
@@ -181,18 +213,5 @@ const ScheduleLiveClass = () => {
     </div>
   );
 };
-
-const StyledButton = styled.button`
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
 
 export default ScheduleLiveClass;
