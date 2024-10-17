@@ -162,7 +162,7 @@ export default function StudentSidebar() {
               </li>
               <li className={`nav-item ${location.pathname === '/student/join-live-classes' ? 'active' : ''}`}>
                 <Link to="/student/join-live-classes" className="nav-link">
-                  <i className="bx bxs-chat" />
+                <i className="bx bxs-video" />
                   Join Live Classes
                 </Link>
               </li>

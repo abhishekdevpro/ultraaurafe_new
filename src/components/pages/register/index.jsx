@@ -315,6 +315,25 @@ const Register = () => {
     fetchCountries();
   }, [userType]);
 
+  // useEffect(() => {
+  //   if (formData.country_id) {
+  //     const fetchStates = async () => {
+  //       try {
+  //         const response = await axios.get(
+  //           userType === "student"
+  //             ? `https://api.novajobs.us/api/students/stats/${formData.country_id}`
+  //             : `https://api.novajobs.us/api/trainers/stats/${formData.country_id}`
+  //         );
+
+  //         setStates(response.data.data);
+  //         console.log(response.data.data,"states");
+  //       } catch (error) {
+  //         console.error("Error fetching states:", error);
+  //       }
+  //     };
+  //     fetchStates();
+  //   }
+  // }, [formData.country_id, userType]);
   useEffect(() => {
     if (formData.country_id) {
       const fetchStates = async () => {
@@ -325,12 +344,23 @@ const Register = () => {
               : `https://api.novajobs.us/api/trainers/stats/${formData.country_id}`
           );
 
-          setStates(response.data.data);
+          // Ensure response.data.data is an array before setting states
+          if (Array.isArray(response.data.data)) {
+            setStates(response.data.data);
+          } else {
+            console.error("Expected an array from API response");
+            setStates([]); // Reset to empty array if not an array
+          }
+
+          console.log(response.data.data, "states");
         } catch (error) {
           console.error("Error fetching states:", error);
+          setStates([]); // Reset to empty array on error
         }
       };
       fetchStates();
+    } else {
+      setStates([]); // Reset to empty array if country_id is not set
     }
   }, [formData.country_id, userType]);
 
