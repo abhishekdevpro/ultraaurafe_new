@@ -23,6 +23,9 @@ export default function VendorSidebar() {
       })
       .catch((error) => {
         console.error("Error fetching profile data:", error);
+        if(error.response && error.response.status == 401){
+          window.location.href = '/login'
+        }
       });
   }, []);
   const handleLogout = () => {
@@ -126,6 +129,16 @@ export default function VendorSidebar() {
                 <Link to="" className="nav-link">
                   <i className="bx bxs-star" />
                   Reviews
+                </Link>
+              </li>
+              <li
+                className={`nav-item ${
+                  location.pathname === "/vendor/vendor-liveclass" ? "active" : ""
+                }`}
+              >
+                <Link to="/vendor/vendor-liveclass" className="nav-link">
+                  <i className="bx bxs-video" />
+                  Schedule Live Classes
                 </Link>
               </li>
               {/* <li className={`nav-item ${location.pathname === '/vendor/vendor-withdrawals' ? 'active' : ''}`}>

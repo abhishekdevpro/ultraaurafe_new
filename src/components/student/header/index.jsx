@@ -215,9 +215,32 @@ export default function StudentHeader() {
 
   const profile = useRef();
 
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token');
+  //   const fetchProfile = async () => {
+  //     try {
+  //       const response = await axios.get("https://api.novajobs.us/api/students/profile", {
+  //         headers: {
+  //           Authorization: `${token}`,
+  //         },
+  //       });
+  //       setProfileData(response.data.data);
+  //     } catch (error) {
+  //       console.error("Error fetching profile data", error);
+  //     }
+  //   };
+
+  //   fetchProfile();
+  // }, []);
   useEffect(() => {
-    const token = localStorage.getItem('token');
     const fetchProfile = async () => {
+      const token = localStorage.getItem('token'); // Retrieve token
+  
+      if (!token) {
+        window.location.href = '/login'; // Redirect to login if token is missing
+        return;
+      }
+  
       try {
         const response = await axios.get("https://api.novajobs.us/api/students/profile", {
           headers: {
@@ -226,13 +249,22 @@ export default function StudentHeader() {
         });
         setProfileData(response.data.data);
       } catch (error) {
-        console.error("Error fetching profile data", error);
+        // Handle errors
+        if (error.response) {
+          if (error.response.status === 401) {
+            window.location.href = '/login'; // Redirect if token is expired or invalid
+          } else {
+            console.error("Error fetching profile data", error); // Log other errors
+          }
+        } else {
+          console.error("Error fetching profile data", error); // Log any unexpected errors
+        }
       }
     };
-
+  
     fetchProfile();
   }, []);
-
+  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (profile.current && !profile.current.contains(event.target)) {

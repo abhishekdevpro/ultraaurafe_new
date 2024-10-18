@@ -592,7 +592,7 @@ const Register = () => {
                         onChange={handleInputChange}
                         className="form-control"
                       >
-                        <option value="">Select Qualification</option>
+                        <option value="">Select Grades</option>
                         {qualifications.map((qualification) => (
                           <option key={qualification.id} value={qualification.id}>
                             {qualification.name}

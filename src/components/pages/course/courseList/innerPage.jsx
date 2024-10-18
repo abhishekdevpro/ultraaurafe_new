@@ -481,9 +481,28 @@ const StatItem = styled.div`
   }
 `;
 
+// const CoursePrice = styled.div`
+//   display: flex;
+//   align-items: center;
+
+//   .discounted-price {
+//     font-size: 1.5rem;
+//     color: #ff4d4f;
+//     font-weight: bold;
+//     margin-right: 10px;
+//   }
+
+//   .original-price {
+//     font-size: 1.2rem;
+//     color: #999;
+//     text-decoration: line-through;
+//   }
+// `;
 const CoursePrice = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  margin-bottom: 10px;
 
   .discounted-price {
     font-size: 1.5rem;
@@ -496,6 +515,22 @@ const CoursePrice = styled.div`
     font-size: 1.2rem;
     color: #999;
     text-decoration: line-through;
+  }
+
+  .course-discount {
+    font-size: 1rem;
+    color: #007bff;
+    background-color: #e6f7ff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.1);
+      background-color: #bae7ff;
+      color: #0056b3;
+    }
   }
 `;
 
@@ -646,12 +681,27 @@ const InnerPage = ({ courses = [] }) => {
                       <span>{course.course_level_name}</span>
                     </StatItem>
                   </CourseStats>
-                  <CoursePrice>
+                  {/* <CoursePrice>
                     <span className="discounted-price">${course.after_discount_price}</span>
                     {course.discount_percent > 0 && (
                       <span className="original-price">${course.course_price}</span>
                     )}
-                  </CoursePrice>
+                  </CoursePrice> */}
+                  <CoursePrice>
+  <div>
+    <span className="discounted-price">
+      ${course.after_discount_price}
+    </span>
+    <span className="original-price">
+      ${course.course_price}
+    </span>
+  </div>
+  {course.discount_percent > 0 && (
+    <span className="course-discount">
+      {course.discount_percent}% OFF
+    </span>
+  )}
+</CoursePrice>
                 </CourseContent>
               </CourseCard>
             ))
