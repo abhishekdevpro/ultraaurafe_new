@@ -237,7 +237,7 @@
 // export default VendorHeader;
 import React, { useEffect, useRef, useState } from "react";
 import { Home, LogOut, ShoppingCart, Menu, X } from "react-feather";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from 'styled-components';
 import logo5 from '../../assets/logo5.png'
@@ -442,11 +442,16 @@ export default function VendorHeader() {
   const [showProfile, setShowProfile] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [profileData, setProfileData] = useState(null);
+  const navigate = useNavigate();
 
   const profile = useRef();
 
   useEffect(() => {
     const token = localStorage.getItem('vendorToken');
+    if(!token){
+      navigate('/login');
+      window.location.href = './login';
+    }
     const fetchProfile = async () => {
       try {
         const response = await axios.get("https://api.novajobs.us/api/vendors/profile", {
@@ -457,6 +462,9 @@ export default function VendorHeader() {
         setProfileData(response.data.data);
       } catch (error) {
         console.error("Error fetching profile data", error);
+        if(error.response && error.response.status == 401){
+          window.location.href = '/login'
+        }
       }
     };
 
@@ -541,10 +549,10 @@ export default function VendorHeader() {
                     <p>Vendor</p>
                   </div>
                 </ProfileInfo>
-                <NavItem to="/vendor/dashboard">
+                <NavItem to="/vendor/vendro-dashboard">
                   <Home size={20} /> Dashboard
                 </NavItem>
-                <NavItem to="/vendor/dashboard">
+                <NavItem to="/vendor/vendor-dashboard">
                   <ShoppingCart size={20} /> My Courses
                 </NavItem>
                 <NavItem to="#" onClick={handleLogout}>

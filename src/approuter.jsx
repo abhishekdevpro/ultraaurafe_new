@@ -170,7 +170,7 @@ import CouponList from "./components/Admin/CouponList.jsx";
 import EditCouponForm from "./components/Admin/EditCoupon.jsx";
 import PaymentFailedPage from "./components/pages/error/Paymentfailed.jsx";
 import ScheduleLiveClass from "./components/instructor/LiveClasses/ScheduleLiveClass.jsx";
-import JoinLiveClass from "./components/instructor/LiveClasses/JoinLiveClasses.jsx";
+import JoinLiveClass from "./components/instructor/LiveClasses/ForStudent/JoinLiveClasses.jsx";
 const Approuter = () => {
   return (
     <BrowserRouter>
@@ -596,6 +596,7 @@ const Approuter = () => {
         <Route path="/admin/add-coupon" element={<AddCouponForm />} /> 
         <Route path="/admin/coupon-list" element={<CouponList />} /> 
         <Route path="/admin/edit-coupon/:id" element={<EditCouponForm />} /> 
+        <Route path="/admin/live-classes" element={<JoinLiveClass />} /> 
         </Route>
         {/* Admin routes ends*/}
 
@@ -611,6 +612,7 @@ const Approuter = () => {
         <Route path="/vendor/vendor-dashboard" element={<VendorDashboard/>}/>
          <Route path="/vendor/vendor-profile" element={<VendorProfile/>}/>
          <Route path="/vendor/add-course" element={<AddCourse/>}/>
+         <Route path="/vendor/vendor-liveclass" element={<ScheduleLiveClass/>}/>
          </Route>
          {/* Vendor Routes ends  */}
       </Routes>

@@ -934,8 +934,42 @@ const StudentDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  // useEffect(() => {
+  //   const fetchCourses = async () => {
+  //     try {
+  //       const token = localStorage.getItem("token");
+  //       const response = await axios.get(
+  //         "https://api.novajobs.us/api/students/mycourse-lists",
+  //         {
+  //           headers: {
+  //             Authorization: `${token}`,
+  //           },
+  //         }
+  //       );
+  //       if (response.data.data && response.data.data.length > 0) {
+  //         setCourses(response.data.data);
+  //         setIsClassAdded(new Array(response.data.data.length).fill(false));
+  //       } else {
+  //         setError("You have not enrolled in any courses yet.");
+  //         if(error.response && error.response.status == 401){
+  //           window.location.href = '/login'
+  //         }
+  //       }
+  //       setLoading(false);
+  //     } catch (error) {
+  //       setError(
+  //         "Failed to fetch courses. Please check your connection or try again later."
+  //       );
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchCourses();
+  // }, []);
   useEffect(() => {
     const fetchCourses = async () => {
+      setLoading(true); // Set loading to true before making the request
+  
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
@@ -946,24 +980,32 @@ const StudentDashboard = () => {
             },
           }
         );
+  
         if (response.data.data && response.data.data.length > 0) {
           setCourses(response.data.data);
           setIsClassAdded(new Array(response.data.data.length).fill(false));
         } else {
           setError("You have not enrolled in any courses yet.");
         }
-        setLoading(false);
       } catch (error) {
-        setError(
-          "Failed to fetch courses. Please check your connection or try again later."
-        );
-        setLoading(false);
+        // Handle specific error responses
+        if (error.response) {
+          if (error.response.status === 401) {
+            window.location.href = '/login'; // Redirect if token is expired or invalid
+          } else {
+            setError("Failed to fetch courses. Please check your connection or try again later.");
+          }
+        } else {
+          setError("Failed to fetch courses. Please check your connection or try again later."); // Handle other errors
+        }
+      } finally {
+        setLoading(false); // Ensure loading is set to false in all cases
       }
     };
-
+  
     fetchCourses();
   }, []);
-
+  
   const toggleClass = async (index, courseId) => {
     const updatedClasses = [...isClassAdded];
     updatedClasses[index] = !updatedClasses[index];
