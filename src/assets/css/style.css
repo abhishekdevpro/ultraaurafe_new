@@ -26163,9 +26163,9 @@ color: #B9B7C0 ;
   .breadcrumb-bar.breadcrumb-bar-info .breadcrumb-title {
     font-size: 30px;
   }
-  .breadcrumb-bar.breadcrumb-bar-info {
+  /* .breadcrumb-bar.breadcrumb-bar-info {
     padding: 30px 0;
-  }
+  } */
   .settings-widget.account-settings {
     margin-bottom: 24px;
   }

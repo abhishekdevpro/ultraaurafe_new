@@ -103,8 +103,8 @@ const ScheduleLiveClass = () => {
   return (
     <div className="main-wrapper">
      {vendorToken? <VendorHeader />  :<InstructorHeader activeMenu={"Schedule Class"} />}
-      <div className="breadcrumb-bar breadcrumb-bar-info">
-        <div className="container">
+      <div className="breadcrumb-bar breadcrumb-bar-info ">
+        <div className="container ">
           <div className="row">
             <div className="col-md-12 col-12">
               <div className="breadcrumb-list">
