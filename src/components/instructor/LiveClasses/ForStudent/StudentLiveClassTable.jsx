@@ -79,13 +79,16 @@ const handleJoin = (liveClass) => {
   
     const meetingId = liveClass.meeting_id;
     const passcode = meetingInfo.password || "";
+
   
     if (!meetingId) {
+
       toast.error("Meeting ID is missing. Please check the meeting details.");
       return;
     }
   
     if (!passcode) {
+      console.log(passcode);
         toast.error("Invalid user or missing password for the meeting. Please check the credentials.");
       return;
     }
