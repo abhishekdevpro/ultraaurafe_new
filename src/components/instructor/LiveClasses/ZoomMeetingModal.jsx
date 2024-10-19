@@ -28,7 +28,7 @@ const ZoomMeetingModal = ({ showMeetingModal, handleMeetingClose, activeMeetingU
     >
       <Modal.Header className="border-bottom-0">
         <div className="d-flex justify-content-between align-items-center w-100">
-          <Modal.Title>Zoom Meeting</Modal.Title>
+          <Modal.Title>Live Class </Modal.Title>
           <div>
             <button
               className="btn btn-link p-0 me-2"
