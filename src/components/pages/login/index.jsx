@@ -351,7 +351,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const apiUrl = "https://api.novajobs.us/api/trainers/login";
+    const apiUrl = "https://api.novajobs.us/api/students/login";
 
     try {
       const response = await axios.post(apiUrl, {
@@ -526,7 +526,7 @@ const Login = () => {
                             {" Loading..."}
                           </>
                         ) : (
-                          "Sign in as Trainer"
+                          "Sign in as Student"
                         )}
                       </button>
                     </div>

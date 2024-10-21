@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes} from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import BlogDetails from "./components/blog/blogDetails";
 import BlogGrid from "./components/blog/blogGrid";
 import BlogList from "./components/blog/bloglist";
@@ -39,7 +39,7 @@ import Support from "./components/pages/support";
 import TermsCondition from "./components/pages/termsCondition";
 import Wishlist from "./components/pages/wishlist";
 
-// import { Home } from "./components/home";
+import { Home } from "./components/home";
 import { Home2 } from "./components/home2";
 import { Home3 } from "./components/home3";
 import { Home4 } from "./components/home4";
@@ -175,7 +175,8 @@ const Approuter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/home2" element={<Home2 />} />
         <Route path="/home3" element={<Home3 />} />
         <Route path="/home4" element={<Home4 />} />
@@ -595,6 +596,7 @@ const Approuter = () => {
         <Route path="/admin/add-coupon" element={<AddCouponForm />} /> 
         <Route path="/admin/coupon-list" element={<CouponList />} /> 
         <Route path="/admin/edit-coupon/:id" element={<EditCouponForm />} /> 
+        <Route path="/admin/live-classes" element={<JoinLiveClass />} /> 
         </Route>
         {/* Admin routes ends*/}
 
@@ -610,6 +612,7 @@ const Approuter = () => {
         <Route path="/vendor/vendor-dashboard" element={<VendorDashboard/>}/>
          <Route path="/vendor/vendor-profile" element={<VendorProfile/>}/>
          <Route path="/vendor/add-course" element={<AddCourse/>}/>
+         <Route path="/vendor/vendor-liveclass" element={<ScheduleLiveClass/>}/>
          </Route>
          {/* Vendor Routes ends  */}
       </Routes>
