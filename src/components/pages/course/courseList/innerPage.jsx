@@ -393,6 +393,33 @@ const CourseGrid = styled.div`
   gap: 2rem;
 `;
 
+// const CourseCard = styled.div`
+//   background-color: white;
+//   border-radius: 10px;
+//   overflow: hidden;
+//   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+//   transition: transform 0.3s, box-shadow 0.3s;
+//   border: 2px solid #f0f0f0;
+//   padding: 0.8rem;
+
+//   &:hover {
+//     transform: translateY(-10px);
+//     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+//     border-color: #ff4081;
+//   }
+// `;
+
+// const CourseImage = styled.img`
+//   width: 100%;
+//   height: 180px;
+//   object-fit: contain;
+//   border-radius: 10px;
+//   transition: transform 0.3s;
+
+//   ${CourseCard}:hover & {
+//     transform: scale(1.05);
+//   }
+// `;
 const CourseCard = styled.div`
   background-color: white;
   border-radius: 10px;
@@ -400,7 +427,8 @@ const CourseCard = styled.div`
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
   border: 2px solid #f0f0f0;
-  padding: 0.8rem;
+  padding: 0.5rem;
+  position: relative; /* Ensure ClaimCoupon positions relative to the CourseCard */
 
   &:hover {
     transform: translateY(-10px);
@@ -409,9 +437,32 @@ const CourseCard = styled.div`
   }
 `;
 
+// ClaimCoupon positioned over the image with enhanced styling
+const ClaimCoupon = styled.div`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(34, 197, 94, 0.9); /* Green background with slight opacity */
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, transform 0.3s;
+  z-index:999;
+
+  &:hover {
+    background-color: rgba(34, 197, 94, 1); /* Slightly darker green on hover */
+    transform: scale(1.05);
+  }
+`;
+
+// Course image with hover zoom effect
 const CourseImage = styled.img`
   width: 100%;
-  height: 180px;
+  height: 130px;
   object-fit: contain;
   border-radius: 10px;
   transition: transform 0.3s;
@@ -420,7 +471,6 @@ const CourseImage = styled.img`
     transform: scale(1.05);
   }
 `;
-
 const CourseContent = styled.div`
   padding: 0.5rem;
 `;
@@ -481,9 +531,28 @@ const StatItem = styled.div`
   }
 `;
 
+// const CoursePrice = styled.div`
+//   display: flex;
+//   align-items: center;
+
+//   .discounted-price {
+//     font-size: 1.5rem;
+//     color: #ff4d4f;
+//     font-weight: bold;
+//     margin-right: 10px;
+//   }
+
+//   .original-price {
+//     font-size: 1.2rem;
+//     color: #999;
+//     text-decoration: line-through;
+//   }
+// `;
 const CoursePrice = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  margin-bottom: 10px;
 
   .discounted-price {
     font-size: 1.5rem;
@@ -496,6 +565,22 @@ const CoursePrice = styled.div`
     font-size: 1.2rem;
     color: #999;
     text-decoration: line-through;
+  }
+
+  .course-discount {
+    font-size: 1rem;
+    color: #007bff;
+    background-color: #e6f7ff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.1);
+      background-color: #bae7ff;
+      color: #0056b3;
+    }
   }
 `;
 
@@ -602,6 +687,9 @@ const InnerPage = ({ courses = [] }) => {
           {currentCourses.length > 0 ? (
             currentCourses.map((course, index) => (
               <CourseCard key={course.id}>
+                {course.coupon_discount_display ? <ClaimCoupon>
+                    {course.coupon_discount_display}
+                  </ClaimCoupon>: <></>}
                 <Link to={`/course-info/${course.id}`}>
                   <CourseImage
                     src={`https://api.novajobs.us${course.course_banner_image}`}
@@ -646,12 +734,27 @@ const InnerPage = ({ courses = [] }) => {
                       <span>{course.course_level_name}</span>
                     </StatItem>
                   </CourseStats>
-                  <CoursePrice>
+                  {/* <CoursePrice>
                     <span className="discounted-price">${course.after_discount_price}</span>
                     {course.discount_percent > 0 && (
                       <span className="original-price">${course.course_price}</span>
                     )}
-                  </CoursePrice>
+                  </CoursePrice> */}
+                  <CoursePrice>
+  <div>
+    <span className="discounted-price">
+      ${course.after_discount_price}
+    </span>
+    <span className="original-price">
+      ${course.course_price}
+    </span>
+  </div>
+  {course.discount_percent > 0 && (
+    <span className="course-discount">
+      {course.discount_percent}% OFF
+    </span>
+  )}
+</CoursePrice>
                 </CourseContent>
               </CourseCard>
             ))

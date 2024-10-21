@@ -30,6 +30,9 @@ export default function StudentSidebar() {
   });
 
   useEffect(() => {
+    if(!token){
+      window.location.href = '/login';
+    }
     axios
       .get("https://api.novajobs.us/api/students/profile", {
         headers: {
@@ -57,6 +60,9 @@ export default function StudentSidebar() {
       })
       .catch((error) => {
         console.error("Error fetching profile data:", error);
+        if(error.response && error.response.status == 401){
+          window.location.href = '/login'
+        }
       });
   }, [token]);
   const handleLogout =() =>{

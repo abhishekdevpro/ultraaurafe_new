@@ -170,7 +170,7 @@ import CouponList from "./components/Admin/CouponList.jsx";
 import EditCouponForm from "./components/Admin/EditCoupon.jsx";
 import PaymentFailedPage from "./components/pages/error/Paymentfailed.jsx";
 import ScheduleLiveClass from "./components/instructor/LiveClasses/ScheduleLiveClass.jsx";
-import JoinLiveClass from "./components/instructor/LiveClasses/JoinLiveClasses.jsx";
+import JoinLiveClass from "./components/instructor/LiveClasses/ForStudent/JoinLiveClasses.jsx";
 const Approuter = () => {
   return (
     <BrowserRouter>

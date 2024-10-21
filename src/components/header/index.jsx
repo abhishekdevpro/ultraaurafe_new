@@ -178,7 +178,6 @@ const StyledHeader = styled.header`
   backdrop-filter: blur(3px);
 }
 `;
-
 const Header = () => {
   const [navbar, setNavbar] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -317,3 +316,115 @@ const Header = () => {
 };
 
 export default Header;
+
+// const Header = () => {
+//   const [navbar, setNavbar] = useState(false);
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+//   const [profilePhoto, setProfilePhoto] = useState(null);
+//   const [dashboardLink, setDashboardLink] = useState("");
+//   const [isMenuOpen, setIsMenuOpen] = useState(false);
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     const studentToken = localStorage.getItem("token");
+//     const trainerToken = localStorage.getItem("trainerToken");
+//     const role = studentToken ? "student" : trainerToken ? "trainer" : null;
+
+//     if (role) {
+//       setIsLoggedIn(true);
+//       const dashboardUrl = role === "student" ? "/student/student-setting" : "/instructor/instructor-dashboard";
+//       setDashboardLink(dashboardUrl);
+//       const profilePhotoUrl = localStorage.getItem("profilePhotoUrl");
+//       setProfilePhoto(profilePhotoUrl);
+//     } else {
+//       setIsLoggedIn(false);
+//     }
+//   }, []);
+
+//   const changeHeaderBackground = () => {
+//     if (window.scrollY >= 90) {
+//       setNavbar(true);
+//     } else {
+//       setNavbar(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     window.addEventListener("scroll", changeHeaderBackground);
+//     return () => window.removeEventListener("scroll", changeHeaderBackground);
+//   }, []);
+
+//   const handleLogout = () => {
+//     localStorage.removeItem("token");
+//     localStorage.removeItem("trainerToken");
+//     localStorage.removeItem("profilePhotoUrl");
+//     setIsLoggedIn(false);
+//     navigate("/login");
+//   };
+
+//   const toggleMenu = () => {
+//     setIsMenuOpen(!isMenuOpen);
+//   };
+
+//   const NavLinks = () => (
+//     <>
+//       {isLoggedIn ? (
+//         <>
+//           <Link className="header__nav-link header__sign-button" to={dashboardLink}>
+//             {profilePhoto ? (
+//               <img src={profilePhoto} alt="Profile" className="header__profile-photo" />
+//             ) : (
+//               <i className="fas fa-user-circle" style={{ marginRight: "10px" }} />
+//             )}
+//             Dashboard
+//           </Link>
+//           <button className="header__nav-link header__login-button" onClick={handleLogout}>
+//             Logout
+//           </button>
+//         </>
+//       ) : (
+//         <>
+//           <Link className="header__nav-link header__sign-button" to="/about-us">
+//             About us
+//           </Link>
+//           <Link className="header__nav-link header__sign-button" to="/login">
+//             Sign In
+//           </Link>
+//           <Link className="header__nav-link header__login-button" to="/register">
+//             Sign Up
+//           </Link>
+//           <Link className="header__nav-link header__login-button" to="/partner-signin">
+//             Partner With Us
+//           </Link>
+//         </>
+//       )}
+//     </>
+//   );
+
+//   return (
+//     <StyledHeader navbar={navbar} isMenuOpen={isMenuOpen}>
+//       <div className="header__main-header">
+//         <div className="header__container">
+//           <Link to="/home" className="header__logo">
+//             <img src={logo5} alt="Logo" />
+//           </Link>
+//           <div className="header__nav-links">
+//             <NavLinks />
+//           </div>
+//           <div className="header__menu-icon" onClick={toggleMenu}>
+//             <FaBars />
+//           </div>
+//         </div>
+//       </div>
+//       <div className="header__mobile-menu">
+//         <div className="header__close-icon" onClick={toggleMenu}>
+//           <FaTimes />
+//         </div>
+//         <NavLinks />
+//       </div>
+//       <div className="header__overlay" onClick={toggleMenu}></div>
+//     </StyledHeader>
+//   );
+// };
+
+// export default Header;

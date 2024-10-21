@@ -508,6 +508,46 @@ const CourseGrid = styled.div`
 `;
 
 // Course card with improved hover and scale effects
+// const CourseCard = styled.div`
+//   background-color: white;
+//   border-radius: 10px;
+//   overflow: hidden;
+//   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+//   transition: transform 0.3s, box-shadow 0.3s;
+//   border: 2px solid #f0f0f0;
+//   padding: 0.5rem;
+
+//   &:hover {
+//     transform: translateY(-10px);
+//     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+//     border-color: #ff4081;
+//   }
+// `;
+
+// // Course image with hover zoom effect
+// const CourseImage = styled.img`
+//   width: 100%;
+//   height: 130px;
+//   object-fit: contain;
+//   border-radius: 10px;
+//   transition: transform 0.3s;
+
+//   ${CourseCard}:hover & {
+//     transform: scale(1.05);
+//   }
+// `;
+// const ClaimCoupon = styled.div`
+//    position: absolute;
+//   top: 10px;
+//   left: 10px;
+//   background-color: rgba(34, 197, 94, 0.9); /* Green background with opacity */
+//   color: white;
+//   padding: 5px 10px;
+//   border-radius: 5px;
+//   font-size: 0.875rem;
+//   cursor: pointer;
+
+// `;
 const CourseCard = styled.div`
   background-color: white;
   border-radius: 10px;
@@ -516,11 +556,34 @@ const CourseCard = styled.div`
   transition: transform 0.3s, box-shadow 0.3s;
   border: 2px solid #f0f0f0;
   padding: 0.5rem;
+  position: relative; /* Ensure ClaimCoupon positions relative to the CourseCard */
 
   &:hover {
     transform: translateY(-10px);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     border-color: #ff4081;
+  }
+`;
+
+// ClaimCoupon positioned over the image with enhanced styling
+const ClaimCoupon = styled.div`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(34, 197, 94, 0.9); /* Green background with slight opacity */
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, transform 0.3s;
+  z-index:999;
+
+  &:hover {
+    background-color: rgba(34, 197, 94, 1); /* Slightly darker green on hover */
+    transform: scale(1.05);
   }
 `;
 
@@ -536,10 +599,9 @@ const CourseImage = styled.img`
     transform: scale(1.05);
   }
 `;
-
 // Course content styling
 const CourseContent = styled.div`
-  padding: 1rem 0.5rem;
+  padding: 1rem 1.5rem;
 `;
 
 const InstructorInfo = styled.div`
@@ -547,7 +609,7 @@ const InstructorInfo = styled.div`
   align-items: center;
   margin-bottom: 0.5rem;
   background: #f9f9f9;
-  padding: 0.5rem 0.5rem;
+  padding: 0.5rem 1rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
@@ -569,10 +631,11 @@ const InstructorName = styled.span`
 
 // Course title with hover effect
 const CourseTitle = styled.h3`
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 1rem;
   color: #333;
+  padding:0.2rem
 
   &:hover {
     color: #ff4081;
@@ -603,7 +666,9 @@ const StatItem = styled.div`
 // Pricing section with styling
 const CoursePrice = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  margin-bottom: 10px;
 
   .discounted-price {
     font-size: 1.5rem;
@@ -616,6 +681,22 @@ const CoursePrice = styled.div`
     font-size: 1.2rem;
     color: #999;
     text-decoration: line-through;
+  }
+
+  .course-discount {
+    font-size: 1rem;
+    color: #007bff;
+    background-color: #e6f7ff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.1);
+      background-color: #bae7ff;
+      color: #0056b3;
+    }
   }
 `;
 
@@ -767,6 +848,9 @@ const DynamicCourseGrid = () => {
             <CourseGrid>
               {limitedCourses.map((course) => (
                 <CourseCard key={course.id}>
+                 {course.coupon_discount_display ? <ClaimCoupon>
+                    {course.coupon_discount_display}
+                  </ClaimCoupon>: <></>}
                   <Link to={`/course-info/${course.id}`}>
                     <CourseImage
                       src={`https://api.novajobs.us${course.course_banner_image}`}
@@ -816,13 +900,20 @@ const DynamicCourseGrid = () => {
                       </StatItem>
                     </CourseStats>
                     <CoursePrice>
-                      <span className="discounted-price">
-                        ${course.after_discount_price}
-                      </span>
-                      <span className="original-price">
-                        ${course.course_price}
-                      </span>
-                    </CoursePrice>
+  <div>
+    <span className="discounted-price">
+      ${course.after_discount_price}
+    </span>
+    <span className="original-price">
+      ${course.course_price}
+    </span>
+  </div>
+  {course.discount_percent > 0 && (
+    <span className="course-discount">
+      {course.discount_percent}% OFF
+    </span>
+  )}
+</CoursePrice>
                   </CourseContent>
                 </CourseCard>
               ))}

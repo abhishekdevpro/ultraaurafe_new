@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 import LiveClassTable from "./LiveClassTable";
 import axios from "axios";
 import { toast } from "react-toastify";
+import VendorHeader from "../../Vendor/VendorHeader";
+import VendorSidebar from "../../Vendor/VendorSidebar";
 
 const ScheduleLiveClass = () => {
   const [show, setShow] = useState(false);
@@ -95,12 +97,14 @@ const ScheduleLiveClass = () => {
       toast.error(error.response?.data?.message || "Error while scheduling the class");
     }
   };
-  
+   
+
+  const vendorToken = localStorage.getItem('vendorToken')
   return (
     <div className="main-wrapper">
-      <InstructorHeader activeMenu={"Schedule Class"} />
-      <div className="breadcrumb-bar breadcrumb-bar-info">
-        <div className="container">
+     {vendorToken? <VendorHeader />  :<InstructorHeader activeMenu={"Schedule Class"} />}
+      <div className="breadcrumb-bar breadcrumb-bar-info ">
+        <div className="container ">
           <div className="row">
             <div className="col-md-12 col-12">
               <div className="breadcrumb-list">
@@ -124,7 +128,7 @@ const ScheduleLiveClass = () => {
       <div className="page-content">
         <div className="container">
           <div className="row">
-            <InstructorSidebar />
+           {vendorToken? <VendorSidebar /> :<InstructorSidebar />}
             <div className="col-xl-9 col-lg-8">
               <Card className="shadow-sm">
                 <Card.Header className="bg-white">

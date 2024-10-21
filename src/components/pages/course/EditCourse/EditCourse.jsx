@@ -1675,7 +1675,7 @@ const EditCourse = () => {
                                 onChange={handleInputChange}
                               />
                             </div>
-                            <div className="input-block">
+                           {/* {localStorage.getItem('adminToken') &&( <div className="input-block">
                               <label className="add-course-label">Discount Percent</label>
                               <input
                                 type="number"
@@ -1707,7 +1707,45 @@ const EditCourse = () => {
                                 value={courseData.coupon_code}
                                 onChange={handleInputChange}
                               />
-                            </div>
+                            </div>)} */}
+                            {localStorage.getItem('adminToken') && (
+  <>
+    <div className="input-block">
+      <label className="add-course-label">Discount Percent</label>
+      <input
+        type="number"
+        className="form-control"
+        placeholder="0"
+        name="discount_percent"
+        value={courseData.discount_percent || ""}
+        onChange={handleInputChange}
+      />
+    </div>
+    <div className="input-block">
+      <label className="add-course-label">Price After Discount</label>
+      <input
+        type="number"
+        className="form-control"
+        placeholder="0"
+        name="after_discount_price"
+        value={courseData.after_discount_price || ""}
+        onChange={handleInputChange}
+      />
+    </div>
+    <div className="input-block">
+      <label className="add-course-label">Coupon Code</label>
+      <input
+        type="text"
+        className="form-control"
+        placeholder="Enter coupon code"
+        name="coupon_code"
+        value={courseData.coupon_code || ""}
+        onChange={handleInputChange}
+      />
+    </div>
+  </>
+)}
+
                           </form>
                         </div>
                         <div className="widget-btn">

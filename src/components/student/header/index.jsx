@@ -14,7 +14,10 @@ const HeaderWrapper = styled.header`
   z-index: 1000;
   background-color: ${props => props.navbar ? '#ffffff' : 'transparent'};
   box-shadow: ${props => props.navbar ? '0 2px 10px rgba(0, 0, 0, 0.1)' : 'none'};
-  transition: all 0.3s ease;
+  transition: all 0.3s ease; 
+  @media (max-width: 768px) {
+    margin-bottom:16px; /* Adjusted for mobile */
+  }
 `;
 
 const NavbarContainer = styled.nav`
@@ -26,6 +29,7 @@ const NavbarContainer = styled.nav`
   margin: 0 auto;
   width: 100%;
   z-index:1000;
+
   @media (max-width: 768px) {
     margin-bottom:4px; /* Adjusted for mobile */
   }
@@ -215,9 +219,32 @@ export default function StudentHeader() {
 
   const profile = useRef();
 
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token');
+  //   const fetchProfile = async () => {
+  //     try {
+  //       const response = await axios.get("https://api.novajobs.us/api/students/profile", {
+  //         headers: {
+  //           Authorization: `${token}`,
+  //         },
+  //       });
+  //       setProfileData(response.data.data);
+  //     } catch (error) {
+  //       console.error("Error fetching profile data", error);
+  //     }
+  //   };
+
+  //   fetchProfile();
+  // }, []);
   useEffect(() => {
-    const token = localStorage.getItem('token');
     const fetchProfile = async () => {
+      const token = localStorage.getItem('token'); // Retrieve token
+  
+      if (!token) {
+        window.location.href = '/login'; // Redirect to login if token is missing
+        return;
+      }
+  
       try {
         const response = await axios.get("https://api.novajobs.us/api/students/profile", {
           headers: {
@@ -226,13 +253,22 @@ export default function StudentHeader() {
         });
         setProfileData(response.data.data);
       } catch (error) {
-        console.error("Error fetching profile data", error);
+        // Handle errors
+        if (error.response) {
+          if (error.response.status === 401) {
+            window.location.href = '/login'; // Redirect if token is expired or invalid
+          } else {
+            console.error("Error fetching profile data", error); // Log other errors
+          }
+        } else {
+          console.error("Error fetching profile data", error); // Log any unexpected errors
+        }
       }
     };
-
+  
     fetchProfile();
   }, []);
-
+  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (profile.current && !profile.current.contains(event.target)) {

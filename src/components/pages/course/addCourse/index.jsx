@@ -27,7 +27,6 @@ const AddCourse = () => {
   const [isLoading, setIsLoading] = useState(false);
   // const [selectedLevels, setSelectedLevels] = useState([]);
 
-
   const [courseData, setCourseData] = useState({
     course_title: "",
     course_category_name: [],
@@ -39,7 +38,7 @@ const AddCourse = () => {
     course_price: 0,
     after_discount_price: 0,
     coupon_code: "",
-    course_language: "",
+    course_language_name: [],
     discount_percent: 0,
     learning_objectives: "",
     target_audience: "",
@@ -66,13 +65,13 @@ const AddCourse = () => {
     if (selectedOptions && selectedOptions.length > 0) {
       const selectedLabels = selectedOptions.map((option) => option.label);
       const selectedValues = selectedOptions.map((option) => option.value);
-  
+
       setCourseData((prevData) => ({
         ...prevData,
         [`${name}_names`]: selectedLabels, // Store the array of selected labels
         [`${name}_ids`]: selectedValues, // Store the array of selected ids
       }));
-  
+
       console.log(`Updated ${name}:`, selectedOptions); // Debugging log
     } else {
       console.warn(`No options selected for ${name}`);
@@ -83,8 +82,7 @@ const AddCourse = () => {
       }));
     }
   };
-  
-  
+
   const handleEditorChange = (value) => {
     setCourseData({ ...courseData, course_description: value });
   };
@@ -620,7 +618,7 @@ const AddCourse = () => {
                                 <Select
                                   options={languageOptions}
                                   onChange={handleSelectChange(
-                                    "course_language"
+                                    "course_language_name"
                                   )}
                                   placeholder="Select Language"
                                   styles={selectStyle}
@@ -929,7 +927,7 @@ const AddCourse = () => {
                                 onChange={handleInputChange}
                               />
                             </div>
-                            <div className="input-block">
+                            {/* <div className="input-block">
                               <label className="add-course-label">
                                 Discount Percent
                               </label>
@@ -967,7 +965,52 @@ const AddCourse = () => {
                                 value={courseData.coupon_code}
                                 onChange={handleInputChange}
                               />
-                            </div>
+                            </div> */}
+                            {adminToken && (
+                              <>
+                                <div className="input-block">
+                                  <label className="add-course-label">
+                                    Discount Percent
+                                  </label>
+                                  <input
+                                    type="number"
+                                    className="form-control"
+                                    placeholder="0"
+                                    name="discount_percent"
+                                    value={courseData.discount_percent}
+                                    onChange={handleInputChange}
+                                  />
+                                </div>
+
+                                <div className="input-block">
+                                  <label className="add-course-label">
+                                    Price After Discount
+                                  </label>
+                                  <input
+                                    type="number"
+                                    className="form-control"
+                                    placeholder="0"
+                                    name="after_discount_price"
+                                    value={courseData.after_discount_price}
+                                    readOnly
+                                  />
+                                </div>
+
+                                <div className="input-block">
+                                  <label className="add-course-label">
+                                    Coupon Code
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Enter coupon code"
+                                    name="coupon_code"
+                                    value={courseData.coupon_code}
+                                    onChange={handleInputChange}
+                                  />
+                                </div>
+                              </>
+                            )}
                           </form>
                         </div>
                         <div className="widget-btn">
