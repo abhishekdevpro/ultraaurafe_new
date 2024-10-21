@@ -14,7 +14,10 @@ const HeaderWrapper = styled.header`
   z-index: 1000;
   background-color: ${props => props.navbar ? '#ffffff' : 'transparent'};
   box-shadow: ${props => props.navbar ? '0 2px 10px rgba(0, 0, 0, 0.1)' : 'none'};
-  transition: all 0.3s ease;
+  transition: all 0.3s ease; 
+  @media (max-width: 768px) {
+    margin-bottom:16px; /* Adjusted for mobile */
+  }
 `;
 
 const NavbarContainer = styled.nav`
@@ -26,6 +29,7 @@ const NavbarContainer = styled.nav`
   margin: 0 auto;
   width: 100%;
   z-index:1000;
+
   @media (max-width: 768px) {
     margin-bottom:4px; /* Adjusted for mobile */
   }

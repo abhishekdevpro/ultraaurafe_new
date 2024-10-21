@@ -19,7 +19,7 @@ const AdminToken = localStorage.getItem("adminToken")
       <div className="breadcrumb-bar breadcrumb-bar-info">
         <div className="container">
           <div className="row">
-            <div className="col-md-12 col-12">
+            <div className="col-md-12 col-12 p-6">
               <div className="breadcrumb-list">
                 <h2 className="breadcrumb-title">Schedule Live Class</h2>
                 <nav aria-label="breadcrumb" className="page-breadcrumb">
@@ -48,7 +48,7 @@ const AdminToken = localStorage.getItem("adminToken")
             {/* /Sidebar */}
 
             {/* Main Content */}
-            <div className="col-xl-9 col-lg-9">
+            <div className="col-xl-9 col-lg-9 ">
               <div className="settings-widget card-details mb-0">
                 <div className="settings-menu p-0">
                   <div className="profile-heading">
