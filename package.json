@@ -1,7 +1,7 @@
 {
   "name": "dlms",
   "version": "0.1.0",
-  "homepage": "https://ultraaurafe-new.vercel.app",
+  "homepage": "https://trainers.ultraaura.education",
   "private": true,
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^41.4.2",

@@ -20,7 +20,7 @@ const StyledHeader = styled.header`
   }
 
   .header__container {
-    max-width: 1200px;
+    // max-width: 1200px;
     margin: 0 auto;
     padding: 0.5rem 1rem;
     display: flex;
@@ -119,48 +119,64 @@ const StyledHeader = styled.header`
       display: none;
     }
   }
+.header__mobile-menu {
+  position: fixed;
+  top: 0;
+  right: ${props => props.isMenuOpen ? '0' : '-100%'};
+  width: 80%;
+  max-width: 400px;
+  height: 100vh;
+  background-color: #f8f9fa;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem 1.5rem;
+  transition: right 0.3s ease-in-out;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-family: 'Arial', sans-serif;
 
-  .header__mobile-menu {
-    position: fixed;
-    top: 0;
-    right: ${props => props.isMenuOpen ? '0' : '-100%'};
-    width: 80%;
-    height: 100vh;
-    background-color: #ffffff;
-    padding: 2rem;
-    transition: right 0.3s ease-in-out;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
+  .header__close-icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #343a40;
+    transition: color 0.2s ease;
 
-    .header__close-icon {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: #4a5568;
-    }
-
-    .header__nav-link {
-      margin: 1rem 0;
-      font-size: 1.2rem;
-      color: #4a5568;
-      text-align: center;
+    &:hover {
+      color: #007bff;
     }
   }
 
-  .header__overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: ${props => props.isMenuOpen ? 'block' : 'none'};
-    z-index: 999;
+  .header__nav-link {
+    margin: 1rem 0;
+    font-size: 1.1rem;
+    color: #343a40;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      background-color: #e9ecef;
+      color: #007bff;
+    }
   }
+}
+
+.header__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: ${props => props.isMenuOpen ? 'block' : 'none'};
+  z-index: 999;
+  backdrop-filter: blur(3px);
+}
 `;
 const Header = () => {
   const [navbar, setNavbar] = useState(false);
@@ -262,6 +278,9 @@ const Header = () => {
           <Link className="header__nav-link header__login-button" to="/register">
             Sign Up
           </Link>
+          <Link className="header__nav-link header__login-button" to="https://trainers.ultraaura.education/">
+            Sign in as Trainer
+          </Link>
           <Link className="header__nav-link header__login-button" to="/partner-signin">
             Partner With Us
           </Link>
@@ -297,6 +316,7 @@ const Header = () => {
 };
 
 export default Header;
+
 // const Header = () => {
 //   const [navbar, setNavbar] = useState(false);
 //   const [isLoggedIn, setIsLoggedIn] = useState(false);
