@@ -645,7 +645,7 @@ console.log(currentTextIndex);
               Partner with Ultra Aura to offer skills training and job placement opportunities that create a lasting impact on individuals and their families
             </p>
             <div className="mt-auto">
-              <Link to="/partner-signin" className="btn btn-primary btn-lg">
+              <Link to="https://vendors.ultraaura.education" className="btn btn-primary btn-lg">
                 Partner with US
               </Link>
             </div>
