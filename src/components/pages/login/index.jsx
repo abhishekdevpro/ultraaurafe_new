@@ -452,7 +452,7 @@ const Login = () => {
                 <div className="mentor-course text-center">
                   <h2>
                     Welcome to 
-                    UltraAura Trainers.
+                    UltraAura.
                   </h2>
                 </div>
               </div>
@@ -467,7 +467,7 @@ const Login = () => {
                       <Link to="/home">Back to Home</Link>
                     </div>
                   </div>
-                  <h1>Sign into Your Account</h1>
+                  <h1>Sign into Your Student Account</h1>
                   <form onSubmit={handleSubmit}>
                     <div className="input-block">
                       <label className="form-control-label">Email</label>
