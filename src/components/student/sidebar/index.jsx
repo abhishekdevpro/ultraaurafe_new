@@ -65,10 +65,11 @@ export default function StudentSidebar() {
         }
       });
   }, [token]);
-  const handleLogout =() =>{
-    localStorage.removeItem("token")
-    navigate('/')
-  }
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('https://ultraaura.education/login');
+    window.location.href= 'https://ultraaura.education/login';
+  };
   return (
     <div className="col-xl-3 col-lg-3 theiaStickySidebar">
       <StickyBox offsetTop={20} offsetBottom={20}>

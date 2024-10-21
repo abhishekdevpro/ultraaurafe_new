@@ -311,9 +311,8 @@ export default function StudentHeader() {
   }
 
   const handleLogout = () => {
-    console.log("check");
     localStorage.removeItem('token');
-    window.location.href = '/login'
+    window.location.href= 'https://ultraaura.education/login';
   };
 console.log(profileData,"profile");
   return (
