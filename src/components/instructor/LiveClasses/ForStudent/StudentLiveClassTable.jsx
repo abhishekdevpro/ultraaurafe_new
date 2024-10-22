@@ -9,6 +9,7 @@ const StudentLiveClassTable = () => {
   const [error, setError] = useState(null);
   const [showMeetingModal, setShowMeetingModal] = useState(false);
   const [activeMeetingUrl, setActiveMeetingUrl] = useState("");
+  const [passcode,setPasscode] = useState(" ");
 
   const studentToken = localStorage.getItem("token");
 const adminToken = localStorage.getItem("adminToken");
@@ -97,6 +98,7 @@ const handleJoin = (liveClass) => {
     const zoomUrl = `https://zoom.us/wc/${meetingId}/join?pwd=${encodeURIComponent(passcode)}`;
     setActiveMeetingUrl(zoomUrl);
     setShowMeetingModal(true);
+    setPasscode(passcode)
   
   };
   
@@ -165,6 +167,7 @@ const handleJoin = (liveClass) => {
         showMeetingModal={showMeetingModal}
         handleMeetingClose={handleMeetingClose}
         activeMeetingUrl={activeMeetingUrl}
+        passcode={passcode}
       />
     </div>
   );

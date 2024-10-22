@@ -3,7 +3,7 @@ import { Modal } from 'react-bootstrap';
 import { X, Maximize, Minimize } from 'lucide-react';
 import PropTypes from 'prop-types';
 
-const ZoomMeetingModal = ({ showMeetingModal, handleMeetingClose, activeMeetingUrl }) => {
+const ZoomMeetingModal = ({ showMeetingModal, handleMeetingClose, activeMeetingUrl,passcode }) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
 
   const toggleFullScreen = () => {
@@ -29,6 +29,7 @@ const ZoomMeetingModal = ({ showMeetingModal, handleMeetingClose, activeMeetingU
       <Modal.Header className="border-bottom-0">
         <div className="d-flex justify-content-between align-items-center w-100">
           <Modal.Title>Live Class </Modal.Title>
+          <Modal.Title>{`Passcode ${passcode}`} </Modal.Title>
           <div>
             <button
               className="btn btn-link p-0 me-2"
@@ -72,6 +73,7 @@ const ZoomMeetingModal = ({ showMeetingModal, handleMeetingClose, activeMeetingU
 
 ZoomMeetingModal.propTypes = {
   showMeetingModal: PropTypes.bool.isRequired,
+  passcode: PropTypes.string.isRequired,
   handleMeetingClose: PropTypes.func.isRequired,
   activeMeetingUrl: PropTypes.string
 };
