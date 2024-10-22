@@ -42,7 +42,7 @@ const Login = () => {
       });
 
       if (response.data) {
-        const tokenKey = "trainerToken";
+        const tokenKey = "token";
         localStorage.setItem(tokenKey, response.data.data.token);
 
         toast.success('Login successful!', {

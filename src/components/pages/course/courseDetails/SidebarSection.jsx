@@ -355,7 +355,10 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
       toast.success("Purchase Successful ");
       console.log("Purchase successful:", response.data);
       setShowPopup(false);
-    } catch (error) {
+      setTimeout(function() {
+        window.location.reload();
+    }, 3000); 
+        } catch (error) {
       console.error("Error during purchase:", error);
       toast.error("There was an issue with the purchase. Please try again.");
     } finally {
