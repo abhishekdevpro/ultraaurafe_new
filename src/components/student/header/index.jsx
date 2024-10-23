@@ -251,6 +251,7 @@ export default function StudentHeader() {
             Authorization: `${token}`,
           },
         });
+        
         setProfileData(response.data.data);
       } catch (error) {
         // Handle errors

@@ -26,6 +26,7 @@ const fetchClasses = async () => {
     : "https://api.novajobs.us/api/students/my-live-classes";
   
   const tokenToUse = adminToken || studentToken;
+  console.log(tokenToUse,"ttuuu");
 
   try {
     const response = await axios.get(url, {
