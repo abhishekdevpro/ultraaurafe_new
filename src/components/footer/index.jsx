@@ -283,7 +283,6 @@ const Footer = () => {
       console.error('Subscription error:', error);
     }
   };
-
   return (
     <FooterWrapper>
       <FooterTop>
@@ -295,18 +294,24 @@ const Footer = () => {
                   <img src={logo5} alt="logo" />
                 </FooterLogo>
                 <FooterAboutContent>
-                  An AI enabled Edtech Company
+                  <b>
+                    An AI enabled Edtech Company
+                    </b>
                 </FooterAboutContent>
                 <FooterContactInfo>
                   <div className="footer-address">
                     <img src={Icon20} alt="" />
                     <p>
-                      1509 Lady St, Columbia, SC 29201,<br /> United States
+                    1225, Laurel Street, Columbia, SC 29201,<br /> United States
                     </p>
                   </div>
                   <p>
                     <img src={Icon19} alt="" />
                     info@ultraaura.education
+                  </p>
+                  <p>
+                    <img src={Icon19} alt="" />
+                    hr@ultraaura.education
                   </p>
                 </FooterContactInfo>
               </FooterWidget>
