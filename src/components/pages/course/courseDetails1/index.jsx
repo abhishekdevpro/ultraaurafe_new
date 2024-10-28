@@ -130,7 +130,8 @@ const CourseDetails1 = () => {
                         <div className="play-icon">
                           <i className="fa-solid fa-play" />
                         </div>
-                        <img className="img-fluid" src={Video} alt="" />
+                        <video className="img-fluid" src={Video} alt="" autoPlay/>
+                        {/* <img className="img-fluid" src={Video} alt="" /> */}
                       </Link>
                     </div>
                   </div>
