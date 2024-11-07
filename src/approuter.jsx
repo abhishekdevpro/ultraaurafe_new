@@ -588,6 +588,7 @@ const Approuter = () => {
         <Route element={<ProtectedRoute />}>
         <Route path="/admin/admin-dashboard" element={<AdminDashboard />} /> 
         <Route path="/admin/trainer-list" element={<TrainerList />} /> 
+        <Route path="/admin/partner-list" element={<TrainerList />} /> 
         <Route path="/admin/student-list" element={<StudentList />} /> 
         <Route path="/admin/course-list" element={<AdminCourseList />} /> 
         <Route path="/admin/add-student" element={<AddStudentForm />} /> 
