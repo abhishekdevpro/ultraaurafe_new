@@ -273,6 +273,10 @@ const Approuter = () => {
           path="/deposit-student-dashboard"
           element={<StudentDepositDashboard />}
         />
+        <Route
+          path="/student/coming-soon"
+          element={<Coming />}
+        />
         <Route path="/students-grid" element={<StudentsGrid />} />
         <Route path="/students-grid2" element={<StudentsGrid2 />} />
         <Route path="/students-list" element={<StudentsList />} />

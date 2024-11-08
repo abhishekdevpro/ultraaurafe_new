@@ -4,11 +4,14 @@ import { Link } from "react-router-dom";
 import { InstructorHeader } from "./header";
 import InstructorSidebar from "./sidebar";
 import Footer from "../footer";
+import StudentHeader from "../student/header";
+import StudentSidebar from "../student/sidebar";
 
 export const Coming = () => {
+  const token = localStorage.getItem("trainerToken")
   return (
     <div className="main-wrapper">
-      <InstructorHeader activeMenu={"Dashboard"} />
+     {token ? <InstructorHeader activeMenu={"Dashboard"} />:<StudentHeader />}
 
       {/* Breadcrumb */}
       <div className="breadcrumb-bar breadcrumb-bar-info">
@@ -39,7 +42,7 @@ export const Coming = () => {
         <div className="container">
           <div className="row">
             {/* Sidebar */}
-            <InstructorSidebar />
+            {token?<InstructorSidebar />:<StudentSidebar />}
             {/* /Sidebar */}
 
             {/* Main Content */}
