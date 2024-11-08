@@ -63,6 +63,13 @@ const FooterLogo = styled.div`
     max-width: 150px;
   }
 `;
+const FooterLogo2 = styled.div`
+  margin-bottom: 20px;
+
+  img {
+    max-width: 100px;
+  }
+`;
 
 const FooterAboutContent = styled.p`
   margin-bottom: 20px;
@@ -314,6 +321,9 @@ const Footer = () => {
                     hr@ultraaura.education
                   </p>
                 </FooterContactInfo>
+                 <FooterLogo2>
+                 <img src="https://abhishekdevpro-nova-home-care-fe.vercel.app/assets/logo2-06lVAt2c.png" alt="" />
+                 </FooterLogo2>
               </FooterWidget>
               <FooterWidget>
                 <FooterTitle>Newsletter</FooterTitle>
