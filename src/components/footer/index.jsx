@@ -360,9 +360,9 @@ const Footer = () => {
                   <Link to={'/partners'}>Partner with UltraAura</Link>
                 </FooterTitle>
                 <FooterMenuList>
-                  <li><Link to="/login">Student Login</Link></li>
-                  <li><Link to="/login">Trainer Login</Link></li>
-                  <li><Link to="/partner-signup">Partner Signup</Link></li>
+                  <li><Link to="https://ultraaura.education/login">Student Login</Link></li>
+                  <li><Link to="https://trainers.ultraaura.education/">Trainer Login</Link></li>
+                  <li><Link to="https://vendors.ultraaura.education/">Partner Signup</Link></li>
                 </FooterMenuList>
               </FooterWidget>
             </LinksColumn>
