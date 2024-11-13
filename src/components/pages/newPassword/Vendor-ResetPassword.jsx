@@ -70,7 +70,7 @@ const NewPasswordVendor = () => {
         }
 
         if (formData.newPassword !== formData.confirmNewPassword) {
-            toast.error("Passwords do not match");
+            toast.error("Passwords do not match localhost wala chl rha h");
             return;
         }
 
@@ -89,13 +89,12 @@ const NewPasswordVendor = () => {
                     },
                 }
             );
+            console.log("Response Data:", response?.data);
 
-            if (response.data.status === 200) {
-                toast.success("Password reset successfully!");
-                navigate("/login"); // Redirect to login page
-            } else {
-                toast.error("Failed to reset password.");
-            }
+            // Display success message and navigate
+            toast.success("Password reset successfully!");
+            navigate("/login");
+    
         } catch (err) {
             console.log(err);
             toast.error(err.response.data.message || "Error resetting password.");
@@ -103,7 +102,7 @@ const NewPasswordVendor = () => {
     };
 
     return (
-        <>
+        <> 
             <div className="main-wrapper">
                 <div className="row">
                     {/* Login Banner */}

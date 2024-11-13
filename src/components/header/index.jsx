@@ -2,8 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
+// import Joyride from "react-joyride";
 import { FaBars, FaTimes } from 'react-icons/fa';
-import logo5 from '../../assets/logo5.png';
+import logo5 from '../../assets/Ultra_Aura.png';
 import { jwtDecode } from 'jwt-decode';
 
 const StyledHeader = styled.header`
@@ -184,6 +185,7 @@ const Header = () => {
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [dashboardLink, setDashboardLink] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // const [runTour, setRunTour] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -275,22 +277,72 @@ const Header = () => {
           <Link className="header__nav-link header__sign-button" to="/login">
             Sign In
           </Link>
-          <Link className="header__nav-link header__login-button" to="/register">
+          <Link className="header__nav-link header__login-button sign-up relative" to="/register" 
+          // data-tour="signup-button"
+
+          >
             Sign Up
           </Link>
-          <Link className="header__nav-link header__login-button" to="https://trainers.ultraaura.education/">
-            Sign in as Trainer
-          </Link>
-          <Link className="header__nav-link header__login-button" to="https://vendors.ultraaura.education/">
-            Partner With Us
-          </Link>
+          <Link
+          className="header__nav-link header__login-button"
+          to="https://trainers.ultraaura.education/"
+        >
+          Sign in as Trainer
+        </Link>
+        <Link
+          className="header__nav-link header__login-button"
+          to="https://vendors.ultraaura.education/"
+        >
+          Partner With Us
+        </Link>
         </>
       )}
     </>
   );
+  // const steps = [
+  //   {
+  //     target: '[data-tour="signup-button"]', // "Sign Up" button
+  //     content: 'Click here to sign up for an account and start your journey!',
+  //     placement: 'bottom',
+  //     disableBeacon: true, // Prevents the initial "beacon" effect
+  //   },
+  //   {
+  //     target: '.header__login-button[href="https://trainers.ultraaura.education/"]',
+  //     content: 'Sign in here if you are a trainer!',
+  //     placement: 'bottom',
+  //   },
+  //   {
+  //     target: '.header__login-button[href="https://vendors.ultraaura.education/"]',
+  //     content: 'Partner with us to grow your business!',
+  //     placement: 'bottom',
+  //   },
+  // ];
+
 
   return (
-    <StyledHeader navbar={navbar} isMenuOpen={isMenuOpen}>
+    <><StyledHeader navbar={navbar} isMenuOpen={isMenuOpen}>
+       {/* <Joyride
+        steps={steps}
+        run={runTour} // The tour will run automatically on page load
+        continuous
+        scrollToFirstStep
+        showSkipButton
+        showProgress
+        styles={{
+          options: {
+            zIndex: 1000,
+            arrowColor: "#fff",
+            backgroundColor: "whitesmoke",
+            textColor: "#ff875a",
+            // overlayColor: "rgba(227, 147, 116, 0.5)",
+          },
+        }}
+        callback={({ status }) => {
+          if (status === 'finished' || status === 'skipped') {
+            setRunTour(false); // Stop the tour once it's finished or skipped
+          }
+        }}
+      /> */}
       <div className="header__main-header">
         <div className="header__container">
           <Link to="/home" className="header__logo">
@@ -312,119 +364,9 @@ const Header = () => {
       </div>
       <div className="header__overlay" onClick={toggleMenu}></div>
     </StyledHeader>
+    
+</>
   );
 };
 
 export default Header;
-
-// const Header = () => {
-//   const [navbar, setNavbar] = useState(false);
-//   const [isLoggedIn, setIsLoggedIn] = useState(false);
-//   const [profilePhoto, setProfilePhoto] = useState(null);
-//   const [dashboardLink, setDashboardLink] = useState("");
-//   const [isMenuOpen, setIsMenuOpen] = useState(false);
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     const studentToken = localStorage.getItem("token");
-//     const trainerToken = localStorage.getItem("trainerToken");
-//     const role = studentToken ? "student" : trainerToken ? "trainer" : null;
-
-//     if (role) {
-//       setIsLoggedIn(true);
-//       const dashboardUrl = role === "student" ? "/student/student-setting" : "/instructor/instructor-dashboard";
-//       setDashboardLink(dashboardUrl);
-//       const profilePhotoUrl = localStorage.getItem("profilePhotoUrl");
-//       setProfilePhoto(profilePhotoUrl);
-//     } else {
-//       setIsLoggedIn(false);
-//     }
-//   }, []);
-
-//   const changeHeaderBackground = () => {
-//     if (window.scrollY >= 90) {
-//       setNavbar(true);
-//     } else {
-//       setNavbar(false);
-//     }
-//   };
-
-//   useEffect(() => {
-//     window.addEventListener("scroll", changeHeaderBackground);
-//     return () => window.removeEventListener("scroll", changeHeaderBackground);
-//   }, []);
-
-//   const handleLogout = () => {
-//     localStorage.removeItem("token");
-//     localStorage.removeItem("trainerToken");
-//     localStorage.removeItem("profilePhotoUrl");
-//     setIsLoggedIn(false);
-//     navigate("/login");
-//   };
-
-//   const toggleMenu = () => {
-//     setIsMenuOpen(!isMenuOpen);
-//   };
-
-//   const NavLinks = () => (
-//     <>
-//       {isLoggedIn ? (
-//         <>
-//           <Link className="header__nav-link header__sign-button" to={dashboardLink}>
-//             {profilePhoto ? (
-//               <img src={profilePhoto} alt="Profile" className="header__profile-photo" />
-//             ) : (
-//               <i className="fas fa-user-circle" style={{ marginRight: "10px" }} />
-//             )}
-//             Dashboard
-//           </Link>
-//           <button className="header__nav-link header__login-button" onClick={handleLogout}>
-//             Logout
-//           </button>
-//         </>
-//       ) : (
-//         <>
-//           <Link className="header__nav-link header__sign-button" to="/about-us">
-//             About us
-//           </Link>
-//           <Link className="header__nav-link header__sign-button" to="/login">
-//             Sign In
-//           </Link>
-//           <Link className="header__nav-link header__login-button" to="/register">
-//             Sign Up
-//           </Link>
-//           <Link className="header__nav-link header__login-button" to="/partner-signin">
-//             Partner With Us
-//           </Link>
-//         </>
-//       )}
-//     </>
-//   );
-
-//   return (
-//     <StyledHeader navbar={navbar} isMenuOpen={isMenuOpen}>
-//       <div className="header__main-header">
-//         <div className="header__container">
-//           <Link to="/home" className="header__logo">
-//             <img src={logo5} alt="Logo" />
-//           </Link>
-//           <div className="header__nav-links">
-//             <NavLinks />
-//           </div>
-//           <div className="header__menu-icon" onClick={toggleMenu}>
-//             <FaBars />
-//           </div>
-//         </div>
-//       </div>
-//       <div className="header__mobile-menu">
-//         <div className="header__close-icon" onClick={toggleMenu}>
-//           <FaTimes />
-//         </div>
-//         <NavLinks />
-//       </div>
-//       <div className="header__overlay" onClick={toggleMenu}></div>
-//     </StyledHeader>
-//   );
-// };
-
-// export default Header;

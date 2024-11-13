@@ -54,15 +54,19 @@ import "./assets/icons/feather/css/iconfont.css";
 import Approuter from "./approuter";
 import { Provider } from "react-redux";
 import store from "./components/common/redux/store.jsx";
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 // Import Toastify
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import the CSS
 
+const stripePromise = loadStripe('publishable-key-here'); 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <>
     <Provider store={store}>
+    <Elements stripe={stripePromise}>
       <Approuter />
       <ToastContainer // Add the ToastContainer component
         position="top-right"
@@ -76,6 +80,7 @@ root.render(
         pauseOnHover
         theme="colored"
       />
+       </Elements>
     </Provider>
   </>
 );

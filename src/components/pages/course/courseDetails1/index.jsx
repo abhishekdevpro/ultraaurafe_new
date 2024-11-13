@@ -24,6 +24,18 @@ import FeatherIcon from "feather-icons-react";
 import Footer from "../../../footer";
 
 const CourseDetails1 = () => {
+  const handleShare = () => {
+    console.log("You clicked Share button")
+    const shareLink = `${window.location.origin}${window.location.pathname}`; 
+
+    navigator.clipboard.writeText(shareLink)
+      .then(() => {
+        alert("Link copied to clipboard!");
+      })
+      .catch((err) => {
+        console.error("Failed to copy: ", err);
+      });
+  };
   return (
     <>
       <div className="main-wrapper">
@@ -164,11 +176,11 @@ const CourseDetails1 = () => {
                             </Link>
                           </div>
                           <div className="col-sm-6">
-                            <Link to="/#" className="btn btn-wish w-100">
+                            <button  className="btn btn-wish w-100" onClick={()=>handleShare()}>
                               {/* <i className="feather-share-2" />  */}
                               <FeatherIcon icon="share-2" />
-                              Share
-                            </Link>
+                              Share 
+                            </button>
                           </div>
                           <div className="col-sm-6">
                             <Link to="/cart" className="btn btn-cart w-100">

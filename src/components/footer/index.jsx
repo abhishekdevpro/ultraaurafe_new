@@ -298,7 +298,9 @@ const Footer = () => {
             <CompanyInfoColumn>
               <FooterWidget>
                 <FooterLogo>
+                  <Link to={"/home"}>
                   <img src={logo5} alt="logo" />
+                  </Link>
                 </FooterLogo>
                 <FooterAboutContent>
                   <b>

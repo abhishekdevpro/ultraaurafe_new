@@ -101,7 +101,7 @@ const AboutUs = () => {
           <h2>Welcome to UltraAura 🎓</h2>
           <p>
             Welcome to UltraAura, your go-to platform for high-quality, comprehensive education across a variety of trades and professional skills.
-            As a proud product of Hyper V Solutions—an AI-driven business incubator at the University of South Carolina—we are dedicated to providing accessible, cutting-edge online learning experiences for students at every stage of their careers.
+            As a proud product of Hyper V Solutions—an AI-driven business incubator—we are dedicated to providing accessible, cutting-edge online learning experiences for students at every stage of their careers.
           </p>
           <p>
             We cater to:
