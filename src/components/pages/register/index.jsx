@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import OwlCarousel from "react-owl-carousel";
 // import {NetIcon1, NetIcon2 } from "../../imagepath";
 import axios from "axios";
-import logo5 from '../../../assets/logo5.png'
+import logo5 from '../../../assets/Ultra_Aura.png'
 import { toast } from "react-toastify";
 const hasNumber = (value) => {
   return new RegExp(/[0-9]/).test(value);

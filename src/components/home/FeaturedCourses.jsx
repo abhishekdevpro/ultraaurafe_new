@@ -412,7 +412,7 @@ const DynamicCourseGrid = () => {
     <Wrapper>
       <Container>
         <Header>
-          <Title>Our Popular Online Courses</Title>
+          <Title className="courses">Our Popular Online Courses</Title>
           <AllCoursesButton to={"/course-list"}>All Courses</AllCoursesButton>
         </Header>
 

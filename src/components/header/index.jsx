@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
-import Joyride from "react-joyride";
+// import Joyride from "react-joyride";
 import { FaBars, FaTimes } from 'react-icons/fa';
-import logo5 from '../../assets/logo5.png';
+import logo5 from '../../assets/Ultra_Aura.png';
 import { jwtDecode } from 'jwt-decode';
 
 const StyledHeader = styled.header`
@@ -185,7 +185,7 @@ const Header = () => {
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [dashboardLink, setDashboardLink] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [runTour, setRunTour] = useState(true);
+  // const [runTour, setRunTour] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -277,31 +277,51 @@ const Header = () => {
           <Link className="header__nav-link header__sign-button" to="/login">
             Sign In
           </Link>
-          <Link className="header__nav-link header__login-button relative" to="/register" data-tour="signup-button">
+          <Link className="header__nav-link header__login-button sign-up relative" to="/register" 
+          // data-tour="signup-button"
+
+          >
             Sign Up
           </Link>
-          <Link className="header__nav-link header__login-button" to="https://trainers.ultraaura.education/">
-            Sign in as Trainer
-          </Link>
-          <Link className="header__nav-link header__login-button" to="https://vendors.ultraaura.education/">
-            Partner With Us
-          </Link>
+          <Link
+          className="header__nav-link header__login-button"
+          to="https://trainers.ultraaura.education/"
+        >
+          Sign in as Trainer
+        </Link>
+        <Link
+          className="header__nav-link header__login-button"
+          to="https://vendors.ultraaura.education/"
+        >
+          Partner With Us
+        </Link>
         </>
       )}
     </>
   );
-  const steps = [
-    {
-      target: '[data-tour="signup-button"]', // Target the "Sign Up" button
-      content: 'Click here to sign up for an account and start your journey!',
-      placement: 'bottom', // You can adjust the position as needed
-      disableBeacon: true,
-    },
-  ];
+  // const steps = [
+  //   {
+  //     target: '[data-tour="signup-button"]', // "Sign Up" button
+  //     content: 'Click here to sign up for an account and start your journey!',
+  //     placement: 'bottom',
+  //     disableBeacon: true, // Prevents the initial "beacon" effect
+  //   },
+  //   {
+  //     target: '.header__login-button[href="https://trainers.ultraaura.education/"]',
+  //     content: 'Sign in here if you are a trainer!',
+  //     placement: 'bottom',
+  //   },
+  //   {
+  //     target: '.header__login-button[href="https://vendors.ultraaura.education/"]',
+  //     content: 'Partner with us to grow your business!',
+  //     placement: 'bottom',
+  //   },
+  // ];
+
 
   return (
-    <StyledHeader navbar={navbar} isMenuOpen={isMenuOpen}>
-       <Joyride
+    <><StyledHeader navbar={navbar} isMenuOpen={isMenuOpen}>
+       {/* <Joyride
         steps={steps}
         run={runTour} // The tour will run automatically on page load
         continuous
@@ -322,7 +342,7 @@ const Header = () => {
             setRunTour(false); // Stop the tour once it's finished or skipped
           }
         }}
-      />
+      /> */}
       <div className="header__main-header">
         <div className="header__container">
           <Link to="/home" className="header__logo">
@@ -344,6 +364,8 @@ const Header = () => {
       </div>
       <div className="header__overlay" onClick={toggleMenu}></div>
     </StyledHeader>
+    
+</>
   );
 };
 

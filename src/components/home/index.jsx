@@ -202,33 +202,34 @@ console.log(currentTextIndex);
 
 const steps = [
   {
-    target: '.navbar', // Ensure the Navbar has this class
-    content: 'This is the main navigation bar.',
+    target: '.sign-up', // "Sign Up" button
+    content: 'Click here to sign up for an account and start your journey!',
+    placement: 'bottom',
+    disableBeacon: true, // Prevents the initial "beacon" effect
   },
   {
-    target: '.home-slide h1',
-    content: 'This is the homepage’s main heading.',
+    target: '.header__login-button[href="https://trainers.ultraaura.education/"]',
+    content: 'Sign in here if you are a trainer!',
+    placement: 'bottom',
+  },
+  {
+    target: '.header__login-button[href="https://vendors.ultraaura.education/"]',
+    content: 'Partner with us to grow your business!',
+    placement: 'bottom',
   },
   {
     target: '.form-container',
     content: 'Search for courses here by keyword, category, or level.',
   },
   {
-    target: '.card-title',
-    content: 'Check out your options as a Facilitator or Seeker.',
+    target: '.courses',
+    content: 'Check out our courses and enhance your skills.',
   },
   {
     target: '.master-skill',
     content: 'Explore new skills and career advancement opportunities here.',
   },
-  {
-    target: '.share-knowledge',
-    content: 'Interested in teaching? Join as a Trainer!',
-  },
-  {
-    target: '.lead-companies',
-    content: 'We’re proud to be partnered with leading companies worldwide.',
-  },
+  
 ];
 // const handleTourComplete = () => {
 //   setTourCompleted(true); // Mark tour as completed
@@ -747,7 +748,7 @@ const steps = [
                               styles={customSelectStyles}
                             />
                             <SearchButton type="button" onClick={handleSearch}>
-                              <i className="fas fa-arrow-right" />
+                              <i className="fas fa-arrow-right form-container" />
                             </SearchButton>
                           </InputGroup>
                         </FormInner>
