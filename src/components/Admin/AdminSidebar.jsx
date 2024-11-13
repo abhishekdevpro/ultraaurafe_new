@@ -95,8 +95,8 @@ const handleLogout =()=>{
                   Add Student
                 </Link>
               </li>
-              <li className={`nav-item ${location.pathname === '/admin/students' ? 'active' : ''}`}>
-                <Link to="" className="nav-link">
+              <li className={`nav-item ${location.pathname === '/admin/partner-list' ? 'active' : ''}`}>
+                <Link to="/admin/partner-list" className="nav-link">
                   <i className="bx bxs-group" />
                   Partners
                 </Link>

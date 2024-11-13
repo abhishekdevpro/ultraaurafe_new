@@ -63,6 +63,13 @@ const FooterLogo = styled.div`
     max-width: 150px;
   }
 `;
+const FooterLogo2 = styled.div`
+  margin-bottom: 20px;
+
+  img {
+    max-width: 100px;
+  }
+`;
 
 const FooterAboutContent = styled.p`
   margin-bottom: 20px;
@@ -316,6 +323,9 @@ const Footer = () => {
                     hr@ultraaura.education
                   </p>
                 </FooterContactInfo>
+                 <FooterLogo2>
+                 <img src="https://abhishekdevpro-nova-home-care-fe.vercel.app/assets/logo2-06lVAt2c.png" alt="" />
+                 </FooterLogo2>
               </FooterWidget>
               <FooterWidget>
                 <FooterTitle>Newsletter</FooterTitle>
@@ -357,9 +367,9 @@ const Footer = () => {
                   <Link to={'/partners'}>Partner with UltraAura</Link>
                 </FooterTitle>
                 <FooterMenuList>
-                  <li><Link to="/login">Student Login</Link></li>
-                  <li><Link to="/login">Trainer Login</Link></li>
-                  <li><Link to="/partner-signup">Partner Signup</Link></li>
+                  <li><Link to="https://ultraaura.education/login">Student Login</Link></li>
+                  <li><Link to="https://trainers.ultraaura.education/">Trainer Login</Link></li>
+                  <li><Link to="https://vendors.ultraaura.education/">Partner Signup</Link></li>
                 </FooterMenuList>
               </FooterWidget>
             </LinksColumn>

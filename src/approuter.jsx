@@ -273,6 +273,10 @@ const Approuter = () => {
           path="/deposit-student-dashboard"
           element={<StudentDepositDashboard />}
         />
+        <Route
+          path="/student/coming-soon"
+          element={<Coming />}
+        />
         <Route path="/students-grid" element={<StudentsGrid />} />
         <Route path="/students-grid2" element={<StudentsGrid2 />} />
         <Route path="/students-list" element={<StudentsList />} />
@@ -588,6 +592,7 @@ const Approuter = () => {
         <Route element={<ProtectedRoute />}>
         <Route path="/admin/admin-dashboard" element={<AdminDashboard />} /> 
         <Route path="/admin/trainer-list" element={<TrainerList />} /> 
+        <Route path="/admin/partner-list" element={<TrainerList />} /> 
         <Route path="/admin/student-list" element={<StudentList />} /> 
         <Route path="/admin/course-list" element={<AdminCourseList />} /> 
         <Route path="/admin/add-student" element={<AddStudentForm />} /> 

@@ -149,7 +149,7 @@ export default function StudentSidebar() {
               </li>
               <li className={`nav-item ${location.pathname === '/student/student-qa' ? 'active' : ''}`}>
 
-                <Link to="" className="nav-link">
+                <Link to="/student/coming-soon" className="nav-link">
                   <i className="bx bxs-bookmark-alt" />
                   Question &amp; Answer
                 </Link>
