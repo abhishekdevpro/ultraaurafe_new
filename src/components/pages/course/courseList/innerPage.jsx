@@ -442,7 +442,7 @@ const ClaimCoupon = styled.div`
   position: absolute;
   top: 10px;
   left: 10px;
-  background-color: rgba(34, 197, 94, 0.9); /* Green background with slight opacity */
+  background-color: rgba(43, 46, 44, 0.9);/* Green background with slight opacity */
   color: white;
   padding: 6px 12px;
   border-radius: 8px;
@@ -454,7 +454,7 @@ const ClaimCoupon = styled.div`
   z-index:999;
 
   &:hover {
-    background-color: rgba(34, 197, 94, 1); /* Slightly darker green on hover */
+    background-color:rgba(18, 19, 19, 0.9); /* Slightly darker green on hover */
     transform: scale(1.05);
   }
 `;

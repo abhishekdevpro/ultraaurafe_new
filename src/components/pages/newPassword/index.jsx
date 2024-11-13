@@ -6,7 +6,7 @@ import { LoginImg} from "../../imagepath";
 import logo from '../../../assets/logo5.png'
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { toast } from 'react-toastify'; // Import toast for notifications
+import { toast, ToastContainer } from 'react-toastify'; // Import toast for notifications
 
 const NewPassword = () => {
     const [eye, setEye] = useState(true);
@@ -105,6 +105,7 @@ const NewPassword = () => {
 
     return (
         <>
+          <ToastContainer />
             <div className="main-wrapper">
                 <div className="row">
                     {/* Login Banner */}
