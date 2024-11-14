@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 import styled from "styled-components";
 import ShareButton from "./Sharebutton";
 import { Loader } from "lucide-react";
+
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -228,6 +229,9 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   // const [showBanner, setShowBanner] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState(false);
   const [showTestModal, setShowTestModal] = useState(false);
+  const [userInfo,setUserInfo]=useState('');
+  // const [checkoutData, setCheckoutData] =useState([]);
+  
   const toggleReadMore = () => {
     setIsExpanded(!isExpanded);
   };
@@ -293,6 +297,44 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
     }
   };
 
+  const fetchProfile=async() => {
+    try{
+      const response = await axios.get("https://api.novajobs.us/api/students/profile", {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
+      setUserInfo(response.data.data);
+    } 
+    catch (error) {
+      console.error("Error fetching user profile:", error);
+    }
+  }
+  useEffect(()=>{
+    fetchProfile();
+    },[userInfo.id]
+    )
+  const handleBuyNow=async() => {
+    
+  
+    try {
+      const response = await axios.post('https://api.novajobs.us/api/students/cart', {
+        student_id: userInfo.id, 
+        course_id: Number(courseId), 
+        quantity: 1,
+      }, {headers: {
+        Authorization: `${token}`,
+      }},);
+      console.log('Item added to cart:', response.data.message);
+      toast.success(response.data.message || "Course Added To cart Successfully ")
+      window.location.href="/cart"
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
+      toast.error(error.message || "Error to add the course in the cart")
+    }
+
+  }
+
   const toggleClass = async (courseId, isFavorite) => {
     const updatedClasses = [...isClassAdded];
     updatedClasses[courseId] = !isFavorite;
@@ -338,7 +380,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
 
   const handleCheckout = async () => {
     setLoading(true);
-    try {
+     try {
       const response = await axios.post(
         "https://api.novajobs.us/api/students/buy",
         {
@@ -352,8 +394,11 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
           },
         }
       );
+      
       toast.success("Purchase Successful ");
       console.log("Purchase successful:", response.data);
+      
+      
       setShowPopup(false);
       setTimeout(function() {
         window.location.reload();
@@ -365,6 +410,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
       setLoading(false);
     }
   };
+  
 
   const handleVideoPlay = async () => {
     setLoading(true);
@@ -484,7 +530,11 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                       </button>
                     )}
 
-            
+                   {
+                    <button  className="btn-enroll w-100"
+                    onClick={handleBuyNow}
+                    >Buy now</button>
+                   }
 
                     {token &&
                       courseData.is_student_enroll &&
