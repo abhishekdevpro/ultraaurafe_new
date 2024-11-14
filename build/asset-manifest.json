@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.6f4f96c8.css",
-    "main.js": "/static/js/main.1f896fbb.js",
+    "main.js": "/static/js/main.eec51005.js",
     "reactPlayerYouTube.js": "/static/js/reactPlayerYouTube.779c505e.chunk.js",
     "reactPlayerSoundCloud.js": "/static/js/reactPlayerSoundCloud.c576f519.chunk.js",
     "reactPlayerVimeo.js": "/static/js/reactPlayerVimeo.3cb25a13.chunk.js",
@@ -54,6 +54,7 @@
     "static/media/logo5.png": "/static/media/logo5.43c058bc9ffc574683f2.png",
     "static/media/award-01.png": "/static/media/award-01.32a80aa13dc166528369.png",
     "static/media/certification.png": "/static/media/certification.53adb002556c3829193b.png",
+    "static/media/Ultra_Aura.png": "/static/media/Ultra_Aura.cabb61de498b919d72f4.png",
     "static/media/education.png": "/static/media/education.e686a662004703ddf830.png",
     "static/media/joing-us-skill.png": "/static/media/joing-us-skill.09a733153d451f504040.png",
     "static/media/slider-02.png": "/static/media/slider-02.1fbcd291e4da9d1c7143.png",
@@ -227,7 +228,7 @@
     "static/media/ellipse-2.svg": "/static/media/ellipse-2.66db5a5abef263f9125a7836e3a20524.svg",
     "static/media/ellipse-3.svg": "/static/media/ellipse-3.c43a615f25034961835631a131d2e873.svg",
     "main.6f4f96c8.css.map": "/static/css/main.6f4f96c8.css.map",
-    "main.1f896fbb.js.map": "/static/js/main.1f896fbb.js.map",
+    "main.eec51005.js.map": "/static/js/main.eec51005.js.map",
     "reactPlayerYouTube.779c505e.chunk.js.map": "/static/js/reactPlayerYouTube.779c505e.chunk.js.map",
     "reactPlayerSoundCloud.c576f519.chunk.js.map": "/static/js/reactPlayerSoundCloud.c576f519.chunk.js.map",
     "reactPlayerVimeo.3cb25a13.chunk.js.map": "/static/js/reactPlayerVimeo.3cb25a13.chunk.js.map",
@@ -245,6 +246,6 @@
   },
   "entrypoints": [
     "static/css/main.6f4f96c8.css",
-    "static/js/main.1f896fbb.js"
+    "static/js/main.eec51005.js"
   ]
 }

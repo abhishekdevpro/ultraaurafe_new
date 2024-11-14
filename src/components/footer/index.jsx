@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Icon19, Icon20 } from "../imagepath";
-import logo5 from './logo5.png';
+import logo5 from '../../assets/Ultra_Aura.png';
 import axios from "axios";
 import { toast } from "react-toastify";
 
