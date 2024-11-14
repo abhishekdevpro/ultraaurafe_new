@@ -57,7 +57,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "eslint": "^8.53.0",
+    "eslint": "^8.57.1",
     "eslint-plugin-react": "^7.33.2",
     "react-scripts": "^5.0.1"
   },
@@ -76,6 +76,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test"
+    "test": "react-scripts test",
+    "lint": "eslint ."
   }
 }

@@ -171,6 +171,9 @@ import EditCouponForm from "./components/Admin/EditCoupon.jsx";
 import PaymentFailedPage from "./components/pages/error/Paymentfailed.jsx";
 import ScheduleLiveClass from "./components/instructor/LiveClasses/ScheduleLiveClass.jsx";
 import JoinLiveClass from "./components/instructor/LiveClasses/ForStudent/JoinLiveClasses.jsx";
+import Enroll from "./components/student/stripepayment/Enroll.jsx";
+import Success from "./components/student/transactionStudent/Success.jsx";
+
 const Approuter = () => {
   return (
     <BrowserRouter>
@@ -181,7 +184,7 @@ const Approuter = () => {
         <Route path="/home3" element={<Home3 />} />
         <Route path="/home4" element={<Home4 />} />
 
-        
+        <Route path="/transaction?s=success" element={<Success />}/>
         {/* routes for course creation and edit  */}
         <Route element={<ProtectedRoute/>}>
         <Route path="/add-section/:id" element={<AddSection />} />
@@ -255,6 +258,7 @@ const Approuter = () => {
         <Route path="/setting-student-privacy" element={<StudentPrivacy />} />
         <Route path="/setting-student-referral" element={<StudentReferral />} />
         <Route path="/setting-student-security" element={<StudentSecurity />} />
+       <Route path="/enroll-course" element={<Enroll />} />
 
         <Route
           path="/setting-student-subscription"
@@ -585,7 +589,7 @@ const Approuter = () => {
         <Route path="/student/student-setting" element={<StudentSetting />} />
         <Route path="/student/student-ticket" element={<StudentTicket />} />
         </Route>
-
+        
         {/* student routes ends*/}
         {/* Admin routes starts*/}
         <Route path="/admin/login" element={<AdminLogin />} /> 
