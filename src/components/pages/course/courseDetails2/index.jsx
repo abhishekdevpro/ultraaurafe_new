@@ -276,7 +276,7 @@ const CourseDetails2 = () => {
                           Overview
                         </Link>
                       </li>
-                      <li>
+                      <li className=".course-content">
                         <Link to="#Course_Content">Course Content</Link>
                       </li>
                       <li>

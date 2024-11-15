@@ -171,7 +171,7 @@ import EditCouponForm from "./components/Admin/EditCoupon.jsx";
 import PaymentFailedPage from "./components/pages/error/Paymentfailed.jsx";
 import ScheduleLiveClass from "./components/instructor/LiveClasses/ScheduleLiveClass.jsx";
 import JoinLiveClass from "./components/instructor/LiveClasses/ForStudent/JoinLiveClasses.jsx";
-import Enroll from "./components/student/stripepayment/Enroll.jsx";
+
 import Success from "./components/student/transactionStudent/Success.jsx";
 
 const Approuter = () => {
@@ -258,7 +258,7 @@ const Approuter = () => {
         <Route path="/setting-student-privacy" element={<StudentPrivacy />} />
         <Route path="/setting-student-referral" element={<StudentReferral />} />
         <Route path="/setting-student-security" element={<StudentSecurity />} />
-       <Route path="/enroll-course" element={<Enroll />} />
+       
 
         <Route
           path="/setting-student-subscription"
