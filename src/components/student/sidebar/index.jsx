@@ -5,12 +5,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { useState,useEffect } from "react";
+import Joyride from 'react-joyride';
 // eslint-disable-next-line react/prop-types
 export default function StudentSidebar() {
   const location = useLocation();
 
   const token = localStorage.getItem("token");
   const navigate = useNavigate()
+  const [runTour, setRunTour] = useState(true);
   const [profileData, setProfileData] = useState({
     first_name: "",
     last_name: "",
@@ -70,6 +72,29 @@ export default function StudentSidebar() {
     navigate('https://ultraaura.education/login');
     window.location.href= 'https://ultraaura.education/login';
   };
+ 
+    const steps = [
+      {
+        target: '[data-tour="wishlist-link"]',
+        content: 'This is where you can manage your wishlist.',
+      },
+      {
+        target: '[data-tour="reviews-link"]',
+        content: 'Browse your reviews here.',
+      },
+      {
+        target: '[data-tour="quiz-link"]',
+        content: 'View and take quizzes in this section.',
+      },
+      {
+        target: '[data-tour="order-history-link"]',
+        content: 'Access your order history here.',
+      },
+      {
+        target: '[data-tour="qa-link"]',
+        content: 'Ask questions and find answers in this section.',
+      },
+    ];
   return (
     <div className="col-xl-3 col-lg-3 theiaStickySidebar">
       <StickyBox offsetTop={20} offsetBottom={20}>
@@ -94,6 +119,34 @@ export default function StudentSidebar() {
           </div>
         </div>
         <div className="settings-widget account-settings">
+        <Joyride
+      steps={steps}
+      run={runTour}
+      continuous
+      showProgress
+      showSkipButton
+      callback={({ status }) => {
+        if (['finished', 'skipped'].includes(status)) {
+          setRunTour(false); // Stop the tour when completed or skipped
+        }
+      }}
+      styles={{
+        options: {
+          zIndex: 1000, // Ensure tooltips are above all other content
+          overlayColor: 'rgba(0, 0, 0, 0.4)', // Dim background during the tour
+        },
+        tooltip: {
+          backgroundColor: 'rgba(240, 235, 235, 0.8)', // Tooltip background opacity (adjust opacity here)
+          color: '#0e0d0d', // Tooltip text color
+          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)', // Optional shadow for better contrast
+        },
+        spotlight: {
+          backgroundColor: 'rgba(14, 14, 14, 0.5)', // Overlay behind the highlighted element
+        },
+       
+    
+      }}
+    />
           <div className="settings-menu">
             <h3>Dashboard</h3>
             <ul>
@@ -111,7 +164,7 @@ export default function StudentSidebar() {
                   My Profile
                 </Link>
               </li>
-              <li className={`nav-item ${location.pathname === '/student/student-courses' ? 'active' : ''}`}>
+              {/* <li className={`nav-item ${location.pathname === '/student/student-courses' ? 'active' : ''}`}>
                 <Link
                   to="/student/student-courses"
                   className="nav-link"
@@ -119,41 +172,63 @@ export default function StudentSidebar() {
                   <i className="bx bxs-graduation" />
                   Enrolled Courses
                 </Link>
-              </li>
-              <li className={`nav-item ${location.pathname === '/student/student-wishlist' || location.pathname === '/student/student-quiz-details' ? 'active' : ''}`}>
+              </li> */}
+              <li
+  className={`nav-item ${location.pathname === '/student/student-courses' ? 'active' : ''}`}
+  data-tour="enrolled-courses" // Unique identifier for Joyride
+>
+  <Link to="/student/student-courses" className="nav-link">
+    <i className="bx bxs-graduation" />
+    Enrolled Courses
+  </Link>
+</li>
 
-              <Link to="/student/student-wishlist" className="nav-link">
+<li
+  className={`nav-item ${location.pathname === '/student/student-wishlist' || location.pathname === '/student/student-quiz-details' ? 'active' : ''}`}
+  data-tour="wishlist-link"
+>
+  <Link to="/student/student-wishlist" className="nav-link">
     <i className="bx bxs-heart" />
     Wishlist
   </Link>
-              </li>
-              <li className={`nav-item ${location.pathname === '/student/student-reviews' ? 'active' : ''}`}>
+</li>
+<li
+  className={`nav-item ${location.pathname === '/student/student-reviews' ? 'active' : ''}`}
+  data-tour="reviews-link"
+>
+  <Link to="/student/student-reviews" className="nav-link">
+    <i className="bx bxs-star" />
+    Reviews
+  </Link>
+</li>
+<li
+  className={`nav-item ${location.pathname === '/student/student-quiz' ? 'active' : ''}`}
+  data-tour="quiz-link"
+>
+  <Link to="/student/student-quiz" className="nav-link">
+    <i className="bx bxs-shapes" />
+    My Quiz Attempts
+  </Link>
+</li>
+<li
+  className={`nav-item ${location.pathname === '/student/student-order-history' ? 'active' : ''}`}
+  data-tour="order-history-link"
+>
+  <Link to="" className="nav-link">
+    <i className="bx bxs-cart" />
+    Order History
+  </Link>
+</li>
+<li
+  className={`nav-item ${location.pathname === '/student/student-qa' ? 'active' : ''}`}
+  data-tour="qa-link"
+>
+  <Link to="/student/coming-soon" className="nav-link">
+    <i className="bx bxs-bookmark-alt" />
+    Question &amp; Answer
+  </Link>
+</li>
 
-                <Link to="/student/student-reviews" className="nav-link">
-                  <i className="bx bxs-star" />
-                  Reviews
-                </Link>
-              </li>
-              <li className={`nav-item ${location.pathname === '/student/student-quiz' ? 'active' : ''}`}>
-
-                <Link to="/student/student-quiz" className="nav-link">
-                  <i className="bx bxs-shapes" />
-                  My Quiz Attempts
-                </Link>
-              </li>
-              <li className={`nav-item ${location.pathname === '/student/student-order-history' ? 'active' : ''}`}>
-                <Link to="" className="nav-link">
-                  <i className="bx bxs-cart" />
-                  Order History
-                </Link>
-              </li>
-              <li className={`nav-item ${location.pathname === '/student/student-qa' ? 'active' : ''}`}>
-
-                <Link to="/student/coming-soon" className="nav-link">
-                  <i className="bx bxs-bookmark-alt" />
-                  Question &amp; Answer
-                </Link>
-              </li>
               {/* <li className={`nav-item ${location.pathname === '/student/student-referral' ? 'active' : ''}`}>
 
                 <Link to="" className="nav-link">

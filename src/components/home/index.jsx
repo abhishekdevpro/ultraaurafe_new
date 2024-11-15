@@ -672,24 +672,19 @@ const steps = [
   showProgress
   styles={{
     options: {
-      zIndex: 1000,
-      arrowColor: '#fff',
-      backgroundColor: 'whitesmoke',
-      textColor: '#ff875a',
-      // overlayColor: 'rgba(227, 147, 116, 0.5)',
-      // Customize Next button (Primary button)
-      buttonPrimary: {
-        backgroundColor: '#007bff', // Change to your desired color
-        color: '#fff', // Text color
-        borderRadius: '5px', // Optional: round the button corners
-      },
-      // Customize Back button (Secondary button)
-      buttonSecondary: {
-        backgroundColor: '#ccc', // Change to your desired color
-        color: '#333', // Text color for Back button
-        borderRadius: '5px', // Optional: round the button corners
-      },
+      zIndex: 1000, // Ensure tooltips are above all other content
+      overlayColor: 'rgba(0, 0, 0, 0.4)', // Dim background during the tour
     },
+    tooltip: {
+      backgroundColor: 'rgba(240, 235, 235, 0.8)', // Tooltip background opacity (adjust opacity here)
+      color: '#0e0d0d', // Tooltip text color
+      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)', // Optional shadow for better contrast
+    },
+    spotlight: {
+      backgroundColor: 'rgba(14, 14, 14, 0.5)', // Overlay behind the highlighted element
+    },
+   
+
   }}
   callback={({ status }) => {
     if (status === 'finished' || status === 'skipped') {
@@ -804,7 +799,7 @@ const steps = [
     <p className="card-text flex-grow-1">
       A new day awaits! Choose from our wide range of specialized courses to unlock exciting new possibilities for your future
     </p>
-    <div className="mt-auto">
+    <div className="mt-auto sign-up">
       <Link to="/register" className="btn btn-primary btn-lg">
         Sign up
       </Link>

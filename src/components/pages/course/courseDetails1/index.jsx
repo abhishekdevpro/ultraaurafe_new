@@ -204,7 +204,7 @@ const CourseDetails1 = () => {
                 {/* Include */}
                 <div className="card include-sec">
                   <div className="card-body">
-                    <div className="cat-title">
+                    <div className="cat-title includes">
                       <h4>Includes</h4>
                       <span>
                         <i className="fas fa-angle-down" />

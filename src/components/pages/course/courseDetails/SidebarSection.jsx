@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 import styled from "styled-components";
 import ShareButton from "./Sharebutton";
 import { Loader } from "lucide-react";
+import Joyride from "react-joyride";
 
 
 const ButtonWrapper = styled.div`
@@ -231,6 +232,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   const [showTestModal, setShowTestModal] = useState(false);
   const [userInfo,setUserInfo]=useState('');
   // const [checkoutData, setCheckoutData] =useState([]);
+  const [runTour, setRunTour] = useState(true);
   
   const toggleReadMore = () => {
     setIsExpanded(!isExpanded);
@@ -440,7 +442,30 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
     }, 2000);
   };
   const isFavorite = isClassAdded[courseData.course_id];
+  const steps = [
+    {
+      target: '.btn-wish', // Target "Add to Wishlist"
+      content: 'Click here to add this course to your wishlist!',
+    },
+    {
+      target: '.btn-enroll:first-of-type', // Target "Enroll Now" button
+      content: 'Click here to enroll in this course!',
+    },
+    {
+      target: '.buynow', // Target "Buy Now" button
+      content: 'Click here to buy this course immediately!',
+    },
+    {
+      target: '.includes', // Target "Buy Now" button
+      content: 'This is the topics included in this course!',
+    },
+  ];
+
   return (
+  <>
+  
+ 
+
     <div className="col-lg-4">
       <div className="sidebar-sec">
         {/* Video Section */}
@@ -474,7 +499,34 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                 </button>
               </div>
             )}
-
+            <Joyride
+        steps={steps}
+        run={runTour} // Automatically start the tour
+        continuous
+        showProgress
+        showSkipButton
+        callback={({ status }) => {
+          if (['finished', 'skipped'].includes(status)) {
+            setRunTour(false); // Stop the tour when completed or skipped
+          }
+        }}
+        styles={{
+          options: {
+            zIndex: 1000, // Ensure tooltips are above all other content
+            overlayColor: 'rgba(0, 0, 0, 0.4)', // Dim background during the tour
+          },
+          tooltip: {
+            backgroundColor: 'rgba(240, 235, 235, 0.8)', // Tooltip background opacity (adjust opacity here)
+            color: '#0e0d0d', // Tooltip text color
+            boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)', // Optional shadow for better contrast
+          },
+          spotlight: {
+            backgroundColor: 'rgba(14, 14, 14, 0.5)', // Overlay behind the highlighted element
+          },
+         
+      
+        }}
+      />
                 <div className="video-details">
                  {courseFeatureData.course_price == 0? <div className="course-fee">
                     <h2>FREE</h2>
@@ -531,7 +583,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                     )}
 
                    {
-                    <button  className="btn-enroll w-100"
+                    <button  className="btn-enroll w-100 buynow"
                     onClick={handleBuyNow}
                     >Buy now</button>
                    }
@@ -607,7 +659,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
         {/* Include Section */}
         <div className="card include-sec">
           <div className="card-body">
-            <div className="cat-title">
+            <div className="cat-title includes">
               <h4>Includes</h4>
             </div>
             <ul>
@@ -707,6 +759,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
