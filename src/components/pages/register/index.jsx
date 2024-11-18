@@ -535,7 +535,7 @@ const Register = () => {
                   </div>
                   
                     <div className="input-block">
-                      <label className="form-control-label">Qualification</label>
+                      <label className="form-control-label">Grades</label>
                       <select
                         name="qualification_id"
                         value={formData.qualification_id}
