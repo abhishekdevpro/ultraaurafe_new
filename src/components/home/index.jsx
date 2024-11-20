@@ -862,7 +862,7 @@ const steps = [
     <div className="col-lg-7 col-md-12">
       <div className="section-header aos" data-aos="fade-up">
         <div className="section-sub-head">
-          <span>What’s New</span>
+          <span>What is New</span>
           <h2>Master the skills to drive your career</h2>
         </div>
       </div>
