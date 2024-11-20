@@ -38,12 +38,12 @@ const StyledHeader = styled.header`
     align-items: center;
     
     img {
-      height: 30px;
+      height: 60px;
       width: auto;
       object-fit: contain;
 
       @media (min-width: 768px) {
-        height: 40px;
+        height: 60px;
       }
     }
   }
