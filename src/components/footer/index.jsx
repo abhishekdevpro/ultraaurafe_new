@@ -311,7 +311,7 @@ const Footer = () => {
                   <div className="footer-address">
                     <img src={Icon20} alt="" />
                     <p>
-                    1225, Laurel Street, Columbia, SC 29201,<br /> United States
+                    P O Box 1084, Columbia, SC 29202
                     </p>
                   </div>
                   <p>

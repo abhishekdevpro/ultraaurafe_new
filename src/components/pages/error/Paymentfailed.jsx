@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 // import { PaymentFailedIcon, logo } from "../../../imagepath";
-import logo from '../../../assets/logo5.png'
+import logo from '../../../assets/Ultra_Aura.png'
 import { Error3 } from "../../imagepath";
 
 const PaymentFailedWrapper = styled.div`

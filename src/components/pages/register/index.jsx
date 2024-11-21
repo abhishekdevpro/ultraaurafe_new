@@ -278,7 +278,7 @@ const Register = () => {
       }
     };
     fetchCountries();
-  });
+  },[]);
 
   // useEffect(() => {
   //   if (formData.country_id) {
@@ -355,7 +355,7 @@ const Register = () => {
         }
       }
       fetchQualifications();
-  });
+  },[]);
 
   return (
     <>

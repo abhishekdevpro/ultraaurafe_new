@@ -505,6 +505,8 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
         continuous
         showProgress
         showSkipButton
+        spotlightClicks={false}
+        hideBeacon={true}
         callback={({ status }) => {
           if (['finished', 'skipped'].includes(status)) {
             setRunTour(false); // Stop the tour when completed or skipped
@@ -520,8 +522,14 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
             color: '#0e0d0d', // Tooltip text color
             boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)', // Optional shadow for better contrast
           },
+          // spotlight: {
+          //   backgroundColor: 'rgba(14, 14, 14, 0.5)', // Overlay behind the highlighted element
+          // },
           spotlight: {
-            backgroundColor: 'rgba(14, 14, 14, 0.5)', // Overlay behind the highlighted element
+            display: 'none', // Hides the spotlight effect entirely
+          },
+          beacon: {
+            display: 'none', // Just in case, ensure it never displays
           },
          
       

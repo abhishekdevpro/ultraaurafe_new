@@ -3,7 +3,7 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import OwlCarousel from "react-owl-carousel";
 import { LoginImg} from "../../imagepath";
-import logo from '../../../assets/logo5.png'
+import logo from '../../../assets/Ultra_Aura.png'
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify'; // Import toast for notifications

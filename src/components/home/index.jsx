@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Joyride from 'react-joyride';
+// import Joyride from 'react-joyride';
 import Header from "../header";
 import {
   // bannerimg,
@@ -183,7 +183,7 @@ export const Home = () => {
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [levelOptions, setLevelOptions] = useState([]);
-  const [runTour, setRunTour] = useState(true);
+  // const [runTour, setRunTour] = useState(true);
   // const [tourCompleted, setTourCompleted] = useState(false);    
   // const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const navigate = useNavigate(); // Initialize useNavigate
@@ -200,37 +200,37 @@ export const Home = () => {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
 console.log(currentTextIndex);
 
-const steps = [
-  {
-    target: '.sign-up', // "Sign Up" button
-    content: 'Click here to sign up for an account and start your journey!',
-    placement: 'bottom',
-    disableBeacon: true, // Prevents the initial "beacon" effect
-  },
-  {
-    target: '.header__login-button[href="https://trainers.ultraaura.education/"]',
-    content: 'Sign in here if you are a trainer!',
-    placement: 'bottom',
-  },
-  {
-    target: '.header__login-button[href="https://vendors.ultraaura.education/"]',
-    content: 'Partner with us to grow your business!',
-    placement: 'bottom',
-  },
-  {
-    target: '.form-container',
-    content: 'Search for courses here by keyword, category, or level.',
-  },
-  {
-    target: '.courses',
-    content: 'Check out our courses and enhance your skills.',
-  },
-  {
-    target: '.master-skill',
-    content: 'Explore new skills and career advancement opportunities here.',
-  },
+// const steps = [
+//   {
+//     target: '.sign-up', // "Sign Up" button
+//     content: 'Click here to sign up for an account and start your journey!',
+//     placement: 'bottom',
+//     disableBeacon: true, // Prevents the initial "beacon" effect
+//   },
+//   {
+//     target: '.header__login-button[href="https://trainers.ultraaura.education/"]',
+//     content: 'Sign in here if you are a trainer!',
+//     placement: 'bottom',
+//   },
+//   {
+//     target: '.header__login-button[href="https://vendors.ultraaura.education/"]',
+//     content: 'Partner with us to grow your business!',
+//     placement: 'bottom',
+//   },
+//   {
+//     target: '.form-container',
+//     content: 'Search for courses here by keyword, category, or level.',
+//   },
+//   {
+//     target: '.courses',
+//     content: 'Check out our courses and enhance your skills.',
+//   },
+//   {
+//     target: '.master-skill',
+//     content: 'Explore new skills and career advancement opportunities here.',
+//   },
   
-];
+// ];
 // const handleTourComplete = () => {
 //   setTourCompleted(true); // Mark tour as completed
 // };
@@ -663,13 +663,15 @@ const steps = [
 
 <>
       <div className="main-wrapper">
-      <Joyride
+      {/* <Joyride
   steps={steps}
   run={runTour}
   continuous
   scrollToFirstStep
   showSkipButton
   showProgress
+  spotlightClicks={false}
+  hideBeacon={true}
   styles={{
     options: {
       zIndex: 1000, // Ensure tooltips are above all other content
@@ -680,8 +682,14 @@ const steps = [
       color: '#0e0d0d', // Tooltip text color
       boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)', // Optional shadow for better contrast
     },
+    // spotlight: {
+    //   backgroundColor: 'rgba(14, 14, 14, 0.5)', // Overlay behind the highlighted element
+    // },
     spotlight: {
-      backgroundColor: 'rgba(14, 14, 14, 0.5)', // Overlay behind the highlighted element
+      display: 'none', // Hides the spotlight effect entirely
+    },
+    beacon: {
+      display: 'none', // Just in case, ensure it never displays
     },
    
 
@@ -691,7 +699,7 @@ const steps = [
       setRunTour(false);
     }
   }}
-/>
+/> */}
 
         
         <Header />

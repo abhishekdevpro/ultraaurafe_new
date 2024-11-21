@@ -240,7 +240,7 @@ import { Home, LogOut, ShoppingCart, Menu, X } from "react-feather";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from 'styled-components';
-import logo5 from '../../assets/logo5.png'
+import logo5 from '../../assets/Ultra_Aura.png'
 
 const HeaderWrapper = styled.header`
   position: fixed;
