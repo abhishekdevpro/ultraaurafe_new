@@ -4,6 +4,8 @@ import AGI from '../../assets/img/Agi.jpg'
 import React from 'react';
 import styled from 'styled-components';
 
+
+
 const PartnersContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
@@ -106,19 +108,57 @@ const partnerData = [
   {
     name: 'SCOPE',
     icon: scope, // Replace with actual icon import or URL
-    description: 'Empowering Citizens of South Florida... Innovative education and employment program for a stronger Hallandale Beach community.'
+    description: 'Empowering Citizens of South Florida... Innovative education and employment program for a stronger Hallandale Beach community.',
+    // url:"https://www.google.com/"
+
   },
   {
     name: 'AGI Tax Experts',
     icon: AGI, // Replace with actual icon import or URL
-    description: 'Launch your career with AGI Tax Experts! Comprehensive training and placement opportunities available through our portal.'
+    description: 'Launch your career with AGI Tax Experts! Comprehensive training and placement opportunities available through our portal.',
+     url:"https://ultraaura.education/course-info/226"
   },
   {
     name: 'NOVA Home Care',
     icon: "https://idfy-eia3.vercel.app/assets/logo5-DddCxhI1.jpg", // Replace with actual icon import or URL
-    description: 'Elevate your career with top-notch training and placement. Transform lives and secure your future with us.'
+    description: 'Elevate your career with top-notch training and placement. Transform lives and secure your future with us.',
+     url:"https://novahome.care/"
   }
 ];
+
+
+// const PartnerList = () => {
+//   return (
+//     <PartnersContainer>
+//       <Title>Our Partners</Title>
+//       <PartnersRow>
+//         {partnerData.map((partner, index) => (
+//           <PartnerCard key={index}>
+//             <CardContent>
+//               <IconContainer>
+//                 <PartnerIcon src={partner.icon} alt={`${partner.name} icon`} />
+//               </IconContainer>
+//               <PartnerName>{partner.name}</PartnerName>
+//               <PartnerDescription>{partner.description}</PartnerDescription>
+//             </CardContent>
+//             <CardFooter>
+//               <a 
+//               href={partner.url}
+//               target="_blank"
+//               // rel="noopener noreferrer"
+//               style={{ textDecoration: "none" }}
+//               >
+//               <LearnMoreButton>
+//                 Learn More
+//                 </LearnMoreButton>
+//               </a>
+//             </CardFooter>
+//           </PartnerCard>
+//         ))}
+//       </PartnersRow>
+//     </PartnersContainer>
+//   );
+// };
 
 
 const PartnerList = () => {
@@ -136,7 +176,17 @@ const PartnerList = () => {
               <PartnerDescription>{partner.description}</PartnerDescription>
             </CardContent>
             <CardFooter>
-              <LearnMoreButton>Learn More</LearnMoreButton>
+            <LearnMoreButton>
+            <a
+      href={partner.url||""}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="btn-link" style={{color:'white'}}
+      >
+      Learn More
+    </a>
+      </LearnMoreButton> 
+            
             </CardFooter>
           </PartnerCard>
         ))}
@@ -144,5 +194,7 @@ const PartnerList = () => {
     </PartnersContainer>
   );
 };
+
+
 
 export default PartnerList;

@@ -25,7 +25,13 @@ const Login = () => {
   const handleEmailChange = (evt) => {
     setEmail(evt.target.value);
   };
-
+  window.onerror = function (message, source, lineno, colno, error) {
+    console.error("Error in login:", message);
+    console.log("Source file:", source);
+    console.log("Line:", lineno, "Column:", colno);
+    console.log("Error object:", error);
+  };
+  
   const togglePassword = () => {
     setPasswordType(passwordType === "password" ? "text" : "password");
   };

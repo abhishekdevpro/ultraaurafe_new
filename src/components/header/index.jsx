@@ -277,11 +277,14 @@ const Header = () => {
           <Link className="header__nav-link header__sign-button" to="/login">
             Sign In
           </Link>
-          <Link className="header__nav-link header__login-button sign-up relative" to="/register" 
-          // data-tour="signup-button"
 
+          <Link className="header__nav-link header__login-button relative" to="/register" 
+          // data-tour="signup-button"
+          
           >
+          <span className="nav-sign-up">
             Sign Up
+            </span>
           </Link>
           <Link
           className="header__nav-link header__login-button"

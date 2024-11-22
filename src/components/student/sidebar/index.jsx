@@ -119,7 +119,7 @@ export default function StudentSidebar() {
           </div>
         </div>
         <div className="settings-widget account-settings">
-        <Joyride
+        {runTour?<Joyride
       steps={steps}
       run={runTour}
       continuous
@@ -146,16 +146,16 @@ export default function StudentSidebar() {
         // spotlight: {
         //   backgroundColor: 'rgba(14, 14, 14, 0.5)', // Overlay behind the highlighted element
         // },
-        // spotlight: {
-        //   display: 'none', // Hides the spotlight effect entirely
-        // },
+        spotlight: {
+          display: 'none', 
+        },
         beacon: {
           display: 'none', // Just in case, ensure it never displays
         },
        
     
       }}
-    />
+    />:""}
           <div className="settings-menu">
             <h3>Dashboard</h3>
             <ul>
