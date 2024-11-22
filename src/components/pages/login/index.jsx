@@ -9,7 +9,7 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styled from "styled-components";
-import logo5 from "../../../assets/logo5.png";
+import logo5 from "../../../assets/Ultra_Aura.png";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,13 @@ const Login = () => {
   const handleEmailChange = (evt) => {
     setEmail(evt.target.value);
   };
-
+  window.onerror = function (message, source, lineno, colno, error) {
+    console.error("Error in login:", message);
+    console.log("Source file:", source);
+    console.log("Line:", lineno, "Column:", colno);
+    console.log("Error object:", error);
+  };
+  
   const togglePassword = () => {
     setPasswordType(passwordType === "password" ? "text" : "password");
   };

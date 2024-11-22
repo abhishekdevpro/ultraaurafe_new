@@ -8,7 +8,7 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // import styled from "styled-components";
-import logo5 from "../../assets/logo5.png";
+import logo5 from "../../assets/Ultra_Aura.png";
 
 const AdminLogin = () => {
   const [passwordType, setPasswordType] = useState("password");

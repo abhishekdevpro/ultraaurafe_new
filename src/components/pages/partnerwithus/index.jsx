@@ -5,7 +5,7 @@ import OwlCarousel from "react-owl-carousel";
 import FeatherIcon from "feather-icons-react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import logo5 from "../../header/logo5.png";
+import logo5 from "../../../assets/Ultra_Aura.png";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

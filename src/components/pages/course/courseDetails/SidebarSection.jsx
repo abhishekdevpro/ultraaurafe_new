@@ -232,8 +232,22 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   const [showTestModal, setShowTestModal] = useState(false);
   const [userInfo,setUserInfo]=useState('');
   // const [checkoutData, setCheckoutData] =useState([]);
-  const [runTour, setRunTour] = useState(true);
-  
+  const [runTour, setRunTour] = useState(false);
+  const [dataLoaded, setDataLoaded] = useState(false);
+
+  useEffect(() => {
+    // Simulating data loading
+    setTimeout(() => {
+      setDataLoaded(true); // Set dataLoaded to true when data is ready
+    }, 1000); // Adjust time based on when data actually loads
+  }, []);
+
+  useEffect(() => {
+    if (dataLoaded) {
+      setRunTour(true); // Start the tour when data is loaded
+    }
+  }, [dataLoaded]);
+
   const toggleReadMore = () => {
     setIsExpanded(!isExpanded);
   };
@@ -448,7 +462,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
       content: 'Click here to add this course to your wishlist!',
     },
     {
-      target: '.btn-enroll:first-of-type', // Target "Enroll Now" button
+      target: '.btn-enroll', // Target "Enroll Now" button
       content: 'Click here to enroll in this course!',
     },
     {
@@ -505,6 +519,9 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
         continuous
         showProgress
         showSkipButton
+        spotlightClicks={false}
+        // hideBeacon={true}
+        // disableBeacon={true}
         callback={({ status }) => {
           if (['finished', 'skipped'].includes(status)) {
             setRunTour(false); // Stop the tour when completed or skipped
@@ -523,6 +540,12 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
           spotlight: {
             backgroundColor: 'rgba(14, 14, 14, 0.5)', // Overlay behind the highlighted element
           },
+          // spotlight: {
+          //   display: 'none', // Hides the spotlight effect entirely
+          // },
+          // beacon: {
+          //   display: 'none', // Just in case, ensure it never displays
+          // },
          
       
         }}

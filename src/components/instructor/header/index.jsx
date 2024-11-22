@@ -260,7 +260,7 @@ import React, { useEffect, useState } from "react";
 import { Home, LogOut, User, Menu, X } from "react-feather";
 import { Link, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
-import logo5 from "../../../assets/logo5.png";
+import logo5 from "../../../assets/Ultra_Aura.png";
 
 const HeaderWrapper = styled.header`
   position: fixed;

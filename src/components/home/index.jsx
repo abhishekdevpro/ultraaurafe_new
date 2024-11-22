@@ -184,6 +184,7 @@ export const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [levelOptions, setLevelOptions] = useState([]);
   const [runTour, setRunTour] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
   // const [tourCompleted, setTourCompleted] = useState(false);    
   // const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const navigate = useNavigate(); // Initialize useNavigate
@@ -231,6 +232,14 @@ const steps = [
   },
   
 ];
+
+useEffect(() => {
+  // Simulate data fetching or waiting for DOM to render
+  const timer = setTimeout(() => {
+      setIsLoaded(true);
+  }, 1000); // Adjust based on your app's loading time
+  return () => clearTimeout(timer);
+}, []);
 // const handleTourComplete = () => {
 //   setTourCompleted(true); // Mark tour as completed
 // };
@@ -663,13 +672,15 @@ const steps = [
 
 <>
       <div className="main-wrapper">
-      <Joyride
+     {isLoaded &&  <Joyride
   steps={steps}
   run={runTour}
   continuous
   scrollToFirstStep
   showSkipButton
   showProgress
+  spotlightClicks={false}
+  hideBeacon={true}
   styles={{
     options: {
       zIndex: 1000, // Ensure tooltips are above all other content
@@ -680,8 +691,14 @@ const steps = [
       color: '#0e0d0d', // Tooltip text color
       boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)', // Optional shadow for better contrast
     },
+    // spotlight: {
+    //   backgroundColor: 'rgba(14, 14, 14, 0.5)', // Overlay behind the highlighted element
+    // },
     spotlight: {
-      backgroundColor: 'rgba(14, 14, 14, 0.5)', // Overlay behind the highlighted element
+      display: 'none', // Hides the spotlight effect entirely
+    },
+    beacon: {
+      display: 'none', // Just in case, ensure it never displays
     },
    
 
@@ -692,7 +709,7 @@ const steps = [
     }
   }}
 />
-
+}
         
         <Header />
         <SubHeader />
@@ -863,7 +880,7 @@ const steps = [
     <div className="col-lg-7 col-md-12">
       <div className="section-header aos" data-aos="fade-up">
         <div className="section-sub-head">
-          <span>What’s New</span>
+          <span>What is New</span>
           <h2>Master the skills to drive your career</h2>
         </div>
       </div>

@@ -4,7 +4,8 @@ import OwlCarousel from "react-owl-carousel";
 // import {NetIcon1, NetIcon2 } from "../../imagepath";
 import axios from "axios";
 import logo5 from '../../../assets/Ultra_Aura.png'
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const hasNumber = (value) => {
   return new RegExp(/[0-9]/).test(value);
 };
@@ -278,7 +279,7 @@ const Register = () => {
       }
     };
     fetchCountries();
-  });
+  },[]);
 
   // useEffect(() => {
   //   if (formData.country_id) {
@@ -355,10 +356,10 @@ const Register = () => {
         }
       }
       fetchQualifications();
-  });
+  },[]);
 
   return (
-    <>
+    <> <ToastContainer />
       <div className="main-wrapper log-wrap">
         <div className="row">
           {/* Login Banner */}
@@ -535,7 +536,7 @@ const Register = () => {
                   </div>
                   
                     <div className="input-block">
-                      <label className="form-control-label">Qualification</label>
+                      <label className="form-control-label">Grades</label>
                       <select
                         name="qualification_id"
                         value={formData.qualification_id}

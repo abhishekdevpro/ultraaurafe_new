@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import logo5 from '../../../assets/logo5.png';
+import logo5 from '../../../assets/Ultra_Aura.png';
 
 const StyledHeader = styled.header`
   position: sticky;

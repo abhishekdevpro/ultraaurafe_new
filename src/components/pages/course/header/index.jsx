@@ -3,7 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import logo5 from '../../../../assets/logo5.png';
+import logo5 from '../../../../assets/Ultra_Aura.png';
 import HeadModule from "../module";
 
 const Header = styled.header`

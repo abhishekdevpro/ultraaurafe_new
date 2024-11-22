@@ -44,7 +44,7 @@ const CourseDescriptionWrapper = styled.div`
   line-height: 1.6;
   color: white;
   margin-bottom: 20px;
-  max-height: ${({ isExpanded }) => (isExpanded ? "none" : "100px")};
+  max-height: ${({ isExpanded }) => (isExpanded ? "none" : "130px")};
   overflow: hidden;
   transition: max-height 0.3s ease-in-out;
 

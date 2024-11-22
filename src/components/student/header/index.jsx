@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Home, LogOut, User, Menu, X } from "react-feather";
 import { Link } from "react-router-dom";
-import logo5 from "../../../assets/logo5.png";
+import logo5 from "../../../assets/Ultra_Aura.png";
 // import DarkMode from "../../common/darkMode";
 import axios from "axios";
 import styled from 'styled-components';

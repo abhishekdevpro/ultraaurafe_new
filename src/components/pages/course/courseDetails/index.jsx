@@ -137,7 +137,7 @@ const CourseDetails = () => {
                 <span className="web-badge mb-3">
                   {courseData.course_category_name
                     ? courseData.data.course_category_name
-                    : "Graduates"}
+                    : "Under Graduates"}
                 </span>
               </div>
               <h2>{courseData.data.course_title || "Course Title"}</h2>
