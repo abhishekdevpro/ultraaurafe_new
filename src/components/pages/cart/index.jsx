@@ -93,6 +93,7 @@ const Cart = () => {
         }
       );
       setCartData(response.data);
+      console.log(response.data)
       setTotalPrice(response.data.total_price);
     } catch (error) {
       console.error("Error fetching cart data:", error);
@@ -327,6 +328,13 @@ const Cart = () => {
                                   __html: item.description,
                                 }}
                               />
+                            </div><div className="container" style={{display:'flex'}}>
+
+                            
+                            <div className="cart-remove" style={{marginRight:'8px'}}>
+                              <button className="btn btn-primary">
+                                Quantity: {item.quantity}
+                              </button>
                             </div>
                             <div className="cart-remove">
                               <button
@@ -347,6 +355,7 @@ const Cart = () => {
                                   "Remove"
                                 )}
                               </button>
+                              </div>
                             </div>
                           </div>
                         </div>

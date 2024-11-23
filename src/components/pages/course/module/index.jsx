@@ -550,7 +550,9 @@ const HeadModule = ({ courseId }) => {
       </NavItem>
 
       <NavItem>
-        <Link to="#" onClick={handleAddCart}>
+        <Link to="#" 
+        onClick={handleAddCart}
+        >
           <img src={Wish} alt="Wishlist" />
         </Link>
       </NavItem>

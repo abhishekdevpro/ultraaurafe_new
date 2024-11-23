@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import OwlCarousel from "react-owl-carousel";
@@ -17,6 +17,21 @@ const Login = () => {
   const [passwordInput, setPasswordInput] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
+  const [isLoadPage, setIsLoadPage] = useState(false);
+  useEffect(() => {
+    if(isLoadPage==false) {
+         console.log(
+          "Login page is loading!!!"
+         )
+    }
+    const timer = setTimeout(() => {
+      setIsLoadPage(true);
+    }, 1000);
+
+    // Cleanup timer on unmount
+    return () => clearTimeout(timer);
+  }, []);
+
 
   const handlePasswordChange = (evt) => {
     setPasswordInput(evt.target.value);
@@ -122,7 +137,7 @@ const Login = () => {
   `;
 
   return (
-    <>
+    <>{isLoadPage&&
       <div className="main-wrapper log-wrap">
         <div className="row">
           <div className="col-md-6 login-bg">
@@ -231,7 +246,7 @@ const Login = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div>}
       <ToastContainer />
     </>
   );

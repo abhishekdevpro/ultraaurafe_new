@@ -1344,7 +1344,7 @@ const DynamicCourseGrid = () => {
     <Wrapper>
       <Container>
         <Header>
-          <Title>Our Popular Online Courses</Title>
+          <Title><span className="courses">Our Popular Online Courses</span></Title>
           <AllCoursesButton to={"/course-list"}>All Courses</AllCoursesButton>
         </Header>
 
