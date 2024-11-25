@@ -184,7 +184,7 @@ const Approuter = () => {
         <Route path="/home3" element={<Home3 />} />
         <Route path="/home4" element={<Home4 />} />
 
-        <Route path="/transaction?s=success" element={<Success />}/>
+        <Route path="/transaction" element={<Success />}/>
         {/* routes for course creation and edit  */}
         <Route element={<ProtectedRoute/>}>
         <Route path="/add-section/:id" element={<AddSection />} />

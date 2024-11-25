@@ -15,7 +15,8 @@ import {
   Video2,
 } from "../../../imagepath";
 import { Modal, Button, Spinner } from "react-bootstrap";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import the CSS for toast notifications
 import styled from "styled-components";
 import ShareButton from "./Sharebutton";
 import { Loader } from "lucide-react";
@@ -332,7 +333,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
     )
   const handleBuyNow=async() => {
     
-  
+  if(token){
     try {
       const response = await axios.post('https://api.novajobs.us/api/students/cart', {
         student_id: userInfo.id, 
@@ -348,6 +349,10 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
       console.error('Error adding item to cart:', error);
       toast.error(error.message || "Error to add the course in the cart")
     }
+  }
+  else {
+    navigate("/login");
+  }
 
   }
 
@@ -389,7 +394,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
     } catch (error) {
       console.error("Failed to update course favorites:", error);
       // Show error toast
-      toast.error("FYou need to login first.");
+      toast.error("You need to login first.");
       navigate("/login");
     }
   };
@@ -479,8 +484,8 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   <>
   
  
-
     <div className="col-lg-4">
+    <ToastContainer />
       <div className="sidebar-sec">
         {/* Video Section */}
         <VideoSection>

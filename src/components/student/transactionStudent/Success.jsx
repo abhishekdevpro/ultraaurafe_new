@@ -1,31 +1,46 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function Success() {
-    const navigate=useNavigate();
-    // const {s}=useParams();
-    const handleBack=()=>{
-        navigate("/home")
+  const location = useLocation();
+  const navigate = useNavigate();
 
-    }
+  // Parse the query parameter
+  const queryParams = new URLSearchParams(location.search);
+  const status = queryParams.get('s'); // Get the value of 's'
+  const backToHome = () => {
+    navigate("/home")
+
+  }
   return (
-    
-    <div className="border border-gray-200 rounded-lg shadow-lg max-w-md mx-auto mt-10">
-    <div className="m-3 p-3">
-      <button 
-        onClick={handleBack} 
-        className="bg-blue-500 hover:bg-blue-600 font-medium py-2 px-4 rounded"
-      >
-        Back
-      </button>
+    <div style={{ textAlign: 'center', marginTop: '50px' }}>
+      <button
+        onClick={backToHome}
+        style={{
+          borderRadius: '15px',
+          color: 'purple',
+          backgroundColor: 'white',
+          outline: 'none',
+          // border: 'none',
+          fontSize: '18px',
+          marginBottom:'20px',
+          padding:'5px',
+          
+        }}
+      >Back to home</button>
+      {status === 'success' ? (
+        <div style={{ color: 'green', fontSize: '24px' }}>
+          🎉 Payment Successful! Thank you for your purchase.
+        </div>
+      ) : status === 'failure' ? (
+        <div style={{ color: 'red', fontSize: '24px' }}>
+          ❌ Payment Failed. Please try again.
+        </div>
+      ) : (
+        <div style={{ fontSize: '20px' }}>🔄 Processing...</div>
+      )}
     </div>
-    <h1 className="text-center font-semibold text-green-600 py-4">
-        Transaction Successful
-      {/* {s==="success"?"Transaction Successful":"Transaction Failed"} */}
-    </h1>
-  </div>
-  
-  )
+  );
 }
 
 export default Success

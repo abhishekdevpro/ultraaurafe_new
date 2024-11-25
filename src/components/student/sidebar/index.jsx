@@ -223,7 +223,7 @@ export default function StudentSidebar() {
   className={`nav-item ${location.pathname === '/student/student-order-history' ? 'active' : ''}`}
   data-tour="order-history-link"
 >
-  <Link to="" className="nav-link">
+  <Link to="/student/coming-soon" className="nav-link">
     <i className="bx bxs-cart" />
     Order History
   </Link>
@@ -246,7 +246,7 @@ export default function StudentSidebar() {
                 </Link>
               </li> */}
               <li className={`nav-item ${location.pathname === '/student/student-messages' ? 'active' : ''}`}>
-                <Link to="" className="nav-link">
+                <Link to="/student/coming-soon" className="nav-link">
                   <i className="bx bxs-chat" />
                   Messages
                 </Link>
@@ -261,9 +261,9 @@ export default function StudentSidebar() {
               {/* <li className={`nav-item ${location.pathname === '/student/student-ticket' ? 'active' : ''}`}>
 
                 <Link to="" className="nav-link">
-                  <i className="bx bxs-coupon" />
+                  <i className="bx bxs-coupon" />c
                   Support Tickets
-                </Link>
+                </Link>c
               </li> */}
             </ul>
             <h3>Account Settings</h3>

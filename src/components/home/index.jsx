@@ -678,7 +678,7 @@ useEffect(() => {
   continuous
   scrollToFirstStep
   showSkipButton
-  showProgress
+  // showProgress
   spotlightClicks={false}
   hideBeacon={true}
   styles={{
