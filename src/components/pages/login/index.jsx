@@ -17,20 +17,38 @@ const Login = () => {
   const [passwordInput, setPasswordInput] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
-  const [isLoadPage, setIsLoadPage] = useState(false);
+  // const [isLoadPage, setIsLoadPage] = useState(false);
   useEffect(() => {
-    if(isLoadPage==false) {
-         console.log(
-          "Login page is loading!!!"
-         )
-    }
-    const timer = setTimeout(() => {
-      setIsLoadPage(true);
-    }, 1000);
+    // Check session storage for a reload flag
+    const hasReloaded = sessionStorage.getItem("hasReloaded");
 
-    // Cleanup timer on unmount
-    return () => clearTimeout(timer);
+    if (!hasReloaded) {
+      console.log("Login page is rendering and reloading once!");
+
+      // Set the reload flag in session storage
+      sessionStorage.setItem("hasReloaded", "true");
+
+      // Reload the page
+      window.location.reload();
+    }
   }, []);
+
+
+  // useEffect(() => {
+  //   const hasReloaded = localStorage.getItem('hasReloaded');
+
+  //   if (!hasReloaded) {
+  //     console.log("Login page is loading!!!");
+  //     const timer = setTimeout(() => {
+  //       setIsLoadPage(true);
+  //       window.location.reload();
+  //       localStorage.setItem('hasReloaded', 'true');
+  //     }, 1000);
+
+  //     // Cleanup timer on unmount
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, []);
 
 
   const handlePasswordChange = (evt) => {
@@ -137,7 +155,8 @@ const Login = () => {
   `;
 
   return (
-    <>{isLoadPage&&
+    <>
+    {/* {isLoadPage&& */}
       <div className="main-wrapper log-wrap">
         <div className="row">
           <div className="col-md-6 login-bg">
@@ -246,7 +265,8 @@ const Login = () => {
             </div>
           </div>
         </div>
-      </div>}
+      </div>
+      {/* } */}
       <ToastContainer />
     </>
   );
