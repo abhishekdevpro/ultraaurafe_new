@@ -5,14 +5,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { useState,useEffect } from "react";
-import Joyride from 'react-joyride';
+// import Joyride from 'react-joyride';
 // eslint-disable-next-line react/prop-types
 export default function StudentSidebar() {
   const location = useLocation();
 
   const token = localStorage.getItem("token");
   const navigate = useNavigate()
-  const [runTour, setRunTour] = useState(true);
+  // const [runTour, setRunTour] = useState(true);
   const [profileData, setProfileData] = useState({
     first_name: "",
     last_name: "",
@@ -73,28 +73,28 @@ export default function StudentSidebar() {
     window.location.href= 'https://ultraaura.education/login';
   };
  
-    const steps = [
-      {
-        target: '[data-tour="wishlist-link"]',
-        content: 'This is where you can manage your wishlist.',
-      },
-      {
-        target: '[data-tour="reviews-link"]',
-        content: 'Browse your reviews here.',
-      },
-      {
-        target: '[data-tour="quiz-link"]',
-        content: 'View and take quizzes in this section.',
-      },
-      {
-        target: '[data-tour="order-history-link"]',
-        content: 'Access your order history here.',
-      },
-      {
-        target: '[data-tour="qa-link"]',
-        content: 'Ask questions and find answers in this section.',
-      },
-    ];
+    // const steps = [
+    //   {
+    //     target: '[data-tour="wishlist-link"]',
+    //     content: 'This is where you can manage your wishlist.',
+    //   },
+    //   {
+    //     target: '[data-tour="reviews-link"]',
+    //     content: 'Browse your reviews here.',
+    //   },
+    //   {
+    //     target: '[data-tour="quiz-link"]',
+    //     content: 'View and take quizzes in this section.',
+    //   },
+    //   {
+    //     target: '[data-tour="order-history-link"]',
+    //     content: 'Access your order history here.',
+    //   },
+    //   {
+    //     target: '[data-tour="qa-link"]',
+    //     content: 'Ask questions and find answers in this section.',
+    //   },
+    // ];
   return (
     <div className="col-xl-3 col-lg-3 theiaStickySidebar">
       <StickyBox offsetTop={20} offsetBottom={20}>
@@ -119,7 +119,7 @@ export default function StudentSidebar() {
           </div>
         </div>
         <div className="settings-widget account-settings">
-        {runTour?<Joyride
+        {/* {runTour?<Joyride
       steps={steps}
       run={runTour}
       continuous
@@ -155,7 +155,7 @@ export default function StudentSidebar() {
        
     
       }}
-    />:""}
+    />:""} */}
           <div className="settings-menu">
             <h3>Dashboard</h3>
             <ul>

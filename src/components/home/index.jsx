@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Joyride from 'react-joyride';
+// import Joyride from 'react-joyride';
 import Header from "../header";
 import {
   // bannerimg,
@@ -183,8 +183,8 @@ export const Home = () => {
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [levelOptions, setLevelOptions] = useState([]);
-  const [runTour, setRunTour] = useState(true);
-  const [isLoaded, setIsLoaded] = useState(false);
+  // const [runTour, setRunTour] = useState(true);
+  // const [isLoaded, setIsLoaded] = useState(false);
   // const [tourCompleted, setTourCompleted] = useState(false);    
   // const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const navigate = useNavigate(); // Initialize useNavigate
@@ -201,45 +201,45 @@ export const Home = () => {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
 console.log(currentTextIndex);
 
-const steps = [
-  {
-    target: '.sign-up', // "Sign Up" button
-    content: 'Click here to sign up for an account and start your journey!',
-    placement: 'bottom',
-    disableBeacon: true, // Prevents the initial "beacon" effect
-  },
-  {
-    target: '.header__login-button[href="https://trainers.ultraaura.education/"]',
-    content: 'Sign in here if you are a trainer!',
-    placement: 'bottom',
-  },
-  {
-    target: '.header__login-button[href="https://vendors.ultraaura.education/"]',
-    content: 'Partner with us to grow your business!',
-    placement: 'bottom',
-  },
-  {
-    target: '.form-container',
-    content: 'Search for courses here by keyword, category, or level.',
-  },
-  {
-    target: '.courses',
-    content: 'Check out our courses and enhance your skills.',
-  },
-  {
-    target: '.master-skill',
-    content: 'Explore new skills and career advancement opportunities here.',
-  },
+// const steps = [
+//   {
+//     target: '.sign-up', // "Sign Up" button
+//     content: 'Click here to sign up for an account and start your journey!',
+//     placement: 'bottom',
+//     disableBeacon: true, // Prevents the initial "beacon" effect
+//   },
+//   {
+//     target: '.header__login-button[href="https://trainers.ultraaura.education/"]',
+//     content: 'Sign in here if you are a trainer!',
+//     placement: 'bottom',
+//   },
+//   {
+//     target: '.header__login-button[href="https://vendors.ultraaura.education/"]',
+//     content: 'Partner with us to grow your business!',
+//     placement: 'bottom',
+//   },
+//   {
+//     target: '.form-container',
+//     content: 'Search for courses here by keyword, category, or level.',
+//   },
+//   {
+//     target: '.courses',
+//     content: 'Check out our courses and enhance your skills.',
+//   },
+//   {
+//     target: '.master-skill',
+//     content: 'Explore new skills and career advancement opportunities here.',
+//   },
   
-];
+// ];
 
-useEffect(() => {
-  // Simulate data fetching or waiting for DOM to render
-  const timer = setTimeout(() => {
-      setIsLoaded(true);
-  }, 1000); // Adjust based on your app's loading time
-  return () => clearTimeout(timer);
-}, []);
+// useEffect(() => {
+//   // Simulate data fetching or waiting for DOM to render
+//   const timer = setTimeout(() => {
+//       setIsLoaded(true);
+//   }, 1000); // Adjust based on your app's loading time
+//   return () => clearTimeout(timer);
+// }, []);
 // const handleTourComplete = () => {
 //   setTourCompleted(true); // Mark tour as completed
 // };
@@ -672,7 +672,7 @@ useEffect(() => {
 
 <>
       <div className="main-wrapper">
-     {isLoaded &&  <Joyride
+     {/* {isLoaded &&  <Joyride
   steps={steps}
   run={runTour}
   continuous
@@ -709,7 +709,7 @@ useEffect(() => {
     }
   }}
 />
-}
+} */}
         
         <Header />
         <SubHeader />

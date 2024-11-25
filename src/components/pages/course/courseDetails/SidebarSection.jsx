@@ -20,7 +20,7 @@ import "react-toastify/dist/ReactToastify.css"; // Import the CSS for toast noti
 import styled from "styled-components";
 import ShareButton from "./Sharebutton";
 import { Loader } from "lucide-react";
-import Joyride from "react-joyride";
+// import Joyride from "react-joyride";
 
 
 const ButtonWrapper = styled.div`
@@ -233,21 +233,21 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   const [showTestModal, setShowTestModal] = useState(false);
   const [userInfo,setUserInfo]=useState('');
   // const [checkoutData, setCheckoutData] =useState([]);
-  const [runTour, setRunTour] = useState(false);
-  const [dataLoaded, setDataLoaded] = useState(false);
+  // const [runTour, setRunTour] = useState(false);
+  // const [dataLoaded, setDataLoaded] = useState(false);
 
-  useEffect(() => {
-    // Simulating data loading
-    setTimeout(() => {
-      setDataLoaded(true); // Set dataLoaded to true when data is ready
-    }, 1000); // Adjust time based on when data actually loads
-  }, []);
+  // useEffect(() => {
+  //   // Simulating data loading
+  //   setTimeout(() => {
+  //     setDataLoaded(true); // Set dataLoaded to true when data is ready
+  //   }, 1000); // Adjust time based on when data actually loads
+  // }, []);
 
-  useEffect(() => {
-    if (dataLoaded) {
-      setRunTour(true); // Start the tour when data is loaded
-    }
-  }, [dataLoaded]);
+  // useEffect(() => {
+  //   if (dataLoaded) {
+  //     setRunTour(true); // Start the tour when data is loaded
+  //   }
+  // }, [dataLoaded]);
 
   const toggleReadMore = () => {
     setIsExpanded(!isExpanded);
@@ -461,24 +461,24 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
     }, 2000);
   };
   const isFavorite = isClassAdded[courseData.course_id];
-  const steps = [
-    {
-      target: '.btn-wish', // Target "Add to Wishlist"
-      content: 'Click here to add this course to your wishlist!',
-    },
-    {
-      target: '.btn-enroll', // Target "Enroll Now" button
-      content: 'Click here to enroll in this course!',
-    },
-    {
-      target: '.buynow', // Target "Buy Now" button
-      content: 'Click here to buy this course immediately!',
-    },
-    {
-      target: '.includes', // Target "Buy Now" button
-      content: 'This is the topics included in this course!',
-    },
-  ];
+  // const steps = [
+  //   {
+  //     target: '.btn-wish', // Target "Add to Wishlist"
+  //     content: 'Click here to add this course to your wishlist!',
+  //   },
+  //   {
+  //     target: '.btn-enroll', // Target "Enroll Now" button
+  //     content: 'Click here to enroll in this course!',
+  //   },
+  //   {
+  //     target: '.buynow', // Target "Buy Now" button
+  //     content: 'Click here to buy this course immediately!',
+  //   },
+  //   {
+  //     target: '.includes', // Target "Buy Now" button
+  //     content: 'This is the topics included in this course!',
+  //   },
+  // ];
 
   return (
   <>
@@ -518,7 +518,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                 </button>
               </div>
             )}
-            <Joyride
+            {/* <Joyride
         steps={steps}
         run={runTour} // Automatically start the tour
         continuous
@@ -554,7 +554,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
          
       
         }}
-      />
+      /> */}
                 <div className="video-details">
                  {courseFeatureData.course_price == 0? <div className="course-fee">
                     <h2>FREE</h2>
