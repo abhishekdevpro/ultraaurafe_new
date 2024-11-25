@@ -261,9 +261,9 @@ export default function StudentSidebar() {
               {/* <li className={`nav-item ${location.pathname === '/student/student-ticket' ? 'active' : ''}`}>
 
                 <Link to="" className="nav-link">
-                  <i className="bx bxs-coupon" />
+                  <i className="bx bxs-coupon" />c
                   Support Tickets
-                </Link>
+                </Link>c
               </li> */}
             </ul>
             <h3>Account Settings</h3>

@@ -135,7 +135,7 @@ const Cart = () => {
     // console.log("It is the total price"+totalPrice)
     // console.log("It is the net total of cart"+cartData.net_total)
     
-    //   if(cartData.net_total===0){
+    //   if(cartData.net_total==0){
     //     try {
     //       const response = await axios.post(
     //         "https://api.novajobs.us/api/students/buy",
