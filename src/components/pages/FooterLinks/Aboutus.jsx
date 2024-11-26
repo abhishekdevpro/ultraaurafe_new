@@ -116,22 +116,7 @@ const AboutUs = () => {
           </div>
           <div style={{ display:'flex',justifyContent:'center'}}>
           <video ref={videoRef} 
-          src={IntroVideo} 
-          controls 
-          onClick={handlePlay}
-          style={{
-            margin: '50px',
-            width: '700px',
-            height: '500px',
-            border: '2px solid #ccc',
-            borderRadius: '10px',
-            boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-           
-        }}
-          ></video>
-
-            <video ref={videoRef} 
-          src="https://www.w3schools.com/tags/mov_bbb.mp4"
+          src="https://api.novajobs.us/etc/nova_us_jobs/about_ultra_aura.mp4" 
           controls 
           onClick={handlePlay}
           style={{
