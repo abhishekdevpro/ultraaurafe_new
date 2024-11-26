@@ -57,7 +57,8 @@ const HeadModuleWrapper = styled.div`
 `;
 
 const CourseHeader = ({courseId}) => {
-  console.log(courseId,"cid");
+  if(courseId) {
+  console.log(courseId,"cid");}
   return (
     <Header>
       <Navbar>

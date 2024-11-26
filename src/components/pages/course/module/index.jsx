@@ -329,7 +329,7 @@ import { User11, Messages, Cart, Wish, Notification } from "../../../imagepath";
 import axios from "axios";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 const Nav = styled.ul`
   display: flex;
@@ -465,7 +465,8 @@ const HeadModule = ({ courseId }) => {
 
   const profile = useRef();
   const navigate = useNavigate();
-
+  
+   console.log("CourseId is " + courseId);
   useOnClickOutside(profile, () => setShowProfile(false));
 
   const trainerToken = localStorage.getItem("trainerToken");
@@ -497,6 +498,10 @@ const HeadModule = ({ courseId }) => {
           },
         });
         setUserInfo(response.data.data);
+        if(response.data.data){
+          console.log("This is userinfo Id: "+response.data.data.id);
+        }
+       
       } catch (error) {
         console.error("Error fetching user profile:", error);
       }
@@ -513,22 +518,28 @@ const HeadModule = ({ courseId }) => {
     navigate("/home");
   };
 
-  const handleAddCart = async () => {
-    try {
-      const response = await axios.post('https://api.novajobs.us/api/students/cart', {
-        student_id: userInfo.id, 
-        course_id: Number(courseId), 
-        quantity: 1,
-      }, {headers: {
-        Authorization: `${studentToken}`,
-      }},);
-      console.log('Item added to cart:', response.data.message);
-      toast.success(response.data.message || "Course Added To cart Successfully ")
-    } catch (error) {
-      console.error('Error adding item to cart:', error);
-      toast.error(error.message || "Error to add the course in the cart")
-    }
-  };
+  // const handleAddCart = async () => {
+  //   try {
+  //     const response = await axios.post('https://api.novajobs.us/api/students/cart', 
+  //       {
+  //       student_id: userInfo.id, 
+  //       course_id: Number(courseId), 
+  //       quantity: 1,
+  //     }, 
+  //     {headers: {
+  //       Authorization: ` ${studentToken}`,
+        
+  //     }},);
+  //     console.log('Item added to cart:', response.data.message);
+  //     toast.success(response.data.message || "Course Added To cart Successfully ")
+  //   } catch (error) {
+  //     if(!courseId){
+  //       console.log("courseId: ", courseId)
+  //     }
+  //     console.error('Error adding item to cart:', error);
+  //     toast.error(error.message || "Error to add the course in the cart")
+  //   }
+  // };
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -550,8 +561,8 @@ const HeadModule = ({ courseId }) => {
       </NavItem>
 
       <NavItem>
-        <Link to="#" 
-        onClick={handleAddCart}
+        <Link to="/wishlist" 
+        // onClick={handleAddCart}
         >
           <img src={Wish} alt="Wishlist" />
         </Link>
@@ -607,8 +618,8 @@ const HeadModule = ({ courseId }) => {
           </Link>
           <Link
             className="dropdown-item mobile-only"
-            to="#"
-            onClick={handleAddCart}
+            to="/wishlist"
+            // onClick={handleAddCart}
           >
             <FeatherIcon icon="heart" className="me-1" /> Wishlist
           </Link>
