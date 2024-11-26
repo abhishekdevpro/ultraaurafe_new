@@ -329,7 +329,7 @@ import { User11, Messages, Cart, Wish, Notification } from "../../../imagepath";
 import axios from "axios";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const Nav = styled.ul`
   display: flex;
@@ -518,28 +518,28 @@ const HeadModule = ({ courseId }) => {
     navigate("/home");
   };
 
-  // const handleAddCart = async () => {
-  //   try {
-  //     const response = await axios.post('https://api.novajobs.us/api/students/cart', 
-  //       {
-  //       student_id: userInfo.id, 
-  //       course_id: Number(courseId), 
-  //       quantity: 1,
-  //     }, 
-  //     {headers: {
-  //       Authorization: ` ${studentToken}`,
+  const handleAddCart = async () => {
+    try {
+      const response = await axios.post('https://api.novajobs.us/api/students/cart', 
+        {
+        student_id: userInfo.id, 
+        course_id: Number(courseId), 
+        quantity: 1,
+      }, 
+      {headers: {
+        Authorization: ` ${studentToken}`,
         
-  //     }},);
-  //     console.log('Item added to cart:', response.data.message);
-  //     toast.success(response.data.message || "Course Added To cart Successfully ")
-  //   } catch (error) {
-  //     if(!courseId){
-  //       console.log("courseId: ", courseId)
-  //     }
-  //     console.error('Error adding item to cart:', error);
-  //     toast.error(error.message || "Error to add the course in the cart")
-  //   }
-  // };
+      }},);
+      console.log('Item added to cart:', response.data.message);
+      toast.success(response.data.message || "Course Added To cart Successfully ")
+    } catch (error) {
+      if(!courseId){
+        console.log("courseId: ", courseId)
+      }
+      console.error('Error adding item to cart:', error);
+      toast.error(error.message || "Error to add the course in the cart")
+    }
+  };
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -561,8 +561,8 @@ const HeadModule = ({ courseId }) => {
       </NavItem>
 
       <NavItem>
-        <Link to="/wishlist" 
-        // onClick={handleAddCart}
+        <Link to="#" 
+        onClick={handleAddCart}
         >
           <img src={Wish} alt="Wishlist" />
         </Link>
@@ -618,8 +618,8 @@ const HeadModule = ({ courseId }) => {
           </Link>
           <Link
             className="dropdown-item mobile-only"
-            to="/wishlist"
-            // onClick={handleAddCart}
+            to="#"
+            onClick={handleAddCart}
           >
             <FeatherIcon icon="heart" className="me-1" /> Wishlist
           </Link>
