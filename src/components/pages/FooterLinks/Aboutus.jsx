@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import PageHeader from '../header';
 import Footer from '../../footer';
-import IntroVideo from "../../../assets/IntroVideo.mp4"
+import IntroVideo from "../../../assets/introvideo.mp4"
 
 const Container = styled.div`
   padding: 20px;
