@@ -111,7 +111,7 @@ const AboutUs = () => {
           </p>
           <div style={{display:'flex',justifyContent:'center'}}>
 
-          <h2 style={{marginTop:"20px"}}>Check our quick Product Video below :
+          <h2 style={{marginTop:"20px"}}>Check our quick Product Video below:
           </h2>
           </div>
           <div style={{ display:'flex',justifyContent:'center'}}>
