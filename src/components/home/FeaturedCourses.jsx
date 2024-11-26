@@ -1087,32 +1087,32 @@ const CourseCard = styled.div`
 `;
 
 // ClaimCoupon positioned over the image with enhanced styling
-const ClaimCoupon = styled.div`
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background-color: rgba(34, 197, 94, 0.9); /* Green background with slight opacity */
-  color: white;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 0.875rem;
-  cursor: pointer;
-  font-weight: bold;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s, transform 0.3s;
-  z-index:999;
+// const ClaimCoupon = styled.div`
+//   position: absolute;
+//   top: 10px;
+//   left: 10px;
+//   background-color: rgba(34, 197, 94, 0.9); /* Green background with slight opacity */
+//   color: white;
+//   padding: 6px 12px;
+//   border-radius: 8px;
+//   font-size: 0.875rem;
+//   cursor: pointer;
+//   font-weight: bold;
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+//   transition: background-color 0.3s, transform 0.3s;
+//   z-index:999;
 
-  &:hover {
-    background-color: rgba(34, 197, 94, 1); /* Slightly darker green on hover */
-    transform: scale(1.05);
-  }
-`;
+//   &:hover {
+//     background-color: rgba(34, 197, 94, 1); /* Slightly darker green on hover */
+//     transform: scale(1.05);
+//   }
+// `;
 
 // Course image with hover zoom effect
 const CourseImage = styled.img`
   width: 100%;
-  height: 130px;
-  object-fit: contain;
+  height: 150px;
+  /* object-fit: contain; */
   border-radius: 10px;
   transition: transform 0.3s;
 
@@ -1369,9 +1369,11 @@ const DynamicCourseGrid = () => {
             <CourseGrid>
               {limitedCourses.map((course) => (
                 <CourseCard key={course.id}>
-                 {course.coupon_discount_display ? <ClaimCoupon>
+                 {/* {course.coupon_discount_display ? 
+                 <ClaimCoupon>
                     {course.coupon_discount_display}
-                  </ClaimCoupon>: <></>}
+                  </ClaimCoupon>
+                  : <></>} */}
                   <Link to={`/course-info/${course.id}`}>
                     <CourseImage
                       src={`https://api.novajobs.us${course.course_banner_image}`}
