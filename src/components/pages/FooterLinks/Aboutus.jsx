@@ -129,6 +129,22 @@ const AboutUs = () => {
            
         }}
           ></video>
+
+            <video ref={videoRef} 
+          src="https://www.w3schools.com/tags/mov_bbb.mp4"
+          controls 
+          onClick={handlePlay}
+          style={{
+            margin: '50px',
+            width: '700px',
+            height: '500px',
+            border: '2px solid #ccc',
+            borderRadius: '10px',
+            boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+           
+        }}
+          ></video>
+            
           {/* <button >Play Unmuted</button> */}
           {/* <video ref={videoRef} src={IntroVideo} controls></video>
           <button onClick={handlePlay}>Play Unmuted</button> */}
