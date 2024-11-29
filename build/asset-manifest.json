@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.6f4f96c8.css",
-    "main.js": "/static/js/main.eec51005.js",
+    "main.js": "/static/js/main.c3edef8e.js",
     "reactPlayerYouTube.js": "/static/js/reactPlayerYouTube.779c505e.chunk.js",
     "reactPlayerSoundCloud.js": "/static/js/reactPlayerSoundCloud.c576f519.chunk.js",
     "reactPlayerVimeo.js": "/static/js/reactPlayerVimeo.3cb25a13.chunk.js",
@@ -51,7 +51,6 @@
     "static/media/feather.eot?t=1525787366991": "/static/media/feather.ba142c9a3d0f5747c347.eot",
     "static/media/feather.ttf?t=1525787366991": "/static/media/feather.aaacbaee6c14b4207d39.ttf",
     "static/media/map-user.png": "/static/media/map-user.49627ca98b07ca4053b0.png",
-    "static/media/logo5.png": "/static/media/logo5.43c058bc9ffc574683f2.png",
     "static/media/award-01.png": "/static/media/award-01.32a80aa13dc166528369.png",
     "static/media/certification.png": "/static/media/certification.53adb002556c3829193b.png",
     "static/media/Ultra_Aura.png": "/static/media/Ultra_Aura.cabb61de498b919d72f4.png",
@@ -228,7 +227,7 @@
     "static/media/ellipse-2.svg": "/static/media/ellipse-2.66db5a5abef263f9125a7836e3a20524.svg",
     "static/media/ellipse-3.svg": "/static/media/ellipse-3.c43a615f25034961835631a131d2e873.svg",
     "main.6f4f96c8.css.map": "/static/css/main.6f4f96c8.css.map",
-    "main.eec51005.js.map": "/static/js/main.eec51005.js.map",
+    "main.c3edef8e.js.map": "/static/js/main.c3edef8e.js.map",
     "reactPlayerYouTube.779c505e.chunk.js.map": "/static/js/reactPlayerYouTube.779c505e.chunk.js.map",
     "reactPlayerSoundCloud.c576f519.chunk.js.map": "/static/js/reactPlayerSoundCloud.c576f519.chunk.js.map",
     "reactPlayerVimeo.3cb25a13.chunk.js.map": "/static/js/reactPlayerVimeo.3cb25a13.chunk.js.map",
@@ -246,6 +245,6 @@
   },
   "entrypoints": [
     "static/css/main.6f4f96c8.css",
-    "static/js/main.eec51005.js"
+    "static/js/main.c3edef8e.js"
   ]
 }

@@ -1,8 +1,9 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import PageHeader from '../header';
 import Footer from '../../footer';
+import ReactPlayer from 'react-player'
 
 const Container = styled.div`
   padding: 20px;
@@ -81,12 +82,12 @@ const AboutUs = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  const videoRef = useRef(null);
-  const handlePlay = () => {
-    if (videoRef.current) {
-        videoRef.current.play();
-    }
-};
+//   const videoRef = useRef(null);
+//   const handlePlay = () => {
+//     if (videoRef.current) {
+//         videoRef.current.play();
+//     }
+// };
   return (
     <>
       <PageHeader />
@@ -114,7 +115,7 @@ const AboutUs = () => {
           </h2>
           </div>
           <div style={{ display:'flex',justifyContent:'center'}}>
-          <video ref={videoRef} 
+          {/* <video ref={videoRef} 
           src="https://api.novajobs.us/etc/nova_us_jobs/about_ultra_aura.mp4" 
           controls 
           onClick={handlePlay}
@@ -127,7 +128,26 @@ const AboutUs = () => {
             boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
            
         }}
-          ></video>
+          ></video> */}
+           <div style={{ display: 'flex', justifyContent: 'center' }}>
+      
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        {/* Using ReactPlayer for a better video player experience */}
+        <ReactPlayer
+          url="https://youtu.be/9xwazD5SyVg" 
+// Replace with your YouTube video URL
+          width="700px"
+          height="500px"
+          controls={true} // Show player controls
+          style={{
+            margin: '50px',
+            border: '2px solid #ccc',
+            borderRadius: '10px',
+            boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+          }}
+        />
+      </div>
             
           {/* <button >Play Unmuted</button> */}
           {/* <video ref={videoRef} src={IntroVideo} controls></video>
