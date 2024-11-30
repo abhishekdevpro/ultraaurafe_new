@@ -135,7 +135,7 @@ const AboutUs = () => {
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         {/* Using ReactPlayer for a better video player experience */}
         <ReactPlayer
-          url="https://youtu.be/9xwazD5SyVg" 
+          url="https://youtu.be/FObrI1s9qIk?si=RKSVtL4H071Qu8vj" 
 // Replace with your YouTube video URL
           width="700px"
           height="500px"
