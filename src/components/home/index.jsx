@@ -776,7 +776,7 @@ console.log(currentTextIndex);
                         <div className="card-body d-flex flex-column p-4 rounded">
                         <div className="row flex-grow-1">
   <div className="col-12 col-md-8 d-flex flex-column">
-  <h4 className="card-title mb-3 " style={{fontSize:"1.2rem" }}>Growing with UltraAura</h4>
+  <h4 className="card-title mb-3 " style={{fontSize:"1.2rem" }}>Become an UltraAura Partner</h4>
     <p className="card-text flex-grow-1">
       Partner with Ultra Aura to offer skills training and job placement opportunities that create a lasting impact on individuals and their families
     </p>
@@ -810,7 +810,7 @@ console.log(currentTextIndex);
                     <div className="col-md-6 d-flex">
                       <div className="card w-100 shadow-lg transition-transform hover-lift" style={{ backgroundColor: '#ffe88f', borderRadius: '15px' }}>
                         <div className="card-body d-flex flex-column p-4 rounded">
-                          <h4 className="card-title mb-3" style={{fontSize:"1.2rem" }}>Looking for Career Growth?</h4>
+                          <h4 className="card-title mb-3" style={{fontSize:"1.2rem" }}>For Students, by Experts</h4>
                           <div className="row flex-grow-1">
   <div className="col-12 col-md-8 d-flex flex-column">
     <p className="card-text flex-grow-1">
