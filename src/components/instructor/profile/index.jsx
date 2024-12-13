@@ -148,121 +148,130 @@ const InstructorProfile = () => {
               </div>
 
               {/* Courses */}
-              <div className="card education-sec">
-                <div className="card-body pb-0">
-                  <h5 className="subs-title">Courses</h5>
-                  <div className="row">
-                    {profileData.courses.map((course) => (
-                      <div key={course.id} className="col-lg-6 col-md-6 d-flex">
-                        <div className="course-box course-design d-flex">
-                          <div className="product">
-                            <div className="product-img">
-                              <Link to={`/course-info/${course.id}`}>
-                                <img
-                                  src={
-                                    course.course_banner_image
-                                      ? `https://api.novajobs.us${course.course_banner_image}`
-                                      : dummy
-                                  }
-                                  alt="Course Banner"
-                                  className="course-banner"
-                                />
-                              </Link>
-                              <div className="price">
-                                <h3>
-                                  ${course.after_discount_price}{" "}
-                                  <span>${course.course_price}</span>
-                                </h3>
-                              </div>
-                            </div>
-                            <div className="product-content">
-                              <div className="course-group d-flex">
-                                <div className="course-group-img d-flex">
-                                  <Link
-                                    to={`/instructor-profile/${trainer.id}`}
-                                  >
-                                    <img
-                                      src={`https://api.novajobs.us${trainer.photo}`}
-                                      alt={`${trainer.first_name} ${trainer.last_name}`}
-                                      className="img-fluid"
-                                    />
-                                  </Link>
-                                  <div className="course-name">
-                                    <h4>
-                                      <Link
-                                        to={`/instructor-profile/${trainer.id}`}
-                                      >
-                                        {trainer.first_name} {trainer.last_name}
-                                      </Link>
-                                    </h4>
-                                    <p>Instructor</p>
-                                  </div>
+              {courses && (
+                <div className="card education-sec">
+                  <div className="card-body pb-0">
+                    <h5 className="subs-title">Courses</h5>
+                    <div className="row">
+                      {profileData.courses.map((course) => (
+                        <div
+                          key={course.id}
+                          className="col-lg-6 col-md-6 d-flex"
+                        >
+                          <div className="course-box course-design d-flex">
+                            <div className="product">
+                              <div className="product-img">
+                                <Link to={`/course-info/${course.id}`}>
+                                  <img
+                                    src={
+                                      course.course_banner_image
+                                        ? `https://api.novajobs.us${course.course_banner_image}`
+                                        : dummy
+                                    }
+                                    alt="Course Banner"
+                                    className="course-banner"
+                                  />
+                                </Link>
+                                <div className="price">
+                                  <h3>
+                                    ${course.after_discount_price}{" "}
+                                    <span>${course.course_price}</span>
+                                  </h3>
                                 </div>
-                                {/* <div className="course-share d-flex align-items-center justify-content-center">
+                              </div>
+                              <div className="product-content">
+                                <div className="course-group d-flex">
+                                  <div className="course-group-img d-flex">
+                                    <Link
+                                      to={`/instructor-profile/${trainer.id}`}
+                                    >
+                                      <img
+                                        src={`https://api.novajobs.us${trainer.photo}`}
+                                        // alt={`${trainer.first_name} ${trainer.last_name}`}
+                                        alt={`${trainer.display_name}`}
+                                        className="img-fluid"
+                                      />
+                                    </Link>
+                                    <div className="course-name">
+                                      <h4>
+                                        <Link
+                                          to={`/instructor-profile/${trainer.id}`}
+                                        >
+                                          {trainer.display_name ||
+                                            `${trainer.first_name} ${trainer.last_name}`}
+                                        </Link>
+                                      </h4>
+                                      <p>Instructor</p>
+                                    </div>
+                                  </div>
+                                  {/* <div className="course-share d-flex align-items-center justify-content-center">
                                   <Link to="#">
                                     <i className="fa-regular fa-heart"></i>
                                   </Link>
                                 </div> */}
-                                 <div className="course-share d-flex align-items-center justify-content-center">
-                                <Link
-                                  to="#"
-                                  onClick={() => toggleClass(course.id)}
-                                >
-                                  <i
-                                    className={`fa-regular fa-heart ${
-                                      isClassAdded[course.id] ? "color-active" : ""
-                                    }`}
-                                  />
-                                </Link>
-                              </div>
-                              </div>
-                              <h3 className="title instructor-text">
-                                <Link to={`/course-info/${course.id}`}>
-                                  {course.course_title}
-                                </Link>
-                              </h3>
-                              <div className="course-info d-flex align-items-center border-0 m-0">
-                                <div className="rating-img d-flex align-items-center">
-                                  <img src={Icon1} alt="Course Duration" />
-                                  <p>{course.time_spent_on_course}</p>
+                                  <div className="course-share d-flex align-items-center justify-content-center">
+                                    <Link
+                                      to="#"
+                                      onClick={() => toggleClass(course.id)}
+                                    >
+                                      <i
+                                        className={`fa-regular fa-heart ${
+                                          isClassAdded[course.id]
+                                            ? "color-active"
+                                            : ""
+                                        }`}
+                                      />
+                                    </Link>
+                                  </div>
                                 </div>
-                                <div className="course-view d-flex align-items-center">
-                                  <img src={Icon2} alt="Total Lectures" />
-                                  <p>{course.total_lectures} Lectures</p>
+                                <h3 className="title instructor-text">
+                                  <Link to={`/course-info/${course.id}`}>
+                                    {course.course_title}
+                                  </Link>
+                                </h3>
+                                <div className="course-info d-flex align-items-center border-0 m-0">
+                                  <div className="rating-img d-flex align-items-center">
+                                    <img src={Icon1} alt="Course Duration" />
+                                    <p>{course.time_spent_on_course}</p>
+                                  </div>
+                                  <div className="course-view d-flex align-items-center">
+                                    <img src={Icon2} alt="Total Lectures" />
+                                    <p>{course.total_lectures} Lectures</p>
+                                  </div>
                                 </div>
-                              </div>
-                              <div className="rating">
-                                {[...Array(5)].map((_, index) => (
-                                  <i
-                                    key={index}
-                                    className={`fas fa-star ${
-                                      index < Math.floor(course.rating)
-                                        ? "filled"
-                                        : ""
-                                    }`}
-                                  ></i>
-                                ))}
-                                <span className="d-inline-block average-rating">
-                                  <span>{course.rating.toFixed(1)}</span> (
-                                  {course.enrolled_student_count})
-                                </span>
-                              </div>
-                              <div className="all-btn all-category d-flex align-items-center">
-                                <Link
-                                  to={`/checkout/${course.id}`}
-                                  className="btn btn-primary"
-                                >
-                                  BUY NOW
-                                </Link>
+                                <div className="rating">
+                                  {[...Array(5)].map((_, index) => (
+                                    <i
+                                      key={index}
+                                      className={`fas fa-star ${
+                                        index < Math.floor(course.rating)
+                                          ? "filled"
+                                          : ""
+                                      }`}
+                                    ></i>
+                                  ))}
+                                  <span className="d-inline-block average-rating">
+                                    <span>{course.rating.toFixed(1)}</span> (
+                                    {course.enrolled_student_count})
+                                  </span>
+                                </div>
+                                <div className="all-btn all-category d-flex align-items-center">
+                                  <Link
+                                    to={`/checkout/${course.id}`}
+                                    className="btn btn-primary"
+                                  >
+                                    BUY NOW
+                                  </Link>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
 
             <div className="col-lg-4">
@@ -284,11 +293,13 @@ const InstructorProfile = () => {
                       ))}
                       <span className="d-inline-block average-rating">
                         <span>{(trainer.rating || 0).toFixed(1)}</span> (
-                        {courses.reduce(
-                          (total, course) =>
-                            total + course.enrolled_student_count,
-                          0
-                        )}
+                        {courses
+                          ? courses.reduce(
+                              (total, course) =>
+                                total + course.enrolled_student_count,
+                              0
+                            )
+                          : 0}
                         )
                       </span>
                     </div>
@@ -299,7 +310,7 @@ const InstructorProfile = () => {
                         <img src={Icon1} alt="Courses" />
                       </div>
                       <div className="list-content-blk flex-grow-1 ms-3">
-                        <h5>{courses.length}</h5>
+                        <h5>{courses ? courses.length : 0}</h5>
                         <p>Courses</p>
                       </div>
                     </div>
@@ -309,11 +320,13 @@ const InstructorProfile = () => {
                       </div>
                       <div className="list-content-blk flex-grow-1 ms-3">
                         <h5>
-                          {courses.reduce(
-                            (total, course) =>
-                              total + course.enrolled_student_count,
-                            0
-                          )}
+                          {courses
+                            ? courses.reduce(
+                                (total, course) =>
+                                  total + course.enrolled_student_count,
+                                0
+                              )
+                            : 0}
                         </h5>
                         <p>Total Students</p>
                       </div>
