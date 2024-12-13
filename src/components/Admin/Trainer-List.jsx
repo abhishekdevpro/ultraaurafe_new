@@ -821,6 +821,9 @@
 // };
 
 // export default TrainerList;
+
+
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -834,7 +837,18 @@ const TrainerList = () => {
   const [allTrainers, setAllTrainers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [selectedTrainer, setSelectedTrainer] = useState(null);
+  const [editDetails, seteditDetails] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    country_id: "",
+    state_id: "",
+    city_id: "",
+    display_name: "",
+  });
   const token = localStorage.getItem("adminToken");
   const trainersPerPage = 15;
 
@@ -886,7 +900,13 @@ const TrainerList = () => {
       setAllTrainers((prevTrainers) =>
         prevTrainers.map((trainer) =>
           trainer.trainer.id === selectedTrainer.trainer.id
-            ? { ...trainer, trainer: { ...trainer.trainer, is_active: !trainer.trainer.is_active } }
+            ? {
+                ...trainer,
+                trainer: {
+                  ...trainer.trainer,
+                  is_active: !trainer.trainer.is_active,
+                },
+              }
             : trainer
         )
       );
@@ -895,6 +915,74 @@ const TrainerList = () => {
       toast.error("Error activating/deactivating Trainer. Please try again.");
     }
     setShowConfirmModal(false);
+  };
+
+  const handleeditDetails = (trainer) => {
+    setSelectedTrainer(trainer);
+    seteditDetails({
+      firstName: trainer.trainer.first_name,
+      lastName: trainer.trainer.last_name,
+      email: trainer.trainer.email,
+      phone: trainer.trainer.phone,
+      country_id: trainer.trainer.country_id || "",
+      state_id: trainer.trainer.state_id || "",
+      city_id: trainer.trainer.city_id || "",
+      display_name: trainer.trainer.display_name || "",
+    });
+    setShowEditModal(true);
+  };
+
+  const saveeditDetails = async () => {
+    if (!selectedTrainer) return;
+
+    try {
+      const url = `https://api.novajobs.us/api/uaadmin/trainer/${selectedTrainer.trainer.id}`;
+      await axios.patch(
+        url,
+        {
+          first_name: editDetails.firstName,
+          last_name: editDetails.lastName,
+          email: editDetails.email,
+          phone: editDetails.phone,
+          country_id: editDetails.country_id || "",
+          state_id: editDetails.state_id || "",
+          city_id: editDetails.city_id || "",
+          display_name: editDetails.display_name || "",
+        },
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+
+      toast.success("Trainer name updated successfully!");
+
+      setAllTrainers((prevTrainers) =>
+        prevTrainers.map((trainer) =>
+          trainer.trainer.id === selectedTrainer.trainer.id
+            ? {
+                ...trainer,
+                trainer: {
+                  ...trainer.trainer,
+                  first_name: editDetails.firstName,
+                  last_name: editDetails.lastName,
+                  email: editDetails.email,
+                  phone: editDetails.phone,
+                  country_id: editDetails.country_id || "",
+                  state_id: editDetails.state_id || "",
+                  city_id: editDetails.city_id || "",
+                  display_name: editDetails.display_name || "",
+                },
+              }
+            : trainer
+        )
+      );
+      setShowEditModal(false);
+    } catch (error) {
+      console.error("Error updating Trainer name:", error);
+      toast.error("Error updating Trainer name. Please try again.");
+    }
   };
 
   const indexOfLastTrainer = currentPage * trainersPerPage;
@@ -939,27 +1027,43 @@ const TrainerList = () => {
                       <thead>
                         <tr>
                           <th>Name</th>
+                          <th>Display Name </th>
                           <th>Email</th>
                           <th>Phone number</th>
                           <th>Created At</th>
                           <th>Status</th>
                           <th>Action</th>
+                          {/* <th>Edit Name</th> */}
                         </tr>
                       </thead>
                       <tbody>
                         {currentTrainers.map((trainerData) => (
                           <tr key={trainerData.trainer.id}>
                             <td>
-                              <Link to={`/instructor/instructor-profile/${trainerData.trainer.id}`}>
+                              <Link
+                                to={`/instructor/instructor-profile/${trainerData.trainer.id}`}
+                              >
                                 {`${trainerData.trainer.first_name} ${trainerData.trainer.last_name}`}
                               </Link>
+                            </td>
+                            <td>
+                              {" "}
+                              {trainerData.trainer.display_name
+                                ? trainerData.trainer.display_name
+                                : "-"}
                             </td>
                             <td>{trainerData.trainer.email}</td>
                             <td>{trainerData.trainer.phone}</td>
                             <td>
-                              {new Date(trainerData.trainer.created_at).toLocaleDateString()}
+                              {new Date(
+                                trainerData.trainer.created_at
+                              ).toLocaleDateString()}
                             </td>
-                            <td>{trainerData.trainer.is_active ? "Active" : "Inactive"}</td>
+                            <td>
+                              {trainerData.trainer.is_active
+                                ? "Active"
+                                : "Inactive"}
+                            </td>
                             <td>
                               <div className="actions d-flex gap-2">
                                 <button
@@ -972,7 +1076,15 @@ const TrainerList = () => {
                                     handleActivateDeactivate(trainerData)
                                   }
                                 >
-                                  {trainerData.trainer.is_active ? "Deactivate" : "Activate"}
+                                  {trainerData.trainer.is_active
+                                    ? "Deactivate"
+                                    : "Activate"}
+                                </button>
+                                <button
+                                  className="btn btn-sm btn-primary"
+                                  onClick={() => handleeditDetails(trainerData)}
+                                >
+                                  Edit
                                 </button>
                               </div>
                             </td>
@@ -1034,13 +1146,15 @@ const TrainerList = () => {
       </div>
       <Footer />
 
+      {/* Confirm Activate/Deactivate Modal */}
       <Modal show={showConfirmModal} onHide={() => setShowConfirmModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Confirm Action</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           Are you sure you want to{" "}
-          {selectedTrainer?.trainer.is_active ? "deactivate" : "activate"} this Trainer?
+          {selectedTrainer?.trainer.is_active ? "deactivate" : "activate"} this
+          Trainer?
         </Modal.Body>
         <Modal.Footer>
           <button
@@ -1057,8 +1171,141 @@ const TrainerList = () => {
           </button>
         </Modal.Footer>
       </Modal>
+
+      {/* Edit Name Modal */}
+      <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Trainer Name</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="form-group">
+            <label>Display Name</label>
+            <input
+              type="text"
+              className="form-control"
+              value={editDetails.display_name}
+              onChange={(e) =>
+                seteditDetails((prev) => ({
+                  ...prev,
+                  display_name: e.target.value,
+                }))
+              }
+            />
+          </div>
+          <div className="form-group">
+            <label>First Name</label>
+            <input
+              type="text"
+              className="form-control"
+              value={editDetails.firstName}
+              onChange={(e) =>
+                seteditDetails((prev) => ({
+                  ...prev,
+                  firstName: e.target.value,
+                }))
+              }
+              disabled
+            />
+          </div>
+          <div className="form-group">
+            <label>Last Name</label>
+            <input
+              type="text"
+              className="form-control"
+              value={editDetails.lastName}
+              onChange={(e) =>
+                seteditDetails((prev) => ({
+                  ...prev,
+                  lastName: e.target.value,
+                }))
+              }
+              disabled
+            />
+          </div>
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              className="form-control"
+              value={editDetails.email}
+              onChange={(e) =>
+                seteditDetails((prev) => ({ ...prev, email: e.target.value }))
+              }
+              disabled
+            />
+          </div>
+          <div className="form-group">
+            <label>Phone</label>
+            <input
+              type="text"
+              className="form-control"
+              value={editDetails.phone}
+              onChange={(e) =>
+                seteditDetails((prev) => ({ ...prev, phone: e.target.value }))
+              }
+              disabled
+            />
+          </div>
+          {/* <div className="form-group">
+            <label>Country ID</label>
+            <input
+              type="text"
+              className="form-control"
+              value={editDetails.country_id}
+              onChange={(e) =>
+                seteditDetails((prev) => ({
+                  ...prev,
+                  country_id: e.target.value,
+                }))
+              }
+              disabled
+            />
+          </div> */}
+          {/* <div className="form-group">
+            <label>State ID</label>
+            <input
+              type="text"
+              className="form-control"
+              value={editDetails.state_id}
+              onChange={(e) =>
+                seteditDetails((prev) => ({
+                  ...prev,
+                  state_id: e.target.value,
+                }))
+              }
+              disabled
+            />
+          </div> */}
+          {/* <div className="form-group"> */}
+          {/* <label>City ID</label>
+            <input
+              type="text"
+              className="form-control"
+              value={editDetails.city_id}
+              onChange={(e) =>
+                seteditDetails((prev) => ({ ...prev, city_id: e.target.value }))
+              }
+              disabled
+            />
+          </div> */}
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className="btn btn-secondary"
+            onClick={() => setShowEditModal(false)}
+          >
+            Cancel
+          </button>
+          <button className="btn btn-primary" onClick={saveeditDetails}>
+            Save Changes
+          </button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
 
 export default TrainerList;
+
+
+
