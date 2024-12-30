@@ -7,6 +7,11 @@ import profilelogo from "../../assets/img/profile-pro.png";
 export default function AdminSidebar() {
   const location = useLocation();
   const navigate = useNavigate();
+  // const [showCMS,setShowCMS] = useState(false);
+  // const handleCMSShow=()=>{
+  //   setShowCMS(!showCMS);
+  // }
+
   // Placeholder admin data
   const admin = {
     first_name: "Admin",
@@ -142,6 +147,28 @@ const handleLogout =()=>{
                   Logout
                 </Link>
               </li>
+              <h3 className={`nav-item ${location.pathname === '/admin/settings' ? 'active' : ''}`}
+              
+              >
+                <Link to="" className="nav-link">
+               
+                 CMS
+                </Link>
+              </h3>
+              <>
+              
+              <li className={`nav-item ${location.pathname === '/admin/settings' ? 'active' : ''}`}>
+                <Link to="/home" className="nav-link">
+                 Home
+                </Link>
+              </li>
+              <li className={`nav-item ${location.pathname === '/admin/settings' ? 'active' : ''}`}>
+                <Link to="/admin/aboutus" className="nav-link">
+                 AboutUs
+                </Link>
+              </li>
+              </>
+              
             </ul>
           </div>
         </div>
