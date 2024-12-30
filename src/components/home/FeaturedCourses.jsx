@@ -1344,7 +1344,9 @@ const DynamicCourseGrid = () => {
     <Wrapper>
       <Container>
         <Header>
-          <Title><span className="courses">Our Popular Online Courses</span></Title>
+          <Title>
+            <span className="courses">Our Popular Online Courses</span>
+          </Title>
           <AllCoursesButton to={"/course-list"}>All Courses</AllCoursesButton>
         </Header>
 
@@ -1369,7 +1371,7 @@ const DynamicCourseGrid = () => {
             <CourseGrid>
               {limitedCourses.map((course) => (
                 <CourseCard key={course.id}>
-                 {/* {course.coupon_discount_display ? 
+                  {/* {course.coupon_discount_display ? 
                  <ClaimCoupon>
                     {course.coupon_discount_display}
                   </ClaimCoupon>
@@ -1390,9 +1392,13 @@ const DynamicCourseGrid = () => {
                         <Link
                           to={`/instructor/instructor-profile/${course.trainer_id}`}
                         >
-                          <InstructorName>
+                          {/* <InstructorName>
                             {course.trainer_first_name}{" "}
                             {course.trainer_last_name}
+                          </InstructorName> */}
+                          <InstructorName>
+                            {course.trainer_display_name ||
+                              `${course.trainer_first_name} ${course.trainer_last_name}`}
                           </InstructorName>
                         </Link>
                         <p className="text-muted">Instructor</p>
@@ -1423,20 +1429,20 @@ const DynamicCourseGrid = () => {
                       </StatItem>
                     </CourseStats>
                     <CoursePrice>
-  <div>
-    <span className="discounted-price">
-      ${course.after_discount_price}
-    </span>
-    <span className="original-price">
-      ${course.course_price}
-    </span>
-  </div>
-  {course.discount_percent > 0 && (
-    <span className="course-discount">
-      {course.discount_percent}% OFF
-    </span>
-  )}
-</CoursePrice>
+                      <div>
+                        <span className="discounted-price">
+                          ${course.after_discount_price}
+                        </span>
+                        <span className="original-price">
+                          ${course.course_price}
+                        </span>
+                      </div>
+                      {course.discount_percent > 0 && (
+                        <span className="course-discount">
+                          {course.discount_percent}% OFF
+                        </span>
+                      )}
+                    </CoursePrice>
                   </CourseContent>
                 </CourseCard>
               ))}
