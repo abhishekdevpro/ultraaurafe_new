@@ -175,6 +175,7 @@ import JoinLiveClass from "./components/instructor/LiveClasses/ForStudent/JoinLi
 import Success from "./components/student/transactionStudent/Success.jsx";
 import AboutUsForm from "./components/Admin/CMS/About/index.js";
 
+
 const Approuter = () => {
   return (
     <BrowserRouter>
@@ -608,6 +609,7 @@ const Approuter = () => {
         <Route path="/admin/edit-coupon/:id" element={<EditCouponForm />} /> 
         <Route path="/admin/live-classes" element={<JoinLiveClass />} /> 
         <Route path="/admin/about-us" element={<AboutUsForm />} /> 
+
         </Route>
         {/* Admin routes ends*/}
 
