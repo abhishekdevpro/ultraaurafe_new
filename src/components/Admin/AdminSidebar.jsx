@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useState} from "react";
 import StickyBox from "react-sticky-box";
 import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -7,6 +7,9 @@ import profilelogo from "../../assets/img/profile-pro.png";
 export default function AdminSidebar() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const [cmsOpen, setCmsOpen] = useState(false); 
+
   // const [showCMS,setShowCMS] = useState(false);
   // const handleCMSShow=()=>{
   //   setShowCMS(!showCMS);
@@ -124,6 +127,32 @@ const handleLogout =()=>{
                      Live Classes
                 </Link>
               </li>
+              <li className={`nav-item ${location.pathname.startsWith("/admin/cms") ? "active" : ""}`}>
+                <Link
+                  className="nav-link"
+                  onClick={() => setCmsOpen(!cmsOpen)} // Toggle submenu
+                  style={{ cursor: "pointer" }}
+                >
+                  <i className="bx bxs-group" />
+                  CMS
+                  <i className={`bx ${cmsOpen ? "bx-chevron-up" : "bx-chevron-down"} float-end`} />
+                </Link>
+                </li>
+                {cmsOpen && (
+                  <ul className="submenu" style={{ paddingLeft: "1rem" }}>
+                    <li className={`nav-item ${location.pathname === "/admin/cms/home" ? "active" : ""}`}>
+                      <Link to="/admin/cms/home" className="nav-link">
+                        Home
+                      </Link>
+                    </li>
+                    <li className={`nav-item ${location.pathname === "/admin/about-us" ? "active" : ""}`}>
+                      <Link to="/admin/about-us" className="nav-link">
+                        About Us
+                      </Link>
+                    </li>
+                  </ul>
+                )}
+             
               {/* <li className={`nav-item ${location.pathname === '/admin/add-student' ? 'active' : ''}`}>
                 <Link to="/admin/add-student" className="nav-link">
                   <i className="bx bxs-user-plus" />
@@ -139,6 +168,7 @@ const handleLogout =()=>{
                   Settings
                 </Link>
               </li>
+              
               <li className="nav-item">
                 <Link  className="nav-link"
                  onClick={handleLogout}
@@ -176,3 +206,5 @@ const handleLogout =()=>{
     </div>
   );
 }
+
+
