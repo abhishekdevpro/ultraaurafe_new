@@ -82,7 +82,7 @@ function Introductions({ introductionData }) {
 
     try {
       const response = await axios.patch(
-        "https://api.novajobs.us/api/admin/update-aboutus-content/1",
+        "https://api.novajobs.us/api/uaadmin/update-aboutus-content/1",
         formData,
         {
           headers: {
