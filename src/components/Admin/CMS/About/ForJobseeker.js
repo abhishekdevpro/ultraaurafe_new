@@ -24,7 +24,7 @@ function ForJobseeker({ forJobseekerData }) {
   const [image, setImage] = useState(null); // Binary image blob
   const [imagePreview, setImagePreview] = useState(logo2); // Preview for the image
 
-  const authToken = localStorage.getItem("authToken"); // Retrieve auth token
+  const authToken = localStorage.getItem("adminToken"); // Retrieve auth token
 
   useEffect(() => {
     if (!forJobseekerData) {

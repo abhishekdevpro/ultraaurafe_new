@@ -94,7 +94,7 @@ function Novajobsus({ novaJobsusData }) {
     });
 
     try {
-      const token = localStorage.getItem("authToken");
+      const token = localStorage.getItem("adminToken");
       const response = await axios.patch(
         "https://api.novajobs.us/api/admin/update-aboutus-content/4",
         formData,
@@ -114,7 +114,7 @@ function Novajobsus({ novaJobsusData }) {
     }
   };
 
-  const authToken = localStorage.getItem("authToken");
+  const authToken = localStorage.getItem("adminToken");
 
   return (
     <div className="mt-5">

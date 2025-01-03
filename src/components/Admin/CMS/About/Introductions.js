@@ -30,7 +30,7 @@ function Introductions({ introductionData }) {
   const [imagePreview, setImagePreview] = useState(logo1); // For preview
   const [loading, setLoading] = useState(false); // State for API request status
 
-  const authToken = localStorage.getItem("authToken"); // Retrieve auth token
+  const authToken = localStorage.getItem("adminToken"); // Retrieve auth token
 
   // Fetch data from the GET API
   useEffect(() => {
