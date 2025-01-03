@@ -26,7 +26,7 @@ function MoreServices({ moreServicesData }) {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(logo5);
 
-  const authToken = localStorage.getItem("authToken"); // Retrieve auth token
+  const authToken = localStorage.getItem("adminToken"); // Retrieve auth token
 
   // Fetch data from the GET API
   useEffect(() => {
