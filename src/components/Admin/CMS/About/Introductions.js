@@ -24,7 +24,7 @@ function Introductions({ introductionData }) {
     </p>
   `);
   const [videoUrl, setVideoUrl] = useState(
-    "https://www.youtube.com/watch?v=DbHXRGdBhqo"
+    "https://youtu.be/SjRhXWtHAqc?si=RhpBpfgS3Z24fr86"
   );
   const [image, setImage] = useState(null); // Binary image
   const [imagePreview, setImagePreview] = useState(logo1); // For preview
