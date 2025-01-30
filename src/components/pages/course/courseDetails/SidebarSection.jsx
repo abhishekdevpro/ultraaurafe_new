@@ -22,7 +22,6 @@ import ShareButton from "./Sharebutton";
 import { Loader } from "lucide-react";
 // import Joyride from "react-joyride";
 
-
 const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -231,7 +230,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   // const [showBanner, setShowBanner] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState(false);
   const [showTestModal, setShowTestModal] = useState(false);
-  const [userInfo,setUserInfo]=useState('');
+  const [userInfo, setUserInfo] = useState("");
   // const [checkoutData, setCheckoutData] =useState([]);
   // const [runTour, setRunTour] = useState(false);
   // const [dataLoaded, setDataLoaded] = useState(false);
@@ -266,7 +265,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   // The length at which content should be truncated
   const truncateLength = 100; // Adjust this value as needed
   const fullContent = courseFeatureData.learning_objectives || "";
-  
+
   // Check if content needs to be truncated
   const isTruncated = fullContent.length > truncateLength;
   const handleEnrollClick = () => {
@@ -314,47 +313,53 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
     }
   };
 
-  const fetchProfile=async() => {
-    try{
-      const response = await axios.get("https://api.novajobs.us/api/students/profile", {
-        headers: {
-          Authorization: `${token}`,
-        },
-      });
+  const fetchProfile = async () => {
+    try {
+      const response = await axios.get(
+        "https://api.novajobs.us/api/students/profile",
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
       setUserInfo(response.data.data);
-    } 
-    catch (error) {
+    } catch (error) {
       console.error("Error fetching user profile:", error);
     }
-  }
-  useEffect(()=>{
+  };
+  useEffect(() => {
     fetchProfile();
-    },[userInfo.id]
-    )
-  const handleBuyNow=async() => {
-    
-  if(token){
-    try {
-      const response = await axios.post('https://api.novajobs.us/api/students/cart', {
-        student_id: userInfo.id, 
-        course_id: Number(courseId), 
-        quantity: 1,
-      }, {headers: {
-        Authorization: `${token}`,
-      }},);
-      console.log('Item added to cart:', response.data.message);
-      toast.success(response.data.message || "Course Added To cart Successfully ")
-      window.location.href="/cart"
-    } catch (error) {
-      console.error('Error adding item to cart:', error);
-      toast.error(error.message || "Error to add the course in the cart")
+  }, [userInfo.id]);
+  const handleBuyNow = async () => {
+    if (token) {
+      try {
+        const response = await axios.post(
+          "https://api.novajobs.us/api/students/cart",
+          {
+            student_id: userInfo.id,
+            course_id: Number(courseId),
+            quantity: 1,
+          },
+          {
+            headers: {
+              Authorization: `${token}`,
+            },
+          }
+        );
+        console.log("Item added to cart:", response.data.message);
+        toast.success(
+          response.data.message || "Course Added To cart Successfully "
+        );
+        window.location.href = "/cart";
+      } catch (error) {
+        console.error("Error adding item to cart:", error);
+        toast.error(error.message || "Error to add the course in the cart");
+      }
+    } else {
+      navigate("/login");
     }
-  }
-  else {
-    navigate("/login");
-  }
-
-  }
+  };
 
   const toggleClass = async (courseId, isFavorite) => {
     const updatedClasses = [...isClassAdded];
@@ -401,7 +406,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
 
   const handleCheckout = async () => {
     setLoading(true);
-     try {
+    try {
       const response = await axios.post(
         "https://api.novajobs.us/api/students/buy",
         {
@@ -415,23 +420,21 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
           },
         }
       );
-      
+
       toast.success("Purchase Successful ");
       console.log("Purchase successful:", response.data);
-      
-      
+
       setShowPopup(false);
-      setTimeout(function() {
+      setTimeout(function () {
         window.location.reload();
-    }, 3000); 
-        } catch (error) {
+      }, 3000);
+    } catch (error) {
       console.error("Error during purchase:", error);
       toast.error("There was an issue with the purchase. Please try again.");
     } finally {
       setLoading(false);
     }
   };
-  
 
   const handleVideoPlay = async () => {
     setLoading(true);
@@ -481,44 +484,61 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   // ];
 
   return (
-  <>
-  
- 
-    <div className="col-lg-4">
-    <ToastContainer />
-      <div className="sidebar-sec">
-        {/* Video Section */}
-        <VideoSection>
-          <div className="video-sec vid-bg">
-            <div className="card">
-              <div className="card-body">
-              
-      {videoPlaying ? (
-              videoUrl ? (
-                <video controls onLoadStart={() => setLoading(true)} onLoadedData={() => setLoading(false)}>
-                  <source src={videoUrl} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              ) : (
-                <img src={`https://api.novajobs.us${courseFeatureData.course_banner_image}`} alt="Course Banner" className="course-banner" />
-              )
-            ) : (
-              <div className="video-thumbnail-container">
-                <button onClick={handleVideoPlay} className="video-thumbnail" data-fancybox="">
-                  {loading ? (
-                    <img src={Loader} alt="Loading..." className="loader" />
+    <>
+      <div className="col-lg-4">
+        <ToastContainer />
+        <div className="sidebar-sec">
+          {/* Video Section */}
+          <VideoSection>
+            <div className="video-sec vid-bg">
+              <div className="card">
+                <div className="card-body">
+                  {videoPlaying ? (
+                    videoUrl ? (
+                      <video
+                        controls
+                        onLoadStart={() => setLoading(true)}
+                        onLoadedData={() => setLoading(false)}
+                      >
+                        <source src={videoUrl} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                    ) : (
+                      <img
+                        src={`https://api.novajobs.us${courseFeatureData.course_banner_image}`}
+                        alt="Course Banner"
+                        className="course-banner"
+                      />
+                    )
                   ) : (
-                    <div className="default-thumbnail">
-                      <img src={Video2} alt="Default Thumbnail" className="default-image" />
-                      <div className="play-icon">
-                        <i className="fa-solid fa-play" />
-                      </div>
+                    <div className="video-thumbnail-container">
+                      <button
+                        onClick={handleVideoPlay}
+                        className="video-thumbnail"
+                        data-fancybox=""
+                      >
+                        {loading ? (
+                          <img
+                            src={Loader}
+                            alt="Loading..."
+                            className="loader"
+                          />
+                        ) : (
+                          <div className="default-thumbnail">
+                            <img
+                              src={Video2}
+                              alt="Default Thumbnail"
+                              className="default-image"
+                            />
+                            <div className="play-icon">
+                              <i className="fa-solid fa-play" />
+                            </div>
+                          </div>
+                        )}
+                      </button>
                     </div>
                   )}
-                </button>
-              </div>
-            )}
-            {/* <Joyride
+                  {/* <Joyride
         steps={steps}
         run={runTour} // Automatically start the tour
         continuous
@@ -555,213 +575,228 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
       
         }}
       /> */}
-                <div className="video-details">
-                 {courseFeatureData.course_price == 0? <div className="course-fee">
-                    <h2>FREE</h2>
-                    <p>
-                      <span>$99.00</span> 50% off
-                    </p>
-                  </div>: " "}
-                  <div className="row gx-2">
-                    <div className="col-md-6 addHeart">
-                      {isFavorite && localStorage.getItem("token") ? (
-                        <button
-                          className="btn btn-danger w-100"
-                          onClick={() =>
-                            toggleClass(courseData.course_id, isFavorite)
-                          }
-                        >
-                          <i className="feather icon-heart me-2" />
-                          Remove
-                        </button>
-                      ) : (
-                        <button
-                          className="btn btn-wish w-100"
-                          onClick={() =>
-                            toggleClass(courseData.course_id, isFavorite)
-                          }
-                        >
-                          <i className="feather icon-heart me-2" />
-                          Add to Wishlist
-                        </button>
-                      )}
-                    </div>
-                    {/* <div className="col-md-6 addHeart">
+                  <div className="video-details">
+                    {courseFeatureData.course_price == 0 ? (
+                      <div className="course-fee">
+                        <h2>FREE</h2>
+                        <p>
+                          <span>$99.00</span> 50% off
+                        </p>
+                      </div>
+                    ) : (
+                      " "
+                    )}
+                    <div className="row gx-2">
+                      <div className="col-md-6 addHeart">
+                        {isFavorite && localStorage.getItem("token") ? (
+                          <button
+                            className="btn btn-danger w-100"
+                            onClick={() =>
+                              toggleClass(courseData.course_id, isFavorite)
+                            }
+                          >
+                            <i className="feather icon-heart me-2" />
+                            Remove
+                          </button>
+                        ) : (
+                          <button
+                            className="btn btn-wish w-100"
+                            onClick={() =>
+                              toggleClass(courseData.course_id, isFavorite)
+                            }
+                          >
+                            <i className="feather icon-heart me-2" />
+                            Add to Wishlist
+                          </button>
+                        )}
+                      </div>
+                      {/* <div className="col-md-6 addHeart">
                       <Link to="#" className="btn btn-wish w-100">
                         <i className="feather icon-share-2 me-2" />
                         Share
                       </Link>
                     </div> */}
-                    <div className="col-md-6 addHeart">
-                      <ShareButton courseUrl={`http://localhost:3000/course-info/${courseData.course_id}` }/>
+                      <div className="col-md-6 addHeart">
+                        <ShareButton
+                          courseUrl={`https://ultraaura.education/course-info/${courseData.course_id}`}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <ButtonWrapper>
-                    {token && courseData.is_student_enroll ? (
-                      <button className="btn-enroll w-100" disabled>
-                        Enrolled
-                      </button>
-                    ) : (
-                      <button
-                        onClick={handleEnrollClick}
-                        className="btn-enroll w-100"
-                      >
-                        Enroll Now
-                      </button>
-                    )}
-
-                   {
-                    <button  className="btn-enroll w-100 buynow"
-                    onClick={handleBuyNow}
-                    >Buy now</button>
-                   }
-
-                    {token &&
-                      courseData.is_student_enroll &&
-                      courseData.is_certificate && (
+                    <ButtonWrapper>
+                      {token && courseData.is_student_enroll ? (
+                        <button className="btn-enroll w-100" disabled>
+                          Enrolled
+                        </button>
+                      ) : (
                         <button
-                          onClick={handleDownload}
+                          onClick={handleEnrollClick}
                           className="btn-enroll w-100"
                         >
-                          Download Certificate
+                          Enroll Now
                         </button>
                       )}
+
+                      {
+                        <button
+                          className="btn-enroll w-100 buynow"
+                          onClick={handleBuyNow}
+                        >
+                          Buy now
+                        </button>
+                      }
+
+                      {token &&
+                        courseData.is_student_enroll &&
+                        courseData.is_certificate && (
+                          <button
+                            onClick={handleDownload}
+                            className="btn-enroll w-100"
+                          >
+                            Download Certificate
+                          </button>
+                        )}
                       {token && (
-          <button
-            className="btn-enroll w-100"
-            onClick={() => setShowTestModal(true)}
-          >
-            Take Test
-          </button>
-        )}
-                  </ButtonWrapper>
+                        <button
+                          className="btn-enroll w-100"
+                          onClick={() => setShowTestModal(true)}
+                        >
+                          Take Test
+                        </button>
+                      )}
+                    </ButtonWrapper>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </VideoSection>
+          </VideoSection>
 
-        {/* Checkout Popup */}
-        <Modal show={showPopup} onHide={() => setShowPopup(false)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Confirm Purchase</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p>Are you sure you want to enroll in this course?</p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowPopup(false)}>
-              Cancel
-            </Button>
-            <Button variant="primary" onClick={handleCheckout}>
-              {loading ? (
-                <Spinner as="span" animation="border" size="sm" />
-              ) : (
-                "Confirm and Enroll"
+          {/* Checkout Popup */}
+          <Modal show={showPopup} onHide={() => setShowPopup(false)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Confirm Purchase</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <p>Are you sure you want to enroll in this course?</p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => setShowPopup(false)}>
+                Cancel
+              </Button>
+              <Button variant="primary" onClick={handleCheckout}>
+                {loading ? (
+                  <Spinner as="span" animation="border" size="sm" />
+                ) : (
+                  "Confirm and Enroll"
+                )}
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
+          <Modal show={showTestModal} onHide={() => setShowTestModal(false)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Confirm Action</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <p>Are you sure you want to take the test for this course?</p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                variant="secondary"
+                onClick={() => setShowTestModal(false)}
+              >
+                Cancel
+              </Button>
+              <Button variant="primary" onClick={handleTakeTest}>
+                {loading ? (
+                  <Spinner as="span" animation="border" size="sm" />
+                ) : (
+                  "Confirm and Take Test"
+                )}
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
+          {/* Include Section */}
+          <div className="card include-sec">
+            <div className="card-body">
+              <div className="cat-title includes">
+                <h4>Includes</h4>
+              </div>
+              <ul>
+                <li>
+                  <img src={Mobile} className="me-2" alt="" /> On-demand video
+                </li>
+                <li>
+                  <img src={Play} className="me-2" alt="" />
+                  Downloadable resources
+                </li>
+                <li>
+                  <img src={Key} className="me-2" alt="" /> Full access
+                </li>
+                <li>
+                  <img src={Mobile} className="me-2" alt="" /> Access on mobile
+                  screen
+                </li>
+                <li>
+                  <img src={Cloud} className="me-2" alt="" /> Assignments
+                </li>
+                <li>
+                  <img src={Teacher} className="me-2" alt="" /> Certificate of
+                  Completion
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Features Section */}
+          <div className="card feature-sec">
+            <div className="card-body">
+              <div className="cat-title">
+                <h4>Features</h4>
+              </div>
+              <ul>
+                <li>
+                  <img src={Users} className="me-2" alt="" /> Enrolled:{" "}
+                  <span>{courseFeatureData.enrolled_student_count}</span>
+                </li>
+                <li>
+                  <img src={Timer2} className="me-2" alt="" /> Duration:{" "}
+                  <span>{courseFeatureData.time_spent_on_course}</span>
+                </li>
+                <li>
+                  <img src={Chapter} className="me-2" alt="" /> Lectures:{" "}
+                  <span> {courseFeatureData.total_lectures} </span>
+                </li>
+                {/* <li><img src={Video2} className="me-2" alt="" /> Video:<span> 12 hours</span></li> */}
+                <li>
+                  <img src={Chart} className="me-2" alt="" /> Level:{" "}
+                  <span>{courseFeatureData.course_level_name}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="card feature-sec">
+            <div className="card-body">
+              <div className="cat-title">
+                <h4>Learning Objective</h4>
+              </div>
+              <div className="content">
+                {/* Truncate and conditionally render content */}
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      isExpanded || !isTruncated
+                        ? fullContent
+                        : fullContent.slice(0, truncateLength) + "...",
+                  }}
+                />
+              </div>
+              {isTruncated && (
+                <button onClick={toggleReadMore} className="read-more-btn">
+                  {isExpanded ? "Show Less" : "Read More"}
+                </button>
               )}
-            </Button>
-          </Modal.Footer>
-        </Modal>
-
-        <Modal show={showTestModal} onHide={() => setShowTestModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirm Action</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Are you sure you want to take the test for this course?</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowTestModal(false)}>
-            Cancel
-          </Button>
-          <Button variant="primary" onClick={handleTakeTest}>
-            {loading ? (
-              <Spinner as="span" animation="border" size="sm" />
-            ) : (
-              'Confirm and Take Test'
-            )}
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-        {/* Include Section */}
-        <div className="card include-sec">
-          <div className="card-body">
-            <div className="cat-title includes">
-              <h4>Includes</h4>
-            </div>
-            <ul>
-              <li>
-                <img src={Mobile} className="me-2" alt="" /> On-demand video
-              </li>
-              <li>
-                <img src={Play} className="me-2" alt="" />
-                Downloadable resources
-              </li>
-              <li>
-                <img src={Key} className="me-2" alt="" /> Full access
-              </li>
-              <li>
-                <img src={Mobile} className="me-2" alt="" /> Access on mobile
-                screen
-              </li>
-              <li>
-                <img src={Cloud} className="me-2" alt="" /> Assignments
-              </li>
-              <li>
-                <img src={Teacher} className="me-2" alt="" /> Certificate of
-                Completion
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Features Section */}
-        <div className="card feature-sec">
-          <div className="card-body">
-            <div className="cat-title">
-              <h4>Features</h4>
-            </div>
-            <ul>
-              <li>
-                <img src={Users} className="me-2" alt="" /> Enrolled:{" "}
-                <span>{courseFeatureData.enrolled_student_count}</span>
-              </li>
-              <li>
-                <img src={Timer2} className="me-2" alt="" /> Duration:{" "}
-                <span>{courseFeatureData.time_spent_on_course}</span>
-              </li>
-              <li>
-                <img src={Chapter} className="me-2" alt="" /> Lectures:{" "}
-                <span> {courseFeatureData.total_lectures} </span>
-              </li>
-              {/* <li><img src={Video2} className="me-2" alt="" /> Video:<span> 12 hours</span></li> */}
-              <li>
-                <img src={Chart} className="me-2" alt="" /> Level:{" "}
-                <span>{courseFeatureData.course_level_name}</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="card feature-sec">
-          <div className="card-body">
-            <div className="cat-title">
-              <h4>Learning Objective</h4>
-            </div>
-            <div className="content">
-        {/* Truncate and conditionally render content */}
-        <p
-          dangerouslySetInnerHTML={{
-            __html: isExpanded || !isTruncated ? fullContent : fullContent.slice(0, truncateLength) + '...',
-          }}
-        />
-      </div>
-      {isTruncated && (
-        <button onClick={toggleReadMore} className="read-more-btn">
-          {isExpanded ? 'Show Less' : 'Read More'}
-        </button>
-      )}
-      {/* <style jsx>{`
+              {/* <style jsx>{`
         .course-feature {
           margin: 1rem 0;
         }
@@ -783,10 +818,10 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
           background-color: #0056b3;
         }
       `}</style> */}
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </>
   );
 };

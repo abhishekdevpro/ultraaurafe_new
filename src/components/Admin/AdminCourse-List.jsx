@@ -801,6 +801,9 @@ const AdminCourseList = () => {
                                 >
                                   Edit
                                 </button>
+                                <button className="btn btn-sm btn-danger">
+                                  Delete
+                                </button>
                               </div>
                             </td>
                           </tr>
