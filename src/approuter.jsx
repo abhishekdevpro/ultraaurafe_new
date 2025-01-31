@@ -176,6 +176,7 @@ import Success from "./components/student/transactionStudent/Success.jsx";
 import AboutUsForm from "./components/Admin/CMS/About/index.js";
 import LoginEmail from "./components/pages/login/loginemail.jsx";
 import LoginCode from "./components/pages/login/logincode.jsx";
+import Gauth from "./components/pages/login/G-auth";
 
 const Approuter = () => {
   return (
@@ -186,6 +187,7 @@ const Approuter = () => {
         <Route path="/home2" element={<Home2 />} />
         <Route path="/home3" element={<Home3 />} />
         <Route path="/home4" element={<Home4 />} />
+        <Route path="/gauth" element={<Gauth />} />
 
         <Route path="/transaction" element={<Success />} />
         {/* routes for course creation and edit  */}
