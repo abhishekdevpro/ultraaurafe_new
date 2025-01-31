@@ -66,49 +66,52 @@ const Login = () => {
   //   setPasswordType(passwordType === "password" ? "text" : "password");
   // };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   const apiUrl = "https://api.novajobs.us/api/students/login";
+
+  //   try {
+  //     const response = await axios.post(apiUrl, {
+  //       email: email,
+  //       // password: passwordInput,
+  //     });
+
+  //     if (response.data) {
+  //       const tokenKey = "token";
+  //       localStorage.setItem(tokenKey, response.data.data.token);
+
+  //       toast.success("Login successful!", {
+  //         position: "top-right",
+  //         autoClose: 3000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //       });
+
+  //       setTimeout(() => {
+  //         navigate("/student/student-dashboard");
+  //       }, 3000);
+  //     }
+  //   } catch (error) {
+  //     console.error("Login failed", error);
+  //     toast.error("Login failed. Please check your credentials.", {
+  //       position: "top-right",
+  //       autoClose: 5000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //     });
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  const handleSubmit = () => {
     setLoading(true);
-    const apiUrl = "https://api.novajobs.us/api/students/login";
-
-    try {
-      const response = await axios.post(apiUrl, {
-        email: email,
-        // password: passwordInput,
-      });
-
-      if (response.data) {
-        const tokenKey = "token";
-        localStorage.setItem(tokenKey, response.data.data.token);
-
-        toast.success("Login successful!", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
-
-        setTimeout(() => {
-          navigate("/student/student-dashboard");
-        }, 3000);
-      }
-    } catch (error) {
-      console.error("Login failed", error);
-      toast.error("Login failed. Please check your credentials.", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-    } finally {
-      setLoading(false);
-    }
+    navigate("/emailwithlogin");
   };
-
   var settings = {
     items: 1,
     margin: 25,
@@ -218,7 +221,7 @@ const Login = () => {
                           className="h-6 w-6 mr-2"
                           style={{ fontSize: "30px" }}
                         />
-                        Continue with Google
+                        <span className="ms-4">Continue with Google</span>
                       </button>
                     </div>
                     <div
