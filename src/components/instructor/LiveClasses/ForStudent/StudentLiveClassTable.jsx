@@ -97,8 +97,9 @@ const handleJoin = (liveClass) => {
   
     // Construct the Zoom meeting URL
     const zoomUrl = `https://zoom.us/wc/${meetingId}/join?pwd=${encodeURIComponent(passcode)}`;
-    setActiveMeetingUrl(zoomUrl);
-    setShowMeetingModal(true);
+    // setActiveMeetingUrl(zoomUrl);
+    // setShowMeetingModal(true);
+    window.open(zoomUrl, "_blank");
     setPasscode(passcode)
   
   };
