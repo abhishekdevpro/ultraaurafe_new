@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from "react-toastify";
 const Gauth = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const Gauth = () => {
           localStorage.setItem("token", token);
           console.log(response);
           // navigate('/dashboard')
-
+          toast.success(response.data.message);
           // Redirect to the success URL with the token
           navigate("/student/student-dashboard");
         } catch (error) {
