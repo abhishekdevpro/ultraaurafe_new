@@ -4,14 +4,14 @@ import axios from "axios";
 import Footer from "../../footer";
 import { Icon1, Icon2 } from "../../imagepath";
 import Header from "../../header";
-import dummy from "../../../assets/Online Course.png";
+// import dummy from "../../../assets/Online Course.png";
 import { toast } from "react-toastify";
 
 const InstructorProfile = () => {
   const [isClassAdded, setIsClassAdded] = useState([]);
   const [profileData, setProfileData] = useState(null);
   const { id } = useParams(); // Assuming you're using react-router and have a route parameter for the trainer ID
- const navigate = useNavigate();
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
@@ -163,10 +163,17 @@ const InstructorProfile = () => {
                               <div className="product-img">
                                 <Link to={`/course-info/${course.id}`}>
                                   <img
+                                    // src={
+                                    //   course.course_banner_image
+                                    //     ? `https://api.novajobs.us${course.course_banner_image}`
+                                    //     : dummy
+                                    // }
                                     src={
-                                      course.course_banner_image
-                                        ? `https://api.novajobs.us${course.course_banner_image}`
-                                        : dummy
+                                      course.course_banner_image.startsWith(
+                                        "https"
+                                      )
+                                        ? course.course_banner_image
+                                        : `https://api.novajobs.us${course.course_banner_image}`
                                     }
                                     alt="Course Banner"
                                     className="course-banner"

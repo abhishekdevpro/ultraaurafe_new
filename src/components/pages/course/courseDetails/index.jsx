@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
@@ -12,13 +11,12 @@ import CourseDescription from "./CourseDescription";
 
 // Styled Components
 
-
 const CourseDetails = () => {
   const [courseData, setCourseData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { courseid } = useParams();
-  
+
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
@@ -33,10 +31,9 @@ const CourseDetails = () => {
         console.error("Error fetching course data:", error);
         setError("Error loading course data. Please try again later.");
         console.log(error.response);
-        if(error.response && error.response.status == 401){
-          window.location.href = '/login'
+        if (error.response && error.response.status == 401) {
+          window.location.href = "/login";
         }
-
       } finally {
         setLoading(false);
       }
@@ -56,17 +53,17 @@ const CourseDetails = () => {
 
   const token = localStorage.getItem("token");
 
- 
-
- 
-
   const courseDescription = courseData.data.course_description || "";
-  
+
   return (
     <div className="main-wrapper">
-      {token &&courseid? <CourseHeader activeMenu={"CourseDetails"} courseId={courseid} /> : <Header />}
+      {token && courseid ? (
+        <CourseHeader activeMenu={"CourseDetails"} courseId={courseid} />
+      ) : (
+        <Header />
+      )}
       {/* <section className="page-content course-sec"> */}
-{/* 
+      {/* 
       <div className="breadcrumb-bar">
         <div className="container">
           <div className="row">
@@ -91,7 +88,11 @@ const CourseDetails = () => {
                     <Link
                       to={`/instructor/instructor-profile/${courseData.data.trainer_id}`}
                     >
-                      <img src={`https://api.novajobs.us${courseData.data.trainer_photo}`} alt="Instructor" className="img-fluid" />
+                      <img
+                        src={`https://api.novajobs.us${courseData.data.trainer_photo}`}
+                        alt="Instructor"
+                        className="img-fluid"
+                      />
                     </Link>
                   </div>
                   <div className="instructor-detail me-3">

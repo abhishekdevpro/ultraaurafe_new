@@ -1,8 +1,7 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { Icon1, Icon2 } from "../../../imagepath";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -229,11 +228,11 @@ const FavoriteButton = styled.button`
   cursor: pointer;
   transition: color 0.3s;
   margin-left: auto;
-  
+
   &:hover {
     color: #ff4081;
   }
-  
+
   &.active {
     color: #ff4081;
   }
@@ -246,8 +245,8 @@ const PaginationContainer = styled.div`
 `;
 
 const PaginationButton = styled.button`
-  background-color: ${props => props.active ? '#ff4081' : 'white'};
-  color: ${props => props.active ? 'white' : '#333'};
+  background-color: ${(props) => (props.active ? "#ff4081" : "white")};
+  color: ${(props) => (props.active ? "white" : "#333")};
   padding: 0.5rem 1rem;
   border-radius: 5px;
   text-decoration: none;
@@ -257,7 +256,7 @@ const PaginationButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: ${props => props.active ? '#e63975' : '#e0e0e0'};
+    background-color: ${(props) => (props.active ? "#e63975" : "#e0e0e0")};
   }
 
   &:disabled {
@@ -270,7 +269,7 @@ const InnerPage = ({ courses = [] }) => {
   const [isClassAdded, setIsClassAdded] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const coursesPerPage = 9;
-  
+
   const navigate = useNavigate();
 
   const indexOfLastCourse = currentPage * coursesPerPage;
@@ -284,26 +283,26 @@ const InnerPage = ({ courses = [] }) => {
     setIsClassAdded(updatedClasses);
 
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) {
         toast.error("You need to login first");
-        navigate('/login');
+        navigate("/login");
         return;
       }
       await axios.post(
-        'https://api.novajobs.us/api/students/course-favorite',
+        "https://api.novajobs.us/api/students/course-favorite",
         { course_id: courseId },
         {
           headers: {
-            'Authorization': `${token}`,
-            'Content-Type': 'application/json',
-          }
+            Authorization: `${token}`,
+            "Content-Type": "application/json",
+          },
         }
       );
-      toast.success('Course added to favorites!');
+      toast.success("Course added to favorites!");
     } catch (error) {
-      console.error('Failed to add course to favorites:', error);
-      toast.error('Failed to add course to favorites. Please try again.');
+      console.error("Failed to add course to favorites:", error);
+      toast.error("Failed to add course to favorites. Please try again.");
     }
   };
 
@@ -319,23 +318,31 @@ const InnerPage = ({ courses = [] }) => {
           {currentCourses.length > 0 ? (
             currentCourses.map((course, index) => (
               <CourseCard key={course.id}>
-               
                 <Link to={`/course-info/${course.id}`}>
                   <CourseImage
-                    src={`https://api.novajobs.us${course.course_banner_image}`}
+                    // src={`https://api.novajobs.us${course.course_banner_image}`}
+                    src={
+                      course.course_banner_image.startsWith("https")
+                        ? course.course_banner_image
+                        : `https://api.novajobs.us${course.course_banner_image}`
+                    }
                     alt={course.course_title}
                   />
                 </Link>
                 <CourseContent>
                   <InstructorInfo>
-                    <Link to={`/instructor/instructor-profile/${course.instructor_id}`}>
+                    <Link
+                      to={`/instructor/instructor-profile/${course.instructor_id}`}
+                    >
                       <InstructorAvatar
                         src={`https://api.novajobs.us${course.trainer_photo}`}
                         alt={course.trainer_first_name}
                       />
                     </Link>
                     <div>
-                      <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
+                      <Link
+                        to={`/instructor/instructor-profile/${course.trainer_id}`}
+                      >
                         <InstructorName>
                           {course.trainer_first_name} {course.trainer_last_name}
                         </InstructorName>
@@ -344,12 +351,12 @@ const InnerPage = ({ courses = [] }) => {
                     </div>
                     <FavoriteButton
                       onClick={() => toggleClass(index, course.id)}
-                      className={isClassAdded[index] ? 'active' : ''}
+                      className={isClassAdded[index] ? "active" : ""}
                     >
                       <i className="fa-regular fa-heart" />
                     </FavoriteButton>
                   </InstructorInfo>
-                  
+
                   <Link to={`/course-info/${course.id}`}>
                     <CourseTitle>{course.course_title}</CourseTitle>
                   </Link>
@@ -371,20 +378,20 @@ const InnerPage = ({ courses = [] }) => {
                     )}
                   </CoursePrice> */}
                   <CoursePrice>
-  <div>
-    <span className="discounted-price">
-      ${course.after_discount_price}
-    </span>
-    <span className="original-price">
-      ${course.course_price}
-    </span>
-  </div>
-  {course.discount_percent > 0 && (
-    <span className="course-discount">
-      {course.discount_percent}% OFF
-    </span>
-  )}
-</CoursePrice>
+                    <div>
+                      <span className="discounted-price">
+                        ${course.after_discount_price}
+                      </span>
+                      <span className="original-price">
+                        ${course.course_price}
+                      </span>
+                    </div>
+                    {course.discount_percent > 0 && (
+                      <span className="course-discount">
+                        {course.discount_percent}% OFF
+                      </span>
+                    )}
+                  </CoursePrice>
                 </CourseContent>
               </CourseCard>
             ))
@@ -392,16 +399,16 @@ const InnerPage = ({ courses = [] }) => {
             <p className="text-center w-100">No courses found.</p>
           )}
         </CourseGrid>
-        
+
         {totalPages > 1 && (
           <PaginationContainer>
-            <PaginationButton 
+            <PaginationButton
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
             >
               Previous
             </PaginationButton>
-            
+
             {[...Array(totalPages)].map((_, index) => (
               <PaginationButton
                 key={index + 1}
@@ -411,8 +418,8 @@ const InnerPage = ({ courses = [] }) => {
                 {index + 1}
               </PaginationButton>
             ))}
-            
-            <PaginationButton 
+
+            <PaginationButton
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
             >

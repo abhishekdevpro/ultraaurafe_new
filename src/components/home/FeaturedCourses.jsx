@@ -1,4 +1,3 @@
-
 // import React, { useState, useEffect } from "react";
 // import axios from "axios";
 // import { Link, useNavigate } from "react-router-dom";
@@ -315,7 +314,6 @@
 //   const navigate = useNavigate();
 //   const token = localStorage.getItem("token");
 
-
 //   useEffect(() => {
 //     const fetchData = async () => {
 //       try {
@@ -438,7 +436,6 @@
 //               {limitedCourses.map((course) => (
 //                 <CourseCard key={course.id}>
 
-                 
 //                   <Link to={`/course-info/${course.id}`}>
 //                     <CourseImage
 //                       src={`https://api.novajobs.us${course.course_banner_image}`}
@@ -1247,7 +1244,6 @@ const DynamicCourseGrid = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -1377,8 +1373,16 @@ const DynamicCourseGrid = () => {
                   </ClaimCoupon>
                   : <></>} */}
                   <Link to={`/course-info/${course.id}`}>
-                    <CourseImage
+                    {/* <CourseImage
                       src={`https://api.novajobs.us${course.course_banner_image}`}
+                      alt={course.course_title}
+                    /> */}
+                    <CourseImage
+                      src={
+                        course.course_banner_image.startsWith("https")
+                          ? course.course_banner_image
+                          : `https://api.novajobs.us${course.course_banner_image}`
+                      }
                       alt={course.course_title}
                     />
                   </Link>

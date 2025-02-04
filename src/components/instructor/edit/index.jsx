@@ -56,10 +56,7 @@ export default function InstructorEdit() {
           <div className="row">
             <div className="col-md-12 col-12">
               <div className="profile-info-blk">
-                <Link
-                  to="instructor-dashboard"
-                  className="profile-info-img"
-                >
+                <Link to="instructor-dashboard" className="profile-info-img">
                   <img src={ProfileAvatar} alt="" className="img-fluid" />
                 </Link>
                 <h4>
@@ -311,10 +308,7 @@ export default function InstructorEdit() {
                               </span>
                             </div>
                             <div className="all-btn all-category d-flex align-items-center">
-                              <Link
-                                to="/checkout"
-                                className="btn btn-primary"
-                              >
+                              <Link to="/checkout" className="btn btn-primary">
                                 BUY NOW
                               </Link>
                             </div>
@@ -391,10 +385,7 @@ export default function InstructorEdit() {
                               </span>
                             </div>
                             <div className="all-btn all-category d-flex align-items-center">
-                              <Link
-                                to="/checkout"
-                                className="btn btn-primary"
-                              >
+                              <Link to="/checkout" className="btn btn-primary">
                                 BUY NOW
                               </Link>
                             </div>

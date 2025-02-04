@@ -12356,12 +12356,12 @@ input[type="password"]::-ms-clear {
 .course-design {
   border: 1px solid #e9ecef;
 }
-.course-design .product {
+/* .course-design .product {
   background: #fff;
 }
 .course-design .product:hover {
   background: #fff;
-}
+} */
 .course-design .product:hover .course-info p,
 .course-design .product:hover .course-name p,
 .course-design .product:hover .course-name h4 a,
