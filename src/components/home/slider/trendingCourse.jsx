@@ -894,7 +894,7 @@
 //                   </Link>
 //                   <div className="price">
 //                     <h3>
-//                       ${course.course_price} 
+//                       ${course.course_price}
 //                       {course.after_discount_price > 0 && (
 //                         <span>${course.after_discount_price}</span>
 //                       )}
@@ -972,9 +972,11 @@ const TrendingCourse = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get("https://api.novajobs.us/api/trainers/all-courses");
+        const response = await axios.get(
+          "https://api.novajobs.us/api/trainers/all-courses"
+        );
         console.log(response.data.data, "Coursesssss");
-        setCourses(response.data.data.slice(0,9));
+        setCourses(response.data.data.slice(0, 9));
       } catch (error) {
         console.error("Error fetching courses:", error);
       } finally {
@@ -1029,7 +1031,8 @@ const TrendingCourse = () => {
         </div>
         <div className="section-text aos" data-aos="fade-up">
           <p className="mb-0">
-            Explore our trending courses and enhance your skills with the latest in-demand topics.
+            Explore our trending courses and enhance your skills with the latest
+            in-demand topics.
           </p>
         </div>
         <OwlCarousel
@@ -1042,11 +1045,20 @@ const TrendingCourse = () => {
               <div className="product trend-product">
                 <div className="product-img">
                   <Link to={`course-info/${course.id}`}>
-                    <img className="img-fluid" alt="" src={`https://api.novajobs.us/${course.course_banner_image}`} />
+                    <img
+                      className="img-fluid"
+                      alt=""
+                      // src={`https://api.novajobs.us/${course.course_banner_image}`}
+                      src={
+                        course.course_banner_image.startsWith("https")
+                          ? course.course_banner_image
+                          : `https://api.novajobs.us${course.course_banner_image}`
+                      }
+                    />
                   </Link>
                   <div className="price">
                     <h3>
-                      ${course.course_price} 
+                      ${course.course_price}
                       {course.after_discount_price > 0 && (
                         <span>${course.after_discount_price}</span>
                       )}
@@ -1056,13 +1068,22 @@ const TrendingCourse = () => {
                 <div className="product-content">
                   <div className="course-group d-flex">
                     <div className="course-group-img d-flex">
-                      <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1xJJlvtKTz9dZmVROeoba-PszAGiwk6rLpg&s" alt="" className="img-fluid" />
+                      <Link
+                        to={`/instructor/instructor-profile/${course.trainer_id}`}
+                      >
+                        <img
+                          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1xJJlvtKTz9dZmVROeoba-PszAGiwk6rLpg&s"
+                          alt=""
+                          className="img-fluid"
+                        />
                       </Link>
                       <div className="course-name">
                         <h4>
-                          <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
-                            {course.trainer_first_name} {course.trainer_last_name}
+                          <Link
+                            to={`/instructor/instructor-profile/${course.trainer_id}`}
+                          >
+                            {course.trainer_first_name}{" "}
+                            {course.trainer_last_name}
                           </Link>
                         </h4>
                         <p>Instructor</p>
@@ -1075,7 +1096,9 @@ const TrendingCourse = () => {
                     </div>
                   </div>
                   <h3 className="title">
-                    <Link to={`course-info/${course.id}`}>{course.course_title}</Link>
+                    <Link to={`course-info/${course.id}`}>
+                      {course.course_title}
+                    </Link>
                   </h3>
                   <div className="course-info d-flex align-items-center">
                     <div className="rating-img d-flex align-items-center">
@@ -1093,7 +1116,10 @@ const TrendingCourse = () => {
                     </span>
                   </div>
                   <div className="all-btn all-category d-flex align-items-center">
-                    <Link to={`/checkout/${course.id}`} className="btn btn-primary">
+                    <Link
+                      to={`/checkout/${course.id}`}
+                      className="btn btn-primary"
+                    >
                       BUY NOW
                     </Link>
                   </div>

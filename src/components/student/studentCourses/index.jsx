@@ -1,19 +1,18 @@
-
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Search } from 'lucide-react';
-import Select from 'react-select';
-import axios from 'axios';
-import { Icon1, Icon2 } from '../../imagepath';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Search } from "lucide-react";
+import Select from "react-select";
+import axios from "axios";
+import { Icon1, Icon2 } from "../../imagepath";
 import StudentHeader from "../header";
 import StudentSidebar from "../sidebar";
 import Footer from "../../footer";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import styled from 'styled-components';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import styled from "styled-components";
 
 const StartLessonButton = styled.button`
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 12px 20px;
   text-align: center;
@@ -65,36 +64,50 @@ const DynamicCourseList = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterOption, setFilterOption] = useState({ value: 'all', label: 'All' });
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterOption, setFilterOption] = useState({
+    value: "all",
+    label: "All",
+  });
   const [isClassAdded, setIsClassAdded] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         if (!token) {
-          throw new Error('No authentication token found');
+          throw new Error("No authentication token found");
         }
-        const response = await axios.get('https://api.novajobs.us/api/students/mycourse-lists', {
-          headers: {
-            'Authorization': `${token}`
+        const response = await axios.get(
+          "https://api.novajobs.us/api/students/mycourse-lists",
+          {
+            headers: {
+              Authorization: `${token}`,
+            },
           }
-        });
-        
+        );
+
         if (response.data && Array.isArray(response.data.data)) {
           setCourses(response.data.data);
           setIsClassAdded(new Array(response.data.data.length).fill(false));
         } else {
           setCourses([]);
-          console.log('No course data returned from API');
+          console.log("No course data returned from API");
         }
       } catch (error) {
-        setError(error.response?.data?.message || error.message || 'An error occurred while fetching courses');
-        toast.error(error.response?.data?.message || error.message || 'An error occurred while fetching courses');
-        if(error.response && error.response.status == 401){
-          window.location.href = '/login'
+        setError(
+          error.response?.data?.message ||
+            error.message ||
+            "An error occurred while fetching courses"
+        );
+        toast.error(
+          error.response?.data?.message ||
+            error.message ||
+            "An error occurred while fetching courses"
+        );
+        if (error.response && error.response.status == 401) {
+          window.location.href = "/login";
         }
       } finally {
         setLoading(false);
@@ -105,51 +118,52 @@ const DynamicCourseList = () => {
   }, []);
 
   const options = [
-    { value: 'all', label: 'All' },
-    { value: 'inprogress', label: 'In Progress' },
-    { value: 'completed', label: 'Completed' }
+    { value: "all", label: "All" },
+    { value: "inprogress", label: "In Progress" },
+    { value: "completed", label: "Completed" },
   ];
 
   const style = {
     control: (base) => ({
       ...base,
       border: 0,
-      boxShadow: 'none',
+      boxShadow: "none",
     }),
   };
 
-  const filteredCourses = courses.filter(course => 
-    course.course_title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-    (filterOption.value === 'all' || 
-     (filterOption.value === 'inprogress' && course.progress < 100) ||
-     (filterOption.value === 'completed' && course.progress === 100))
+  const filteredCourses = courses.filter(
+    (course) =>
+      course.course_title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (filterOption.value === "all" ||
+        (filterOption.value === "inprogress" && course.progress < 100) ||
+        (filterOption.value === "completed" && course.progress === 100))
   );
 
   const toggleClass = async (index, courseId) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) {
-        throw new Error('No authentication token found');
+        throw new Error("No authentication token found");
       }
       await axios.post(
-        'https://api.novajobs.us/api/students/course-favorite',
+        "https://api.novajobs.us/api/students/course-favorite",
         { course_id: courseId },
         {
           headers: {
-            'Authorization': `${token}`,
-            'Content-Type': 'application/json',
-          }
+            Authorization: `${token}`,
+            "Content-Type": "application/json",
+          },
         }
       );
       const updatedClasses = [...isClassAdded];
       updatedClasses[index] = !updatedClasses[index];
       setIsClassAdded(updatedClasses);
-      toast.success('Course added to favorites!');
+      toast.success("Course added to favorites!");
     } catch (error) {
-      console.error('Failed to add course to favorites:', error);
-      toast.error('Failed to add course to favorites. Please try again.');
-      if(error.response && error.response.status == 401){
-        window.location.href = '/login'
+      console.error("Failed to add course to favorites:", error);
+      toast.error("Failed to add course to favorites. Please try again.");
+      if (error.response && error.response.status == 401) {
+        window.location.href = "/login";
       }
     }
   };
@@ -162,7 +176,9 @@ const DynamicCourseList = () => {
     return (
       <div className="alert alert-danger" role="alert">
         Error: {error}
-        <button onClick={() => navigate(0)} className="btn btn-primary ml-3">Retry</button>
+        <button onClick={() => navigate(0)} className="btn btn-primary ml-3">
+          Retry
+        </button>
       </div>
     );
   }
@@ -233,13 +249,18 @@ const DynamicCourseList = () => {
                                     <div className="mycourse-student align-items-center">
                                       <div className="student-search">
                                         <div className="search-group">
-                                          <Search className="searchFeather" size={16} />
+                                          <Search
+                                            className="searchFeather"
+                                            size={16}
+                                          />
                                           <input
                                             type="text"
                                             className="form-control"
                                             placeholder="Search our courses"
                                             value={searchTerm}
-                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                            onChange={(e) =>
+                                              setSearchTerm(e.target.value)
+                                            }
                                           />
                                         </div>
                                       </div>
@@ -264,20 +285,35 @@ const DynamicCourseList = () => {
                             <div className="row">
                               {filteredCourses.length > 0 ? (
                                 filteredCourses.map((course, index) => (
-                                  <div key={course.id} className="col-xl-4 col-md-6 d-flex">
+                                  <div
+                                    key={course.id}
+                                    className="col-xl-4 col-md-6 d-flex"
+                                  >
                                     <div className="course-box flex-fill">
                                       <div className="product">
                                         <div className="product-img">
-                                          <Link to={`/course-info/${course.id}`}>
+                                          <Link
+                                            to={`/course-info/${course.id}`}
+                                          >
                                             <img
                                               className="img-fluid"
                                               alt={course.course_title}
-                                              src={`https://api.novajobs.us${course.course_banner_image}`}
+                                              // src={`https://api.novajobs.us${course.course_banner_image}`}
+                                              src={
+                                                course.course_banner_image.startsWith(
+                                                  "https"
+                                                )
+                                                  ? course.course_banner_image
+                                                  : `https://api.novajobs.us${course.course_banner_image}`
+                                              }
                                             />
                                           </Link>
                                           <div className="price">
                                             <h3>
-                                              ${course.price} <span>${course.original_price}</span>
+                                              ${course.price}{" "}
+                                              <span>
+                                                ${course.original_price}
+                                              </span>
                                             </h3>
                                           </div>
                                         </div>
@@ -286,7 +322,9 @@ const DynamicCourseList = () => {
                                             <div className="course-group-img d-flex">
                                               <div className="course-name">
                                                 <h4>
-                                                  <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
+                                                  <Link
+                                                    to={`/instructor/instructor-profile/${course.trainer_id}`}
+                                                  >
                                                     {course.trainer_first_name}
                                                   </Link>
                                                 </h4>
@@ -294,20 +332,35 @@ const DynamicCourseList = () => {
                                               </div>
                                             </div>
                                             <div className="course-share d-flex align-items-center justify-content-center">
-                                              <Link to="#" onClick={() => toggleClass(index, course.id)}>
-                                                <i className={`fa-regular fa-heart ${isClassAdded[index] ? 'color-active' : ''}`} />
+                                              <Link
+                                                to="#"
+                                                onClick={() =>
+                                                  toggleClass(index, course.id)
+                                                }
+                                              >
+                                                <i
+                                                  className={`fa-regular fa-heart ${
+                                                    isClassAdded[index]
+                                                      ? "color-active"
+                                                      : ""
+                                                  }`}
+                                                />
                                               </Link>
                                             </div>
                                           </div>
                                           <h3 className="title instructor-text">
-                                            <Link to={`/course-info/${course.id}`}>
+                                            <Link
+                                              to={`/course-info/${course.id}`}
+                                            >
                                               {course.course_title}
                                             </Link>
                                           </h3>
                                           <div className="course-info d-flex align-items-center">
                                             <div className="rating-img d-flex align-items-center">
                                               <img src={Icon1} alt="Icon" />
-                                              <p>{course.total_lectures} Lesson</p>
+                                              <p>
+                                                {course.total_lectures} Lesson
+                                              </p>
                                             </div>
                                             <div className="course-view d-flex align-items-center">
                                               <img src={Icon2} alt="Icon" />
@@ -315,18 +368,26 @@ const DynamicCourseList = () => {
                                             </div>
                                           </div>
                                           <div className="rating mb-0">
-                                            {[...Array(5)].map((star, index) => (
-                                              <i
-                                                key={index}
-                                                className={`fas fa-star ${index < course.rating ? 'filled' : ''}`}
-                                              />
-                                            ))}
+                                            {[...Array(5)].map(
+                                              (star, index) => (
+                                                <i
+                                                  key={index}
+                                                  className={`fas fa-star ${
+                                                    index < course.rating
+                                                      ? "filled"
+                                                      : ""
+                                                  }`}
+                                                />
+                                              )
+                                            )}
                                             <span className="d-inline-block average-rating">
                                               {course.rating}
                                             </span>
                                           </div>
                                           <div>
-                                            <Link to={`/course-info/${course.id}`}>
+                                            <Link
+                                              to={`/course-info/${course.id}`}
+                                            >
                                               <StartLessonButton>
                                                 Start the Lesson
                                               </StartLessonButton>
@@ -338,15 +399,23 @@ const DynamicCourseList = () => {
                                   </div>
                                 ))
                               ) : (
-                                <div>No courses found matching your search criteria.</div>
+                                <div>
+                                  No courses found matching your search
+                                  criteria.
+                                </div>
                               )}
                             </div>
                           </>
                         ) : (
                           <NoCourseMessage>
                             <h3>You are not enrolled in any courses yet.</h3>
-                            <p>Explore our course catalog and start your learning journey today!</p>
-                            <GoToCoursesButton to="/course-list">Go to All Courses</GoToCoursesButton>
+                            <p>
+                              Explore our course catalog and start your learning
+                              journey today!
+                            </p>
+                            <GoToCoursesButton to="/course-list">
+                              Go to All Courses
+                            </GoToCoursesButton>
                           </NoCourseMessage>
                         )}
                       </div>

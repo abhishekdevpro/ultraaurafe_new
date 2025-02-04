@@ -1,4 +1,3 @@
-
 // import React from "react";
 // import { Link } from "react-router-dom";
 // import { Icon1, Icon2 } from "../../../imagepath";
@@ -21,7 +20,7 @@
 //                   </Link>
 //                   <div className="price">
 //                     <h3>
-//                       ${course.course_price} 
+//                       ${course.course_price}
 //                       {course.discount_percent > 0 && <span>${course.after_discount_price}</span>}
 //                     </h3>
 //                   </div>
@@ -112,7 +111,12 @@ const GridInnerPage = ({ courses }) => {
                     <img
                       className="img-fluid"
                       alt=""
-                      src={`https://api.novajobs.us${course.course_banner_image}`}
+                      // src={`https://api.novajobs.us${course.course_banner_image}`}
+                      src={
+                        course.course_banner_image.startsWith("https")
+                          ? course.course_banner_image
+                          : `https://api.novajobs.us${course.course_banner_image}`
+                      }
                     />
                   </Link>
                   <div className="price">
@@ -127,7 +131,7 @@ const GridInnerPage = ({ courses }) => {
                 <div className="product-content">
                   <div className="course-group d-flex">
                     <div className="course-group-img d-flex">
-                     {/* <Link to="/instructor/instructor-profile">
+                      {/* <Link to="/instructor/instructor-profile">
                         <img
                           src={`https://via.placeholder.com/150x150?text=${course.trainer_first_name.charAt(0)}${course.trainer_last_name.charAt(0)}`}
                           alt=""
@@ -136,10 +140,12 @@ const GridInnerPage = ({ courses }) => {
                       </Link> */}
                       <div className="course-name">
                         <h4>
-                        <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
-                                {course.trainer_first_name} {course.trainer_last_name}
-                                
-                              </Link>
+                          <Link
+                            to={`/instructor/instructor-profile/${course.trainer_id}`}
+                          >
+                            {course.trainer_first_name}{" "}
+                            {course.trainer_last_name}
+                          </Link>
                         </h4>
                         <p>Instructor</p>
                       </div>
@@ -155,12 +161,7 @@ const GridInnerPage = ({ courses }) => {
                       {course.course_title}
                     </Link>
                   </h3>
-                  <p className="fs-6">
-                       
-                          {course.course_category_name}
-                          
-                        
-                      </p>
+                  <p className="fs-6">{course.course_category_name}</p>
                   <div className="course-info d-flex align-items-center">
                     <div className="rating-img d-flex align-items-center">
                       <img src={Icon1} alt="" />
@@ -172,11 +173,13 @@ const GridInnerPage = ({ courses }) => {
                     </div>
                   </div>
                   <span className="d-inline-block average-rating fs-6">
-                            <span className="fs-8" style={{fontSize:"15px"}}>{course.course_level_name}</span>
-                          </span>
+                    <span className="fs-8" style={{ fontSize: "15px" }}>
+                      {course.course_level_name}
+                    </span>
+                  </span>
                   <div className="all-btn all-category d-flex align-items-center">
                     <Link to="/checkout" className="btn btn-primary">
-                    Enroll Now
+                      Enroll Now
                     </Link>
                   </div>
                 </div>

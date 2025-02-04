@@ -1,9 +1,8 @@
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import StudentHeader from "../header";
 import StudentSidebar from "../sidebar";
-import { Icon1, Icon2} from "../../imagepath";
+import { Icon1, Icon2 } from "../../imagepath";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { toast } from "react-toastify";
@@ -45,7 +44,7 @@ const ExploreButton = styled.button`
   }
 `;
 const StartLessonButton = styled.button`
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 12px 20px;
   text-align: center;
@@ -111,7 +110,7 @@ const StudentDashboard = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       setLoading(true); // Set loading to true before making the request
-  
+
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
@@ -122,7 +121,7 @@ const StudentDashboard = () => {
             },
           }
         );
-  
+
         if (response.data.data && response.data.data.length > 0) {
           setCourses(response.data.data);
           setIsClassAdded(new Array(response.data.data.length).fill(false));
@@ -133,21 +132,25 @@ const StudentDashboard = () => {
         // Handle specific error responses
         if (error.response) {
           if (error.response.status === 401) {
-            window.location.href = '/login'; // Redirect if token is expired or invalid
+            window.location.href = "/login"; // Redirect if token is expired or invalid
           } else {
-            setError("Failed to fetch courses. Please check your connection or try again later.");
+            setError(
+              "Failed to fetch courses. Please check your connection or try again later."
+            );
           }
         } else {
-          setError("Failed to fetch courses. Please check your connection or try again later."); // Handle other errors
+          setError(
+            "Failed to fetch courses. Please check your connection or try again later."
+          ); // Handle other errors
         }
       } finally {
         setLoading(false); // Ensure loading is set to false in all cases
       }
     };
-  
+
     fetchCourses();
   }, []);
-  
+
   const toggleClass = async (index, courseId) => {
     const updatedClasses = [...isClassAdded];
     updatedClasses[index] = !updatedClasses[index];
@@ -274,7 +277,12 @@ const StudentDashboard = () => {
                               <img
                                 className="img-fluid"
                                 alt={course.course_title}
-                                src={`https://api.novajobs.us${course.course_banner_image}`}
+                                // src={`https://api.novajobs.us${course.course_banner_image}`}
+                                src={
+                                  course.course_banner_image.startsWith("https")
+                                    ? course.course_banner_image
+                                    : `https://api.novajobs.us${course.course_banner_image}`
+                                }
                               />
                             </Link>
                             <div className="price">
