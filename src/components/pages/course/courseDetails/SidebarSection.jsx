@@ -15,7 +15,7 @@ import {
   Video2,
 } from "../../../imagepath";
 import { Modal, Button, Spinner } from "react-bootstrap";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import the CSS for toast notifications
 import styled from "styled-components";
 import ShareButton from "./Sharebutton";
@@ -453,8 +453,9 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
       setVideoUrl(videoUrl);
       console.log("Video URL:", videoUrl);
     } catch (error) {
-      console.error("Error fetching video:", error);
-      toast.error("Unable to fetch video. Please try again later.");
+      console.error("Error fetching video:", error?.response?.data.message);
+
+      toast.error(error.response?.data?.message || "No video found");
     } finally {
       setLoading(false);
     }
@@ -486,7 +487,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   return (
     <>
       <div className="col-lg-4">
-        <ToastContainer />
+        {/* <ToastContainer /> */}
         <div className="sidebar-sec">
           {/* Video Section */}
           <VideoSection>
