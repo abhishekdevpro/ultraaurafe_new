@@ -308,7 +308,7 @@ const Header = () => {
             className="header__nav-link header__login-button"
             to="https://trainers.ultraaura.education/"
           >
-            Sign in as Trainer
+            Join Us as a Trainer
           </Link>
           <Link
             className="header__nav-link header__login-button"

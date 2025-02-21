@@ -1389,7 +1389,7 @@ const DynamicCourseGrid = () => {
                   <CourseContent>
                     <InstructorInfo>
                       <InstructorAvatar
-                        src="https://cdn.pixabay.com/photo/2015/03/04/22/35/avatar-659652_640.png"
+                        src={course.trainer_photo ?`https://api.novajobs.us${course.trainer_photo}`:"https://cdn.pixabay.com/photo/2015/03/04/22/35/avatar-659652_640.png"}
                         alt="Instructor"
                       />
                       <div>
@@ -1405,7 +1405,7 @@ const DynamicCourseGrid = () => {
                               `${course.trainer_first_name} ${course.trainer_last_name}`}
                           </InstructorName>
                         </Link>
-                        <p className="text-muted">Instructor</p>
+                        <p className="text-muted">{course.trainer_job_title || "Instructor"}</p>
                       </div>
                       <div className="course-share d-flex align-items-center justify-content-center">
                         <Link to="#" onClick={() => toggleClass(course.id)}>

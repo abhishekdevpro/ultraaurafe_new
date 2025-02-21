@@ -8,6 +8,7 @@ import Footer from "../../../footer";
 import Header from "../../../header";
 import { Target } from "react-feather";
 import CourseDescription from "./CourseDescription";
+import MetaComponent from "../../../../Common/MetaComponent";
 
 // Styled Components
 
@@ -55,8 +56,14 @@ const CourseDetails = () => {
 
   const courseDescription = courseData.data.course_description || "";
 
+  const metadata = {
+    title: courseData.data.course_title ,
+    description: courseDescription,
+  };
   return (
-    <div className="main-wrapper">
+    <> 
+    <MetaComponent meta={metadata}/>
+      <div className="main-wrapper">
       {token && courseid ? (
         <CourseHeader activeMenu={"CourseDetails"} courseId={courseid} />
       ) : (
@@ -186,6 +193,7 @@ const CourseDetails = () => {
       <DetailsContent courseFeatureData={courseData.data} />
       <Footer />
     </div>
+    </>
   );
 };
 

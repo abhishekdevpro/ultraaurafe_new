@@ -16,12 +16,32 @@ const EmptyCartMessage = styled.div`
   margin-top: 2rem;
 `;
 
+// const TruncatedText = styled.p`
+//   max-width:70%;
+//   // border:2px solid red;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+//   display: -webkit-box;
+//   -webkit-line-clamp: 3;
+//   -webkit-box-orient: vertical;
+// `;
+
 const TruncatedText = styled.p`
+  max-width: 60%; /* Ensures it doesn’t overflow */
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+  word-break: break-word; /* Ensures long words don’t overflow */
+
+  @media (max-width: 768px) {
+    -webkit-line-clamp: 2; /* Show fewer lines on smaller screens */
+  }
+
+  @media (max-width: 480px) {
+    -webkit-line-clamp: 1; /* Show only one line on very small screens */
+  }
 `;
 
 const ModalOverlay = styled.div`
@@ -322,7 +342,7 @@ const Cart = () => {
                                 <p>{item.duration}</p>
                               </div>
                             </div>
-                            <div className="course-description mt-2">
+                            <div className="">
                               <TruncatedText
                                 dangerouslySetInnerHTML={{
                                   __html: item.description,
@@ -331,14 +351,14 @@ const Cart = () => {
                             </div><div className="container" style={{display:'flex'}}>
 
                             
-                            <div className="cart-remove" style={{marginRight:'8px'}}>
+                            <div className="" style={{marginRight:'8px'}}>
                               <button className="btn btn-primary">
                                 Quantity: {item.quantity}
                               </button>
                             </div>
-                            <div className="cart-remove">
+                            <div className="">
                               <button
-                                className="btn btn-primary"
+                                className="btn btn-danger"
                                 onClick={() => handleRemove(item.course_id)}
                                 disabled={loading}
                               >

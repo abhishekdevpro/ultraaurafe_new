@@ -982,7 +982,7 @@ console.log(currentTextIndex);
                    </ul>
                    <div className="all-btn all-category d-flex align-items-center">
                      <Link to="/login" className="btn btn-primary">
-                       Join as Trainer Now
+                     Join Us as a Trainer
                      </Link>
                    </div>
                  </div>

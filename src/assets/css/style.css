@@ -2260,7 +2260,7 @@ html.menu-opened body {
   -webkit-backdrop-filter: blur(17px);
 }
 .product:hover {
-  background: #413655;
+  /* background: #413655; */
   color: #fff;
   transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
@@ -18938,7 +18938,7 @@ input[type="password"]::-ms-clear {
 }
 .course-design .product:hover .cart-remove .btn-primary {
   color: #fff;
-  background: #ff5364;
+  /* background: #ff5364; */
   transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
