@@ -23,16 +23,49 @@ function Introductions({ introductionData }) {
       connect you with top-tier talent, optimizing your hiring process with precision and efficiency.
     </p>
   `);
+  const [paragraph1BContent, setParagraph1BContent] = useState(`
+    <p>
+      <strong>Check our quick Product Video below:</strong>
+    </p>
+  `);
+  const [pdfheading, setPdfHeading] = useState("View Pdf");
   const [videoUrl, setVideoUrl] = useState(
-    "https://youtu.be/SjRhXWtHAqc?si=RhpBpfgS3Z24fr86"
+    "https://www.youtube.com/watch?v=DbHXRGdBhqo"
   );
-  const [image, setImage] = useState(null); // Binary image
-  const [imagePreview, setImagePreview] = useState(logo1); // For preview
-  const [loading, setLoading] = useState(false); // State for API request status
+  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(logo1);
+  const [loading, setLoading] = useState(false);
 
-  const authToken = localStorage.getItem("adminToken"); // Retrieve auth token
+  const [showHeading, setShowHeading] = useState(true);
+  const [showParagraph1, setShowParagraph1] = useState(true);
+  const [showParagraph1A, setShowParagraph1A] = useState(true);
+  const [showParagraph1B, setShowParagraph1B] = useState(true);
+  const [showpdfheading, setShowPdfHeading] = useState(true);
+  const [showVideo, setShowVideo] = useState(true);
+  const [showImage, setShowImage] = useState(true);
+  const [pdf, setPdf] = useState(null);
+  const [pdfPreview, setPdfPreview] = useState(null);
+  const [showPdf, setShowPdf] = useState(true);
 
-  // Fetch data from the GET API
+  const authToken = localStorage.getItem("adminToken");
+  useEffect(() => {
+    if (!introductionData) return;
+
+    if (introductionData.pdf && JSON.parse(introductionData.pdf)) {
+      const pdfData = JSON.parse(introductionData.pdf);
+      setPdfPreview(pdfData[0] ? "https://api.novajobs.us" + pdfData[0] : null);
+    }
+  }, [introductionData]);
+  const handlePdfChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type === "application/pdf") {
+      setPdf(file);
+      setPdfPreview(URL.createObjectURL(file));
+    } else {
+      toast.error("Please upload a valid PDF file!");
+    }
+  };
+
   useEffect(() => {
     if (!introductionData) {
       return;
@@ -41,9 +74,20 @@ function Introductions({ introductionData }) {
     setHeading(introductionData.title || heading);
     setParagraph1Content(introductionData.paragraph1 || paragraph1Content);
     setParagraph1AContent(introductionData.paragraph2 || paragraph1AContent);
+    setParagraph1BContent(introductionData.paragraph3 || paragraph1BContent);
+
+    setPdfHeading(introductionData.paragraph4 || pdfheading);
+    setShowHeading(introductionData.is_title_display);
+    setShowParagraph1(introductionData.is_paragraph1_display);
+    setShowParagraph1B(introductionData.is_paragraph3_display);
+    setShowParagraph1A(introductionData.is_paragraph2_display);
+    setShowPdfHeading(introductionData.is_paragraph4_display);
+    setShowVideo(introductionData.is_urls_display);
+    setShowImage(introductionData.is_images_display);
+    setShowPdf(introductionData.is_pdf_display);
     if (introductionData.urls && JSON.parse(introductionData.urls)) {
-      const urlData = JSON.parse(introductionData.urls);
-      setVideoUrl(urlData[0] || videoUrl);
+      // const urlData = JSON.parse(introductionData.urls);
+      // setVideoUrl(urlData[0] || videoUrl);
     }
     if (introductionData.images && JSON.parse(introductionData.images)) {
       const imgData = JSON.parse(introductionData.images);
@@ -52,12 +96,12 @@ function Introductions({ introductionData }) {
       );
     }
   }, [introductionData]);
-
+  console.log(videoUrl, "videourl");
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setImage(file); // Directly store the selected file
-      setImagePreview(URL.createObjectURL(file)); // Set preview
+      setImage(file);
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
@@ -74,12 +118,24 @@ function Introductions({ introductionData }) {
     formData.append("title", heading);
     formData.append("paragraph1", paragraph1Content);
     formData.append("paragraph2", paragraph1AContent);
+    formData.append("paragraph3", paragraph1BContent);
+    formData.append("paragraph4", pdfheading);
     formData.append("urls", videoUrl);
 
+    formData.append("is_title_display", showHeading);
+    formData.append("is_paragraph1_display", showParagraph1);
+    formData.append("is_paragraph2_display", showParagraph1A);
+    formData.append("is_paragraph3_display", showParagraph1B);
+    formData.append("is_urls_display", showVideo);
+    formData.append("is_images_display", showImage);
+    formData.append("is_pdf_display", showPdf);
+    formData.append("is_paragraph4_display", showpdfheading);
     if (image) {
       formData.append("images", image, "image.jpg");
     }
-
+    if (pdf) {
+      formData.append("pdf", pdf, "document.pdf");
+    }
     try {
       const response = await axios.patch(
         "https://api.novajobs.us/api/uaadmin/update-aboutus-content/1",
@@ -117,42 +173,283 @@ function Introductions({ introductionData }) {
         <div className="mx-3 mx-lg-5 mb-4 mb-lg-0">
           {isEditing ? (
             <div>
-              <label>
-                Heading(Title Mandatory):
-                <input
-                  type="text"
-                  value={heading}
-                  onChange={(e) => setHeading(e.target.value)}
-                  className="form-control"
+              <div className="d-flex justify-content-start gap-4">
+                {showHeading && (
+                  <label>
+                    Heading (Title Mandatory):
+                    <input
+                      type="text"
+                      value={heading}
+                      onChange={(e) => setHeading(e.target.value)}
+                      className="form-control"
+                    />
+                  </label>
+                )}
+
+                <div className="d-flex justify-content-start gap-2">
+                  <label className="form-check form-switch mt-4 mb-2">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="toggleHeading"
+                      checked={showHeading}
+                      onChange={() => setShowHeading(!showHeading)}
+                    />
+                    <span className="form-check-label">
+                      {showHeading ? "Hide" : "Show"} Heading
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div>
+                <div className="d-flex justify-content-start gap-4">
+                  {/* <button
+                    className="btn btn-danger mt-4 mb-2 px-4 btn btn-primary"
+                    onClick={() => handleDelete("paragraph1")}
+                  >
+                    Delete Paragraph 1
+                  </button> */}
+
+                  <div className="d-flex justify-content-start gap-2">
+                    <label className="form-check form-switch mt-4 mb-2">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="toggleHeading"
+                        checked={showParagraph1}
+                        onChange={() => setShowParagraph1(!showParagraph1)}
+                      />
+                      <span className="form-check-label">
+                        {showParagraph1 ? "Hide" : "Show"} Paragraph 1
+                      </span>
+                    </label>
+                  </div>
+                </div>
+                {showParagraph1 && (
+                  <ReactQuill
+                    value={paragraph1Content}
+                    onChange={setParagraph1Content}
+                  />
+                )}
+              </div>
+              <div>
+                <div className="d-flex justify-content-start gap-4">
+                  {/* <button
+                    className="btn btn-danger mt-2 mb-2 btn-primary"
+                    onClick={() => handleDelete("paragraph3")}
+                  >
+                    Delete Paragraph 3
+                  </button> */}
+
+                  <div className="d-flex justify-content-start gap-2">
+                    <label className="form-check form-switch mt-4 mb-2">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="toggleHeading"
+                        checked={showParagraph1B}
+                        onChange={() => setShowParagraph1B(!showParagraph1B)}
+                      />
+                      <span className="form-check-label">
+                        {showParagraph1B ? "Hide" : "Show"} paragraph3
+                      </span>
+                    </label>
+                  </div>
+                </div>
+                {showParagraph1B && (
+                  <ReactQuill
+                    value={paragraph1BContent}
+                    onChange={setParagraph1BContent}
+                  />
+                )}
+              </div>
+
+              <div className="d-flex justify-content-start gap-4">
+                {showVideo && (
+                  <label className="mt-3">
+                    Video URL:
+                    <input
+                      type="text"
+                      value={videoUrl}
+                      onChange={(e) => setVideoUrl(e.target.value)}
+                      className="form-control"
+                    />
+                  </label>
+                )}
+                {/* <button
+                  className="btn btn-danger mt-4 mb-2 px-4 btn btn-primary"
+                  onClick={() => handleDelete("videoUrl")}
+                >
+                  Delete Video URL
+                </button> */}
+
+                <div className="d-flex justify-content-start gap-2">
+                  <label className="form-check form-switch mt-4 mb-2">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="toggleHeading"
+                      checked={showVideo}
+                      onChange={() => setShowVideo(!showVideo)}
+                    />
+                    <span className="form-check-label">
+                      {showParagraph1 ? "Hide" : "Show"} Video
+                    </span>
+                  </label>
+                </div>
+              </div>
+              {showVideo && (
+                <ReactPlayer
+                  url={videoUrl}
+                  width="700px"
+                  height="500px"
+                  controls={true}
+                  style={{
+                    margin: "50px",
+                    border: "2px solid #ccc",
+                    borderRadius: "10px",
+                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                  }}
                 />
-              </label>
-              <ReactQuill
-                value={paragraph1Content}
-                onChange={setParagraph1Content}
-              />
-              <label className="mt-3">
-                Video URL:
-                <input
-                  type="text"
-                  value={videoUrl}
-                  onChange={(e) => setVideoUrl(e.target.value)}
-                  className="form-control"
+              )}
+              <div className="d-flex justify-content-start gap-4">
+                {showpdfheading && (
+                  <label>
+                    Heading (Title Mandatory):
+                    <input
+                      type="text"
+                      value={pdfheading}
+                      onChange={(e) => setPdfHeading(e.target.value)}
+                      className="form-control"
+                    />
+                  </label>
+                )}
+
+                <div className="d-flex justify-content-start gap-2">
+                  <label className="form-check form-switch mt-4 mb-2">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="toggleHeading"
+                      checked={showpdfheading}
+                      onChange={() => setShowPdfHeading(!showpdfheading)}
+                    />
+                    <span className="form-check-label">
+                      {showpdfheading ? "Hide" : "Show"} pdf Heading
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div className="d-flex justify-content-start gap-4">
+                <label className="mt-3">
+                  Upload PDF:
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    onChange={handlePdfChange}
+                    className="form-control mt-2"
+                  />
+                </label>
+
+                <div className="d-flex justify-content-start gap-2">
+                  <label className="form-check form-switch mt-4 mb-2">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      checked={showPdf}
+                      onChange={() => setShowPdf(!showPdf)}
+                    />
+                    <span className="form-check-label">
+                      {showPdf ? "Hide" : "Show"} PDF
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              {showPdf && pdfPreview && (
+                <div className="mt-3">
+                  <p>
+                    <strong>PDF Preview:</strong>
+                  </p>
+                  <iframe
+                    src={pdfPreview}
+                    width="800px"
+                    height="500px"
+                    style={{
+                      border: "2px solid #ccc",
+                      borderRadius: "10px",
+                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                    }}
+                  ></iframe>
+                </div>
+              )}
+
+              <div className="d-flex justify-content-start gap-4">
+                {/* <button
+                  className="btn btn-danger mt-2 mb-2 btn-primary"
+                  onClick={() => handleDelete("paragraph2")}
+                >
+                  Delete Paragraph 2
+                </button> */}
+
+                <div className="d-flex justify-content-start gap-2">
+                  <label className="form-check form-switch mt-4 mb-2">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="toggleHeading"
+                      checked={showParagraph1A}
+                      onChange={() => setShowParagraph1A(!showParagraph1A)}
+                    />
+                    <span className="form-check-label">
+                      {showParagraph1A ? "Hide" : "Show"} paragraph2
+                    </span>
+                  </label>
+                </div>
+              </div>
+              {showParagraph1A && (
+                <ReactQuill
+                  value={paragraph1AContent}
+                  onChange={setParagraph1AContent}
                 />
-              </label>
-              <ReactQuill
-                value={paragraph1AContent}
-                onChange={setParagraph1AContent}
-              />
-              <label className="mt-3">
-                Change Image (400px x 800px):
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="form-control mt-2"
-                />
-              </label>
-              {imagePreview && (
+              )}
+
+              <div className="d-flex justify-content-start gap-4 ">
+                {showParagraph1A && (
+                  <label className="mt-3">
+                    Change Image (400px x 800px):
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className="form-control mt-2"
+                    />
+                  </label>
+                )}
+                {/* <button
+                  className="btn btn-danger mt-4 mb-2 px-4 btn-primary"
+                  onClick={() => handleDelete("image")}
+                >
+                  Delete Image
+                </button> */}
+
+                <div className="d-flex justify-content-start gap-2">
+                  <label className="form-check form-switch mt-4 mb-2">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="toggleHeading"
+                      checked={showImage}
+                      onChange={() => setShowImage(!showImage)}
+                    />
+                    <span className="form-check-label">
+                      {showImage ? "Hide" : "Show"} Image
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              {showImage && imagePreview && (
                 <div className="mt-3">
                   <p>
                     <strong>Preview:</strong>
@@ -170,6 +467,7 @@ function Introductions({ introductionData }) {
                   />
                 </div>
               )}
+
               <button
                 className="btn btn-primary mt-3"
                 onClick={handleSave}
@@ -186,42 +484,71 @@ function Introductions({ introductionData }) {
             </div>
           ) : (
             <div>
-              <h1 className="mb-4">{heading}</h1>
-              <div
-                dangerouslySetInnerHTML={{ __html: paragraph1Content }}
-              ></div>
-              <p className="mt-5 text-center">
-                <strong>Check our quick Product Video below:</strong>
-              </p>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                <ReactPlayer
-                  url={videoUrl}
-                  width="700px"
-                  height="500px"
-                  controls={true}
+              {showHeading && <h1 className="mb-4">{heading}</h1>}
+              {showParagraph1 && (
+                <div
+                  dangerouslySetInnerHTML={{ __html: paragraph1Content }}
+                ></div>
+              )}
+              {showParagraph1B && (
+                <p
+                  className="mt-5 text-center"
+                  dangerouslySetInnerHTML={{ __html: paragraph1BContent }}
+                ></p>
+              )}
+              {showVideo && (
+                <div
                   style={{
-                    margin: "50px",
-                    border: "2px solid #ccc",
-                    borderRadius: "10px",
-                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                    display: "flex",
+                    justifyContent: "center",
                   }}
-                />
+                >
+                  <ReactPlayer
+                    url={videoUrl}
+                    width="700px"
+                    height="500px"
+                    controls={true}
+                    style={{
+                      margin: "50px",
+                      border: "2px solid #ccc",
+                      borderRadius: "10px",
+                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                    }}
+                  />
+                </div>
+              )}
+              <div className="mt-4 ">
+                {showpdfheading && <h3 className="mb-4">{pdfheading}</h3>}
               </div>
-              <div
-                dangerouslySetInnerHTML={{ __html: paragraph1AContent }}
-              ></div>
-              <div className="text-center">
-                <img
-                  src={imagePreview}
-                  alt="Uploaded Image"
-                  style={{ height: "400px", width: "800px" }}
-                />
-              </div>
+              {showPdf && pdfPreview && (
+                <div className="mt-4 mb-4 text-center">
+                  <iframe
+                    src={pdfPreview}
+                    width="800px"
+                    height="500px"
+                    style={{
+                      border: "2px solid #ccc",
+                      borderRadius: "10px",
+                      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                    }}
+                  ></iframe>
+                </div>
+              )}
+
+              {showParagraph1A && (
+                <div
+                  dangerouslySetInnerHTML={{ __html: paragraph1AContent }}
+                ></div>
+              )}
+              {showImage && (
+                <div className="text-center">
+                  <img
+                    src={imagePreview}
+                    alt="Uploaded Image"
+                    style={{ height: "400px", width: "800px" }}
+                  />
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -236,6 +563,18 @@ Introductions.propTypes = {
     paragraph2: PropTypes.string,
     urls: PropTypes.string,
     images: PropTypes.string,
+    pdf: PropTypes.string,
+    paragraph3: PropTypes.string,
+    paragraph4: PropTypes.string,
+    is_title_display: PropTypes.bool,
+    is_paragraph1_display: PropTypes.bool,
+    is_paragraph3_display: PropTypes.bool,
+    is_paragraph2_display: PropTypes.bool,
+    is_paragraph4_display: PropTypes.bool,
+    is_urls_display: PropTypes.bool,
+    is_images_display: PropTypes.bool,
+    is_pdf_display: PropTypes.bool,
   }),
 };
+
 export default Introductions;

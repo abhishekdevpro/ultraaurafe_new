@@ -1,4 +1,3 @@
-
 // import React, { useEffect } from 'react';
 // import styled from 'styled-components';
 // import PageHeader from '../header';
@@ -115,9 +114,9 @@
 //           </h2>
 //           </div>
 //           <div style={{ display:'flex',justifyContent:'center'}}>
-//           {/* <video ref={videoRef} 
-//           src="https://api.novajobs.us/etc/nova_us_jobs/about_ultra_aura.mp4" 
-//           controls 
+//           {/* <video ref={videoRef}
+//           src="https://api.novajobs.us/etc/nova_us_jobs/about_ultra_aura.mp4"
+//           controls
 //           onClick={handlePlay}
 //           style={{
 //             margin: '50px',
@@ -126,16 +125,16 @@
 //             border: '2px solid #ccc',
 //             borderRadius: '10px',
 //             boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-           
+
 //         }}
 //           ></video> */}
 //            <div style={{ display: 'flex', justifyContent: 'center' }}>
-      
+
 //       </div>
 //       <div style={{ display: 'flex', justifyContent: 'center' }}>
 //         {/* Using ReactPlayer for a better video player experience */}
 //         <ReactPlayer
-//           url="https://youtu.be/FObrI1s9qIk?si=RKSVtL4H071Qu8vj" 
+//           url="https://youtu.be/FObrI1s9qIk?si=RKSVtL4H071Qu8vj"
 // // Replace with your YouTube video URL
 //           width="700px"
 //           height="500px"
@@ -148,7 +147,7 @@
 //           }}
 //         />
 //       </div>
-            
+
 //           {/* <button >Play Unmuted</button> */}
 //           {/* <video ref={videoRef} src={IntroVideo} controls></video>
 //           <button onClick={handlePlay}>Play Unmuted</button> */}
@@ -195,7 +194,7 @@
 //                 <li>IT</li>
 //                 <li>Non- IT
 //                 </li>
-                
+
 //                 <li>Construction</li>
 //                 <li>Home care, and more.</li>
 //               </ul>
@@ -245,7 +244,7 @@
 //           <p>
 //            <b>
 //             For more information about our courses, partnerships, or any inquiries, please contact us at:
-//             </b> 
+//             </b>
 //           </p>
 //           <p>
 //             <b>📧 <a href="mailto:info@ultraaura.education">info@ultraaura.education</a></b>
@@ -262,21 +261,17 @@
 
 // export default AboutUs;
 
-
 import React, { useEffect } from "react";
 import axios from "axios";
 
-
-
-import styled from 'styled-components';
-import PageHeader from '../header';
-import Footer from '../../footer';
+import styled from "styled-components";
+import PageHeader from "../header";
+import Footer from "../../footer";
 import Introductions from "../../Admin/CMS/About/Introductions";
 import ForJobseeker from "../../Admin/CMS/About/ForJobseeker";
 import ForEmployer from "../../Admin/CMS/About/ForEmployer";
 import Novajobsus from "../../Admin/CMS/About/Novajobsus";
 import MoreServices from "../../Admin/CMS/About/MoreServices";
-
 
 const Banner = styled.div`
   background-color: #f4f4f4;
@@ -289,7 +284,6 @@ const Banner = styled.div`
     color: #333;
   }
 `;
-
 
 function AboutUs() {
   const [sections, setSections] = React.useState([]);
@@ -320,52 +314,42 @@ function AboutUs() {
     return sections.find((section) => section.id === id);
   };
   return (
-   
-     <>
-     <PageHeader />
-     <Banner>
-       <div className="page-banner">
-         <div className="container">
-           <div className="row">
-             <div className="col-md-12 col-12">
-               <h1 className="mb-0 text-white">About Us</h1>
-             </div>
-           </div>
-         </div>
-       </div>
-     </Banner>
-     <div className="main-wrapper">
-       
-       
+    <>
+      <PageHeader />
+      <Banner>
+        <div className="page-banner">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12 col-12">
+                <h1 className="mb-0 text-white">About Us</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Banner>
+      <div className="main-wrapper">
         {/* Page Content */}
         <div className="page-content">
           <div className="container">
             <div className="row">
-              
-             
-             
-                <div className=" justify-content-center">
-                  {sections.length ? (
-                    <>
-                      <Introductions introductionData={getSectionData(1)} />
-                      <ForJobseeker forJobseekerData={getSectionData(2)} />
-                      <ForEmployer forEmployerData={getSectionData(3)} />
-                      <Novajobsus novaJobsusData={getSectionData(4)} />
-                      <MoreServices moreServicesData={getSectionData(5)} />
-                    </>
-                  ) : null}
-                </div>
-             
+              <div className=" justify-content-center">
+                {sections.length ? (
+                  <>
+                    <Introductions introductionData={getSectionData(1)} />
+                    <ForJobseeker forJobseekerData={getSectionData(2)} />
+                    <ForEmployer forEmployerData={getSectionData(3)} />
+                    <Novajobsus novaJobsusData={getSectionData(4)} />
+                    <MoreServices moreServicesData={getSectionData(5)} />
+                  </>
+                ) : null}
+              </div>
             </div>
           </div>
         </div>
-
-      
       </div>
-     <Footer />
-   </>
+      <Footer />
+    </>
   );
 }
 
 export default AboutUs;
-

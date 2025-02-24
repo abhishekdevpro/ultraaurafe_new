@@ -1,10 +1,7 @@
-
-import scope from '../../assets/img/scope.jpg'
-import AGI from '../../assets/img/Agi.jpg'
-import React from 'react';
-import styled from 'styled-components';
-
-
+import scope from "../../assets/img/scope.jpg";
+import westTown from "../../assets/img/west-town.jpg";
+import React from "react";
+import styled from "styled-components";
 
 const PartnersContainer = styled.div`
   max-width: 1200px;
@@ -17,7 +14,7 @@ const Title = styled.h2`
   font-weight: bold;
   text-align: center;
   margin-bottom: 2rem;
-  color: #4F46E5;
+  color: #4f46e5;
 `;
 
 const PartnersRow = styled.div`
@@ -55,7 +52,7 @@ const CardContent = styled.div`
 const IconContainer = styled.div`
   width: 4rem;
   height: 4rem;
-  background-color: #EEF2FF;
+  background-color: #eef2ff;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -75,23 +72,23 @@ const PartnerName = styled.h3`
   font-weight: 600;
   text-align: center;
   margin-bottom: 0.5rem;
-  color: #1F2937;
+  color: #1f2937;
 `;
 
 const PartnerDescription = styled.p`
   text-align: center;
-  color: #4B5563;
+  color: #4b5563;
 `;
 
 const CardFooter = styled.div`
-  background-color: #EEF2FF;
+  background-color: #eef2ff;
   padding: 1rem 1.5rem;
   margin-top: auto; /* Ensures footer stays at the bottom */
 `;
 
 const LearnMoreButton = styled.button`
   width: 100%;
-  background-color: #4F46E5;
+  background-color: #4f46e5;
   color: white;
   padding: 0.5rem 1rem;
   border: none;
@@ -100,32 +97,33 @@ const LearnMoreButton = styled.button`
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #4338CA;
+    background-color: #4338ca;
   }
 `;
 
 const partnerData = [
   {
-    name: 'SCOPE',
+    name: "SCOPE",
     icon: scope, // Replace with actual icon import or URL
-    description: 'Empowering Citizens of South Florida... Innovative education and employment program for a stronger Hallandale Beach community.',
+    description:
+      "Empowering Citizens of South Florida... Innovative education and employment program for a stronger Hallandale Beach community.",
     // url:"https://www.google.com/"
-
   },
   {
-    name: 'AGI Tax Experts',
-    icon: AGI, // Replace with actual icon import or URL
-    description: 'Launch your career with AGI Tax Experts! Comprehensive training and placement opportunities available through our portal.',
-     url:"https://ultraaura.education/course-info/226"
+    name: "West Town Payment’s information",
+    icon: westTown, // Replace with actual icon import or URL
+    description:
+      "Launch your career with West Town Payment’s information! Comprehensive training and placement opportunities available through our portal.",
+    url: "https://ultraaura.education/course-info/242",
   },
   {
-    name: 'NOVA Home Care',
+    name: "NOVA Home Care",
     icon: "https://idfy-eia3.vercel.app/assets/logo5-DddCxhI1.jpg", // Replace with actual icon import or URL
-    description: 'Elevate your career with top-notch training and placement. Transform lives and secure your future with us.',
-     url:"https://novahome.care/"
-  }
+    description:
+      "Elevate your career with top-notch training and placement. Transform lives and secure your future with us.",
+    url: "https://novahome.care/",
+  },
 ];
-
 
 // const PartnerList = () => {
 //   return (
@@ -142,7 +140,7 @@ const partnerData = [
 //               <PartnerDescription>{partner.description}</PartnerDescription>
 //             </CardContent>
 //             <CardFooter>
-//               <a 
+//               <a
 //               href={partner.url}
 //               target="_blank"
 //               // rel="noopener noreferrer"
@@ -160,7 +158,6 @@ const partnerData = [
 //   );
 // };
 
-
 const PartnerList = () => {
   return (
     <PartnersContainer>
@@ -176,17 +173,17 @@ const PartnerList = () => {
               <PartnerDescription>{partner.description}</PartnerDescription>
             </CardContent>
             <CardFooter>
-            <LearnMoreButton>
-            <a
-      href={partner.url||""}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="btn-link" style={{color:'white'}}
-      >
-      Learn More
-    </a>
-      </LearnMoreButton> 
-            
+              <LearnMoreButton>
+                <a
+                  href={partner.url || ""}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-link"
+                  style={{ color: "white" }}
+                >
+                  Learn More
+                </a>
+              </LearnMoreButton>
             </CardFooter>
           </PartnerCard>
         ))}
@@ -194,7 +191,5 @@ const PartnerList = () => {
     </PartnersContainer>
   );
 };
-
-
 
 export default PartnerList;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { Icon1, Icon2 } from "../../../imagepath";
+import { Icon01, Icon02 } from "../../../imagepath";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -215,28 +215,28 @@ const CoursePrice = styled.div`
   }
 `;
 
-const CategoryName = styled.p`
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 0.5rem;
-`;
+// const CategoryName = styled.p`
+//   font-size: 0.9rem;
+//   color: #666;
+//   margin-bottom: 0.5rem;
+// `;
 
-const FavoriteButton = styled.button`
-  background: none;
-  border: none;
-  color: #666;
-  cursor: pointer;
-  transition: color 0.3s;
-  margin-left: auto;
+// const FavoriteButton = styled.button`
+//   background: none;
+//   border: none;
+//   color: #666;
+//   cursor: pointer;
+//   transition: color 0.3s;
+//   margin-left: auto;
 
-  &:hover {
-    color: #ff4081;
-  }
+//   &:hover {
+//     color: #ff4081;
+//   }
 
-  &.active {
-    color: #ff4081;
-  }
-`;
+//   &.active {
+//     color: #ff4081;
+//   }
+// `;
 
 const PaginationContainer = styled.div`
   display: flex;
@@ -271,7 +271,7 @@ const InnerPage = ({ courses = [] }) => {
   const coursesPerPage = 9;
 
   const navigate = useNavigate();
-
+  const token = localStorage.getItem("token");
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
   const currentCourses = courses.slice(indexOfFirstCourse, indexOfLastCourse);
@@ -316,7 +316,7 @@ const InnerPage = ({ courses = [] }) => {
       <Container>
         <CourseGrid>
           {currentCourses.length > 0 ? (
-            currentCourses.map((course, index) => (
+            currentCourses.map((course) => (
               <CourseCard key={course.id}>
                 <Link to={`/course-info/${course.id}`}>
                   <CourseImage
@@ -334,9 +334,17 @@ const InnerPage = ({ courses = [] }) => {
                     <Link
                       to={`/instructor/instructor-profile/${course.instructor_id}`}
                     >
-                      <InstructorAvatar
+                      {/* <InstructorAvatar
                         src={`https://api.novajobs.us${course.trainer_photo}`}
                         alt={course.trainer_first_name}
+                      /> */}
+                      <InstructorAvatar
+                        src={
+                          course.trainer_photo
+                            ? `https://api.novajobs.us${course.trainer_photo}`
+                            : "https://cdn.pixabay.com/photo/2015/03/04/22/35/avatar-659652_640.png"
+                        }
+                        alt="Instructor"
                       />
                     </Link>
                     <div>
@@ -344,31 +352,45 @@ const InnerPage = ({ courses = [] }) => {
                         to={`/instructor/instructor-profile/${course.trainer_id}`}
                       >
                         <InstructorName>
-                          {course.trainer_first_name} {course.trainer_last_name}
+                          {course.trainer_display_name ||
+                            `${course.trainer_first_name} ${course.trainer_last_name}`}
                         </InstructorName>
                       </Link>
-                      <p className="text-muted">Instructor</p>
+                      <p className="text-muted">
+                        {course.trainer_job_title || "Instructor"}
+                      </p>
                     </div>
-                    <FavoriteButton
+                    {/* <FavoriteButton
                       onClick={() => toggleClass(index, course.id)}
                       className={isClassAdded[index] ? "active" : ""}
                     >
                       <i className="fa-regular fa-heart" />
-                    </FavoriteButton>
+                    </FavoriteButton> */}
+                    <div className="course-share d-flex align-items-center justify-content-center">
+                      <Link to="#" onClick={() => toggleClass(course.id)}>
+                        <i
+                          className={`fa-regular fa-heart ${
+                            isClassAdded[course.id] && token
+                              ? "color-active"
+                              : ""
+                          }`}
+                        />
+                      </Link>
+                    </div>
                   </InstructorInfo>
 
                   <Link to={`/course-info/${course.id}`}>
                     <CourseTitle>{course.course_title}</CourseTitle>
                   </Link>
-                  <CategoryName>{course.course_category_name}</CategoryName>
+                  {/* <CategoryName>{course.course_category_name}</CategoryName> */}
                   <CourseStats>
                     <StatItem>
-                      <img src={Icon1} alt="Duration" />
-                      <span>{course.time_spent_on_course}</span>
+                      <img src={Icon01} alt="Students" />
+                      <span>{course.students_counts} students</span>
                     </StatItem>
                     <StatItem>
-                      <img src={Icon2} alt="Level" />
-                      <span>{course.course_level_name}</span>
+                      <img src={Icon02} alt="Duration" />
+                      <span>{course.time_spent_on_course}</span>
                     </StatItem>
                   </CourseStats>
                   {/* <CoursePrice>
