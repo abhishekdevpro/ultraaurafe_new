@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Quill editor styles
-
 import logo2 from "../../../../assests/logo2.jpg";
 import axios from "axios";
 import PropTypes from "prop-types";
@@ -23,6 +22,10 @@ function ForJobseeker({ forJobseekerData }) {
   );
   const [image, setImage] = useState(null); // Binary image blob
   const [imagePreview, setImagePreview] = useState(logo2); // Preview for the image
+  const [showHeading, setShowHeading] = useState(true);
+  const [showParagraph1, setShowParagraph1] = useState(true);
+  const [showParagraph2, setShowParagraph2] = useState(true);
+  const [showImage, setShowImage] = useState(true);
 
   const authToken = localStorage.getItem("adminToken"); // Retrieve auth token
 
@@ -34,7 +37,10 @@ function ForJobseeker({ forJobseekerData }) {
     setHeading(forJobseekerData.title || heading);
     setParagraph1Content(forJobseekerData.paragraph1 || paragraph1Content);
     setParagraph1AContent(forJobseekerData.paragraph2 || paragraph1AContent);
-
+    setShowHeading(forJobseekerData.is_title_display);
+    setShowParagraph1(forJobseekerData.is_paragraph1_display);
+    setShowParagraph2(forJobseekerData.is_paragraph2_display);
+    setShowImage(forJobseekerData.is_images_display);
     if (forJobseekerData.images && JSON.parse(forJobseekerData.images)) {
       const imgData = JSON.parse(forJobseekerData.images);
       setImagePreview(
@@ -59,6 +65,10 @@ function ForJobseeker({ forJobseekerData }) {
     formData.append("title", heading);
     formData.append("paragraph1", paragraph1Content);
     formData.append("paragraph2", paragraph1AContent);
+    formData.append("is_title_display", showHeading);
+    formData.append("is_paragraph1_display", showParagraph1);
+    formData.append("is_paragraph2_display", showParagraph2);
+    formData.append("is_images_display", showImage);
 
     if (image) {
       formData.append("images", image, "image.jpg");
@@ -84,6 +94,26 @@ function ForJobseeker({ forJobseekerData }) {
     }
   };
 
+  // const handleDelete = (field) => {
+  //   switch (field) {
+  //     case "heading":
+  //       setHeading("");
+  //       break;
+  //     case "paragraph1":
+  //       setParagraph1Content("");
+  //       break;
+  //     case "paragraph2":
+  //       setParagraph1AContent("");
+  //       break;
+  //     case "image":
+  //       setImage(null);
+  //       setImagePreview(logo2);
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // };
+
   return (
     <>
       <div className="mt-5">
@@ -98,36 +128,102 @@ function ForJobseeker({ forJobseekerData }) {
         <div className="mx-3 mx-lg-5 mb-4 mb-lg-0">
           {isEditing ? (
             <div>
-              <label>
-                <h5> Heading(Title Mandatory):</h5>
-                <input
-                  type="text"
-                  value={heading}
-                  onChange={(e) => setHeading(e.target.value)}
-                  className="form-control"
-                  style={{ marginBottom: "10px" }}
-                />
-              </label>
+              <div className="d-flex justify-content-start gap-2">
+                {showHeading && (
+                  <label>
+                    <h5> Heading(Title Mandatory):</h5>
+                    <input
+                      type="text"
+                      value={heading}
+                      onChange={(e) => setHeading(e.target.value)}
+                      className="form-control"
+                      style={{ marginBottom: "10px" }}
+                    />
+                  </label>
+                )}
+
+                <div className="d-flex justify-content-start gap-2">
+                  <label className="form-check form-switch">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      checked={showHeading}
+                      onChange={() => setShowHeading(!showHeading)}
+                    />
+                    <span className="form-check-label">
+                      {showHeading ? "Hide Heading" : "Show Heading"}
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div className="d-flex justify-content-start gap-4">
+                <div className="d-flex justify-content-start gap-2">
+                  <label className="form-check form-switch">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      checked={showParagraph1}
+                      onChange={() => setShowParagraph1(!showParagraph1)}
+                    />
+                    <span className="form-check-label">
+                      {showParagraph1 ? "Hide Paragraph 1" : "Show Paragraph 1"}
+                    </span>
+                  </label>
+                </div>
+              </div>
               <h5>Paragraph 1:</h5>
-              <ReactQuill
-                value={paragraph1Content}
-                onChange={setParagraph1Content}
-              />
-              <h5 className="mt-3">Paragraph 2:</h5>
-              <ReactQuill
-                value={paragraph1AContent}
-                onChange={setParagraph1AContent}
-              />
-              <label className="mt-3">
-                <h5>Change Image (400px x 800px):</h5>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="form-control"
+              {showParagraph1 && (
+                <ReactQuill
+                  value={paragraph1Content}
+                  onChange={setParagraph1Content}
                 />
-              </label>
-              {imagePreview && (
+              )}
+              <div className="d-flex justify-content-start gap-4">
+                <label className="form-check form-switch">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    checked={showParagraph2}
+                    onChange={() => setShowParagraph2(!showParagraph2)}
+                  />
+                  <span className="form-check-label">
+                    {showParagraph2 ? "Hide Paragraph 2" : "Show Paragraph 2"}
+                  </span>
+                </label>
+              </div>
+              <h5>Paragraph 2:</h5>
+              {showParagraph2 && (
+                <ReactQuill
+                  value={paragraph1AContent}
+                  onChange={setParagraph1AContent}
+                />
+              )}
+              <div className="d-flex justify-content-start gap-2">
+                <label className="mt-3">
+                  <h5>Change Image (400px x 800px):</h5>
+                  {showImage && (
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className="form-control"
+                    />
+                  )}
+                </label>
+
+                <label className="form-check form-switch">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    checked={showImage}
+                    onChange={() => setShowImage(!showImage)}
+                  />
+                  <span className="form-check-label">
+                    {showImage ? "Hide Image" : "Show Image"}
+                  </span>
+                </label>
+              </div>
+              {showImage && imagePreview && (
                 <div className="mt-3">
                   <p>
                     <strong>Preview:</strong>
@@ -162,30 +258,38 @@ function ForJobseeker({ forJobseekerData }) {
             </div>
           ) : (
             <div>
-              <h1
-                style={{
-                  fontSize: "clamp(14px, 5vw, 20px)",
-                  fontWeight: "500",
-                  textDecoration: "underline",
-                }}
-              >
-                {heading}
-              </h1>
-              <div
-                dangerouslySetInnerHTML={{ __html: paragraph1Content }}
-                style={{ fontSize: "clamp(14px, 3vw, 15px)" }}
-              ></div>
-              <div
-                dangerouslySetInnerHTML={{ __html: paragraph1AContent }}
-                style={{ fontSize: "clamp(14px, 3vw, 15px)" }}
-              ></div>
-              <div className="mx-3 mx-lg-5 d-flex justify-content-center">
-                <img
-                  src={imagePreview}
-                  alt="Uploaded"
-                  style={{ height: "400px", width: "800px" }}
-                />
-              </div>
+              {showHeading && (
+                <h1
+                  style={{
+                    fontSize: "clamp(14px, 5vw, 20px)",
+                    fontWeight: "500",
+                    textDecoration: "underline",
+                  }}
+                >
+                  {heading}
+                </h1>
+              )}
+              {showParagraph1 && (
+                <div
+                  dangerouslySetInnerHTML={{ __html: paragraph1Content }}
+                  style={{ fontSize: "clamp(14px, 3vw, 15px)" }}
+                ></div>
+              )}
+              {showParagraph2 && (
+                <div
+                  dangerouslySetInnerHTML={{ __html: paragraph1AContent }}
+                  style={{ fontSize: "clamp(14px, 3vw, 15px)" }}
+                ></div>
+              )}
+              {showImage && (
+                <div className="mx-3 mx-lg-5 d-flex justify-content-center">
+                  <img
+                    src={imagePreview}
+                    alt="Uploaded"
+                    style={{ height: "400px", width: "800px" }}
+                  />
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -198,8 +302,12 @@ ForJobseeker.propTypes = {
     title: PropTypes.string,
     paragraph1: PropTypes.string,
     paragraph2: PropTypes.string,
-    urls: PropTypes.string,
-    images: PropTypes.string,
+    is_title_display: PropTypes.bool, // Add missing prop validation
+    is_paragraph1_display: PropTypes.bool, // Add missing prop validation
+    is_paragraph2_display: PropTypes.bool, // Add missing prop validation
+    is_images_display: PropTypes.bool, // Add missing prop validation
+    images: PropTypes.string, // Ensure this matches the expected data type
   }),
 };
+
 export default ForJobseeker;

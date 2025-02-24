@@ -11,20 +11,29 @@ function MoreServices({ moreServicesData }) {
   const [heading, setHeading] = useState(
     "More Services from Hyper V Solutions"
   );
-  const [paragraph1Content, setParagraph1Content] = useState(
-    `Discover the wide range of innovative services offered by Hyper V Solutions. Whether you're navigating a job search or looking to elevate your career, our EdTech platform, UltraAura.education, is here to support you.`
-  );
-  const [paragraph2Content, setParagraph2Content] = useState(
-    `We offer expertly curated content, live online classes led by industry professionals, and robust placement assistance through Novajobs.us. Take the next step towards your future with our cutting-edge educational solutions.`
-  );
-  const [paragraph3Content, setParagraph3Content] = useState(
-    `For more information, visit our parent website: https://hypervsolutions.net/`
-  );
+  const [paragraph1, setParagraph1] = useState([
+    `Discover the wide range of innovative services offered by Hyper V Solutions. Whether you're navigating a job search or looking to elevate your career, our EdTech platform, UltraAura.education, is here to support you.`,
+  ]);
+  const [paragraph2, setParagraph2] = useState([
+    `We offer expertly curated content, live online classes led by industry professionals, and robust placement assistance through Novajobs.us. Take the next step towards your future with our cutting-edge educational solutions.`,
+  ]);
+  const [paragraph3, setParagraph3] = useState([
+    `For more information, visit our parent website: https://hypervsolutions.net/`,
+  ]);
   const [subHeading, setSubHeading] = useState(
     `Experience the difference of innovation and inclusivity at Novajobs.us. Explore our website today and unlock your path to success.`
   );
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(logo5);
+
+  // Show/Hide toggles
+  const [isHeadingVisible, setIsHeadingVisible] = useState(true);
+
+  const [isImageVisible, setIsImageVisible] = useState(true);
+  const [isSubHeadingVisible, setIsSubHeadingVisible] = useState(true);
+  const [showParagraph1, setShowParagraph1] = useState(true);
+  const [showParagraph2, setShowParagraph2] = useState(true);
+  const [showParagraph3, setShowParagraph3] = useState(true);
 
   const authToken = localStorage.getItem("adminToken"); // Retrieve auth token
 
@@ -35,10 +44,17 @@ function MoreServices({ moreServicesData }) {
     }
 
     setHeading(moreServicesData.title || heading);
-    setParagraph1Content(moreServicesData.paragraph1 || paragraph1Content);
-    setParagraph2Content(moreServicesData.paragraph2 || paragraph2Content);
-    setParagraph3Content(moreServicesData.paragraph3 || paragraph2Content);
+    setParagraph1(moreServicesData.paragraph1 || paragraph1);
+    setParagraph2(moreServicesData.paragraph2 || paragraph2);
+    setParagraph3(moreServicesData.paragraph3 || paragraph3);
     setSubHeading(moreServicesData.paragraph4 || subHeading);
+    setIsHeadingVisible(moreServicesData.is_title_display);
+    setShowParagraph1(moreServicesData.is_paragraph1_display);
+    setShowParagraph2(moreServicesData.is_paragraph2_display);
+    setShowParagraph3(moreServicesData.is_paragraph3_display);
+
+    setIsSubHeadingVisible(moreServicesData.is_paragraph4_display);
+    setIsImageVisible(moreServicesData.is_images_display);
     if (moreServicesData.images && JSON.parse(moreServicesData.images)) {
       const imgData = JSON.parse(moreServicesData.images);
       setImagePreview(
@@ -55,6 +71,11 @@ function MoreServices({ moreServicesData }) {
     }
   };
 
+  // const handleDeleteImage = () => {
+  //   setImage(null);
+  //   setImagePreview(logo5);
+  // };
+
   const handleSave = async () => {
     setIsEditing(false);
     setLoading(true);
@@ -62,10 +83,16 @@ function MoreServices({ moreServicesData }) {
     // Prepare data to send to the API
     const formData = new FormData();
     formData.append("title", heading);
-    formData.append("paragraph1", paragraph1Content);
-    formData.append("paragraph2", paragraph2Content);
-    formData.append("paragraph3", paragraph3Content);
+    formData.append("paragraph1", paragraph1 || "");
+    formData.append("paragraph2", paragraph2 || "");
+    formData.append("paragraph3", paragraph3 || "");
     formData.append("paragraph4", subHeading);
+    formData.append("is_title_display", isHeadingVisible);
+    formData.append("is_images_display", isImageVisible);
+    formData.append("is_paragraph1_display", showParagraph1);
+    formData.append("is_paragraph2_display", showParagraph2);
+    formData.append("is_paragraph3_display", showParagraph3);
+    formData.append("is_paragraph4_display", isSubHeadingVisible);
     if (image) {
       formData.append("images", image, "image.jpg");
     }
@@ -90,10 +117,20 @@ function MoreServices({ moreServicesData }) {
     }
   };
 
+  // const handleDelete = (field) => {
+  //   switch (field) {
+  //     case "heading":
+  //       setHeading("");
+  //       break;
+
+  //     default:
+  //       break;
+  //   }
+  // };
+
   return (
     <>
       <div className="mt-5">
-        {/* Conditionally render "Edit" button based on authToken */}
         {authToken && (
           <button
             className="btn btn-warning mt-3 float-end"
@@ -104,37 +141,106 @@ function MoreServices({ moreServicesData }) {
         )}
         {isEditing ? (
           <div className="mx-3 mx-lg-5 mb-4 mb-lg-0">
-            <label>
-              Heading(Title Mandatory):
+            <div className="d-flex justify-content-start gap-4">
+              {isHeadingVisible && (
+                <label>
+                  <h5> Heading (Title Mandatory):</h5>
+                  <input
+                    type="text"
+                    value={heading}
+                    onChange={(e) => setHeading(e.target.value)}
+                    className="form-control"
+                    style={{ marginBottom: "10px" }}
+                  />
+                </label>
+              )}
+
+              <div className="d-flex justify-content-start gap-2 ms-2">
+                <label className="form-check form-switch mt-4 mb-2">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id="toggleHeading"
+                    checked={isHeadingVisible}
+                    onChange={() => setIsHeadingVisible(!isHeadingVisible)}
+                  />
+                  <span className="form-check-label">
+                    {isHeadingVisible ? "Hide Heading" : "Show Heading"}
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <div className="d-flex justify-content-start gap-2">
+              <label className="form-check form-switch">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  checked={showParagraph1}
+                  onChange={() => setShowParagraph1(!showParagraph1)}
+                />
+                <span className="form-check-label">
+                  {showParagraph1 ? "Hide Paragraph 1" : "Show Paragraph 1"}
+                </span>
+              </label>
+            </div>
+
+            {showParagraph1 && (
+              <ReactQuill value={paragraph1} onChange={setParagraph1} />
+            )}
+
+            <div className="d-flex justify-content-start gap-2">
+              <label className="form-check form-switch">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  checked={showParagraph2}
+                  onChange={() => setShowParagraph2(!showParagraph2)}
+                />
+                <span className="form-check-label">
+                  {showParagraph2 ? "Hide Paragraph 1" : "Show Paragraph 1"}
+                </span>
+              </label>
+            </div>
+
+            {showParagraph2 && (
+              <ReactQuill value={paragraph2} onChange={setParagraph2} />
+            )}
+            <div className="d-flex justify-content-start gap-2">
+              <label className="form-check form-switch">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  checked={showParagraph3}
+                  onChange={() => setShowParagraph3(!showParagraph3)}
+                />
+                <span className="form-check-label">
+                  {showParagraph3 ? "Hide Paragraph 1" : "Show Paragraph 1"}
+                </span>
+              </label>
+            </div>
+
+            {showParagraph3 && (
+              <ReactQuill value={paragraph3} onChange={setParagraph3} />
+            )}
+
+            <label className="form-check form-switch">
               <input
-                type="text"
-                value={heading}
-                onChange={(e) => setHeading(e.target.value)}
-                className="form-control"
+                className="form-check-input"
+                type="checkbox"
+                checked={isSubHeadingVisible}
+                onChange={() => setIsSubHeadingVisible(!isSubHeadingVisible)}
               />
+              <span className="form-check-label">
+                {isSubHeadingVisible ? "Hide Paragraph 1" : "Show Paragraph 1"}
+              </span>
             </label>
-            <h5>Paragraph 1:</h5>
-            <ReactQuill
-              value={paragraph1Content}
-              onChange={setParagraph1Content}
-            />
-            <h5>Paragraph 2:</h5>
-            <ReactQuill
-              value={paragraph2Content}
-              onChange={setParagraph2Content}
-            />
-            <h5>Paragraph 3:</h5>
-            <ReactQuill
-              value={paragraph3Content}
-              onChange={setParagraph3Content}
-            />
+
             <h5>Subheading:</h5>
-            <input
-              type="text"
-              value={subHeading}
-              onChange={(e) => setSubHeading(e.target.value)}
-              className="form-control"
-            />
+            {isSubHeadingVisible && (
+              <ReactQuill value={subHeading} onChange={setSubHeading} />
+            )}
+
             <label className="mt-3">
               Change Image (400px x 800px):
               <input
@@ -144,11 +250,12 @@ function MoreServices({ moreServicesData }) {
                 className="form-control mt-2"
               />
             </label>
-            {imagePreview && (
-              <div className="mt-3">
-                <p>
-                  <strong>Preview:</strong>
-                </p>
+
+            <div className="mt-3">
+              <p>
+                <strong>Preview:</strong>
+              </p>
+              {isImageVisible && imagePreview && (
                 <img
                   src={imagePreview}
                   alt="Preview"
@@ -159,8 +266,23 @@ function MoreServices({ moreServicesData }) {
                     borderRadius: "10px",
                   }}
                 />
+              )}
+
+              <div className="d-flex justify-content-start gap-2 ms-2">
+                <label className="form-check form-switch mt-4 mb-2">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id="toggleHeading"
+                    checked={isImageVisible}
+                    onChange={() => setIsImageVisible(!isImageVisible)}
+                  />
+                  <span className="form-check-label">
+                    {isImageVisible ? "Hide" : "Show"} Image
+                  </span>
+                </label>
               </div>
-            )}
+            </div>
 
             <button
               className="btn btn-primary mt-3"
@@ -183,54 +305,63 @@ function MoreServices({ moreServicesData }) {
                 className="mx-3 mx-lg-5 mb-4 mb-lg-0"
                 style={{ maxWidth: "420px" }}
               >
-                <h1
-                  className="mb-4"
-                  style={{
-                    fontSize: "clamp(14px, 5vw, 20px)",
-                    fontWeight: "500",
-                    textDecoration: "underline",
-                  }}
-                >
-                  {heading}
-                </h1>
-                <p
-                  style={{ fontSize: "clamp(14px, 3vw, 15px)" }}
-                  dangerouslySetInnerHTML={{ __html: paragraph1Content }}
-                ></p>
-                <p
-                  style={{ fontSize: "clamp(14px, 3vw, 15px)" }}
-                  dangerouslySetInnerHTML={{ __html: paragraph2Content }}
-                ></p>
-
-                <p
-                  dangerouslySetInnerHTML={{ __html: paragraph3Content }}
-                  style={{
-                    fontSize: "clamp(14px, 3vw, 15px)",
-                    fontWeight: "500",
-                  }}
-                ></p>
+                {isHeadingVisible && (
+                  <>
+                    <h1
+                      className="mb-4"
+                      style={{
+                        fontSize: "clamp(14px, 5vw, 20px)",
+                        fontWeight: "500",
+                        textDecoration: "underline",
+                      }}
+                    >
+                      {heading}
+                    </h1>
+                  </>
+                )}
+                {showParagraph1 && (
+                  <div
+                    dangerouslySetInnerHTML={{ __html: paragraph1 }}
+                    style={{ fontSize: "clamp(14px, 3vw, 15px)" }}
+                  ></div>
+                )}
+                {showParagraph2 && (
+                  <div
+                    dangerouslySetInnerHTML={{ __html: paragraph2 }}
+                    style={{ fontSize: "clamp(14px, 3vw, 15px)" }}
+                  ></div>
+                )}
+                {showParagraph3 && (
+                  <div
+                    dangerouslySetInnerHTML={{ __html: paragraph3 }}
+                    style={{ fontSize: "clamp(14px, 3vw, 15px)" }}
+                  ></div>
+                )}
               </div>
               <div className="mx-3 mx-lg-5">
-                <img
-                  src={imagePreview}
-                  alt="Service Logo"
-                  style={{ height: "350px", width: "350px" }}
-                />
+                {isImageVisible && (
+                  <img
+                    src={imagePreview}
+                    alt="Service Logo"
+                    style={{ height: "350px", width: "350px" }}
+                  />
+                )}
               </div>
             </div>
             <br />
             <br />
-            <div className="candidate-title mx-3 mx-sm-5 px-3 px-sm-5 text-center">
-              <h1
-                className="m-b5"
-                style={{
-                  fontSize: "clamp(14px, 5vw, 20px)",
-                  fontWeight: "semibold",
-                }}
-              >
-                {subHeading}
-              </h1>
-            </div>
+            {isSubHeadingVisible && (
+              <div className="candidate-title mx-3 mx-sm-5 px-3 px-sm-5 text-center">
+                <h1
+                  className="m-b5"
+                  style={{
+                    fontSize: "clamp(14px, 5vw, 20px)",
+                    fontWeight: "semibold",
+                  }}
+                  dangerouslySetInnerHTML={{ __html: subHeading }}
+                ></h1>
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -244,8 +375,14 @@ MoreServices.propTypes = {
     paragraph2: PropTypes.string,
     paragraph3: PropTypes.string,
     paragraph4: PropTypes.string,
-    urls: PropTypes.string,
-    images: PropTypes.string,
+    is_title_display: PropTypes.bool,
+    is_paragraph1_display: PropTypes.bool,
+    is_paragraph2_display: PropTypes.bool,
+    is_paragraph3_display: PropTypes.bool,
+    is_paragraph4_display: PropTypes.bool,
+    is_images_display: PropTypes.bool,
+    images: PropTypes.string, // Ensure it's correctly validated
   }),
 };
+
 export default MoreServices;
