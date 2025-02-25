@@ -142,19 +142,6 @@ function MoreServices({ moreServicesData }) {
         {isEditing ? (
           <div className="mx-3 mx-lg-5 mb-4 mb-lg-0">
             <div className="d-flex justify-content-start gap-4">
-              {isHeadingVisible && (
-                <label>
-                  <h5> Heading (Title Mandatory):</h5>
-                  <input
-                    type="text"
-                    value={heading}
-                    onChange={(e) => setHeading(e.target.value)}
-                    className="form-control"
-                    style={{ marginBottom: "10px" }}
-                  />
-                </label>
-              )}
-
               <div className="d-flex justify-content-start gap-2 ms-2">
                 <label className="form-check form-switch mt-4 mb-2">
                   <input
@@ -164,14 +151,26 @@ function MoreServices({ moreServicesData }) {
                     checked={isHeadingVisible}
                     onChange={() => setIsHeadingVisible(!isHeadingVisible)}
                   />
-                  <span className="form-check-label">
+                  {/* <span className="form-check-label">
                     {isHeadingVisible ? "Hide Heading" : "Show Heading"}
-                  </span>
+                  </span> */}
                 </label>
               </div>
+              <label>
+                <h5> Heading (Title Mandatory):</h5>
+                {isHeadingVisible && (
+                  <input
+                    type="text"
+                    value={heading}
+                    onChange={(e) => setHeading(e.target.value)}
+                    className="form-control"
+                    style={{ marginBottom: "10px" }}
+                  />
+                )}
+              </label>
             </div>
 
-            <div className="d-flex justify-content-start gap-2">
+            <div className="d-flex justify-content-start gap-2 mt-4">
               <label className="form-check form-switch">
                 <input
                   className="form-check-input"
@@ -180,7 +179,8 @@ function MoreServices({ moreServicesData }) {
                   onChange={() => setShowParagraph1(!showParagraph1)}
                 />
                 <span className="form-check-label">
-                  {showParagraph1 ? "Hide Paragraph 1" : "Show Paragraph 1"}
+                  {/* {showParagraph1 ? "Hide Paragraph 1" : "Show Paragraph 1"} */}
+                  Paragraph 1
                 </span>
               </label>
             </div>
@@ -189,7 +189,7 @@ function MoreServices({ moreServicesData }) {
               <ReactQuill value={paragraph1} onChange={setParagraph1} />
             )}
 
-            <div className="d-flex justify-content-start gap-2">
+            <div className="d-flex justify-content-start gap-2 mt-4">
               <label className="form-check form-switch">
                 <input
                   className="form-check-input"
@@ -198,7 +198,8 @@ function MoreServices({ moreServicesData }) {
                   onChange={() => setShowParagraph2(!showParagraph2)}
                 />
                 <span className="form-check-label">
-                  {showParagraph2 ? "Hide Paragraph 1" : "Show Paragraph 1"}
+                  {/* {showParagraph2 ? "Hide Paragraph 2" : "Show Paragraph 2"} */}
+                  Paragraph 2
                 </span>
               </label>
             </div>
@@ -206,7 +207,7 @@ function MoreServices({ moreServicesData }) {
             {showParagraph2 && (
               <ReactQuill value={paragraph2} onChange={setParagraph2} />
             )}
-            <div className="d-flex justify-content-start gap-2">
+            <div className="d-flex justify-content-start gap-2 mt-4">
               <label className="form-check form-switch">
                 <input
                   className="form-check-input"
@@ -215,7 +216,8 @@ function MoreServices({ moreServicesData }) {
                   onChange={() => setShowParagraph3(!showParagraph3)}
                 />
                 <span className="form-check-label">
-                  {showParagraph3 ? "Hide Paragraph 1" : "Show Paragraph 1"}
+                  {/* {showParagraph3 ? "Hide Paragraph 1" : "Show Paragraph 1"} */}
+                  Paragraph 3
                 </span>
               </label>
             </div>
@@ -224,33 +226,44 @@ function MoreServices({ moreServicesData }) {
               <ReactQuill value={paragraph3} onChange={setParagraph3} />
             )}
 
-            <label className="form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                checked={isSubHeadingVisible}
-                onChange={() => setIsSubHeadingVisible(!isSubHeadingVisible)}
-              />
-              <span className="form-check-label">
-                {isSubHeadingVisible ? "Hide Paragraph 1" : "Show Paragraph 1"}
-              </span>
-            </label>
-
-            <h5>Subheading:</h5>
-            {isSubHeadingVisible && (
-              <ReactQuill value={subHeading} onChange={setSubHeading} />
-            )}
-
-            <label className="mt-3">
-              Change Image (400px x 800px):
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="form-control mt-2"
-              />
-            </label>
-
+            <div className="mt-4 d-flex justify-content-start gap-2 ">
+              <label className="form-check form-switch">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  checked={isSubHeadingVisible}
+                  onChange={() => setIsSubHeadingVisible(!isSubHeadingVisible)}
+                />
+              </label>
+              <div>
+                <h5>Subheading:</h5>
+                {isSubHeadingVisible && (
+                  <ReactQuill value={subHeading} onChange={setSubHeading} />
+                )}
+              </div>
+            </div>
+            <div className="mt-4 d-flex justify-content-start gap-2 ">
+              <div className="d-flex justify-content-start gap-2 ms-2">
+                <label className="form-check form-switch mt-4 mb-2">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id="toggleHeading"
+                    checked={isImageVisible}
+                    onChange={() => setIsImageVisible(!isImageVisible)}
+                  />
+                </label>
+              </div>
+              <label className="mt-4">
+                Change Image (400px x 800px):
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="form-control mt-2"
+                />
+              </label>
+            </div>
             <div className="mt-3">
               <p>
                 <strong>Preview:</strong>
@@ -267,21 +280,6 @@ function MoreServices({ moreServicesData }) {
                   }}
                 />
               )}
-
-              <div className="d-flex justify-content-start gap-2 ms-2">
-                <label className="form-check form-switch mt-4 mb-2">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="toggleHeading"
-                    checked={isImageVisible}
-                    onChange={() => setIsImageVisible(!isImageVisible)}
-                  />
-                  <span className="form-check-label">
-                    {isImageVisible ? "Hide" : "Show"} Image
-                  </span>
-                </label>
-              </div>
             </div>
 
             <button

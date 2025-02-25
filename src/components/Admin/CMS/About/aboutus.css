@@ -545,3 +545,75 @@ h2.size-defaultw {
   border: 1px dashed #007bff; /* Highlight border on hover */
   cursor: grab;
 }
+.section-intro {
+  background-color: #f0f8ff;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+.section-jobseeker {
+  background-color: #ffefdb;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.section-employer {
+  background-color: #e8f5e9;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.section-novajobs {
+  background-color: #fbe9e7;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.section-moresection {
+  background-color: #ede7f6;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+.accordion-container {
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.accordion-item {
+  margin-bottom: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.accordion-title {
+  width: 100%;
+  background: #007bff;
+  color: white;
+  font-size: 18px;
+  padding: 15px;
+  text-align: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.accordion-title:hover {
+  background: #0056b3;
+}
+
+.accordion-content {
+  padding: 15px;
+  background: #f9f9f9;
+  border-top: 1px solid #ddd;
+}

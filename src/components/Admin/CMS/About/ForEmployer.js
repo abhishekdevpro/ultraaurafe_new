@@ -138,38 +138,29 @@ function ForEmployer({ forEmployerData }) {
         <div className="mx-3 mx-lg-5 mb-4 mb-lg-0">
           {isEditing ? (
             <div>
-              <div className="d-flex justify-content-start gap-4">
-                {showHeading && (
-                  <label>
-                    Heading (Title Mandatory):
+              <div className="d-flex justify-content-start gap-2">
+                <div className="d-flex justify-content-start gap-2">
+                  <label className="form-check form-switch">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      checked={showHeading}
+                      onChange={() => setShowHeading(!showHeading)}
+                    />
+                  </label>
+                </div>
+                <label>
+                  <h5> Heading(Title Mandatory):</h5>
+                  {showHeading && (
                     <input
                       type="text"
                       value={heading}
                       onChange={(e) => setHeading(e.target.value)}
                       className="form-control"
+                      style={{ marginBottom: "10px" }}
                     />
-                  </label>
-                )}
-                {/* <button
-                  className="btn btn-danger mt-4 mb-2 px-4 btn btn-primary"
-                  onClick={() => handleDelete("heading")}
-                >
-                  Delete Heading
-                </button> */}
-                <div className="d-flex justify-content-start gap-2">
-                  <label className="form-check form-switch mt-4 mb-2">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id="toggleHeading"
-                      checked={showHeading}
-                      onChange={() => setShowHeading(!showHeading)}
-                    />
-                    <span className="form-check-label">
-                      {showHeading ? "Hide" : "Show"} Heading
-                    </span>
-                  </label>
-                </div>
+                  )}
+                </label>
               </div>
 
               <div className="d-flex justify-content-start gap-4">
@@ -189,22 +180,22 @@ function ForEmployer({ forEmployerData }) {
                       checked={showParagraph1}
                       onChange={() => setShowParagraph1(!showParagraph1)}
                     />
-                    <span className="form-check-label">
+                    {/* <span className="form-check-label">
                       {showParagraph1 ? "Hide" : "Show"} Paragraph 1
-                    </span>
+                    </span> */}
                   </label>
+
+                  <div>
+                    <h5>Paragraph 1:</h5>
+                    {showParagraph1 && (
+                      <ReactQuill
+                        value={paragraph1Content}
+                        onChange={setParagraph1Content}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
-
-              {showParagraph1 && (
-                <div>
-                  <h5>Paragraph 1:</h5>
-                  <ReactQuill
-                    value={paragraph1Content}
-                    onChange={setParagraph1Content}
-                  />
-                </div>
-              )}
 
               <div className="d-flex justify-content-start gap-4">
                 {/* <button
@@ -223,41 +214,21 @@ function ForEmployer({ forEmployerData }) {
                       checked={showParagraph2}
                       onChange={() => setShowParagraph2(!showParagraph2)}
                     />
-                    <span className="form-check-label">
-                      {showParagraph2 ? "Hide" : "Show"} Paragraph 2
-                    </span>
                   </label>
+
+                  <div>
+                    <h5 className="">Paragraph 2:</h5>
+                    {showParagraph2 && (
+                      <ReactQuill
+                        value={paragraph1AContent}
+                        onChange={setParagraph1AContent}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
 
-              {showParagraph2 && (
-                <div>
-                  <h5 className="">Paragraph 2:</h5>
-                  <ReactQuill
-                    value={paragraph1AContent}
-                    onChange={setParagraph1AContent}
-                  />
-                </div>
-              )}
-
-              <div className="d-flex justify-content-start gap-4">
-                {showImage && (
-                  <label className="mt-3">
-                    <h5>Change Image (400px x 800px):</h5>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageChange}
-                      className="form-control"
-                    />
-                  </label>
-                )}
-                {/* <button
-                  className="btn btn-danger mt-4 mb-2 px-4 btn-primary"
-                  onClick={() => handleDelete("image")}
-                >
-                  Delete Image
-                </button> */}
+              <div className="d-flex justify-content-start gap-4 mt-4">
                 <div className="d-flex justify-content-start gap-2">
                   <label className="form-check form-switch mt-4 mb-2">
                     <input
@@ -267,11 +238,19 @@ function ForEmployer({ forEmployerData }) {
                       checked={showImage}
                       onChange={() => setShowImage(!showImage)}
                     />
-                    <span className="form-check-label">
-                      {showImage ? "Hide" : "Show"} Image
-                    </span>
                   </label>
                 </div>
+                <label className="mt-3">
+                  <h5>Change Image (400px x 800px):</h5>
+                  {showImage && (
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className="form-control"
+                    />
+                  )}
+                </label>
               </div>
 
               {showImage && imagePreview && (
@@ -292,20 +271,21 @@ function ForEmployer({ forEmployerData }) {
                   />
                 </div>
               )}
-
-              <button
-                className="btn btn-primary mt-3"
-                onClick={handleSave}
-                disabled={loading}
-              >
-                {loading ? "Saving..." : "Save"}
-              </button>
-              <button
-                className="btn btn-secondary mt-3 ms-2"
-                onClick={() => setIsEditing(false)}
-              >
-                Cancel
-              </button>
+              <div className="mt-4">
+                <button
+                  className="btn btn-primary mt-3"
+                  onClick={handleSave}
+                  disabled={loading}
+                >
+                  {loading ? "Saving..." : "Save"}
+                </button>
+                <button
+                  className="btn btn-secondary mt-3 ms-2"
+                  onClick={() => setIsEditing(false)}
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           ) : (
             <div>
