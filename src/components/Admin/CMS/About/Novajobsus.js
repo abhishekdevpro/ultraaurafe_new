@@ -183,47 +183,31 @@ function Novajobsus({ novaJobsusData }) {
       <div className="mx-3 mx-lg-5 mb-4 mb-lg-0">
         {isEditing ? (
           <div>
-            <div className="d-flex justify-content-start gap-4">
-              {showHeading && (
-                <label>
-                  Heading (Title Mandatory):
+            <div className="d-flex justify-content-start gap-2">
+              <div className="d-flex justify-content-start gap-2">
+                <label className="form-check form-switch">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    checked={showHeading}
+                    onChange={() => setShowHeading(!showHeading)}
+                  />
+                </label>
+              </div>
+              <label>
+                <h5> Heading(Title Mandatory):</h5>
+                {showHeading && (
                   <input
                     type="text"
                     value={heading}
                     onChange={(e) => setHeading(e.target.value)}
                     className="form-control"
+                    style={{ marginBottom: "10px" }}
                   />
-                </label>
-              )}
-              {/* <button
-                className="btn btn-danger mt-4 mb-2 px-4 btn btn-primary"
-                onClick={() => handleDelete("heading")}
-              >
-                Delete Heading
-              </button> */}
-
-              <div className="d-flex justify-content-start gap-2">
-                <label className="form-check form-switch mt-4 mb-2">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="toggleHeading"
-                    checked={showHeading}
-                    onChange={() => setShowHeading(!showHeading)}
-                  />
-                  <span className="form-check-label">
-                    {showHeading ? "Hide" : "Show"} Heading
-                  </span>
-                </label>
-              </div>
+                )}
+              </label>
             </div>
             <div className="d-flex justify-content-start gap-4">
-              {/* <button
-                className="btn btn-danger mt-2 mb-2 px-4 btn btn-primary"
-                onClick={() => handleDelete("paragraph1")}
-              >
-                Delete Paragraph 1
-              </button> */}
               <div className="d-flex justify-content-start gap-2">
                 <label className="form-check form-switch mt-4 mb-2">
                   <input
@@ -233,21 +217,18 @@ function Novajobsus({ novaJobsusData }) {
                     checked={showParagraph1}
                     onChange={() => setShowParagraph1(!showParagraph1)}
                   />
-                  <span className="form-check-label">
-                    {showParagraph1 ? "Hide" : "Show"} Paragraph 1
-                  </span>
                 </label>
+                <div>
+                  <h5>Paragraph 1:</h5>
+                  {showParagraph1 && (
+                    <ReactQuill
+                      value={paragraph1Content}
+                      onChange={setParagraph1Content}
+                    />
+                  )}
+                </div>
               </div>
             </div>
-            {showParagraph1 && (
-              <>
-                <h5>Paragraph 1:</h5>
-                <ReactQuill
-                  value={paragraph1Content}
-                  onChange={setParagraph1Content}
-                />
-              </>
-            )}
 
             <>
               {images.map((image, index) => (
@@ -262,42 +243,44 @@ function Novajobsus({ novaJobsusData }) {
                           onChange={() => handleToggleImage(index)}
                         />
                         <span className="form-check-label">
-                          {image.isVisible ? "Hide" : "Show"} Image {index + 1}
+                          {/* {image.isVisible ? "Hide" : "Show"}  */}
+                          Image {index + 1}
                         </span>
                       </label>
-                    </label>
-                  </div>
-                  {image.isVisible && (
-                    <div>
-                      <label className="mt-3">
-                        Change Image (400px x 800px) {index + 1}:
-                      </label>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => handleImageChange(index, e)}
-                        className="form-control mt-2"
-                      />
-                      {image.preview && (
-                        <div className="mt-3">
-                          <strong>Preview {index + 1}:</strong>
-                          <img
-                            src={image.preview}
-                            alt={`Preview ${index + 1}`}
-                            style={{
-                              height: "300px",
-                              width: "600px",
-                              border: "2px solid #ccc",
-                              borderRadius: "10px",
-                              marginTop: "10px",
-                            }}
+                      {image.isVisible && (
+                        <div>
+                          <label className="mt-3">
+                            Change Image (400px x 800px) {index + 1}:
+                          </label>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleImageChange(index, e)}
+                            className="form-control mt-2"
                           />
+                          {image.preview && (
+                            <div className="mt-3">
+                              <strong>Preview {index + 1}:</strong>
+                              <img
+                                src={image.preview}
+                                alt={`Preview ${index + 1}`}
+                                style={{
+                                  height: "300px",
+                                  width: "600px",
+                                  border: "2px solid #ccc",
+                                  borderRadius: "10px",
+                                  marginTop: "10px",
+                                }}
+                              />
+                            </div>
+                          )}
                         </div>
                       )}
-                    </div>
-                  )}
+                    </label>
+                  </div>
                 </div>
               ))}
+
               <button
                 className="btn btn-secondary mt-3 "
                 onClick={handleAddMoreImages}
@@ -306,19 +289,21 @@ function Novajobsus({ novaJobsusData }) {
               </button>
             </>
 
-            <button
-              className="btn btn-primary mt-3 ms-2"
-              onClick={handleSave}
-              disabled={loading}
-            >
-              {loading ? "Saving..." : "Save"}
-            </button>
-            <button
-              className="btn btn-secondary mt-3 ms-2"
-              onClick={() => setIsEditing(false)}
-            >
-              Cancel
-            </button>
+            <div className="mt-4">
+              <button
+                className="btn btn-primary mt-3 ms-2"
+                onClick={handleSave}
+                disabled={loading}
+              >
+                {loading ? "Saving..." : "Save"}
+              </button>
+              <button
+                className="btn btn-secondary mt-3 ms-2"
+                onClick={() => setIsEditing(false)}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         ) : (
           <div>
