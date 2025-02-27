@@ -83,7 +83,8 @@ function Introductions({ introductionData }) {
     setShowParagraph1A(introductionData.is_paragraph2_display);
     setShowPdfHeading(introductionData.is_paragraph4_display);
     setShowVideo(introductionData.is_urls_display);
-    setShowImage(introductionData.is_images_display);
+    // setShowImage(introductionData.is_images_display);
+    setShowImage(JSON.parse(introductionData.is_images_display)[0] === "true");
     setShowPdf(introductionData.is_pdf_display);
     if (introductionData.urls && JSON.parse(introductionData.urls)) {
       // const urlData = JSON.parse(introductionData.urls);

@@ -40,7 +40,8 @@ function ForJobseeker({ forJobseekerData }) {
     setShowHeading(forJobseekerData.is_title_display);
     setShowParagraph1(forJobseekerData.is_paragraph1_display);
     setShowParagraph2(forJobseekerData.is_paragraph2_display);
-    setShowImage(forJobseekerData.is_images_display);
+    // setShowImage(forJobseekerData.is_images_display);
+    setShowImage(JSON.parse(forJobseekerData.is_images_display)[0] === "true");
     if (forJobseekerData.images && JSON.parse(forJobseekerData.images)) {
       const imgData = JSON.parse(forJobseekerData.images);
       setImagePreview(
