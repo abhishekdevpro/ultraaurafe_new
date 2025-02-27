@@ -54,7 +54,10 @@ function MoreServices({ moreServicesData }) {
     setShowParagraph3(moreServicesData.is_paragraph3_display);
 
     setIsSubHeadingVisible(moreServicesData.is_paragraph4_display);
-    setIsImageVisible(moreServicesData.is_images_display);
+    // setIsImageVisible(moreServicesData.is_images_display);
+    setIsImageVisible(
+      JSON.parse(moreServicesData.is_images_display)[0] === "true"
+    );
     if (moreServicesData.images && JSON.parse(moreServicesData.images)) {
       const imgData = JSON.parse(moreServicesData.images);
       setImagePreview(
