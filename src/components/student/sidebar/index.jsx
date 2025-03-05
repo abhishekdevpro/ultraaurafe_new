@@ -173,11 +173,18 @@ export default function StudentSidebar() {
                   My Profile
                 </Link>
               </li>
-              <li className={`nav-item ${location.pathname === '/student/student-profile' ? 'active' : ''}`}>
+              <li className={`nav-item ${location.pathname === '' ? 'active' : ''}`}>
 
-                <Link to="/student/student-dashboard" className="nav-link">
+                <Link to="https://novajobs.us/novajobs#tab2" className="nav-link">
                 <i className="bx bxs-file"></i>
                   AI Resume Builder
+                </Link>
+              </li>
+              <li className={`nav-item ${location.pathname === '' ? 'active' : ''}`}>
+
+                <Link to="https://novajobs.us/user/job/1" className="nav-link">
+                <i className="bx bxs-file"></i>
+                 NovaJobs
                 </Link>
               </li>
               {/* <li className={`nav-item ${location.pathname === '/student/student-courses' ? 'active' : ''}`}>
@@ -212,7 +219,7 @@ export default function StudentSidebar() {
   className={`nav-item ${location.pathname === '/student/student-reviews' ? 'active' : ''}`}
   data-tour="reviews-link"
 >
-  <Link to="/student/student-reviews" className="nav-link">
+  <Link to="/student/coming-soon" className="nav-link">
     <i className="bx bxs-star" />
     Reviews
   </Link>
@@ -223,7 +230,7 @@ export default function StudentSidebar() {
 >
   <Link to="/student/student-quiz" className="nav-link">
     <i className="bx bxs-shapes" />
-    My Quiz Attempts
+    My Skill Tests
   </Link>
 </li>
 <li
