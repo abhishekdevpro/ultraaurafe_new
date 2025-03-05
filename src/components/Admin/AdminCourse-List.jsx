@@ -639,21 +639,25 @@ import { Modal } from "react-bootstrap";
 import { AdminHeader } from "./AdminHeader";
 import AdminSidebar from "./AdminSidebar";
 import Footer from "../footer";
+import FullPageLoader from "../home/FullPageLoader";
 
 const AdminCourseList = () => {
   const [allCourses, setAllCourses] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
+  const [loading,setLoading] = useState(false)
   const token = localStorage.getItem("adminToken");
   const coursesPerPage = 15;
   const navigate = useNavigate();
 
   useEffect(() => {
+    
     fetchCourses();
   }, [token]);
 
   const fetchCourses = async () => {
+    setLoading(true)
     try {
       const response = await axios.get(
         "https://api.novajobs.us/api/trainers/courses-info",
@@ -667,6 +671,8 @@ const AdminCourseList = () => {
     } catch (error) {
       console.error("Error fetching courses:", error);
       toast.error("Error fetching courses. Please try again.");
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -681,7 +687,7 @@ const AdminCourseList = () => {
     const url = selectedCourse.is_active
       ? `https://api.novajobs.us/api/uaadmin/course-deactive/${selectedCourse.id}`
       : `https://api.novajobs.us/api/uaadmin/course-active/${selectedCourse.id}`;
-
+      
     try {
       await axios.get(url, {
         headers: {
@@ -750,7 +756,7 @@ const AdminCourseList = () => {
 
   return (
     <div className="main-wrapper">
-      <AdminHeader />
+      <AdminHeader is_active={"/admin/course-list"}/>
       <div className="breadcrumb-bar breadcrumb-bar-info">
         <div className="container">
           <div className="row">
@@ -772,7 +778,7 @@ const AdminCourseList = () => {
                 <div className="card-header">
                   <h5 className="card-title">Course List</h5>
                 </div>
-                <div className="card-body">
+                {loading?<FullPageLoader /> :<div className="card-body">
                   <div className="table-responsive">
                     <table className="table table-hover table-center mb-0">
                       <thead>
@@ -840,7 +846,7 @@ const AdminCourseList = () => {
                       </tbody>
                     </table>
                   </div>
-                </div>
+                </div>}
                 {/* <div className="card-footer">
                   <nav aria-label="Page navigation">
                     <ul className="pagination justify-content-center">

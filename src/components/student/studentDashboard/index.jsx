@@ -6,6 +6,7 @@ import { Icon1, Icon2 } from "../../imagepath";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { toast } from "react-toastify";
+import FullPageLoader from "../../home/FullPageLoader";
 
 // Styled components
 const AlertWrapper = styled.div`
@@ -182,7 +183,7 @@ const StudentDashboard = () => {
     }
   };
 
-  if (loading) return <div>Loading...</div>;
+ 
 
   return (
     <div className="main-wrapper">
@@ -255,7 +256,7 @@ const StudentDashboard = () => {
                 <h4>Recently Enrolled Courses</h4>
               </div>
 
-              <div className="row">
+              {loading? <FullPageLoader/>: <div className="row">
                 {error ? (
                   <AlertWrapper>
                     <div>
@@ -376,7 +377,7 @@ const StudentDashboard = () => {
                     </div>
                   </div>
                 )}
-              </div>
+              </div>}
             </div>
           </div>
         </div>

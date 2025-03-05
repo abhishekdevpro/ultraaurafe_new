@@ -325,7 +325,7 @@ import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useOnClickOutside from "../../../hooks/useOnClickOutside";
-import { User11, Messages, Cart, Wish, Notification } from "../../../imagepath";
+import { User11, Cart, Wish, Notification } from "../../../imagepath";
 import axios from "axios";
 import styled from "styled-components";
 import PropTypes from "prop-types";
@@ -548,11 +548,11 @@ const HeadModule = ({ courseId }) => {
 
   return (
     <Nav>
-      <NavItem>
+      {/* <NavItem>
         <Link to="/student/student-messages">
           <img src={Messages} alt="Messages" />
         </Link>
-      </NavItem>
+      </NavItem> */}
 
       <NavItem>
         <Link to="/cart">

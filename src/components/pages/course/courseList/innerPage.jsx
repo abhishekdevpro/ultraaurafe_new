@@ -268,7 +268,7 @@ const PaginationButton = styled.button`
 const InnerPage = ({ courses = [] }) => {
   const [isClassAdded, setIsClassAdded] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const coursesPerPage = 9;
+  const coursesPerPage = 8;
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");

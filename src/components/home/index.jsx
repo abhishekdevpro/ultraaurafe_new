@@ -201,49 +201,6 @@ export const Home = () => {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
 console.log(currentTextIndex);
 
-// const steps = [
-//   {
-//     target: '.sign-up', // "Sign Up" button
-//     content: 'Click here to sign up for an account and start your journey!',
-//     placement: 'bottom',
-//     disableBeacon: true, // Prevents the initial "beacon" effect
-//   },
-//   {
-//     target: '.header__login-button[href="https://trainers.ultraaura.education/"]',
-//     content: 'Sign in here if you are a trainer!',
-//     placement: 'bottom',
-//   },
-//   {
-//     target: '.header__login-button[href="https://vendors.ultraaura.education/"]',
-//     content: 'Partner with us to grow your business!',
-//     placement: 'bottom',
-//   },
-//   {
-//     target: '.form-container',
-//     content: 'Search for courses here by keyword, category, or level.',
-//   },
-//   {
-//     target: '.courses',
-//     content: 'Check out our courses and enhance your skills.',
-//   },
-//   {
-//     target: '.master-skill',
-//     content: 'Explore new skills and career advancement opportunities here.',
-//   },
-  
-// ];
-
-// useEffect(() => {
-//   // Simulate data fetching or waiting for DOM to render
-//   const timer = setTimeout(() => {
-//       setIsLoaded(true);
-//   }, 1000); // Adjust based on your app's loading time
-//   return () => clearTimeout(timer);
-// }, []);
-// const handleTourComplete = () => {
-//   setTourCompleted(true); // Mark tour as completed
-// };
-
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
     const interval = setInterval(() => {
@@ -298,35 +255,7 @@ console.log(currentTextIndex);
     navigate(`/course-list?${queryParams.toString()}`); // Use navigate for routing
   };
 
-  // const handleAllCourses = () => {
-  //   navigate("/course-list");
-  // };
-
-  // const loadChatbot = () => {
-  //   // Check if the script is already added to avoid duplicate injections
-  //   if (document.getElementById("chatling-embed-script")) return;
-
-  //   // Create and append the chatbot configuration script
-  //   const configScript = document.createElement("script");
-  //   configScript.type = "text/javascript";
-  //   configScript.text = `window.chtlConfig = { chatbotId: "5594648998" };`;
-  //   document.body.appendChild(configScript);
-
-  //   // Create and append the chatbot embed script
-  //   const embedScript = document.createElement("script");
-  //   embedScript.id = "chatling-embed-script";
-  //   embedScript.async = true;
-  //   embedScript.src = "https://chatling.ai/js/embed.js";
-  //   embedScript.onload = () => {
-  //     // Optionally, add initialization code here if required
-  //     console.log("Chatbot script loaded");
-  //   };
-  //   embedScript.onerror = () => {
-  //     console.error("Failed to load the chatbot script");
-  //   };
-  //   document.body.appendChild(embedScript);
-  // };
-
+ 
   return (
     // <>
 //       <div className="main-wrapper">
@@ -817,7 +746,7 @@ console.log(currentTextIndex);
       A new day awaits! Choose from our wide range of specialized courses to unlock exciting new possibilities for your future
     </p>
     <div className="mt-auto sign-up">
-      <Link to="/register" className="btn btn-primary btn-lg">
+      <Link to={localStorage.getItem("token")?"/":"/login"} className="btn btn-primary btn-lg">
         Sign up
       </Link>
     </div>
