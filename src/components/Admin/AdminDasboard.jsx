@@ -7,7 +7,7 @@ import CourseTable from "../instructor/dashboard/CourseList";
 export const Dashboard = () => {
   return (
     <div className="main-wrapper">
-      <AdminHeader />
+      <AdminHeader is_active={"/admin/dashboard"} />
       <div className="breadcrumb-bar breadcrumb-bar-info">
         <div className="container">
           <div className="row">

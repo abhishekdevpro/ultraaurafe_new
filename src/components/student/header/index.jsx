@@ -351,7 +351,7 @@ console.log(profileData,"profile");
                 <NavItem to="/student/student-dashboard">
                   <Home size={20} /> Dashboard
                 </NavItem>
-                <NavItem to="/profile">
+                <NavItem to="/student/student-setting">
                   <User size={20} /> Profile
                 </NavItem>
                 <NavItem  onClick={handleLogout}>

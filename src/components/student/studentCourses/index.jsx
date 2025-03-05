@@ -7,9 +7,9 @@ import { Icon1, Icon2 } from "../../imagepath";
 import StudentHeader from "../header";
 import StudentSidebar from "../sidebar";
 import Footer from "../../footer";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components";
+import { toast } from "react-toastify";
+import FullPageLoader from "../../home/FullPageLoader";
 
 const StartLessonButton = styled.button`
   background-color: #4caf50;
@@ -168,9 +168,7 @@ const DynamicCourseList = () => {
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+ 
 
   if (error) {
     return (
@@ -235,7 +233,7 @@ const DynamicCourseList = () => {
                         </li>
                       </ul>
                     </div>
-                    <div className="tab-content">
+                    {loading?<FullPageLoader /> :<div className="tab-content">
                       <div
                         className="tab-pane fade show active"
                         id="enroll-courses"
@@ -419,7 +417,7 @@ const DynamicCourseList = () => {
                           </NoCourseMessage>
                         )}
                       </div>
-                    </div>
+                    </div>}
                   </div>
                 </div>
               </div>
@@ -428,7 +426,7 @@ const DynamicCourseList = () => {
         </div>
       </div>
       <Footer />
-      <ToastContainer />
+      
     </div>
   );
 };

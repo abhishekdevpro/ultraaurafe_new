@@ -6,6 +6,7 @@ import { Icon1, Icon2 } from "../../imagepath";
 import Header from "../../header";
 // import dummy from "../../../assets/Online Course.png";
 import { toast } from "react-toastify";
+import FullPageLoader from "../../home/FullPageLoader";
 
 const InstructorProfile = () => {
   const [isClassAdded, setIsClassAdded] = useState([]);
@@ -57,7 +58,9 @@ const InstructorProfile = () => {
       toast.error("Failed to add course to favorites. Please try again.");
     }
   };
-  if (!profileData) return <div>Loading...</div>;
+  if (!profileData) return <div>
+    <FullPageLoader />
+  </div>;
 
   const { trainer, courses } = profileData;
 

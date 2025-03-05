@@ -173,6 +173,13 @@ export default function StudentSidebar() {
                   My Profile
                 </Link>
               </li>
+              <li className={`nav-item ${location.pathname === '/student/student-profile' ? 'active' : ''}`}>
+
+                <Link to="/student/student-dashboard" className="nav-link">
+                <i className="bx bxs-file"></i>
+                  AI Resume Builder
+                </Link>
+              </li>
               {/* <li className={`nav-item ${location.pathname === '/student/student-courses' ? 'active' : ''}`}>
                 <Link
                   to="/student/student-courses"
@@ -257,6 +264,12 @@ export default function StudentSidebar() {
                   Join Live Classes
                 </Link>
               </li>
+              {/* <li className={`nav-item ${location.pathname === '/student/join-live-classes' ? 'active' : ''}`}>
+                <Link to="https://novajobs.us" className="nav-link">
+                <i className="bx bx-link-alt" />
+                  NovaJobs
+                </Link>
+              </li> */}
 
               {/* <li className={`nav-item ${location.pathname === '/student/student-ticket' ? 'active' : ''}`}>
 

@@ -832,6 +832,7 @@ import { Modal } from "react-bootstrap";
 import { AdminHeader } from "./AdminHeader";
 import AdminSidebar from "./AdminSidebar";
 import Footer from "../footer";
+import FullPageLoader from "../home/FullPageLoader";
 
 const TrainerList = () => {
   const [allTrainers, setAllTrainers] = useState([]);
@@ -839,6 +840,7 @@ const TrainerList = () => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedTrainer, setSelectedTrainer] = useState(null);
+  const [loading,setLoading] = useState(false)
   const [editDetails, seteditDetails] = useState({
     firstName: "",
     lastName: "",
@@ -857,6 +859,7 @@ const TrainerList = () => {
   }, [token]);
 
   const fetchTrainers = async () => {
+    setLoading(true)
     try {
       const response = await axios.get(
         "https://api.novajobs.us/api/uaadmin/trainers",
@@ -870,6 +873,8 @@ const TrainerList = () => {
     } catch (error) {
       console.error("Error fetching trainers:", error);
       toast.error("Error fetching trainers. Please try again.");
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -1021,7 +1026,7 @@ const TrainerList = () => {
                 <div className="card-header">
                   <h5 className="card-title">Trainer List</h5>
                 </div>
-                <div className="card-body">
+                {loading? <FullPageLoader /> :<div className="card-body">
                   <div className="table-responsive">
                     <table className="table table-hover table-center mb-0">
                       <thead>
@@ -1093,7 +1098,7 @@ const TrainerList = () => {
                       </tbody>
                     </table>
                   </div>
-                </div>
+                </div>}
                 <div className="card-footer">
                   <nav aria-label="Page navigation">
                     <ul className="pagination justify-content-center">

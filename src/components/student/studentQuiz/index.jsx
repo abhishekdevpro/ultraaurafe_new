@@ -4,6 +4,7 @@ import StudentHeader from "../header";
 import StudentSidebar from "../sidebar";
 import Footer from "../../footer";
 import { Link } from "react-router-dom";
+import FullPageLoader from "../../home/FullPageLoader";
 
 const StudentQuiz = () => {
   const [quizAttempts, setQuizAttempts] = useState([]);
@@ -29,9 +30,7 @@ const StudentQuiz = () => {
     fetchQuizAttempts();
   }, [token]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+
 
   return (
     <div className="main-wrapper">
@@ -73,7 +72,7 @@ const StudentQuiz = () => {
                   <div className="profile-heading">
                     <h3>My Quiz Attempts</h3>
                   </div>
-                  <div className="checkout-form">
+                 {loading? <FullPageLoader /> :<div className="checkout-form">
                     <div className="table-responsive custom-table">
                       {/* Quiz Attempts Table */}
                       <table className="table table-nowrap mb-0">
@@ -128,7 +127,7 @@ const StudentQuiz = () => {
                         </tbody>
                       </table>
                     </div>
-                  </div>
+                  </div>}
                 </div>
               </div>
               <div className="dash-pagination">

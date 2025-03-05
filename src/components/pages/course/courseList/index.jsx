@@ -5,11 +5,13 @@ import axios from 'axios';
 import InnerPage from './innerPage';
 import Footer from '../../../footer';
 import Header from '../../../header';
+import FullPageLoader from '../../../home/FullPageLoader';
 
 const CourseList = () => {
   const [courses, setCourses] = useState([]);
   const [error, setError] = useState(null);
   const [categoryOptions, setCategoryOptions] = useState([]);
+  const [loading, setLoading] = useState(false)
   // const [trainerOptions, setTrainerOptions] = useState([]);
   const [levelOptions, setLevelOptions] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -51,6 +53,7 @@ const CourseList = () => {
   };
 
   const fetchFilteredCourses = async () => {
+    setLoading(true)
     try {
       const { title_keywords, course_category_id, trainer_id, course_level_id } = parseQueryParams();
       console.log('Fetching courses with params:', {
@@ -74,6 +77,9 @@ const CourseList = () => {
     } catch (error) {
       console.error('Error fetching filtered courses:', error);
       setError('Failed to load courses.');
+    }
+    finally{
+      setLoading(false)
     }
   };
 
@@ -222,7 +228,7 @@ const CourseList = () => {
                 </div>
               </div>
 
-              <InnerPage courses={courses} />
+              {loading? <FullPageLoader /> : <InnerPage courses={courses} />}
 
               <div className="text-center pt-4">
                 <button

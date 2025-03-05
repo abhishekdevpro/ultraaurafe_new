@@ -209,6 +209,7 @@ import Footer from "../../footer";
 import StudentSidebar from "../sidebar";
 import { Icon01, Icon2 } from "../../imagepath";
 import { toast } from "react-toastify";
+import FullPageLoader from "../../home/FullPageLoader";
 
 const StudentWishlist = () => {
   const [wishlistCourses, setWishlistCourses] = useState([]);
@@ -266,7 +267,7 @@ const StudentWishlist = () => {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  
   if (error) return <div>{error}</div>;
 
   return (
@@ -309,7 +310,7 @@ const StudentWishlist = () => {
                   <div className="profile-heading">
                     <h3>Wishlist</h3>
                   </div>
-                  <div className="checkout-form pb-0">
+                  {isLoading?<FullPageLoader /> :<div className="checkout-form pb-0">
                     {wishlistCourses.length === 0 ? (
                       <div className="text-center py-5">
                         <h4>No courses in the wishlist</h4>
@@ -416,7 +417,7 @@ const StudentWishlist = () => {
                         ))}
                       </div>
                     )}
-                  </div>
+                  </div>}
                 </div>
               </div>
             </div>

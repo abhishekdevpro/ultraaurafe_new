@@ -935,6 +935,8 @@ import styled from "styled-components";
 import { Icon01, Icon02 } from "../imagepath";
 import banner from "../../assets/img/bg-banner-02.png";
 import { toast } from "react-toastify";
+import FullPageLoader from "./FullPageLoader";
+// import FullPageLoader from "./FullPageLoader";
 
 // Container styling for center alignment and padding
 const Wrapper = styled.div`
@@ -1241,6 +1243,7 @@ const DynamicCourseGrid = () => {
   const [activeLevel, setActiveLevel] = useState("ALL");
   const [displayCount] = useState(6);
   const [isClassAdded, setIsClassAdded] = useState([]);
+  // const [showLoader, setShowLoader] = useState(false)
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
@@ -1333,10 +1336,20 @@ const DynamicCourseGrid = () => {
   };
 
   if (loading) {
-    return <Container>Loading...</Container>;
+    return <Container>
+      <FullPageLoader />
+    </Container>;
   }
+  // const handleClick = ()=>{
+  //   setShowLoader(true);
+  //   setTimeout(() => {
+  //     navigate("/course-list"); // Navigate after 3 seconds
+  //   }, 3000);
+  // }
 
   return (
+    <>
+     {/* {showLoader && <FullPageLoader />} */}
     <Wrapper>
       <Container>
         <Header>
@@ -1460,6 +1473,7 @@ const DynamicCourseGrid = () => {
         )}
       </Container>
     </Wrapper>
+    </>
   );
 };
 

@@ -153,8 +153,8 @@ const CommentsList = ({ courseId }) => {
         // Debugging: Log the API response
         console.log('API Response:', response);
 
-        if (response.status === 200) {
-          setRatings(response.data.data); // assuming response.data is the array of ratings
+        if (response.data.code === 200) {
+          setRatings(response?.data?.data || []); // assuming response.data is the array of ratings
         } else {
           setError('Failed to load ratings');
         }
@@ -176,13 +176,13 @@ const CommentsList = ({ courseId }) => {
   if (error) {
     return <Message>{error}</Message>;
   }
-
+console.log(ratings,"ratings");
   return (
     <CommentsContainer>
       <Title>Student Ratings</Title>
       <ScrollableContainer>
-        {ratings.length > 0 ? (
-          ratings.map((rating) => (
+        {ratings?.length > 0 ? (
+          ratings?.map((rating) => (
             <CommentCard key={rating.id}>
               <CommentHeader>
                 <StudentName>{rating.student_first_name} {rating.student_last_name}</StudentName>

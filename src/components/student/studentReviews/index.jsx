@@ -158,6 +158,7 @@ import StudentSidebar from "../sidebar";
 import Footer from "../../footer";
 import { Link } from "react-router-dom";
 import { User16 } from "../../imagepath";
+import FullPageLoader from "../../home/FullPageLoader";
 
 const StudentReviews = () => {
   const [reviews, setReviews] = useState([]);
@@ -208,7 +209,6 @@ const StudentReviews = () => {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
@@ -251,7 +251,7 @@ const StudentReviews = () => {
                   <div className="profile-heading">
                     <h3>Reviews</h3>
                   </div>
-                  <div className="checkout-form">
+                 {loading? <FullPageLoader />: <div className="checkout-form">
                     {/* Reviews */}
                     {currentReviews.map((review) => (
                       <div className="review-wrap" key={review.id}>
@@ -278,7 +278,7 @@ const StudentReviews = () => {
                       </div>
                     ))}
                     {/* /Reviews */}
-                  </div>
+                  </div>}
                 </div>
               </div>
               {/* Pagination */}
