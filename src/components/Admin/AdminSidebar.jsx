@@ -375,11 +375,11 @@ export default function AdminSidebar() {
               </li>
               {cmsOpen && (
                 <ul className="submenu" style={{ paddingLeft: "1rem" }}>
-                  <li className={`nav-item ${isPathActive('/admin/cms/home') ? 'active' : ''}`}>
+                  {/* <li className={`nav-item ${isPathActive('/admin/cms/home') ? 'active' : ''}`}>
                     <Link to="/admin/cms/home" className="nav-link">
                       Home
                     </Link>
-                  </li>
+                  </li> */}
                   <li className={`nav-item ${isPathActive('/admin/about-us') ? 'active' : ''}`}>
                     <Link to="/admin/about-us" className="nav-link">
                       About Us
