@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ReactPlayer from "react-player";
 import ReactQuill from "react-quill";
@@ -162,7 +162,7 @@ function Introductions({ introductionData }) {
 
   return (
     <>
-      <ToastContainer />
+      
       <div className="mt-5">
         {authToken && (
           <button

@@ -490,7 +490,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   return (
     <>
       <div className="col-lg-4">
-        {/* <ToastContainer /> */}
+        
         <div className="sidebar-sec">
           {/* Video Section */}
           <VideoSection>

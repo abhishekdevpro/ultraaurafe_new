@@ -2,7 +2,7 @@
 import React, { useCallback, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "../../../footer";
 import CourseHeader from "../header";
@@ -127,7 +127,6 @@ const AddLecture = () => {
   return (
     <div className="main-wrapper">
       <CourseHeader activeMenu={"AddLecture"} />
-      <ToastContainer /> {/* Toast container to display toasts */}
       <section className="page-content course-sec">
         <div className="container">
           <div className="row align-items-center">

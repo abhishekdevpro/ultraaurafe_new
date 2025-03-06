@@ -98,7 +98,7 @@ import InstructorSidebar from "../sidebar";
 import Footer from "../../footer";
 import SettingsPageHeader from "./settingsPageHeader";
 import { Link } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import the CSS for toast notifications
 
 const InstructorChangePassword = () => {
@@ -232,7 +232,7 @@ const InstructorChangePassword = () => {
       </div>
       <Footer />
       {/* /Page Content */}
-      <ToastContainer />
+   
     </div>
   );
 };

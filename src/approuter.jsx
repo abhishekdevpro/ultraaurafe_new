@@ -178,6 +178,7 @@ import LoginEmail from "./components/pages/login/loginemail.jsx";
 import LoginCode from "./components/pages/login/logincode.jsx";
 import Gauth from "./components/pages/login/G-auth";
 import AboutusForm from "./components/Admin/CMS/About/index.js";
+import PartnerList from "./components/Admin/PartnerList.jsx";
 
 const Approuter = () => {
   return (
@@ -633,7 +634,7 @@ const Approuter = () => {
         <Route element={<ProtectedRoute />}>
           <Route path="/admin/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/admin/trainer-list" element={<TrainerList />} />
-          <Route path="/admin/partner-list" element={<TrainerList />} />
+          <Route path="/admin/partner-list" element={<PartnerList />} />
           <Route path="/admin/student-list" element={<StudentList />} />
           <Route path="/admin/course-list" element={<AdminCourseList />} />
           <Route path="/admin/add-student" element={<AddStudentForm />} />

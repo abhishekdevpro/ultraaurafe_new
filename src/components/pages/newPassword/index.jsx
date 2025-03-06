@@ -7,7 +7,7 @@ import logo from '../../../assets/Ultra_Aura.png';
 import { Link, useParams, useNavigate } from "react-router-dom";
 
 import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast} from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css"; // Import toast for notifications
 
 const NewPassword = () => {
@@ -123,7 +123,7 @@ const NewPassword = () => {
 
     return (
         <>
-          <ToastContainer />
+          
             <div className="main-wrapper">
                 <div className="row">
                     {/* Login Banner */}

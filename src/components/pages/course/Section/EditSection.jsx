@@ -6,7 +6,7 @@ import Footer from "../../../footer";
 import CourseHeader from "../header";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const EditSection = () => {
@@ -88,7 +88,6 @@ const EditSection = () => {
   return (
     <div className="main-wrapper">
       <CourseHeader activeMenu={"EditSection"} />
-      <ToastContainer position="top-right" autoClose={2000} />
 
       <section className="page-content course-sec">
         <div className="container">

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
-import { toast, ToastContainer } from "react-toastify";
+import { toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import InstructorCard from "./InstructorCard";
@@ -11,6 +11,7 @@ import SidebarSection from "./SidebarSection";
 import CommentForm from "./CommentForm";
 import CommentsList from "./CommentList";
 import CourseProgressBar from "./CourseProgress";
+import MeetTheExpert from "./MeetTheExpert";
 
 const DetailsContent = ({ courseFeatureData }) => {
   console.log(courseFeatureData, "cfd");
@@ -145,6 +146,7 @@ const DetailsContent = ({ courseFeatureData }) => {
                 <CourseProgressBar progress={courseData.course_progress} />
               )}
               <CourseContent courseData={courseData} />
+              <MeetTheExpert />
               <InstructorCard trainerID={courseData.trainer_id} />
 
               {/* Comment */}
@@ -227,7 +229,7 @@ const DetailsContent = ({ courseFeatureData }) => {
         </div>
       )}
 
-      <ToastContainer />
+      
     </>
   );
 };
