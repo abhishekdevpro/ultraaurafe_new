@@ -10,7 +10,7 @@ import { User16 } from "../../imagepath";
 import axios from "axios";
 import { useState,useEffect } from "react";
 import StudentSettingPageHeader from "./settingPageHeader";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const StudentSetting = () => {
   const token = localStorage.getItem("token");
@@ -129,7 +129,6 @@ const StudentSetting = () => {
   
   return (
     <div className="main-wrapper">
-      <ToastContainer />
       <StudentHeader activeMenu={"Settings"} />
       <div className="breadcrumb-bar breadcrumb-bar-info">
         <div className="container">

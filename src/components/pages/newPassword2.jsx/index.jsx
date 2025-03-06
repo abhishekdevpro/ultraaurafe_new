@@ -5,7 +5,7 @@ import OwlCarousel from "react-owl-carousel";
 import { LoginImg, logo } from "../../imagepath";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify'; // Import toast for notifications
+import { toast } from 'react-toastify'; // Import toast for notifications
 
 const NewPassword2 = () => {
     const [eye, setEye] = useState(true);
@@ -103,7 +103,7 @@ const NewPassword2 = () => {
     };
 
     return (
-        <>   <ToastContainer />
+        <>   
             <div className="main-wrapper">
                 <div className="row">
                     {/* Login Banner */}

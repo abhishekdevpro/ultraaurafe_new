@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "../../../footer";
 import CourseHeader from "../header";
@@ -132,7 +132,7 @@ const EditLecture = () => {
   return (
     <div className="main-wrapper">
       <CourseHeader activeMenu={"EditLecture"} />
-      <ToastContainer />
+     
       <section className="page-content course-sec">
         <div className="container">
           <div className="row align-items-center">

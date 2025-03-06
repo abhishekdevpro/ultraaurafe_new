@@ -78,7 +78,7 @@ root.render(
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="colored"
+        
       />
        </Elements>
     </Provider>

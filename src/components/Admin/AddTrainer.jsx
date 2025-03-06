@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Footer from "../footer";
-import axios from 'axios';
+import axios from "axios";
 import { AdminHeader } from "./AdminHeader";
 import AdminSidebar from "./AdminSidebar";
 import { toast } from "react-toastify";
 
 export const AddTrainerForm = () => {
   const [formData, setFormData] = useState({
-    first_name: '',
-    last_name: '',
-    email: '',
-    phone: '',
-    password: '',
-    country_id: '',
-    state_id: '',
-    city_id: '',
-    qualification_id: '',
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone: "",
+    password: "",
+    country_id: "",
+    state_id: "",
+    city_id: "",
+    qualification_id: "",
   });
 
   const [countries, setCountries] = useState([]);
@@ -85,8 +85,10 @@ export const AddTrainerForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (['country_id', 'state_id', 'city_id', 'qualification_id'].includes(name)) {
-      setFormData({ ...formData, [name]: value ? parseInt(value, 10) : '' });
+    if (
+      ["country_id", "state_id", "city_id", "qualification_id"].includes(name)
+    ) {
+      setFormData({ ...formData, [name]: value ? parseInt(value, 10) : "" });
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -96,20 +98,42 @@ export const AddTrainerForm = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        'https://api.novajobs.us/api/uaadmin/trainer',
+        "https://api.novajobs.us/api/uaadmin/trainer",
         formData,
         {
           headers: {
-            Authorization: localStorage.getItem('adminToken'),
+            Authorization: localStorage.getItem("adminToken"),
           },
         }
       );
-      console.log('Trainer added successfully:', response.data.message);
+      console.log("Trainer added successfully:", response.data.message);
       toast.success(`${response.data.message}`);
       // Reset form or show success message
+      setFormData({
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+        password: "",
+        country_id: "",
+        state_id: "",
+        city_id: "",
+        qualification_id: "",
+      });
     } catch (error) {
-      console.error('Error adding trainer:', error);
+      console.error("Error adding trainer:", error);
       toast.error("Error adding trainer");
+      setFormData({
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+        password: "",
+        country_id: "",
+        state_id: "",
+        city_id: "",
+        qualification_id: "",
+      });
       // Show error message
     }
   };
@@ -123,8 +147,7 @@ export const AddTrainerForm = () => {
             <div className="col-md-12 col-12">
               <div className="breadcrumb-list">
                 <h2 className="breadcrumb-title">Admin Dashboard</h2>
-                <nav aria-label="breadcrumb" className="page-breadcrumb">
-                </nav>
+                <nav aria-label="breadcrumb" className="page-breadcrumb"></nav>
               </div>
             </div>
           </div>
@@ -278,15 +301,17 @@ export const AddTrainerForm = () => {
                             >
                               <option value="">Select Qualification</option>
                               {qualifications.map((qualification) => (
-                                <option key={qualification.id} value={qualification.id}>
+                                <option
+                                  key={qualification.id}
+                                  value={qualification.id}
+                                >
                                   {qualification.name}
                                 </option>
                               ))}
                             </select>
                           </div>
                         </div>
-                        
-                        
+
                         <div className="col-md-12">
                           <button type="submit" className="btn btn-primary">
                             Add Trainer

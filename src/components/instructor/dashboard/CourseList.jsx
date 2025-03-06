@@ -121,7 +121,8 @@ const CourseTable = () => {
                     {localStorage.getItem("adminToken") ? (
                       ""
                     ) : (
-                      <button className="btn btn-secondary danger-btn">
+                      <button 
+                      className="btn btn-secondary danger-btn">
                         Request Delete
                       </button>
                     )}
