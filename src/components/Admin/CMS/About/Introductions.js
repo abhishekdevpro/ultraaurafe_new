@@ -29,9 +29,7 @@ function Introductions({ introductionData }) {
     </p>
   `);
   const [pdfheading, setPdfHeading] = useState("View Pdf");
-  const [videoUrl, setVideoUrl] = useState(
-    "https://www.youtube.com/watch?v=DbHXRGdBhqo"
-  );
+  const [videoUrl, setVideoUrl] = useState("");
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(logo1);
   const [loading, setLoading] = useState(false);
@@ -70,7 +68,7 @@ function Introductions({ introductionData }) {
     if (!introductionData) {
       return;
     }
-
+ 
     setHeading(introductionData.title || heading);
     setParagraph1Content(introductionData.paragraph1 || paragraph1Content);
     setParagraph1AContent(introductionData.paragraph2 || paragraph1AContent);
@@ -87,8 +85,8 @@ function Introductions({ introductionData }) {
     setShowImage(JSON.parse(introductionData.is_images_display)[0] === "true");
     setShowPdf(introductionData.is_pdf_display);
     if (introductionData.urls && JSON.parse(introductionData.urls)) {
-      // const urlData = JSON.parse(introductionData.urls);
-      // setVideoUrl(urlData[0] || videoUrl);
+      const urlData = JSON.parse(introductionData.urls);
+      setVideoUrl(urlData[0] || videoUrl);
     }
 
     if (introductionData.images && JSON.parse(introductionData.images)) {
@@ -264,7 +262,7 @@ function Introductions({ introductionData }) {
                 )}
               </div>
 
-              <div className="d-flex justify-content-start gap-4 mt-4">
+              <div className="d-flex justify-content-start gap-4 mt-4 border-danger">
                 <div className="d-flex justify-content-start gap-2">
                   <label className="form-check form-switch mt-4 mb-2">
                     <input

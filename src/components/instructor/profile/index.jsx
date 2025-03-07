@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Footer from "../../footer";
 import { Icon1, Icon2 } from "../../imagepath";
@@ -13,12 +13,23 @@ const InstructorProfile = () => {
   const [profileData, setProfileData] = useState(null);
   const { id } = useParams(); // Assuming you're using react-router and have a route parameter for the trainer ID
   const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  
+  // Extract the user_type from the query string
+  const userType = queryParams.get('user_type');
+  console.log(userType,"yjjjj");
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get(
-          `https://api.novajobs.us/api/trainers/trainer-profile/${id}`
-        );
+        let apiUrl = `https://api.novajobs.us/api/trainers/trainer-profile/${id}`;
+
+        // Add the user_type query param if userType is 4
+        if (userType === '4') {
+          apiUrl = `https://api.novajobs.us/api/trainers/trainer-profile/${id}?type=academy`;
+        }
+
+        const response = await axios.get(apiUrl);
         console.log(response, "ghjk");
         setProfileData(response.data.data);
       } catch (error) {
@@ -27,7 +38,23 @@ const InstructorProfile = () => {
     };
 
     fetchProfileData();
-  }, [id]);
+  }, [id, userType]); // Dependencies include userType and id
+
+  // useEffect(() => {
+  //   const fetchProfileData = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `https://api.novajobs.us/api/trainers/trainer-profile/${id}`
+  //       );
+  //       console.log(response, "ghjk");
+  //       setProfileData(response.data.data);
+  //     } catch (error) {
+  //       console.error("Error fetching profile data:", error);
+  //     }
+  //   };
+
+  //   fetchProfileData();
+  // }, [id]);
   const toggleClass = async (courseId) => {
     const updatedClasses = [...isClassAdded];
     updatedClasses[courseId] = !updatedClasses[courseId];
@@ -90,42 +117,42 @@ const InstructorProfile = () => {
                 <Link to="#" className="profile-info-img">
                   <img
                     src={`https://api.novajobs.us${trainer.photo}`}
-                    alt={`${trainer.first_name} ${trainer.last_name}`}
+                    alt={`${trainer?.first_name} ${trainer.last_name}`}
                     className="img-fluid"
                   />
                 </Link>
                 <h4>
                   <Link to="#">
-                    {trainer.first_name} {trainer.last_name}
+                    {trainer.first_name || "Instructor"} {trainer?.last_name || ""}
                   </Link>
-                  <span>{trainer.jobtitle}</span>
+                  <span>{trainer.jobtitle || "Jobtitle"}</span>
                 </h4>
                 <p>Instructor</p>
                 <ul className="list-unstyled inline-inline profile-info-social">
                   {trainer.facebook && (
                     <li className="list-inline-item">
-                      <Link to={trainer.facebook}>
+                      <Link to={trainer?.facebook || ""}>
                         <i className="fa-brands fa-facebook"></i>
                       </Link>
                     </li>
                   )}
                   {trainer.twitter && (
                     <li className="list-inline-item">
-                      <Link to={trainer.twitter}>
+                      <Link to={trainer.twitter || ""}>
                         <i className="fa-brands fa-twitter"></i>
                       </Link>
                     </li>
                   )}
                   {trainer.linkedin && (
                     <li className="list-inline-item">
-                      <Link to={trainer.linkedin}>
+                      <Link to={trainer.linkedin || ""}>
                         <i className="fa-brands fa-linkedin"></i>
                       </Link>
                     </li>
                   )}
                   {trainer.youtube && (
                     <li className="list-inline-item">
-                      <Link to={trainer.youtube}>
+                      <Link to={trainer.youtube ||""}>
                         <i className="fa-brands fa-youtube"></i>
                       </Link>
                     </li>
@@ -146,7 +173,7 @@ const InstructorProfile = () => {
               <div className="card overview-sec">
                 <div className="card-body">
                   <h5 className="subs-title">About Me</h5>
-                  <p>{trainer.biography}</p>
+                  <p>{trainer.biography || " "}</p>
                 </div>
               </div>
 
@@ -156,7 +183,7 @@ const InstructorProfile = () => {
                   <div className="card-body pb-0">
                     <h5 className="subs-title">Courses</h5>
                     <div className="row">
-                      {profileData.courses.map((course) => (
+                      {profileData?.courses?.map((course) => (
                         <div
                           key={course.id}
                           className="col-lg-6 col-md-6 d-flex"

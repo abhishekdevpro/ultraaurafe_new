@@ -9,7 +9,7 @@ import { User16 } from "../../imagepath";
 
 import axios from "axios";
 import { useState,useEffect } from "react";
-import StudentSettingPageHeader from "./settingPageHeader";
+// import StudentSettingPageHeader from "./settingPageHeader";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const StudentSetting = () => {
@@ -163,7 +163,7 @@ const StudentSetting = () => {
                     <h3>Settings</h3>
                     <p>You have full control to manage your own account settings</p>
                   </div>
-                  <StudentSettingPageHeader />
+                  {/* <StudentSettingPageHeader /> */}
                   <div className="edit-profile-info px-4 p-3">
                     <h5>Personal Details</h5>
                     <p>Edit your personal information</p>

@@ -261,7 +261,7 @@
 
 // export default AboutUs;
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import styled from "styled-components";
@@ -272,6 +272,7 @@ import ForJobseeker from "../../Admin/CMS/About/ForJobseeker";
 import ForEmployer from "../../Admin/CMS/About/ForEmployer";
 import Novajobsus from "../../Admin/CMS/About/Novajobsus";
 import MoreServices from "../../Admin/CMS/About/MoreServices";
+import FullPageLoader from "../../home/FullPageLoader";
 
 const Banner = styled.div`
   background-color: #f4f4f4;
@@ -287,12 +288,14 @@ const Banner = styled.div`
 
 function AboutUs() {
   const [sections, setSections] = React.useState([]);
+  const [loading,setLoading] =  useState(false)
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   // Fetch data from the GET API
   const fetchContent = async () => {
+    setLoading(true)
     try {
       const response = await axios.get(
         "https://api.novajobs.us/api/uaadmin/get-aboutus-content"
@@ -303,6 +306,8 @@ function AboutUs() {
     } catch (error) {
       console.error("Error fetching content:", error);
       // alert("An error occurred while fetching content.");
+    }finally{
+      setLoading(false)
     }
   };
   useEffect(() => {
@@ -331,7 +336,7 @@ function AboutUs() {
         {/* Page Content */}
         <div className="page-content">
           <div className="container">
-            <div className="row">
+          { loading?<FullPageLoader /> : <div className="row">
               <div className=" justify-content-center">
                 {sections.length ? (
                   <>
@@ -343,7 +348,7 @@ function AboutUs() {
                   </>
                 ) : null}
               </div>
-            </div>
+            </div>}
           </div>
         </div>
       </div>

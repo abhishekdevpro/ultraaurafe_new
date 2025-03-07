@@ -98,7 +98,7 @@ function AdminAboutus() {
   const toggleSection = (id) => {
     setActiveSection(activeSection === id ? null : id);
   };
-
+console.log(sections,"llll");
   return (
     <>
       <div className="accordion-container">
