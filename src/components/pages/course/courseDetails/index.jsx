@@ -60,6 +60,7 @@ const CourseDetails = () => {
     title: courseData.data.course_title ,
     description: courseDescription,
   };
+  console.log(courseData.data.user_type_id,"courseData.user_type_id");
   return (
     <> 
     <MetaComponent meta={metadata}/>
@@ -93,7 +94,9 @@ const CourseDetails = () => {
                 <div className="about-instructor align-items-center">
                   <div className="abt-instructor-img">
                     <Link
-                      to={`/instructor/instructor-profile/${courseData.data.trainer_id}`}
+                      // to={`/instructor/instructor-profile/${courseData.data.trainer_id}?user_type=${courseData.user_type_id}`}
+                      to={`/instructor/instructor-profile/${courseData.data.trainer_id}?user_type=${courseData.data.user_type_id}`}
+
                     >
                       <img
                         src={`https://api.novajobs.us${courseData.data.trainer_photo}`}
@@ -105,7 +108,8 @@ const CourseDetails = () => {
                   <div className="instructor-detail me-3">
                     <h5>
                       <Link
-                        to={`/instructor/instructor-profile/${courseData.data.trainer_id}`}
+                         to={`/instructor/instructor-profile/${courseData.data.trainer_id}${courseData.data.user_type_id === 4 ? `?user_type=${courseData.data.user_type_id}` : ''}`}
+
                       >
                         {courseData.data.trainer_first_name ||
                           "Instructor Name"}{" "}
