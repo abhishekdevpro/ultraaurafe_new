@@ -155,7 +155,7 @@ const MeetTheExpert = () => {
   const expert = {
     id: "1",
     name: "UltraAura Editorial Team",
-    title: "Empowered AI Edication.",
+    title: "Empowered AI Education.",
     bio: "At UltraAura, our courses are meticulously reviewed by industry experts to ensure the highest quality. We prioritize clarity, skill enhancement, and an easy-to-understand learning experience, providing learners with valuable, industry-relevant knowledge.",
     logo: logo // Replace with your actual logo path
   };
