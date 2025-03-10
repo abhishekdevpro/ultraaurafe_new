@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
@@ -229,11 +228,11 @@ const VideoSection = styled.div`
 //   const [isClassAdded, setIsClassAdded] = useState([]);
 //   const token = localStorage.getItem("token");
 //   const [isExpanded, setIsExpanded] = useState(false);
- 
+
 //   const [showTestModal, setShowTestModal] = useState(false);
 //   const [userInfo, setUserInfo] = useState("");
 //   const [isYoutubeVideo, setIsYoutubeVideo] = useState(false);
-  
+
 //   useEffect(() => {
 //     // Check if the videoUrl is a YouTube URL
 //     if (videoUrl) {
@@ -242,7 +241,7 @@ const VideoSection = styled.div`
 //       console.log(courseData.youtube_url,"uutube")
 //     }
 //   }, [videoUrl]);
-  
+
 //   const toggleReadMore = () => {
 //     setIsExpanded(!isExpanded);
 //   };
@@ -462,11 +461,11 @@ const VideoSection = styled.div`
 //     }, 2000);
 //   };
 //   const isFavorite = isClassAdded[courseData.course_id];
- 
+
 //   return (
 //     <>
 //       <div className="col-lg-4">
-        
+
 //         <div className="sidebar-sec">
 //           {/* Video Section */}
 //           <VideoSection>
@@ -474,7 +473,7 @@ const VideoSection = styled.div`
 //               <div className="card">
 //                 <div className="card-body">
 //                   {/* {videoPlaying ? ( */}
-//                   {videoUrl ? 
+//                   {videoUrl ?
 //                      isYoutubeVideo ? (
 //                       // YouTube Player
 //                       <div className="youtube-player-container">
@@ -490,7 +489,7 @@ const VideoSection = styled.div`
 //                           onError={() => setLoading(false)}
 //                           config={{
 //                             youtube: {
-//                               playerVars: { 
+//                               playerVars: {
 //                                 showinfo: 1,
 //                                 controls: 1,
 //                                 rel: 0
@@ -515,7 +514,7 @@ const VideoSection = styled.div`
 //                       Your browser does not support the video tag.
 //                     </video>
 //                   ) : (
-                    
+
 //                     <div className="video-thumbnail-container">
 //                       <button
 //                         onClick={handleVideoPlay}
@@ -579,8 +578,7 @@ const VideoSection = styled.div`
 //           // beacon: {
 //           //   display: 'none', // Just in case, ensure it never displays
 //           // },
-         
-      
+
 //         }}
 //       /> */}
 //                   <div className="video-details">
@@ -844,7 +842,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   const [showTestModal, setShowTestModal] = useState(false);
   const [userInfo, setUserInfo] = useState("");
   const [isYoutubeVideo, setIsYoutubeVideo] = useState(false);
-  
+
   useEffect(() => {
     // When videoUrl changes, check if we should use YouTube or regular video
     if (videoUrl) {
@@ -855,7 +853,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
       }
     }
   }, [videoUrl, courseFeatureData.youtube_url]);
-  
+
   const toggleReadMore = () => {
     setIsExpanded(!isExpanded);
   };
@@ -876,7 +874,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
 
   // Check if content needs to be truncated
   const isTruncated = fullContent.length > truncateLength;
-  
+
   const handleEnrollClick = () => {
     if (token) {
       setShowPopup(true);
@@ -937,11 +935,11 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
       console.error("Error fetching user profile:", error);
     }
   };
-  
+
   useEffect(() => {
     fetchProfile();
   }, [userInfo.id]);
-  
+
   const handleBuyNow = async () => {
     if (token) {
       try {
@@ -1031,9 +1029,9 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
         }
       );
 
-     if(response.status==200){
-      toast.success(response.data.message ||"Purchase Successful ");
-     }
+      if (response.status == 200) {
+        toast.success(response.data.message || "Purchase Successful ");
+      }
 
       setShowPopup(false);
       setTimeout(function () {
@@ -1049,7 +1047,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
 
   const handleVideoPlay = async () => {
     setLoading(true);
-    
+
     // First check if there's a YouTube URL
     if (courseFeatureData.youtube_url) {
       setIsYoutubeVideo(true);
@@ -1078,9 +1076,9 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
       }
     }
   };
-  
+
   const isFavorite = isClassAdded[courseData.course_id];
- console.log(courseFeatureData.youtube_url,"jjjj");
+  console.log(courseFeatureData.youtube_url, "jjjj");
   return (
     <>
       <div className="col-lg-4">
@@ -1106,17 +1104,24 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                           onError={() => setLoading(false)}
                           config={{
                             youtube: {
-                              playerVars: { 
+                              playerVars: {
                                 showinfo: 1,
                                 controls: 1,
-                                rel: 0
-                              }
-                            }
+                                rel: 0,
+                              },
+                            },
                           }}
                         />
                         {loading && (
-                          <div className="video-loader">
-                            <img src={Loader} alt="Loading..." className="loader" />
+                          <div className="d-flex justify-content-center align-items-center">
+                            <div
+                              className="spinner-border text-primary"
+                              role="status"
+                            >
+                              <span className="visually-hidden">
+                                Loading...
+                              </span>
+                            </div>
                           </div>
                         )}
                       </div>
@@ -1148,9 +1153,14 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                           <div className="default-thumbnail">
                             <img
                               src={
-                                courseFeatureData?.course_banner_image?.startsWith("http")
+                                courseFeatureData?.course_banner_image?.startsWith(
+                                  "http"
+                                )
                                   ? courseFeatureData.course_banner_image
-                                  : `https://api.novajobs.us${courseFeatureData?.course_banner_image || ""}`
+                                  : `https://api.novajobs.us${
+                                      courseFeatureData?.course_banner_image ||
+                                      ""
+                                    }`
                               }
                               alt="Course Banner"
                               className="default-image"
@@ -1163,7 +1173,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                       </button>
                     </div>
                   )}
-                  
+
                   <div className="video-details">
                     {courseFeatureData.course_price == 0 ? (
                       <div className="course-fee">
@@ -1404,7 +1414,6 @@ SidebarSection.propTypes = {
     is_student_enroll: PropTypes.bool.isRequired,
     is_certificate: PropTypes.bool.isRequired,
   }).isRequired,
-  
 };
 
 export default SidebarSection;
