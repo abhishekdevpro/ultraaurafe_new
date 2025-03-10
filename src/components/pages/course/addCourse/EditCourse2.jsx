@@ -32,6 +32,7 @@ const EditCourse2 = () => {
     course_description: "",
     course_banner_image: "",
     course_intro_video: null,
+    youtube_url: "",
     requirements: "",
     course_price: "",
     after_discount_price: "",
@@ -96,9 +97,21 @@ const EditCourse2 = () => {
   }
 
   // Handle file changes
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0]
+  //   setCourseData((prevState) => ({ ...prevState, [e.target.name]: file }))
+  // }
   const handleFileChange = (e) => {
-    const file = e.target.files[0]
-    setCourseData((prevState) => ({ ...prevState, [e.target.name]: file }))
+    const { name, type, files, value } = e.target
+    
+    // If it's a file input
+    if (type === 'file' && files && files.length > 0) {
+      setCourseData((prevState) => ({ ...prevState, [name]: files[0] }))
+    } 
+    // If it's a text input (for YouTube URL)
+    else if (type === 'text' || !type) {
+      setCourseData((prevState) => ({ ...prevState, [name]: value }))
+    }
   }
 
   // Handle rich text editor changes
