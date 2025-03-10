@@ -255,7 +255,7 @@ export function AdminHeader() {
   return (
     <HeaderWrapper navbar={navbar}>
       <NavbarContainer>
-        <Link to="/admin/dashboard">
+        <Link to="/admin/admin-dashboard">
           <Logo src={logo5} alt="Logo" />
         </Link>
         <MenuButton onClick={toggleMobileMenu} aria-label="Open menu">

@@ -34,13 +34,12 @@ const CourseTable = () => {
       });
   }, []);
 
-  console.log(courses, "courses hu");
+  // console.log(courses, "courses hu");
 
   // Function to handle course edit
   const handleEditCourse = (courseId, isActive) => {
-    if (localStorage.getItem("adminToken") || isActive) {
-      // Admin can edit the course regardless of the active status
-      // or if the course is active, allow the user to edit it
+    console.log(courseId,isActive,"sjbv bz");
+    if (localStorage.getItem("adminToken")) {
       navigate(`/course-details/${courseId}`);
       console.log(`Edit course with ID: ${courseId}`);
     } else {
@@ -110,6 +109,7 @@ const CourseTable = () => {
                   )}
                   <td>
                     <button
+                    disabled={!course.is_active}
                       className="btn btn-primary action-btn"
                       onClick={() =>
                         handleEditCourse(course.id, course.is_active)
