@@ -1088,6 +1088,7 @@ const AddCourse = () => {
     course_description: "",
     course_banner_image: null,
     course_intro_video: null,
+    youtube_url: "",
     requirements: "",
     course_price: "",
     after_discount_price: "",
