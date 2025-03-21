@@ -508,11 +508,9 @@ const SectionsList = () => {
   const [expandedSectionId, setExpandedSectionId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const trainerToken = localStorage.getItem("trainerToken");
-  const vendorToken = localStorage.getItem("vendorToken");
   const adminToken = localStorage.getItem("adminToken");
-
-  let role = trainerToken ? "instructor" : vendorToken ? "vendor" : adminToken ? "admin" : null;
+  console.log(adminToken,id,"courseId");
+  let role =  "admin";
 
   if (!role) {
     throw new Error("No valid token found for authentication");
