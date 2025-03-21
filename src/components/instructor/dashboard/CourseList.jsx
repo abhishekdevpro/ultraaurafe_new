@@ -41,7 +41,7 @@ const CourseTable = () => {
     console.log(courseId,isActive,"sjbv bz");
     if (localStorage.getItem("adminToken")) {
       navigate(`/course-details/${courseId}`);
-      console.log(`Edit course with ID: ${courseId}`);
+      // console.log(`Edit course with ID: ${courseId}`);
     } else {
       console.log(
         `Course with ID: ${courseId} is not active and cannot be edited.`
