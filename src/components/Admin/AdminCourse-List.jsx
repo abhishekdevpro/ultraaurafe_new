@@ -1063,6 +1063,13 @@ const AdminCourseList = () => {
   useEffect(() => {
     fetchCourses(sortOrder);
   }, [token, sortOrder]);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     fetchCourses(sortOrder);
+  //   }, 300); // 300ms delay
+  
+  //   return () => clearTimeout(timer);
+  // }, [token, sortOrder]);
 
   const fetchCourses = async (order) => {
     setLoading(true);
@@ -1076,6 +1083,7 @@ const AdminCourseList = () => {
         }
       );
       setAllCourses(response.data.data);
+      // setLoading(false)
     } catch (error) {
       console.error("Error fetching courses:", error);
       toast.error("Error fetching courses. Please try again.");
@@ -1194,7 +1202,7 @@ const AdminCourseList = () => {
       console.log(error);
     }
   }
-  console.log(currentCourses,"currentCourses");
+  // console.log(currentCourses,"currentCourses");
   return (
     <div className="main-wrapper">
       <AdminHeader  />
