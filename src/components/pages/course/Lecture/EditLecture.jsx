@@ -11,10 +11,7 @@ import { debounce } from "lodash";
 
 const EditLecture = () => {
   const { courseid, sectionid, lectureid } = useParams();
-  const token =
-    localStorage.getItem("trainerToken") ||
-    localStorage.getItem("vendorToken") ||
-    localStorage.getItem("adminToken");
+  const token = localStorage.getItem("adminToken");
 
   const [lectureData, setLectureData] = useState({
     lecture_name: "",
@@ -41,13 +38,9 @@ const EditLecture = () => {
         const data = response.data.data;
 
         let parsedLinks = "";
-        try {
-          parsedLinks = JSON.parse(data.lecture_resources_link);
-        } catch (jsonError) {
-          console.error("Invalid JSON in lecture_resources_link:", jsonError);
-          parsedLinks = data.lecture_resources_link;
-        }
-
+        
+        parsedLinks = data?.lecture_resources_link
+        
         setLectureData({
           lecture_name: data.lecture_name,
           links: parsedLinks || "",
@@ -55,8 +48,11 @@ const EditLecture = () => {
         });
 
         // Set existing files (if any) separately
-        setVideoFile(data.lecture_videos[0]?.video_url || null);
-        setPdfFile(data.lecture_resources_pdf[0] || null);
+        // setVideoFile(data.lecture_videos[0]?.video_url || null);
+        setVideoFile(data?.lecture_videos?.[0]?.video_url || null);
+        // setPdfFile(data?.lecture_resources_pdf[0] || null);
+        setPdfFile(Array.isArray(data?.lecture_resources_pdf) && data.lecture_resources_pdf.length > 0 ? data.lecture_resources_pdf[0] : null);
+
       } catch (error) {
         console.error("Error fetching lecture data:", error);
         toast.error("Error fetching lecture data.");
@@ -128,7 +124,7 @@ const EditLecture = () => {
     }, 300),
     [courseid, sectionid, lectureid, token, lectureData, videoFile, pdfFile, isLoading, navigate]
   );
-
+console.log(lectureData,"lddd");
   return (
     <div className="main-wrapper">
       <CourseHeader activeMenu={"EditLecture"} />
@@ -143,7 +139,7 @@ const EditLecture = () => {
                   <ul className="nav">
                     <li>
                       <Link
-                        to="/instructor/instructor-dashboard"
+                        to="/admin/admin-dashboard"
                         className="btn btn-black"
                       >
                         Back to Course

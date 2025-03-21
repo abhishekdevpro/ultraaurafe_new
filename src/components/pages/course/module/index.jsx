@@ -466,7 +466,7 @@ const HeadModule = ({ courseId }) => {
   const profile = useRef();
   const navigate = useNavigate();
   
-   console.log("CourseId is " + courseId);
+  //  console.log("CourseId is " + courseId);
   useOnClickOutside(profile, () => setShowProfile(false));
 
   const trainerToken = localStorage.getItem("trainerToken");
