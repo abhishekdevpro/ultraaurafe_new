@@ -509,7 +509,7 @@ const SectionsList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const adminToken = localStorage.getItem("adminToken");
-  console.log(adminToken,id,"courseId");
+  // console.log(adminToken,id,"courseId");
   let role =  "admin";
 
   if (!role) {
@@ -520,7 +520,11 @@ const SectionsList = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `https://api.novajobs.us/api/students/course-details/${id}`
+        `https://api.novajobs.us/api/students/course-details/${id}`,{
+          headers:{
+            Authorization:adminToken
+          }
+        }
       );
       setSections(response.data.data.section_response || []);
       setCourseTitle(response.data.data.course_title);
