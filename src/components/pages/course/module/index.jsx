@@ -476,22 +476,22 @@ const HeadModule = ({ courseId }) => {
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const token = trainerToken || studentToken || adminToken || vendorToken;
+      const token = adminToken;
 
       try {
-        let apiUrl = "";
+        let apiUrl = "https://api.novajobs.us/api/uaadmin/profile";
 
-        if (trainerToken) {
-          apiUrl = "https://api.novajobs.us/api/trainers/profile";
-        } else if (studentToken) {
-          apiUrl = "https://api.novajobs.us/api/students/profile";
-        } else if (adminToken) {
-          apiUrl = "https://api.novajobs.us/api/admin/profile";
-        } else if (vendorToken) {
-          apiUrl = "https://api.novajobs.us/api/vendors/profile";
-        } else {
-          throw new Error("No valid token found!");
-        }
+        // if (trainerToken) {
+        //   apiUrl = "https://api.novajobs.us/api/trainers/profile";
+        // } else if (studentToken) {
+        //   apiUrl = "https://api.novajobs.us/api/students/profile";
+        // } else if (adminToken) {
+        //   apiUrl = "https://api.novajobs.us/api/admin/profile";
+        // } else if (vendorToken) {
+        //   apiUrl = "https://api.novajobs.us/api/vendors/profile";
+        // } else {
+        //   throw new Error("No valid token found!");
+        // }
         const response = await axios.get(apiUrl, {
           headers: {
             Authorization: `${token}`,

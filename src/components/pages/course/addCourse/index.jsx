@@ -1352,17 +1352,9 @@ const AddCourse = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   // Get token and determine user type
-  const token =
-    localStorage.getItem("trainerToken") || localStorage.getItem("vendorToken") || localStorage.getItem("adminToken")
-  let userType
-  if (localStorage.getItem("trainerToken")) {
-    userType = "instructor"
-  } else if (localStorage.getItem("vendorToken")) {
-    userType = "vendor"
-  } else if (localStorage.getItem("adminToken")) {
-    userType = "admin"
-  }
-
+  const token = localStorage.getItem("adminToken")
+  let userType = "admin"
+ 
   // Load data on component mount
   useEffect(() => {
     const loadData = async () => {
