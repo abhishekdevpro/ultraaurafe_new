@@ -842,7 +842,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   const [showTestModal, setShowTestModal] = useState(false);
   const [userInfo, setUserInfo] = useState("");
   const [isYoutubeVideo, setIsYoutubeVideo] = useState(false);
-
+  const [isEnrolled, setIsEnrolled] = useState(false);
   useEffect(() => {
     // When videoUrl changes, check if we should use YouTube or regular video
     if (videoUrl) {
@@ -875,13 +875,13 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   // Check if content needs to be truncated
   const isTruncated = fullContent.length > truncateLength;
 
-  const handleEnrollClick = () => {
-    if (token) {
-      setShowPopup(true);
-    } else {
-      navigate("/login");
-    }
-  };
+  // const handleEnrollClick = () => {
+  //   if (token) {
+  //     setShowPopup(true);
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // };
 
   const handleDownload = async () => {
     try {
@@ -959,6 +959,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
         toast.success(
           response.data.message || "Course Added To cart Successfully "
         );
+        setIsEnrolled(true);
         window.location.href = "/cart";
       } catch (error) {
         console.error("Error adding item to cart:", error);
@@ -1216,7 +1217,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                       </div>
                     </div>
                     <ButtonWrapper>
-                      {token && courseData.is_student_enroll ? (
+                      {/* {token && courseData.is_student_enroll ? (
                         <button className="btn-enroll w-100" disabled>
                           Enrolled
                         </button>
@@ -1227,14 +1228,15 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                         >
                           Enroll Now
                         </button>
-                      )}
+                      )} */}
 
                       {
                         <button
                           className="btn-enroll w-100 buynow"
                           onClick={handleBuyNow}
+                          disabled={isEnrolled} // Disable button after enrollment
                         >
-                          Buy now
+                          {isEnrolled ? "Enrolled" : "Buy Now"}
                         </button>
                       }
 
