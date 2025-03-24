@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import PropTypes from "prop-types";
+import React, { useState } from "react";
+import styled from "styled-components";
 
 const DescriptionContainer = styled.div`
   max-height: 300px;
@@ -31,7 +31,7 @@ const DescriptionContainer = styled.div`
   scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
 
   /* Hide scrollbar for IE, Edge and Firefox */
-  -ms-overflow-style: none;  /* IE and Edge */
+  -ms-overflow-style: none; /* IE and Edge */
 
   /* Show scrollbar on hover for Firefox */
   &:hover {
@@ -39,14 +39,47 @@ const DescriptionContainer = styled.div`
   }
 `;
 
+// const CourseDescriptionWrapper = styled.div`
+//   font-size: 16px;
+//   line-height: 1.6;
+//   color: white;
+//   margin-bottom: 20px;
+//   max-height: ${({ isExpanded }) => (isExpanded ? "none" : "130px")};
+//   overflow: hidden;
+//   transition: max-height 0.3s ease-in-out;
+
+//   p {
+//     margin-bottom: 15px;
+//   }
+
+//   ul,
+//   ol {
+//     padding-left: 20px;
+//     margin-bottom: 15px;
+//   }
+
+//   li {
+//     margin-bottom: 5px;
+//   }
+
+//   strong {
+//     font-weight: 600;
+//     color: white;
+//   }
+// `;
 const CourseDescriptionWrapper = styled.div`
   font-size: 16px;
   line-height: 1.6;
-  color: white;
+  color: white !important;
   margin-bottom: 20px;
   max-height: ${({ isExpanded }) => (isExpanded ? "none" : "130px")};
   overflow: hidden;
   transition: max-height 0.3s ease-in-out;
+
+  /* Apply white color to all child elements */
+  * {
+    color: white !important;
+  }
 
   p {
     margin-bottom: 15px;
