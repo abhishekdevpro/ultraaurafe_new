@@ -26,7 +26,8 @@ const Button = styled.button`
   align-items: center;
   justify-content: center;
   padding: 10px;
-  background-color: #f0f0f0;
+  background-color: #1C2957;
+  color:white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
