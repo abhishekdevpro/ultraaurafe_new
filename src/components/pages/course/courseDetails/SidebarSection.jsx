@@ -959,6 +959,8 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
         toast.success(
           response.data.message || "Course Added To cart Successfully "
         );
+
+        console.log("isEnrolled updated:", isEnrolled);
         setIsEnrolled(true);
         window.location.href = "/cart";
       } catch (error) {
@@ -969,6 +971,26 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
       navigate("/login");
     }
   };
+  useEffect(() => {
+    const fetchCourseDetails = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.novajobs.us/api/students/pro/course-details/${courseId}`,
+          {
+            headers: {
+              Authorization: `${token}`,
+            },
+          }
+        );
+        const courseData = response.data.data;
+        setIsEnrolled(courseData.is_student_enroll); // Ensure this updates correctly
+      } catch (error) {
+        console.error("Error fetching course details:", error);
+      }
+    };
+
+    fetchCourseDetails();
+  }, [courseId, token]);
 
   const toggleClass = async (courseId, isFavorite) => {
     const updatedClasses = [...isClassAdded];
