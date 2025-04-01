@@ -1,0 +1,162 @@
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Playfair+Display:wght@700&display=swap");
+
+.certificate-container {
+  background-size: 100% 100%; /* Ensure full image is visible */
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.certificate-content {
+  padding: 100px;
+
+  max-width: 900px;
+  text-align: center;
+}
+
+.certificate-title {
+  font-family: "Playfair Display", serif;
+  font-size: 6rem;
+  font-weight: 700;
+  color: #123524;
+  letter-spacing: 2px;
+}
+
+.certificate-subtitle {
+  font-family: "Merriweather", serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: #000;
+  letter-spacing: 6px;
+  border-bottom: 2px solid #123524;
+  padding-bottom: 10px;
+}
+
+.certificate-text {
+  font-size: 1.2rem;
+  font-family: "Merriweather", serif;
+}
+
+.recipient-name {
+  font-family: "Playfair Display", serif;
+  font-weight: 900;
+  font-size: 4rem;
+  color: #123524;
+  border-bottom: 2px solid #123524;
+  padding-bottom: 10px;
+}
+
+.certificate-description {
+  font-size: 1.1rem;
+  font-family: "Merriweather", serif;
+}
+
+.signatures {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 40px;
+}
+
+.signature {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.title {
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: bold;
+  border-top: 2px solid #123524;
+}
+
+.certificate-id {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #123524;
+  margin-bottom: 5px;
+}
+.certification-idd {
+  position: absolute;
+  bottom: -12px; /* Adjust this value as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 100%;
+}
+.certificate-verification {
+  font-size: 1.2rem;
+}
+.certificate-logo {
+  position: absolute;
+  bottom: -40px;
+  right: 1px;
+}
+@media screen and (max-width: 768px) {
+  .certificate-content {
+    padding: 20px;
+    max-width: 90%;
+  }
+
+  .certificate-title {
+    font-size: 3rem;
+  }
+
+  .certificate-subtitle {
+    font-size: 1.5rem;
+    letter-spacing: 4px;
+  }
+
+  .recipient-name {
+    font-size: 2.5rem;
+  }
+
+  .certificate-description {
+    font-size: 1rem;
+  }
+
+  .signatures {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .signature {
+    font-size: 1.1rem;
+  }
+
+  .certificate-id {
+    font-size: 1rem;
+    bottom: -60px;
+    left: 0;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .certificate-title {
+    font-size: 2rem;
+  }
+
+  .certificate-subtitle {
+    font-size: 1.3rem;
+  }
+
+  .recipient-name {
+    font-size: 2rem;
+  }
+
+  .certificate-description {
+    font-size: 0.9rem;
+  }
+
+  .certificate-id {
+    font-size: 0.9rem;
+  }
+}
