@@ -348,6 +348,7 @@ const Footer = () => {
                 <FooterTitle>About us</FooterTitle>
                 <FooterMenuList>
                   <li><Link to="/about-us">About Us</Link></li>
+                  <li><Link to="/verify-certificate">Verify Certificate</Link></li>
                   <li><Link to="/careers">Careers</Link></li>
                   <li><Link to="/trainers">Trainers</Link></li>
                 </FooterMenuList>

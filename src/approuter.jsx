@@ -180,6 +180,7 @@ import Gauth from "./components/pages/login/G-auth";
 import AboutusForm from "./components/Admin/CMS/About/index.js";
 import PartnerList from "./components/Admin/PartnerList.jsx";
 import Certificate from "./components/pages/course/courseDetails/certificationDetails.jsx";
+import VerifyCertificate from "./components/footer/VerifyCertificate.jsx";
 
 const Approuter = () => {
   return (
@@ -244,6 +245,7 @@ const Approuter = () => {
         <Route path="/certificatedetails" element={<Certificate />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/verify-certificate" element={<VerifyCertificate />} />
         <Route path="/students/new-password/:token" element={<NewPassword />} />
         <Route
           path="/trainers/new-password/:token"

@@ -277,9 +277,9 @@ const InnerPage = ({ courses = [] }) => {
   const currentCourses = courses.slice(indexOfFirstCourse, indexOfLastCourse);
   const totalPages = Math.ceil(courses.length / coursesPerPage);
 
-  const toggleClass = async (index, courseId) => {
+  const toggleClass = async (courseId) => {
     const updatedClasses = [...isClassAdded];
-    updatedClasses[index] = !updatedClasses[index];
+    updatedClasses[courseId] = !updatedClasses[courseId];
     setIsClassAdded(updatedClasses);
 
     try {
