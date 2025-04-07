@@ -43,6 +43,41 @@ const TestLogin = () => {
     setEmail(evt.target.value);
   };
 
+  //   const handleSubmit = async (e) => {
+  //     e.preventDefault();
+  //     setLoading(true);
+  //     try {
+  //       const response = await axios.post(
+  //         `https://api.novajobs.us/api/${role}/login`,
+  //         { email, password }
+  //       );
+  //       if (response.status === 200) {
+  //         console.log(response);
+  //         console.log("Token", response.data.data.token);
+  //         localStorage.setItem("token", response.data.data.token);
+  //         toast.success(response.data.message || "Login Successsfully!");
+  //         if (role === "students") {
+  //           navigate("/student/student-dashboard");
+  //         } else if (role === "trainers") {
+  //           window.location.href =
+  //             "https://trainers.ultraaura.education/instructor/instructor-dashboard";
+  //         } else if (role === "vendors") {
+  //           navigate("/vendor/vendor-dashboard");
+  //         } else {
+  //           navigate("/dashboard"); // fallback
+  //         }
+  //       } else {
+  //         toast.error("Login Failed ");
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //       toast.error(
+  //         error.response?.data?.message || "Failed to Login. Please try again."
+  //       );
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -51,28 +86,40 @@ const TestLogin = () => {
         `https://api.novajobs.us/api/${role}/login`,
         { email, password }
       );
+
       if (response.status === 200) {
-        console.log(response);
-        console.log("Token", response.data.data.token);
-        localStorage.setItem("token", response.data.data.token);
-        toast.success(response.data.message || "Login Successsfully!");
+        const token = response.data.data.token;
+
+        // Store token based on role
+        if (role === "students") {
+          localStorage.setItem("studentToken", token);
+        } else if (role === "trainers") {
+          localStorage.setItem("trainerToken", token);
+        } else if (role === "vendors") {
+          localStorage.setItem("vendorToken", token);
+        } else {
+          localStorage.setItem("token", token); // fallback
+        }
+
+        toast.success(response.data.message || "Logged in successfully!");
+
+        // Redirect
         if (role === "students") {
           navigate("/student/student-dashboard");
         } else if (role === "trainers") {
-          window.location.href =
-            "https://trainers.ultraaura.education/instructor/instructor-dashboard";
+          window.location.href = `https://trainers.ultraaura.education/instructor/instructor-dashboard/?${token}`;
         } else if (role === "vendors") {
           navigate("/vendor/vendor-dashboard");
         } else {
-          navigate("/dashboard"); // fallback
+          navigate("/dashboard");
         }
       } else {
-        toast.error("Login Failed ");
+        toast.error("Login Failed");
       }
     } catch (error) {
-      console.error(error);
+      console.error("Login Error:", error);
       toast.error(
-        error.response?.data?.message || "Failed to Login. Please try again."
+        error.response?.data?.message || "Failed to login. Please try again."
       );
     } finally {
       setLoading(false);
