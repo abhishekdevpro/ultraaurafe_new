@@ -68,7 +68,7 @@ function Introductions({ introductionData }) {
     if (!introductionData) {
       return;
     }
- 
+
     setHeading(introductionData.title || heading);
     setParagraph1Content(introductionData.paragraph1 || paragraph1Content);
     setParagraph1AContent(introductionData.paragraph2 || paragraph1AContent);
@@ -160,7 +160,6 @@ function Introductions({ introductionData }) {
 
   return (
     <>
-      
       <div className="mt-5">
         {authToken && (
           <button
@@ -514,7 +513,7 @@ function Introductions({ introductionData }) {
               <div className="mt-4 ">
                 {showpdfheading && <h3 className="mb-4">{pdfheading}</h3>}
               </div>
-              {showPdf && pdfPreview && (
+              {/* {showPdf && pdfPreview && (
                 <div className="mt-4 mb-4 text-center">
                   <iframe
                     src={pdfPreview}
@@ -526,6 +525,27 @@ function Introductions({ introductionData }) {
                       boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
                     }}
                   ></iframe>
+                </div>
+              )} */}
+              {showPdf && pdfPreview && (
+                <div className="mt-4 mb-4 text-center px-3">
+                  <div
+                    style={{
+                      maxWidth: "800px",
+                      margin: "0 auto",
+                    }}
+                  >
+                    <iframe
+                      src={pdfPreview}
+                      style={{
+                        width: "100%",
+                        height: "500px",
+                        border: "2px solid #ccc",
+                        borderRadius: "10px",
+                        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                      }}
+                    ></iframe>
+                  </div>
                 </div>
               )}
 
