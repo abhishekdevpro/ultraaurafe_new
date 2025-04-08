@@ -1272,7 +1272,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                             Download Certificate
                           </button>
                         )}
-                      {token && (
+                      {token && courseData.is_student_enroll && (
                         <button
                           className="btn-enroll w-100"
                           onClick={() => setShowTestModal(true)}

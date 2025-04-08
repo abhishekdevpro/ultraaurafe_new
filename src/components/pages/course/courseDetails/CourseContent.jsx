@@ -1,12 +1,12 @@
-
-import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
 // import { Link } from 'react-router-dom';
-import axios from 'axios';
-import styled from 'styled-components';
-import LectureListComponent from './LectureListComponents';
-import { ChevronDown } from 'lucide-react';
+import axios from "axios";
+import styled from "styled-components";
+import LectureListComponent from "./LectureListComponents";
+import { ChevronDown } from "lucide-react";
+import { toast } from "react-toastify";
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -85,7 +85,6 @@ const ErrorMessage = styled.div`
   margin-bottom: 16px;
 `;
 
-
 const PDFModal = styled(ModalContent)`
   width: 80%;
   height: 80vh;
@@ -97,7 +96,15 @@ const PDFViewer = styled.iframe`
   border: none;
 `;
 
-const VideoModal = ({ isOpen, onClose, lecture, streamingUrl, error, courseId, sectionId}) => {
+const VideoModal = ({
+  isOpen,
+  onClose,
+  lecture,
+  streamingUrl,
+  error,
+  courseId,
+  sectionId,
+}) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
@@ -111,28 +118,31 @@ const VideoModal = ({ isOpen, onClose, lecture, streamingUrl, error, courseId, s
 
   const handleClose = async () => {
     console.log(`Video closed at time: ${currentTime.toFixed(2)} seconds`);
-    
+
     const completed = currentTime >= duration;
     const progress = Math.round(currentTime);
-    const last_watched_at = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    const token = localStorage.getItem('token')
+    const last_watched_at = new Date()
+      .toISOString()
+      .slice(0, 19)
+      .replace("T", " ");
+    const token = localStorage.getItem("token");
     try {
       const response = await axios.post(
         `https://api.novajobs.us/api/trainers/video-history/${courseId}/${sectionId}/${lecture.id}/${lecture.lecture_videos[0].id}`,
         {
           last_watched_at,
           progress,
-          completed
+          completed,
         },
-        { 
+        {
           headers: {
             Authorization: `${token}`,
           },
         }
       );
-      console.log('Video history updated:', response.data);
+      console.log("Video history updated:", response.data);
     } catch (error) {
-      console.error('Error updating video history:', error);
+      console.error("Error updating video history:", error);
     }
 
     onClose(currentTime);
@@ -144,14 +154,12 @@ const VideoModal = ({ isOpen, onClose, lecture, streamingUrl, error, courseId, s
     <ModalOverlay onClick={handleClose}>
       <ModalContent onClick={(e) => e.stopPropagation()}>
         <ModalHeader>
-          <ModalTitle>{lecture?.lecture_name || 'Video Preview'}</ModalTitle>
+          <ModalTitle>{lecture?.lecture_name || "Video Preview"}</ModalTitle>
           <CloseButton onClick={handleClose}>&times;</CloseButton>
         </ModalHeader>
         <ModalBody>
           {error ? (
-            <ErrorMessage>
-              {error}
-            </ErrorMessage>
+            <ErrorMessage>{error}</ErrorMessage>
           ) : streamingUrl ? (
             <VideoPlayer
               src={streamingUrl}
@@ -161,9 +169,9 @@ const VideoModal = ({ isOpen, onClose, lecture, streamingUrl, error, courseId, s
               onTimeUpdate={handleTimeUpdate}
               onLoadedMetadata={handleLoadedMetadata}
               onContextMenu={(e) => e.preventDefault()} // disables right-click
-              onTouchStart={(e) => e.preventDefault()} 
+              onTouchStart={(e) => e.preventDefault()}
               // eslint-disable-next-line no-undef
-              onError={() => setError('Video failed to load.')}
+              onError={() => setError("Video failed to load.")}
             />
           ) : (
             <p>Loading video...</p>
@@ -196,7 +204,11 @@ const PDFViewerModal = ({ isOpen, onClose, pdfUrl }) => {
           <CloseButton onClick={onClose}>&times;</CloseButton>
         </ModalHeader>
         <ModalBody>
-          <PDFViewer src={`https://docs.google.com/viewer?url=${encodeURIComponent(pdfUrl)}&embedded=true`} />
+          <PDFViewer
+            src={`https://docs.google.com/viewer?url=${encodeURIComponent(
+              pdfUrl
+            )}&embedded=true`}
+          />
         </ModalBody>
       </PDFModal>
     </ModalOverlay>,
@@ -400,11 +412,11 @@ const SectionTitle = styled.span`
 
 const ChevronIcon = styled(ChevronDown)`
   transition: transform 0.3s ease;
-  transform: ${props => props.isOpen ? 'rotate(180deg)' : 'rotate(0)'};
+  transform: ${(props) => (props.isOpen ? "rotate(180deg)" : "rotate(0)")};
 `;
 
 const SectionContent = styled.div`
-  max-height: ${props => props.isOpen ? '1000px' : '0'};
+  max-height: ${(props) => (props.isOpen ? "1000px" : "0")};
   overflow: hidden;
   transition: max-height 1s ease-in-out;
 `;
@@ -419,15 +431,15 @@ const CourseContent = ({ courseData }) => {
   const [selectedPDFUrl, setSelectedPDFUrl] = useState(null);
   const [error, setError] = useState(null);
   const [currentSectionId, setCurrentSectionId] = useState(null);
-
+  const [isEnrolled, setIsEnrolled] = useState(false);
   useEffect(() => {
     if (showVideoModal) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [showVideoModal]);
 
@@ -441,30 +453,30 @@ const CourseContent = ({ courseData }) => {
     setError(null);
 
     if (!lecture.lecture_videos || lecture.lecture_videos.length === 0) {
-      setError('No videos available for this lecture');
+      setError("No videos available for this lecture");
       setShowVideoModal(true);
       return;
     }
 
     try {
-      setLoadingStates(prev => ({ ...prev, [lecture.id]: true }));
+      setLoadingStates((prev) => ({ ...prev, [lecture.id]: true }));
       const streamingURL = `https://api.novajobs.us/api/trainers/streaming/${courseData.course_id}/${sectionId}/${lecture.id}/${lecture.lecture_videos[0].id}`;
-      
+
       const response = await axios.get(streamingURL, {
-        responseType: 'blob',
+        responseType: "blob",
       });
 
-      const videoBlob = new Blob([response.data], { type: 'video/mp4' });
+      const videoBlob = new Blob([response.data], { type: "video/mp4" });
       const videoUrl = URL.createObjectURL(videoBlob);
 
       setStreamingUrl(videoUrl);
       setShowVideoModal(true);
     } catch (error) {
-      console.error('Error fetching video:', error);
-      setError('Unable to fetch video. Please try again later.');
+      console.error("Error fetching video:", error);
+      setError("Unable to fetch video. Please try again later.");
       setShowVideoModal(true);
     } finally {
-      setLoadingStates(prev => ({ ...prev, [lecture.id]: false }));
+      setLoadingStates((prev) => ({ ...prev, [lecture.id]: false }));
     }
   };
 
@@ -485,14 +497,41 @@ const CourseContent = ({ courseData }) => {
     setSelectedPDFUrl(null);
     setShowPDFModal(false);
   };
+  const token = localStorage.getItem("token");
+  useEffect(() => {
+    if (!token || !courseData?.course_id) return;
+
+    const checkEnrollmentStatus = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.novajobs.us/api/students/pro/course-details/${courseData.course_id}`,
+          {
+            headers: {
+              Authorization: `${token}`,
+            },
+          }
+        );
+        const data = response.data?.data;
+        setIsEnrolled(data?.is_student_enroll || false);
+      } catch (error) {
+        console.error("Error fetching course details:", error);
+        toast.error("Failed to verify course enrollment.");
+        setIsEnrolled(false);
+      }
+    };
+
+    checkEnrollmentStatus();
+  }, [courseData?.course_id, token]);
 
   return (
     <CourseContentWrapper>
       <CourseContentHeader>
         <Title>Course Content</Title>
-        <SectionCount>{courseData.section_response.length} Sections</SectionCount>
+        <SectionCount>
+          {courseData.section_response.length} Sections
+        </SectionCount>
       </CourseContentHeader>
-      {courseData.section_response.map((section) => (
+      {/* {courseData.section_response.map((section) => (
         <CourseSection key={section.id}>
           <SectionHeader onClick={() => toggleOpen(section.id)}>
             <SectionTitle>{section.section_name}</SectionTitle>
@@ -507,7 +546,33 @@ const CourseContent = ({ courseData }) => {
             />
           </SectionContent>
         </CourseSection>
-      ))}
+      ))} */}
+      {isEnrolled ? (
+        courseData?.section_response?.length > 0 ? (
+          courseData.section_response.map((section) => (
+            <CourseSection key={section.id}>
+              <SectionHeader onClick={() => toggleOpen(section.id)}>
+                <SectionTitle>{section.section_name}</SectionTitle>
+                <ChevronIcon size={20} isOpen={open[section.id]} />
+              </SectionHeader>
+              <SectionContent isOpen={open[section.id]}>
+                <LectureListComponent
+                  section={section}
+                  handlePreviewClick={handlePreviewClick}
+                  handlePDFClick={handlePDFClick}
+                  loadingStates={loadingStates}
+                />
+              </SectionContent>
+            </CourseSection>
+          ))
+        ) : (
+          <p>No sections found for this course.</p>
+        )
+      ) : (
+        <div className="text-center py-4 text-muted">
+          <p>Please enroll in this course to view the content.</p>
+        </div>
+      )}
 
       <VideoModal
         isOpen={showVideoModal}
@@ -552,9 +617,9 @@ CourseContent.propTypes = {
   }).isRequired,
 };
 
-
 CourseContent.propTypes = {
   courseData: PropTypes.shape({
+    is_student_enroll: PropTypes.bool,
     course_id: PropTypes.number.isRequired,
     section_response: PropTypes.arrayOf(
       PropTypes.shape({
