@@ -7,6 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CourseHeader from "../course/header";
+import { ArrowRight } from "lucide-react";
 
 const EmptyCartMessage = styled.div`
   text-align: center;
@@ -113,7 +114,7 @@ const Cart = () => {
         }
       );
       setCartData(response.data);
-      console.log(response.data)
+      console.log(response.data);
       setTotalPrice(response.data.total_price);
     } catch (error) {
       console.error("Error fetching cart data:", error);
@@ -154,7 +155,7 @@ const Cart = () => {
     //  console.log(cartData)
     // console.log("It is the total price"+totalPrice)
     // console.log("It is the net total of cart"+cartData.net_total)
-    
+
     //   if(cartData.net_total==0){
     //     try {
     //       const response = await axios.post(
@@ -170,22 +171,20 @@ const Cart = () => {
     //           },
     //         }
     //       );
-          
+
     //       toast.success("Purchase Successful ");
     //       console.log("Purchase successful:", response.data);
-          
-          
-          
+
     //       setTimeout(function() {
     //         window.location.reload();
-    //     }, 3000); 
+    //     }, 3000);
     //         } catch (error) {
     //       console.error("Error during purchase:", error);
     //       toast.error("There was an issue with the purchase. Please try again.");
     //     }
     //   }
-    //  else 
-     try{
+    //  else
+    try {
       const response = await axios.post(
         "https://api.novajobs.us/api/students/payment/checkout",
         {
@@ -255,21 +254,18 @@ const Cart = () => {
           },
         }
       );
-  
+
       // Display a success message
       toast.success(response.data.message || "Coupon Removed Successfully!");
-  
+
       // Refresh the page after the coupon is successfully removed
       window.location.reload();
     } catch (error) {
-      console.error('Failed to remove coupon:', error);
-  
+      console.error("Failed to remove coupon:", error);
+
       toast.error(error.response?.data?.message || "Error removing the coupon");
     }
   };
-  
-  
-  
 
   const renderContent = () => {
     if (loading) {
@@ -348,33 +344,35 @@ const Cart = () => {
                                   __html: item.description,
                                 }}
                               />
-                            </div><div className="container" style={{display:'flex'}}>
-
-                            
-                            <div className="" style={{marginRight:'8px'}}>
-                              <button className="btn btn-primary">
-                                Quantity: {item.quantity}
-                              </button>
                             </div>
-                            <div className="">
-                              <button
-                                className="btn btn-danger"
-                                onClick={() => handleRemove(item.course_id)}
-                                disabled={loading}
-                              >
-                                {loading ? (
-                                  <span>
-                                    <span
-                                      className="spinner-border spinner-border-sm"
-                                      role="status"
-                                      aria-hidden="true"
-                                    ></span>
-                                    Loading...
-                                  </span>
-                                ) : (
-                                  "Remove"
-                                )}
-                              </button>
+                            <div
+                              className="container"
+                              style={{ display: "flex" }}
+                            >
+                              <div className="" style={{ marginRight: "8px" }}>
+                                <button className="btn btn-primary">
+                                  Quantity: {item.quantity}
+                                </button>
+                              </div>
+                              <div className="">
+                                <button
+                                  className="btn btn-danger"
+                                  onClick={() => handleRemove(item.course_id)}
+                                  disabled={loading}
+                                >
+                                  {loading ? (
+                                    <span>
+                                      <span
+                                        className="spinner-border spinner-border-sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                      ></span>
+                                      Loading...
+                                    </span>
+                                  ) : (
+                                    "Remove"
+                                  )}
+                                </button>
                               </div>
                             </div>
                           </div>
@@ -406,7 +404,8 @@ const Cart = () => {
                             {cartData.discount ? (
                               <>
                                 <span className="text-muted text-decoration-line-through me-2">
-                                  ${totalPrice}
+                                  {/* ${totalPrice} */}$
+                                  {cartData.item.after_discount_price}
                                 </span>
                                 <span className="text-danger">
                                   ${cartData.discount}/- OFF
@@ -430,6 +429,62 @@ const Cart = () => {
                       </div>
                     </div>
                   </div>
+
+                  {/* <div className="col-lg-4 col-md-6">
+                    <div className="check-outs">
+                      {totalPrice > 0 ? (
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => setIsModalOpen(true)}
+                        >
+                          Apply Coupon
+                        </button>
+                      ) : (
+                        <button className="btn btn-primary" disabled>
+                          Apply Coupon
+                        </button>
+                      )}
+                    </div>
+                  </div> */}
+                  {/* <div className="col-lg-4 col-md-6">
+                    <div className="check-outs">
+                      <Link to="/course-list" className="btn btn-primary">
+                        Continue Shopping
+                      </Link>
+                    </div>
+                  </div> */}
+                  <div className="col-lg-4 col-md-6">
+                    <div className="check-outs">
+                      <Link
+                        to="/course-list"
+                        className="d-inline-flex align-items-center gap-1 text-primary fw-semibold"
+                      >
+                        Continue Shopping
+                        <ArrowRight size={18} />
+                      </Link>
+                    </div>
+                  </div>
+                  <div className="col-lg-4 col-md-6">
+                    <div className="check-outs">
+                      {cartData.is_coupon ? (
+                        <button
+                          className="btn btn-primary"
+                          onClick={handleRemoveCoupon}
+                        >
+                          Remove Coupon
+                        </button>
+                      ) : (
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => setIsModalOpen(true)}
+                          disabled={totalPrice <= 0}
+                        >
+                          Apply Coupon
+                        </button>
+                      )}
+                    </div>
+                  </div>
+
                   <div className="col-lg-4 col-md-6">
                     <div className="check-outs">
                       <button
@@ -450,50 +505,6 @@ const Cart = () => {
                           "Checkout"
                         )}
                       </button>
-                    </div>
-                  </div>
-                  {/* <div className="col-lg-4 col-md-6">
-                    <div className="check-outs">
-                      {totalPrice > 0 ? (
-                        <button
-                          className="btn btn-primary"
-                          onClick={() => setIsModalOpen(true)}
-                        >
-                          Apply Coupon
-                        </button>
-                      ) : (
-                        <button className="btn btn-primary" disabled>
-                          Apply Coupon
-                        </button>
-                      )}
-                    </div>
-                  </div> */}
-                  <div className="col-lg-4 col-md-6">
-  <div className="check-outs">
-    {cartData.is_coupon ? (
-      <button
-        className="btn btn-primary"
-        onClick={handleRemoveCoupon}
-      >
-        Remove Coupon
-      </button>
-    ) : (
-      <button
-        className="btn btn-primary"
-        onClick={() => setIsModalOpen(true)}
-        disabled={totalPrice <= 0}
-      >
-        Apply Coupon
-      </button>
-    )}
-  </div>
-</div>
-
-                  <div className="col-lg-4 col-md-6">
-                    <div className="check-outs">
-                      <Link to="/course-list" className="btn btn-primary">
-                        Continue Shopping
-                      </Link>
                     </div>
                   </div>
                 </div>
@@ -550,8 +561,6 @@ const Cart = () => {
             </ModalContent>
           </ModalOverlay>
         )}
-
-       
       </div>
       <Footer />
     </>

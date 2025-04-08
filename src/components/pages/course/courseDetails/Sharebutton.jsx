@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
@@ -11,7 +10,7 @@ import {
 } from "react-share";
 import {
   FaFacebookF,
-  FaTwitter,
+  // FaTwitter,
   FaWhatsapp,
   FaLinkedinIn,
   FaEnvelope,
@@ -26,8 +25,8 @@ const Button = styled.button`
   align-items: center;
   justify-content: center;
   padding: 10px;
-  background-color: #1C2957;
-  color:white;
+  background-color: #1c2957;
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -89,8 +88,9 @@ const ShareButton = ({ courseUrl }) => {
           </FacebookShareButton>
 
           <TwitterShareButton url={courseUrl}>
-            <SocialButton bgColor="#1da1f2">
-              <FaTwitter />
+            <SocialButton bgColor="black">
+              {/* <FaTwitter /> */}
+              <span style={{ fontWeight: "bold", fontSize: "20px" }}>𝕏</span>
             </SocialButton>
           </TwitterShareButton>
 

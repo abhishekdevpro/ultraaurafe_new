@@ -1,11 +1,10 @@
-
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import { Star } from 'lucide-react';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { Star } from "lucide-react";
 
 // Styled components
 const Card = styled.div`
@@ -59,7 +58,7 @@ const StarRating = styled.div`
 const StarIcon = styled(Star)`
   cursor: pointer;
   transition: color 0.2s;
-  color: ${(props) => (props.filled ? '#FFD700' : '#ddd')};
+  color: ${(props) => (props.filled ? "#FFD700" : "#ddd")};
 `;
 
 // CommentForm component
@@ -147,18 +146,20 @@ const StarIcon = styled(Star)`
 //   );
 // };
 const CommentForm = ({ courseId }) => {
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
+  const [isEnrolled, setIsEnrolled] = useState(false);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
 
     if (!token) {
-      toast.error('You need to log in first.');
-      navigate('/login');
+      toast.error("You need to log in first.");
+      navigate("/login");
       return;
     }
 
@@ -175,54 +176,89 @@ const CommentForm = ({ courseId }) => {
         {
           headers: {
             Authorization: `${token}`,
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
 
       if (response.status === 200) {
-        toast.success('Comment and rating posted successfully!');
-        setComment('');
+        toast.success("Comment and rating posted successfully!");
+        setComment("");
         setRating(0);
       } else {
-        toast.error('Failed to post comment and rating.');
+        toast.error("Failed to post comment and rating.");
       }
     } catch (error) {
-      console.error('Error posting comment and rating:', error);
-      toast.error('An error occurred while posting your comment and rating.');
+      console.error("Error posting comment and rating:", error);
+      toast.error("An error occurred while posting your comment and rating.");
     }
   };
+  const token = localStorage.getItem("token");
+  useEffect(() => {
+    const checkEnrollmentStatus = async () => {
+      if (!token) {
+        return;
+      }
+
+      try {
+        const response = await axios.get(
+          `https://api.novajobs.us/api/students/pro/course-details/${courseId}`,
+          {
+            headers: {
+              Authorization: `${token}`,
+            },
+          }
+        );
+
+        const courseData = response.data?.data;
+        setIsEnrolled(courseData?.is_student_enroll || false);
+      } catch (error) {
+        console.error("Error fetching course details:", error);
+        toast.error("Failed to verify course enrollment.");
+        setIsEnrolled(false);
+      }
+    };
+
+    checkEnrollmentStatus();
+  }, [courseId, token]);
 
   return (
     <Card>
       <Title>Post A Comment and Rating</Title>
-      <form onSubmit={handleSubmit}>
-        <StarRating>
-          {[1, 2, 3, 4, 5].map((star) => (
-            <StarIcon
-              key={star}
-              size={24}
-              filled={star <= rating}
-              onClick={() => setRating(star)}
+
+      {!isEnrolled ? (
+        <p className="text-muted">
+          You must purchase the course to leave a comment.
+        </p>
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <StarRating>
+            {[1, 2, 3, 4, 5].map((star) => (
+              <StarIcon
+                key={star}
+                size={24}
+                filled={star <= rating}
+                onClick={() => setRating(star)}
+              />
+            ))}
+          </StarRating>
+
+          <div style={{ marginBottom: "1rem" }}>
+            <TextArea
+              rows={4}
+              placeholder="Your Comments"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              required
             />
-          ))}
-        </StarRating>
-        <div style={{ marginBottom: '1rem' }}>
-          <TextArea
-            rows={4}
-            placeholder="Your Comments"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            required
-          />
-        </div>
-        <SubmitButton type="submit">Submit</SubmitButton>
-      </form>
+          </div>
+
+          <SubmitButton type="submit">Submit</SubmitButton>
+        </form>
+      )}
     </Card>
   );
 };
-
-
 
 // PropTypes for validation
 CommentForm.propTypes = {
