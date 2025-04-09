@@ -201,7 +201,7 @@ const MeetTheExpert = () => {
             </div>
             <div className="instructor-detail">
               <h5 className="fw-bold mb-2">
-                <Link to={`/expert-profile/${expert.id}`} className="text-decoration-none" style={{ color: '#1E3A8A' }}>
+                <Link to={``} className="text-decoration-none" style={{ color: '#1E3A8A' }}>
                   {expert.name}
                 </Link>
               </h5>

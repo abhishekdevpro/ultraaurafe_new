@@ -1,9 +1,8 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Icon19, Icon20 } from "../imagepath";
-import logo5 from '../../assets/Ultra_Aura.png';
+import logo5 from "../../assets/Ultra_Aura.png";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -78,7 +77,8 @@ const FooterAboutContent = styled.p`
 `;
 
 const FooterContactInfo = styled.div`
-  .footer-address, p {
+  .footer-address,
+  p {
     margin-bottom: 10px;
     font-size: 14px;
     display: flex;
@@ -102,10 +102,10 @@ const FooterTitle = styled.h2`
 const FooterMenuList = styled.ul`
   list-style: none;
   padding: 0;
-  
+
   li {
     margin-bottom: 10px;
-    
+
     a {
       text-decoration: none;
       color: #555;
@@ -218,8 +218,6 @@ const NewsletterForm = styled.form`
   }
 `;
 
-
-
 const FooterBottom = styled.div`
   background-color: #e9ecef;
   padding: 15px 0;
@@ -242,10 +240,10 @@ const PrivacyPolicy = styled.div`
     list-style: none;
     padding: 0;
     display: flex;
-    
+
     li {
       margin-right: 15px;
-      
+
       a {
         text-decoration: none;
         color: #555;
@@ -271,7 +269,7 @@ const CopyrightText = styled.p`
 `;
 
 const Footer = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -280,14 +278,17 @@ const Footer = () => {
   const handleSubscribe = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://api.novajobs.us/api/jobseeker/user-subscribe', { email });
+      const response = await axios.post(
+        "https://api.novajobs.us/api/jobseeker/user-subscribe",
+        { email }
+      );
       if (response.status === 200) {
-        toast.success('Subscribed successfully!');
-        setEmail('');
+        toast.success("Subscribed successfully!");
+        setEmail("");
       }
     } catch (error) {
-      toast.error('Subscription failed. Please try again.');
-      console.error('Subscription error:', error);
+      toast.error("Subscription failed. Please try again.");
+      console.error("Subscription error:", error);
     }
   };
   return (
@@ -299,20 +300,16 @@ const Footer = () => {
               <FooterWidget>
                 <FooterLogo>
                   <Link to={"/home"}>
-                  <img src={logo5} alt="logo" />
+                    <img src={logo5} alt="logo" />
                   </Link>
                 </FooterLogo>
                 <FooterAboutContent>
-                  <b>
-                    An AI enabled Edtech Company
-                    </b>
+                  <b>An AI enabled Edtech Company</b>
                 </FooterAboutContent>
                 <FooterContactInfo>
                   <div className="footer-address">
                     <img src={Icon20} alt="" />
-                    <p>
-                    P O Box 1084, Columbia, SC 29202
-                    </p>
+                    <p>P O Box 1084, Columbia, SC 29202</p>
                   </div>
                   <p>
                     <img src={Icon19} alt="" />
@@ -323,9 +320,12 @@ const Footer = () => {
                     hr@ultraaura.education
                   </p>
                 </FooterContactInfo>
-                 <FooterLogo2>
-                 <img src="https://abhishekdevpro-nova-home-care-fe.vercel.app/assets/logo2-06lVAt2c.png" alt="" />
-                 </FooterLogo2>
+                <FooterLogo2>
+                  <img
+                    src="https://abhishekdevpro-nova-home-care-fe.vercel.app/assets/logo2-06lVAt2c.png"
+                    alt=""
+                  />
+                </FooterLogo2>
               </FooterWidget>
               <FooterWidget>
                 <FooterTitle>Newsletter</FooterTitle>
@@ -347,30 +347,60 @@ const Footer = () => {
               <FooterWidget>
                 <FooterTitle>About us</FooterTitle>
                 <FooterMenuList>
-                  <li><Link to="/about-us">About Us</Link></li>
-                  <li><Link to="/verify-certificate">Verify Certificate</Link></li>
-                  <li><Link to="/careers">Careers</Link></li>
-                  <li><Link to="/trainers">Trainers</Link></li>
+                  <li>
+                    <Link to="/about-us">About Us</Link>
+                  </li>
+                  <li>
+                    <Link to="/verify-certificate">Verify Certificate</Link>
+                  </li>
+                  <li>
+                    <Link to="/careers">Careers</Link>
+                  </li>
+                  <li>
+                    <Link to="/trainers">Trainers</Link>
+                  </li>
                 </FooterMenuList>
               </FooterWidget>
               <FooterWidget>
                 <FooterTitle>For Students</FooterTitle>
                 <FooterMenuList>
-                  <li><Link to="/studentspage">Students</Link></li>
-                  <li><Link to="/refund">Refund Policy</Link></li>
-                  <li><Link to="/skilltests">Skill Tests</Link></li>
-                  <li><Link to="/certifications">Certifications</Link></li>
-                  <li><Link to="/ai-resume">AI Resume Building</Link></li>
+                  <li>
+                    <Link to="/studentspage">Students</Link>
+                  </li>
+                  <li>
+                    <Link to="/refund">Refund Policy</Link>
+                  </li>
+                  <li>
+                    <Link to="/skilltests">Skill Tests</Link>
+                  </li>
+                  <li>
+                    <Link to="/certifications">Certifications</Link>
+                  </li>
+                  <li>
+                    <Link to="/ai-resume">AI Resume Building</Link>
+                  </li>
                 </FooterMenuList>
               </FooterWidget>
               <FooterWidget>
                 <FooterTitle>
-                  <Link to={'/partners'}>Partner with UltraAura</Link>
+                  <Link to={"/partners"}>Partner with UltraAura</Link>
                 </FooterTitle>
                 <FooterMenuList>
-                  <li><Link to="https://ultraaura.education/login">Student Login</Link></li>
-                  <li><Link to="https://trainers.ultraaura.education/">Trainer Login</Link></li>
-                  <li><Link to="https://vendors.ultraaura.education/">Partner Signup</Link></li>
+                  <li>
+                    <Link to="https://ultraaura.education/login">
+                      Student Login
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="https://trainers.ultraaura.education/">
+                      Trainer Login
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="https://vendors.ultraaura.education/">
+                      Partner Signup
+                    </Link>
+                  </li>
                 </FooterMenuList>
               </FooterWidget>
             </LinksColumn>
@@ -382,11 +412,17 @@ const Footer = () => {
           <Copyright>
             <PrivacyPolicy>
               <ul>
-                <li><Link to="/term-condition">Terms</Link></li>
-                <li><Link to="/privacy-policy">Privacy</Link></li>
+                <li>
+                  <Link to="/term-condition">Terms</Link>
+                </li>
+                <li>
+                  <Link to="/privacy-policy">Privacy</Link>
+                </li>
               </ul>
             </PrivacyPolicy>
-            <CopyrightText>© 2024 UltraAura. All rights reserved.</CopyrightText>
+            <CopyrightText>
+              © {new Date().getFullYear()} UltraAura. All rights reserved.
+            </CopyrightText>
           </Copyright>
         </Container>
       </FooterBottom>

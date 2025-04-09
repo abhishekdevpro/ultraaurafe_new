@@ -980,6 +980,7 @@ const AllCoursesButton = styled(Link)`
 
   &:hover {
     background-color: #e63975;
+    color:white;
   }
 
   @media (max-width: 768px) {
