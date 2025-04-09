@@ -1,4 +1,3 @@
-
 // import React, { useState, useEffect, useCallback } from "react";
 // import { Link, useParams } from "react-router-dom";
 // import axios from "axios";
@@ -323,8 +322,8 @@ import Footer from "../../../footer";
 import CourseHeader from "../header";
 import LectureItem from "../Lecture/LectureItem";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
-import styled from 'styled-components';
-
+import styled from "styled-components";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 const CourseTitle = styled.h2`
   font-size: 28px;
   font-weight: bold;
@@ -510,7 +509,7 @@ const SectionsList = () => {
   const [error, setError] = useState(null);
   const adminToken = localStorage.getItem("adminToken");
   // console.log(adminToken,id,"courseId");
-  let role =  "admin";
+  let role = "admin";
 
   if (!role) {
     throw new Error("No valid token found for authentication");
@@ -520,10 +519,11 @@ const SectionsList = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `https://api.novajobs.us/api/students/course-details/${id}`,{
-          headers:{
-            Authorization:adminToken
-          }
+        `https://api.novajobs.us/api/students/course-details/${id}`,
+        {
+          headers: {
+            Authorization: adminToken,
+          },
         }
       );
       setSections(response.data.data.section_response || []);
@@ -551,7 +551,43 @@ const SectionsList = () => {
   if (error) {
     return <ErrorMessage>{error}</ErrorMessage>;
   }
+  const handleDragEnd = async (result) => {
+    if (!result.destination) return;
 
+    const reordered = Array.from(sections);
+    const [moved] = reordered.splice(result.source.index, 1);
+    reordered.splice(result.destination.index, 0, moved);
+
+    // Update local state
+    setSections(reordered);
+
+    // Get token
+    const token = adminToken;
+
+    // Loop through each section and update its order
+    try {
+      await Promise.all(
+        reordered.map((section, index) =>
+          axios.patch(
+            `https://api.novajobs.us/api/trainers/${id}/${section.id}/section`,
+            {
+              order: index + 1, // assuming order is 1-based
+              section_name: section.section_name,
+              section_objective: section.section_objective,
+            },
+            {
+              headers: {
+                Authorization: token,
+                "Content-Type": "application/json",
+              },
+            }
+          )
+        )
+      );
+    } catch (err) {
+      console.error("Failed to update section order", err);
+    }
+  };
   return (
     <div className="main-wrapper">
       <CourseHeader activeMenu={"SectionsList"} />
@@ -565,19 +601,28 @@ const SectionsList = () => {
                 <ButtonGroup>
                   <ul className="nav">
                     <li>
-                      <Link to={`/edit-course/${id}`} className="btn btn-secondary">
+                      <Link
+                        to={`/edit-course/${id}`}
+                        className="btn btn-secondary"
+                      >
                         <FeatherIcon icon="edit" className="feather" />
                         <span>Edit Course</span>
                       </Link>
                     </li>
                     <li>
-                      <Link to={`/add-section/${id}`} className="btn btn-primary">
+                      <Link
+                        to={`/add-section/${id}`}
+                        className="btn btn-primary"
+                      >
                         <FeatherIcon icon="plus-circle" className="feather" />
                         <span>Add New Section</span>
                       </Link>
                     </li>
                     <li>
-                      <Link to={`/${role}/${role}-dashboard`} className="btn btn-black">
+                      <Link
+                        to={`/${role}/${role}-dashboard`}
+                        className="btn btn-black"
+                      >
                         <FeatherIcon icon="arrow-left" className="feather" />
                         <span>Back</span>
                       </Link>
@@ -602,67 +647,175 @@ const SectionsList = () => {
                       </Link>
                     </div>
                   ) : (
-                    sections.map((section) => (
-                      <SectionItem key={section.id}>
-                        <SectionHeader onClick={() => toggleSection(section.id)}>
-                          <h5>{section.section_name}</h5>
-                          <div className="button-group">
-                            <Link
-                              to={`/edit-section/${id}/${section.id}`}
-                              className="btn btn-sm btn-warning"
-                            >
-                              <FeatherIcon icon="edit" className="me-2" />
-                              <span>Edit</span>
-                            </Link>
-                            <button
-                              className="btn btn-sm btn-info"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                toggleSection(section.id);
-                              }}
-                            >
-                              {expandedSectionId === section.id ? (
-                                <>
-                                  <FeatherIcon icon="x-circle" className="me-2" />
-                                  <span>Close</span>
-                                </>
-                              ) : (
-                                <>
-                                  <FeatherIcon icon="eye" className="me-2" />
-                                  <span>View</span>
-                                </>
-                              )}
-                            </button>
+                    // sections.map((section) => (
+                    //   <SectionItem key={section.id}>
+                    //     <SectionHeader
+                    //       onClick={() => toggleSection(section.id)}
+                    //     >
+                    //       <h5>{section.section_name}</h5>
+                    //       <div className="button-group">
+                    //         <Link
+                    //           to={`/edit-section/${id}/${section.id}`}
+                    //           className="btn btn-sm btn-warning"
+                    //         >
+                    //           <FeatherIcon icon="edit" className="me-2" />
+                    //           <span>Edit</span>
+                    //         </Link>
+                    //         <button
+                    //           className="btn btn-sm btn-info"
+                    //           onClick={(e) => {
+                    //             e.stopPropagation();
+                    //             toggleSection(section.id);
+                    //           }}
+                    //         >
+                    //           {expandedSectionId === section.id ? (
+                    //             <>
+                    //               <FeatherIcon
+                    //                 icon="x-circle"
+                    //                 className="me-2"
+                    //               />
+                    //               <span>Close</span>
+                    //             </>
+                    //           ) : (
+                    //             <>
+                    //               <FeatherIcon icon="eye" className="me-2" />
+                    //               <span>View</span>
+                    //             </>
+                    //           )}
+                    //         </button>
+                    //       </div>
+                    //     </SectionHeader>
+                    //     {expandedSectionId === section.id && (
+                    //       <SectionContent>
+                    //         <h6>Lectures:</h6>
+                    //         {section.lectures && section.lectures.length > 0 ? (
+                    //           <ul className="lecture-list">
+                    //             {section.lectures.map((lecture) => (
+                    //               <LectureItem
+                    //                 key={lecture.id}
+                    //                 lecture={lecture}
+                    //                 courseId={id}
+                    //                 sectionId={section.id}
+                    //               />
+                    //             ))}
+                    //           </ul>
+                    //         ) : (
+                    //           <p>No lectures available</p>
+                    //         )}
+                    //         <Link
+                    //           to={`/add-lecture/${id}/${section.id}`}
+                    //           className="btn btn-sm btn-primary mt-3"
+                    //         >
+                    //           <FeatherIcon icon="plus" className="me-2" />
+                    //           <span>Add Lecture</span>
+                    //         </Link>
+                    //       </SectionContent>
+                    //     )}
+                    //   </SectionItem>
+                    // ))
+                    <DragDropContext onDragEnd={handleDragEnd}>
+                      <Droppable droppableId="sections">
+                        {(provided) => (
+                          <div
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                          >
+                            {sections.map((section, index) => (
+                              <Draggable
+                                key={section.id}
+                                draggableId={section.id.toString()}
+                                index={index}
+                              >
+                                {(provided) => (
+                                  <SectionItem
+                                    ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    {...provided.dragHandleProps}
+                                  >
+                                    <SectionHeader
+                                      style={{
+                                        cursor: "move",
+                                      }}
+                                      onClick={() => toggleSection(section.id)}
+                                    >
+                                      <h5>{section.section_name}</h5>
+                                      <div className="button-group">
+                                        <Link
+                                          to={`/edit-section/${id}/${section.id}`}
+                                          className="btn btn-sm btn-warning"
+                                        >
+                                          <FeatherIcon
+                                            icon="edit"
+                                            className="me-2"
+                                          />
+                                          <span>Edit</span>
+                                        </Link>
+                                        <button
+                                          className="btn btn-sm btn-info"
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            toggleSection(section.id);
+                                          }}
+                                        >
+                                          {expandedSectionId === section.id ? (
+                                            <>
+                                              <FeatherIcon
+                                                icon="x-circle"
+                                                className="me-2"
+                                              />
+                                              <span>Close</span>
+                                            </>
+                                          ) : (
+                                            <>
+                                              <FeatherIcon
+                                                icon="eye"
+                                                className="me-2"
+                                              />
+                                              <span>View</span>
+                                            </>
+                                          )}
+                                        </button>
+                                      </div>
+                                    </SectionHeader>
+                                    {expandedSectionId === section.id && (
+                                      <SectionContent>
+                                        <h6>Lectures:</h6>
+                                        {section.lectures &&
+                                        section.lectures.length > 0 ? (
+                                          <ul className="lecture-list">
+                                            {section.lectures.map((lecture) => (
+                                              <LectureItem
+                                                key={lecture.id}
+                                                lecture={lecture}
+                                                courseId={id}
+                                                sectionId={section.id}
+                                              />
+                                            ))}
+                                          </ul>
+                                        ) : (
+                                          <p>No lectures available</p>
+                                        )}
+                                        <Link
+                                          to={`/add-lecture/${id}/${section.id}`}
+                                          className="btn btn-sm btn-primary mt-3"
+                                        >
+                                          <FeatherIcon
+                                            icon="plus"
+                                            className="me-2"
+                                          />
+                                          <span>Add Lecture</span>
+                                        </Link>
+                                      </SectionContent>
+                                    )}
+                                  </SectionItem>
+                                )}
+                              </Draggable>
+                            ))}
+                            {provided.placeholder}
                           </div>
-                        </SectionHeader>
-                        {expandedSectionId === section.id && (
-                          <SectionContent>
-                            <h6>Lectures:</h6>
-                            {section.lectures && section.lectures.length > 0 ? (
-                              <ul className="lecture-list">
-                                {section.lectures.map((lecture) => (
-                                  <LectureItem
-                                    key={lecture.id}
-                                    lecture={lecture}
-                                    courseId={id}
-                                    sectionId={section.id}
-                                  />
-                                ))}
-                              </ul>
-                            ) : (
-                              <p>No lectures available</p>
-                            )}
-                            <Link
-                              to={`/add-lecture/${id}/${section.id}`}
-                              className="btn btn-sm btn-primary mt-3"
-                            >
-                              <FeatherIcon icon="plus" className="me-2" />
-                              <span>Add Lecture</span>
-                            </Link>
-                          </SectionContent>
                         )}
-                      </SectionItem>
-                    ))
+                      </Droppable>
+                    </DragDropContext>
                   )}
                 </div>
               </div>
