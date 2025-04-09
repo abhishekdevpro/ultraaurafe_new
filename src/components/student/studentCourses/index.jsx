@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Search } from "lucide-react";
-import Select from "react-select";
+// import { Search } from "lucide-react";
+// import Select from "react-select";
 import axios from "axios";
 import { Icon1, Icon2 } from "../../imagepath";
 import StudentHeader from "../header";
@@ -64,8 +64,8 @@ const DynamicCourseList = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterOption, setFilterOption] = useState({
+  const [searchTerm] = useState("");
+  const [filterOption] = useState({
     value: "all",
     label: "All",
   });
@@ -117,19 +117,19 @@ const DynamicCourseList = () => {
     fetchCourses();
   }, []);
 
-  const options = [
-    { value: "all", label: "All" },
-    { value: "inprogress", label: "In Progress" },
-    { value: "completed", label: "Completed" },
-  ];
+  // const options = [
+  //   { value: "all", label: "All" },
+  //   { value: "inprogress", label: "In Progress" },
+  //   { value: "completed", label: "Completed" },
+  // ];
 
-  const style = {
-    control: (base) => ({
-      ...base,
-      border: 0,
-      boxShadow: "none",
-    }),
-  };
+  // const style = {
+  //   control: (base) => ({
+  //     ...base,
+  //     border: 0,
+  //     boxShadow: "none",
+  //   }),
+  // };
 
   const filteredCourses = courses.filter(
     (course) =>
@@ -249,7 +249,7 @@ const DynamicCourseList = () => {
                       >
                         {courses.length > 0 ? (
                           <>
-                            <div className="row">
+                            {/* <div className="row">
                               <div className="col-lg-12">
                                 <div className="show-filter choose-search-blk">
                                   <form action="#">
@@ -288,7 +288,7 @@ const DynamicCourseList = () => {
                                   </form>
                                 </div>
                               </div>
-                            </div>
+                            </div> */}
                             <div className="row">
                               {filteredCourses.length > 0 ? (
                                 filteredCourses.map((course, index) => (

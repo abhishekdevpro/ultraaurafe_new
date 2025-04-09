@@ -910,7 +910,7 @@ console.log(currentTextIndex);
                      </li>
                    </ul>
                    <div className="all-btn all-category d-flex align-items-center">
-                     <Link to="/login" className="btn btn-primary">
+                     <Link to="https://trainers.ultraaura.education/" className="btn btn-primary">
                      Join Us as a Trainer
                      </Link>
                    </div>

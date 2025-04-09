@@ -1,8 +1,7 @@
-
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import PageHeader from '../header';
-import Footer from '../../footer';
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import PageHeader from "../header";
+import Footer from "../../footer";
 
 const Container = styled.div`
   padding: 20px;
@@ -43,7 +42,8 @@ const Section = styled.section`
     color: #555;
   }
 
-  ul, ol {
+  ul,
+  ol {
     list-style-type: disc;
     padding-left: 20px;
     color: #555;
@@ -64,7 +64,7 @@ const CertificationPage = () => {
   }, []);
   return (
     <>
-      <PageHeader />
+      {/* <PageHeader />
       <Banner>
         <div className="page-banner">
           <div className="container">
@@ -159,6 +159,203 @@ const CertificationPage = () => {
         <Section>
           <h2>Get Started with UltraAura Certifications Today!</h2>
           <p>Ready to enhance your career and gain industry-recognized credentials? Start your journey today by enrolling in a course and earning a certification that will set you apart in the plumbing industry. Visit <a href="http://www.ultraaura.education">www.ultraaura.education</a> to explore our certification programs and get started.</p>
+        </Section>
+      </Container>
+      <Footer /> */}
+      <PageHeader />
+      <Banner>
+        <div className="page-banner">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12 col-12">
+                <h1 className="mb-0">UltraAura Certification Programs</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Banner>
+      <Container>
+        <Section>
+          <p>
+            At UltraAura, we believe in empowering individuals from all
+            backgrounds—whether skilled, semi-skilled, or unskilled—with
+            globally recognized certifications to boost their careers,
+            confidence, and opportunities.
+          </p>
+        </Section>
+
+        <Section>
+          <h2>Why Choose UltraAura Certifications?</h2>
+          <p>
+            Earning a certification from UltraAura offers numerous benefits:
+          </p>
+          <ul>
+            <li>
+              <strong>Global Recognition:</strong> Our certifications are
+              respected worldwide, helping you stand out in competitive job
+              markets.
+            </li>
+            <li>
+              <strong>Practical Skills:</strong> Our programs focus on hands-on,
+              skill-based learning that equips you with job-ready capabilities.
+            </li>
+            <li>
+              <strong>Career Advancement:</strong> Certifications boost your
+              employability, qualify you for better positions, and open new
+              career paths.
+            </li>
+            <li>
+              <strong>Flexible Learning:</strong> Complete requirements entirely
+              online at your own pace from anywhere in the world.
+            </li>
+            <li>
+              <strong>Inclusive Approach:</strong> Programs designed for all
+              skill levels, from beginners to advanced professionals.
+            </li>
+          </ul>
+        </Section>
+
+        <Section>
+          <h2>Our Certification Programs</h2>
+
+          <h3>1. Skill-Based Certifications (Technical & Non-Technical)</h3>
+          <p>
+            We offer professional certification programs across a wide range of
+            technical and non-technical fields. This includes IT, software
+            development, data analysis, digital marketing, project management,
+            business communication, customer service, and more. Whether you are
+            starting out or advancing your career, UltraAuras AI-powered
+            platform ensures practical, industry-relevant learning.
+          </p>
+
+          <h3>2. Certifications for Skilled & Unskilled Professions</h3>
+          <p>
+            Our mission extends beyond traditional education. We provide
+            certifications for skilled trades and unskilled professions as
+            well—helping individuals validate their experience and gain
+            credibility in areas such as caregiving, retail services, warehouse
+            operations, food handling, hospitality, and general labor roles.
+            These certifications are designed to support employment, upskilling,
+            and workforce readiness.
+          </p>
+
+          <h3>3. Diploma Programs</h3>
+          <p>
+            UltraAura offers diploma programs for learners seeking structured,
+            career-aligned education. These comprehensive programs blend
+            academic content with real-world application, preparing students for
+            direct entry into the workforce or further educational pathways.
+          </p>
+
+          <h3>4. Degree & Graduation-Level Certifications</h3>
+          <p>
+            We are in the process of acquiring university affiliations to
+            provide fully accredited degree and graduation-level programs. These
+            offerings will grant learners access to globally accepted
+            qualifications, opening doors to higher education, government
+            recognition, and leadership opportunities.
+          </p>
+        </Section>
+
+        <Section>
+          <h2>How to Earn a Certification</h2>
+          <ol>
+            <li>
+              <strong>Choose Your Program:</strong> Select a certification
+              program that aligns with your career goals and current skill
+              level.
+            </li>
+            <li>
+              <strong>Complete the Coursework:</strong> Access our high-quality
+              learning materials including video lectures, readings, practical
+              exercises, and assessments. Study at your own pace.
+            </li>
+            <li>
+              <strong>Pass the Skill Assessment:</strong> Demonstrate your
+              knowledge through comprehensive assessments that test both
+              theoretical understanding and practical application.
+            </li>
+            <li>
+              <strong>Receive Your Certification:</strong> Upon successful
+              completion, receive your official UltraAura certification that can
+              be downloaded, shared with employers, and verified online.
+            </li>
+          </ol>
+        </Section>
+
+        <Section>
+          <h2>Features of UltraAura Certifications</h2>
+          <ul>
+            <li>
+              <strong>Digital and Shareable:</strong> All certifications are
+              digital, making them easy to share on professional networks like
+              LinkedIn.
+            </li>
+            <li>
+              <strong>Verifiable Credentials:</strong> Each certification
+              includes a unique verification ID for employer validation.
+            </li>
+            <li>
+              <strong>Lifetime Access:</strong> Retain permanent access to your
+              certificates and course materials.
+            </li>
+            <li>
+              <strong>Industry-Aligned:</strong> Programs developed with input
+              from industry experts to ensure relevance.
+            </li>
+            <li>
+              <strong>AI-Enhanced Learning:</strong> Our platform adapts to your
+              learning style for a personalized experience.
+            </li>
+          </ul>
+        </Section>
+
+        <Section>
+          <h2>Certification Pathways</h2>
+          <p>
+            UltraAura offers flexible certification pathways to accommodate
+            diverse career goals:
+          </p>
+          <ul>
+            <li>
+              <strong>Skill Development Path:</strong> Build expertise
+              progressively from foundational to advanced certifications.
+            </li>
+            <li>
+              <strong>Career Transition Path:</strong> Acquire new skills and
+              credentials to pivot to a different career.
+            </li>
+            <li>
+              <strong>Professional Advancement Path:</strong> Enhance existing
+              skills with specialized certifications to qualify for promotion.
+            </li>
+            <li>
+              <strong>Academic Progression Path:</strong> Move from certificates
+              to diplomas and eventually to degree-level qualifications.
+            </li>
+          </ul>
+        </Section>
+
+        <Section>
+          <h2>Benefits for Employers</h2>
+          <p>
+            UltraAura certifications help employers identify candidates with
+            verified, job-ready skills across various industries. Our
+            comprehensive assessment process ensures that certified individuals
+            meet industry standards and are prepared to contribute immediately
+            to your organization.
+          </p>
+        </Section>
+
+        <Section>
+          <h2>Get Started with UltraAura Certifications Today!</h2>
+          <p>
+            Ready to enhance your career with globally recognized credentials?
+            Start your journey today by exploring our certification programs and
+            finding the right fit for your goals. Visit{" "}
+            <a href="http://www.ultraaura.education">www.ultraaura.education</a>{" "}
+            to learn more and enroll.
+          </p>
         </Section>
       </Container>
       <Footer />
