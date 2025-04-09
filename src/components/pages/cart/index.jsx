@@ -314,9 +314,9 @@ const Cart = () => {
                             </Link>
                             <div className="price">
                               <h3
-                                className={item.price === 0 ? "free-color" : ""}
+                                className={item.after_discount_price === 0 ? "free-color" : ""}
                               >
-                                {item.price === 0 ? "FREE" : `$${item.price}`}
+                                {item.after_discount_price === 0 ? "FREE" : `${item.after_discount_price}`}
                               </h3>
                             </div>
                           </div>

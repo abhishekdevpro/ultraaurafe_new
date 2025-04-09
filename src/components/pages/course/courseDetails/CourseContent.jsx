@@ -547,31 +547,32 @@ const CourseContent = ({ courseData }) => {
           </SectionContent>
         </CourseSection>
       ))} */}
-      {isEnrolled ? (
-        courseData?.section_response?.length > 0 ? (
-          courseData.section_response.map((section) => (
-            <CourseSection key={section.id}>
-              <SectionHeader onClick={() => toggleOpen(section.id)}>
-                <SectionTitle>{section.section_name}</SectionTitle>
-                <ChevronIcon size={20} isOpen={open[section.id]} />
-              </SectionHeader>
-              <SectionContent isOpen={open[section.id]}>
+      {courseData?.section_response?.length > 0 ? (
+        courseData.section_response.map((section) => (
+          <CourseSection key={section.id}>
+            <SectionHeader onClick={() => toggleOpen(section.id)}>
+              <SectionTitle>{section.section_name}</SectionTitle>
+              <ChevronIcon size={20} isOpen={open[section.id]} />
+            </SectionHeader>
+            <SectionContent isOpen={open[section.id]}>
+             
+              {isEnrolled ? (
                 <LectureListComponent
                   section={section}
                   handlePreviewClick={handlePreviewClick}
                   handlePDFClick={handlePDFClick}
                   loadingStates={loadingStates}
                 />
-              </SectionContent>
-            </CourseSection>
-          ))
-        ) : (
-          <p>No sections found for this course.</p>
-        )
+              ) : (
+                <p className="text-muted text-center m-2">
+                  Please enroll to view the Content.
+                </p>
+              )}
+            </SectionContent>
+          </CourseSection>
+        ))
       ) : (
-        <div className="text-center py-4 text-muted">
-          <p>Please enroll in this course to view the content.</p>
-        </div>
+        <p>No sections found for this course.</p>
       )}
 
       <VideoModal

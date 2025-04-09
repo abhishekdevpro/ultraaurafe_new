@@ -1,12 +1,14 @@
+
 // import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 // import React, { useState, useEffect, useRef } from "react";
 // import { Link, useNavigate } from "react-router-dom";
 // import useOnClickOutside from "../../../hooks/useOnClickOutside";
-// import { User11, Messages, Cart, Wish, Notification } from "../../../imagepath";
+// import { User11, Wish, Notification } from "../../../imagepath";
 // import axios from "axios";
 // import styled from "styled-components";
 // import PropTypes from "prop-types";
 // import { toast } from "react-toastify";
+// import { ShoppingCart } from "lucide-react";
 
 // const Nav = styled.ul`
 //   display: flex;
@@ -136,14 +138,14 @@
 //   }
 // `;
 
-// const HeadModule = ({courseId}) => {
-//   console.log(typeof(courseId));
+// const HeadModule = ({ courseId }) => {
 //   const [showProfile, setShowProfile] = useState(false);
 //   const [userInfo, setUserInfo] = useState(null);
 
 //   const profile = useRef();
 //   const navigate = useNavigate();
-
+  
+//   //  console.log("CourseId is " + courseId);
 //   useOnClickOutside(profile, () => setShowProfile(false));
 
 //   const trainerToken = localStorage.getItem("trainerToken");
@@ -153,28 +155,32 @@
 
 //   useEffect(() => {
 //     const fetchUserProfile = async () => {
-//       const token = trainerToken || studentToken || adminToken || vendorToken;
+      
 
 //       try {
-//         let apiUrl = "";
+//         let apiUrl = adminToken ? "https://api.novajobs.us/api/uaadmin/profile":"https://api.novajobs.us/api/students/profile"
 
-//         if (trainerToken) {
-//           apiUrl = "https://api.novajobs.us/api/trainers/profile";
-//         } else if (studentToken) {
-//           apiUrl = "https://api.novajobs.us/api/students/profile";
-//         } else if (adminToken) {
-//           apiUrl = "https://api.novajobs.us/api/admin/profile";
-//         } else if (vendorToken) {
-//           apiUrl = "https://api.novajobs.us/api/vendors/profile";
-//         } else {
-//           throw new Error("No valid token found!");
-//         }
+//         // if (trainerToken) {
+//         //   apiUrl = "https://api.novajobs.us/api/trainers/profile";
+//         // } else if (studentToken) {
+//         //   apiUrl = "https://api.novajobs.us/api/students/profile";
+//         // } else if (adminToken) {
+//         //   apiUrl = "https://api.novajobs.us/api/admin/profile";
+//         // } else if (vendorToken) {
+//         //   apiUrl = "https://api.novajobs.us/api/vendors/profile";
+//         // } else {
+//         //   throw new Error("No valid token found!");
+//         // }
 //         const response = await axios.get(apiUrl, {
 //           headers: {
-//             Authorization: `${token}`,
+//             Authorization: adminToken || studentToken,
 //           },
 //         });
 //         setUserInfo(response.data.data);
+//         if(response.data.data){
+//           console.log("This is userinfo Id: "+response.data.data.id);
+//         }
+       
 //       } catch (error) {
 //         console.error("Error fetching user profile:", error);
 //       }
@@ -182,7 +188,7 @@
 
 //     fetchUserProfile();
 //   }, [trainerToken, studentToken, adminToken, vendorToken]);
-// //  console.log(userInfo,"ui");
+
 //   const handleLogout = () => {
 //     localStorage.removeItem("token");
 //     localStorage.removeItem("trainerToken");
@@ -192,39 +198,51 @@
 //   };
 
 //   const handleAddCart = async () => {
-//     // const token = localStorage.getItem("token")
 //     try {
-//       const response = await axios.post('https://api.novajobs.us/api/students/cart', {
+//       const response = await axios.post('https://api.novajobs.us/api/students/cart', 
+//         {
 //         student_id: userInfo.id, 
 //         course_id: Number(courseId), 
 //         quantity: 1,
-//       }, {headers: {
-//         Authorization: `${studentToken}`,
+//       }, 
+//       {headers: {
+//         Authorization: ` ${studentToken}`,
+        
 //       }},);
 //       console.log('Item added to cart:', response.data.message);
-//       toast.success(response.data.message ||"Course Added To cart Successfully ")
+//       toast.success(response.data.message || "Course Added To cart Successfully ")
 //     } catch (error) {
+//       if(!courseId){
+//         console.log("courseId: ", courseId)
+//       }
 //       console.error('Error adding item to cart:', error);
-//       toast.error(error.message||"Error to add the course in the cart")
+//       toast.error(error.message || "Error to add the course in the cart")
 //     }
 //   };
 
+//   const handleNavigation = (path) => {
+//     navigate(path);
+//     setShowProfile(false);
+//   };
+// console.log(userInfo.user_details,";;;;");
 //   return (
 //     <Nav>
-//       <NavItem>
+//       {/* <NavItem>
 //         <Link to="/student/student-messages">
 //           <img src={Messages} alt="Messages" />
 //         </Link>
-//       </NavItem>
+//       </NavItem> */}
 
 //       <NavItem>
 //         <Link to="/cart">
-//           <img src={Cart} alt="Cart" />
+//         <ShoppingCart size={24} strokeWidth={2} />
 //         </Link>
 //       </NavItem>
 
 //       <NavItem>
-//         <Link to="#" onClick={handleAddCart}>
+//         <Link to="#" 
+//         onClick={handleAddCart}
+//         >
 //           <img src={Wish} alt="Wishlist" />
 //         </Link>
 //       </NavItem>
@@ -265,25 +283,29 @@
 //           </div>
 //           <Link
 //             className="dropdown-item mobile-only"
-//             to="/course-message"
+//             to="/student/student-messages"
+//             onClick={() => handleNavigation("/student/student-messages")}
 //           >
 //             <FeatherIcon icon="message-square" className="me-1" /> Messages
 //           </Link>
 //           <Link
 //             className="dropdown-item mobile-only"
-//             to="#"
+//             to="/cart"
+//             onClick={() => handleNavigation("/cart")}
 //           >
 //             <FeatherIcon icon="shopping-cart" className="me-1" /> Cart
 //           </Link>
 //           <Link
 //             className="dropdown-item mobile-only"
 //             to="#"
+//             onClick={handleAddCart}
 //           >
 //             <FeatherIcon icon="heart" className="me-1" /> Wishlist
 //           </Link>
 //           <Link
 //             className="dropdown-item mobile-only"
-//             to="#"
+//             to="/page-notification"
+//             onClick={() => handleNavigation("/page-notification")}
 //           >
 //             <FeatherIcon icon="bell" className="me-1" /> Notifications
 //           </Link>
@@ -294,6 +316,7 @@
 //                 ? "/setting-edit-profile"
 //                 : "/instructor/instructor-edit-profile"
 //             }
+//             onClick={() => handleNavigation(studentToken ? "/setting-edit-profile" : "/instructor/instructor-edit-profile")}
 //           >
 //             <FeatherIcon icon="user" className="me-1" /> Profile
 //           </Link>
@@ -304,6 +327,7 @@
 //                 ? "/student/student-dashboard"
 //                 : "/instructor/instructor-dashboard"
 //             }
+//             onClick={() => handleNavigation(studentToken ? "/student/student-dashboard" : "/instructor/instructor-dashboard")}
 //           >
 //             <FeatherIcon icon="star" className="me-1" /> Dashboard
 //           </Link>
@@ -316,20 +340,22 @@
 //   );
 // };
 
+// HeadModule.propTypes = {
+//   courseId: PropTypes.number.isRequired,
+// };
+
 // export default HeadModule;
 
-// HeadModule.propTypes = {
-//   courseId:PropTypes.number.isRequired,
-// };
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useOnClickOutside from "../../../hooks/useOnClickOutside";
-import { User11, Cart, Wish, Notification } from "../../../imagepath";
+import { User11, Wish, Notification } from "../../../imagepath";
 import axios from "axios";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
+import { ShoppingCart } from "lucide-react";
 
 const Nav = styled.ul`
   display: flex;
@@ -349,6 +375,32 @@ const NavItem = styled.li`
       display: none;
     }
   }
+`;
+
+const Badge = styled.span`
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #ff4444;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border: 1px solid #fff;
+`;
+
+const IconWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const UserImg = styled.span`
@@ -462,11 +514,12 @@ const DropdownMenu = styled.div`
 const HeadModule = ({ courseId }) => {
   const [showProfile, setShowProfile] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
+  const [cartCount, setCartCount] = useState(0);
+  const [favoriteCount, setFavoriteCount] = useState(0);
 
   const profile = useRef();
   const navigate = useNavigate();
   
-  //  console.log("CourseId is " + courseId);
   useOnClickOutside(profile, () => setShowProfile(false));
 
   const trainerToken = localStorage.getItem("trainerToken");
@@ -476,32 +529,29 @@ const HeadModule = ({ courseId }) => {
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const token = adminToken;
-
       try {
-        let apiUrl = "https://api.novajobs.us/api/uaadmin/profile";
+        let apiUrl = adminToken ? "https://api.novajobs.us/api/uaadmin/profile" : "https://api.novajobs.us/api/students/profile";
 
-        // if (trainerToken) {
-        //   apiUrl = "https://api.novajobs.us/api/trainers/profile";
-        // } else if (studentToken) {
-        //   apiUrl = "https://api.novajobs.us/api/students/profile";
-        // } else if (adminToken) {
-        //   apiUrl = "https://api.novajobs.us/api/admin/profile";
-        // } else if (vendorToken) {
-        //   apiUrl = "https://api.novajobs.us/api/vendors/profile";
-        // } else {
-        //   throw new Error("No valid token found!");
-        // }
         const response = await axios.get(apiUrl, {
           headers: {
-            Authorization: `${token}`,
+            Authorization: adminToken || studentToken,
           },
         });
+        
         setUserInfo(response.data.data);
-        if(response.data.data){
-          console.log("This is userinfo Id: "+response.data.data.id);
+        
+        // Extract cart and favorite counts from user_details
+        if (response.data.data && response.data.data.user_details) {
+          const { user_details } = response.data.data;
+          
+          if (user_details.cart_info && user_details.cart_info.cart_count !== undefined) {
+            setCartCount(user_details.cart_info.cart_count);
+          }
+          
+          if (user_details.course_info && user_details.course_info.favourite_count !== undefined) {
+            setFavoriteCount(user_details.course_info.favourite_count);
+          }
         }
-       
       } catch (error) {
         console.error("Error fetching user profile:", error);
       }
@@ -520,24 +570,33 @@ const HeadModule = ({ courseId }) => {
 
   const handleAddCart = async () => {
     try {
-      const response = await axios.post('https://api.novajobs.us/api/students/cart', 
-        {
-        student_id: userInfo.id, 
-        course_id: Number(courseId), 
-        quantity: 1,
-      }, 
-      {headers: {
-        Authorization: ` ${studentToken}`,
-        
-      }},);
-      console.log('Item added to cart:', response.data.message);
-      toast.success(response.data.message || "Course Added To cart Successfully ")
-    } catch (error) {
-      if(!courseId){
-        console.log("courseId: ", courseId)
+      if (!userInfo || !userInfo.id) {
+        toast.error("User information is not available");
+        return;
       }
+      
+      const response = await axios.post(
+        'https://api.novajobs.us/api/students/cart', 
+        {
+          student_id: userInfo.id, 
+          course_id: Number(courseId), 
+          quantity: 1,
+        }, 
+        {
+          headers: {
+            Authorization: studentToken,
+          },
+        }
+      );
+      
+      console.log('Item added to cart:', response.data.message);
+      toast.success(response.data.message || "Course Added To cart Successfully");
+      
+      // Update cart count after successful addition
+      setCartCount(prevCount => prevCount + 1);
+    } catch (error) {
       console.error('Error adding item to cart:', error);
-      toast.error(error.message || "Error to add the course in the cart")
+      toast.error(error.response?.data?.message || "Error adding the course to the cart");
     }
   };
 
@@ -546,25 +605,27 @@ const HeadModule = ({ courseId }) => {
     setShowProfile(false);
   };
 
+  if (!userInfo) {
+    return <div>Loading...</div>; // Show loading state until user info is fetched
+  }
+
   return (
     <Nav>
-      {/* <NavItem>
-        <Link to="/student/student-messages">
-          <img src={Messages} alt="Messages" />
-        </Link>
-      </NavItem> */}
-
       <NavItem>
         <Link to="/cart">
-          <img src={Cart} alt="Cart" />
+          <IconWrapper>
+            <ShoppingCart size={24} strokeWidth={2} />
+            {cartCount > 0 && <Badge>{cartCount}</Badge>}
+          </IconWrapper>
         </Link>
       </NavItem>
 
       <NavItem>
-        <Link to="#" 
-        onClick={handleAddCart}
-        >
-          <img src={Wish} alt="Wishlist" />
+        <Link to="/student/student-wishlist">
+          <IconWrapper>
+            <img src={Wish} alt="Wishlist" />
+            {favoriteCount > 0 && <Badge>{favoriteCount}</Badge>}
+          </IconWrapper>
         </Link>
       </NavItem>
 
@@ -578,7 +639,7 @@ const HeadModule = ({ courseId }) => {
         <UserImg>
           <span className="user-img">
             <img
-              src={`https://api.novajobs.us${userInfo?.photo}` || User11}
+              src={userInfo.photo ? `https://api.novajobs.us${userInfo.photo}` : User11}
               alt="User"
             />
             <span className="status online" />
@@ -588,14 +649,14 @@ const HeadModule = ({ courseId }) => {
           <div className="user-header">
             <div className="avatar">
               <img
-                src={`https://api.novajobs.us${userInfo?.photo}` || User11}
+                src={userInfo.photo ? `https://api.novajobs.us${userInfo.photo}` : User11}
                 alt="User Image"
                 className="avatar-img rounded-circle"
               />
             </div>
             <div className="user-text">
               <h6>
-                {userInfo?.first_name} {userInfo?.last_name}
+                {userInfo.first_name} {userInfo.last_name}
               </h6>
               <p className="text-muted mb-0">
                 {trainerToken ? "Trainer" : "Student"}
@@ -615,6 +676,7 @@ const HeadModule = ({ courseId }) => {
             onClick={() => handleNavigation("/cart")}
           >
             <FeatherIcon icon="shopping-cart" className="me-1" /> Cart
+            {cartCount > 0 && <span className="ms-auto bg-primary text-white px-2 py-1 rounded-pill">{cartCount}</span>}
           </Link>
           <Link
             className="dropdown-item mobile-only"
@@ -622,6 +684,7 @@ const HeadModule = ({ courseId }) => {
             onClick={handleAddCart}
           >
             <FeatherIcon icon="heart" className="me-1" /> Wishlist
+            {favoriteCount > 0 && <span className="ms-auto bg-primary text-white px-2 py-1 rounded-pill">{favoriteCount}</span>}
           </Link>
           <Link
             className="dropdown-item mobile-only"
@@ -662,7 +725,7 @@ const HeadModule = ({ courseId }) => {
 };
 
 HeadModule.propTypes = {
-  courseId: PropTypes.number.isRequired,
+  courseId: PropTypes.number,
 };
 
 export default HeadModule;
