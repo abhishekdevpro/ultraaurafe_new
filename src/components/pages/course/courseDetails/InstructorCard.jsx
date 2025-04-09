@@ -189,9 +189,21 @@ const InstructorCard = ({ trainerID }) => {
     fetchTrainer();
   }, [trainerID]);
 
+  // if (!trainer) {
+  //   return <div>Loading...</div>;
+  // }
   if (!trainer) {
-    return <div>Loading...</div>;
+    return (
+      <div className="d-flex justify-content-center align-items-center">
+        <div className="text-center">
+          <i className="bi bi-exclamation-triangle-fill text-warning fs-1 mb-3"></i>
+          <div className=" ">Trainer Not Found</div>
+          <p className="text-muted">We could not find the trainer you are looking for.</p>
+        </div>
+      </div>
+    );
   }
+  
 
   return (
     <div className="card instructor-sec">

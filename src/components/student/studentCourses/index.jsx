@@ -231,6 +231,15 @@ const DynamicCourseList = () => {
                             Enrolled Courses ({courses.length})
                           </Link>
                         </li>
+                        <li className="nav-item">
+                          <Link
+                            to="/course-list"
+                            className="active"
+        
+                          >
+                            Explore Courses
+                          </Link>
+                        </li>
                       </ul>
                     </div>
                     {loading?<FullPageLoader /> :<div className="tab-content">

@@ -566,6 +566,7 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
     <LectureList>
       {section.lectures && section.lectures.length > 0 ? (
         section.lectures.map((lecture) => (
+          
           <LectureItem key={lecture.id}>
             <LectureHeader onClick={() => toggleLecture(lecture.id)}>
               <LectureName>
@@ -583,7 +584,7 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
                       navigate('/login');
                     }
                   }}
-                  disabled={loadingStates[lecture.id] || !isLoggedIn}
+                  disabled={!lecture.lecture_videos ||loadingStates[lecture.id] || !isLoggedIn}
                 >
                   {loadingStates[lecture.id] ? 'Loading...' : 'Preview'}
                 </PreviewButton>

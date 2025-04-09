@@ -183,8 +183,6 @@ const StudentDashboard = () => {
     }
   };
 
- 
-
   return (
     <div className="main-wrapper">
       <StudentHeader activeMenu={"Dashboard"} />
@@ -252,132 +250,147 @@ const StudentDashboard = () => {
                 </div>
               </div>
 
-              <div className="dashboard-title">
-                <h4>Recently Enrolled Courses</h4>
+              <div className="d-flex justify-content-between align-items-center mb-4">
+                <h4 className="mb-0">Recently Enrolled Courses</h4>
+                <ExploreButton className="btn btn-primary"
+                 onClick={()=>navigate('/course-list')}
+                >
+                  Explore Courses
+                </ExploreButton>
               </div>
 
-              {loading? <FullPageLoader/>: <div className="row">
-                {error ? (
-                  <AlertWrapper>
-                    <div>
-                      <AlertText>
-                        You have not enrolled in any courses yet.
-                      </AlertText>
-                      <Link to={"/course-list"}>
-                        <ExploreButton>Explore Courses</ExploreButton>
-                      </Link>
-                    </div>
-                  </AlertWrapper>
-                ) : courses.length > 0 ? (
-                  courses.map((course, index) => (
-                    <div key={course.id} className="col-xl-4 col-md-6 d-flex">
-                      <div className="course-box flex-fill">
-                        <div className="product">
-                          <div className="product-img">
-                            <Link to={`/course-info/${course.id}`}>
-                              <img
-                                className="img-fluid"
-                                alt={course.course_title}
-                                // src={`https://api.novajobs.us${course.course_banner_image}`}
-                                src={
-                                  course.course_banner_image.startsWith("https")
-                                    ? course.course_banner_image
-                                    : `https://api.novajobs.us${course.course_banner_image}`
-                                }
-                              />
-                            </Link>
-                            <div className="price">
-                              <h3>
-                                ${course.price}{" "}
-                                <span>${course.original_price}</span>
-                              </h3>
+              {loading ? (
+                <FullPageLoader />
+              ) : (
+                <div className="row">
+                  {error ? (
+                    <AlertWrapper>
+                      <div>
+                        <AlertText>
+                          You have not enrolled in any courses yet.
+                        </AlertText>
+                        <Link to={"/course-list"}>
+                          <ExploreButton>Explore Courses</ExploreButton>
+                        </Link>
+                      </div>
+                    </AlertWrapper>
+                  ) : courses.length > 0 ? (
+                    courses.map((course, index) => (
+                      <div key={course.id} className="col-xl-4 col-md-6 d-flex">
+                        <div className="course-box flex-fill">
+                          <div className="product">
+                            <div className="product-img">
+                              <Link to={`/course-info/${course.id}`}>
+                                <img
+                                  className="img-fluid"
+                                  alt={course.course_title}
+                                  // src={`https://api.novajobs.us${course.course_banner_image}`}
+                                  src={
+                                    course.course_banner_image.startsWith(
+                                      "https"
+                                    )
+                                      ? course.course_banner_image
+                                      : `https://api.novajobs.us${course.course_banner_image}`
+                                  }
+                                />
+                              </Link>
+                              <div className="price">
+                                <h3>
+                                  ${course.price}{" "}
+                                  <span>${course.original_price}</span>
+                                </h3>
+                              </div>
                             </div>
-                          </div>
-                          <div className="product-content">
-                            <div className="course-group d-flex">
-                              <div className="course-group-img d-flex">
-                                <Link
-                                  to={`/instructor/instructor-profile/${course.trainer_id}`}
-                                >
-                                  <img
-                                    src={`https://api.novajobs.us/${course.trainer_photo}`}
-                                    alt="Instructor"
-                                    className="img-fluid"
-                                  />
-                                </Link>
-                                <div className="course-name">
-                                  <h4>
-                                    <Link
-                                      to={`/instructor/instructor-profile/${course.trainer_id}`}
-                                    >
-                                      {course.trainer_first_name}{" "}
-                                      {course.trainer_last_name}
-                                    </Link>
-                                  </h4>
-                                  <p>Instructor</p>
+                            <div className="product-content">
+                              <div className="course-group d-flex">
+                                <div className="course-group-img d-flex">
+                                  <Link
+                                    to={`/instructor/instructor-profile/${course.trainer_id}`}
+                                  >
+                                    <img
+                                      src={`https://api.novajobs.us/${course.trainer_photo}`}
+                                      alt="Instructor"
+                                      className="img-fluid"
+                                    />
+                                  </Link>
+                                  <div className="course-name">
+                                    <h4>
+                                      <Link
+                                        to={`/instructor/instructor-profile/${course.trainer_id}`}
+                                      >
+                                        {course.trainer_first_name}{" "}
+                                        {course.trainer_last_name}
+                                      </Link>
+                                    </h4>
+                                    <p>Instructor</p>
+                                  </div>
+                                </div>
+                                <div className="course-share d-flex align-items-center justify-content-center">
+                                  <Link
+                                    to="#"
+                                    onClick={() =>
+                                      toggleClass(index, course.id)
+                                    }
+                                  >
+                                    <i
+                                      className={`fa-regular fa-heart ${
+                                        isClassAdded[index]
+                                          ? "color-active"
+                                          : ""
+                                      }`}
+                                    />
+                                  </Link>
                                 </div>
                               </div>
-                              <div className="course-share d-flex align-items-center justify-content-center">
-                                <Link
-                                  to="#"
-                                  onClick={() => toggleClass(index, course.id)}
-                                >
+                              <h3 className="title instructor-text">
+                                <Link to={`/course-info/${course.id}`}>
+                                  {course.course_title}
+                                </Link>
+                              </h3>
+                              <div className="course-info d-flex align-items-center">
+                                <div className="rating-img d-flex align-items-center">
+                                  <img src={Icon1} alt="Icon" />
+                                  <p>{course.total_lectures} Lesson</p>
+                                </div>
+                                <div className="course-view d-flex align-items-center">
+                                  <img src={Icon2} alt="Icon" />
+                                  <p>{course.course_level_name}</p>
+                                </div>
+                              </div>
+                              <div className="rating mb-0">
+                                {[...Array(5)].map((star, index) => (
                                   <i
-                                    className={`fa-regular fa-heart ${
-                                      isClassAdded[index] ? "color-active" : ""
+                                    key={index}
+                                    className={`fas fa-star ${
+                                      index < course.rating ? "filled" : ""
                                     }`}
                                   />
+                                ))}
+                                <span className="d-inline-block average-rating">
+                                  <span>{course.rating}</span>
+                                </span>
+                              </div>
+                              <div>
+                                <Link to={`/course-info/${course.id}`}>
+                                  <StartLessonButton>
+                                    Start the Lesson
+                                  </StartLessonButton>
                                 </Link>
                               </div>
-                            </div>
-                            <h3 className="title instructor-text">
-                              <Link to={`/course-info/${course.id}`}>
-                                {course.course_title}
-                              </Link>
-                            </h3>
-                            <div className="course-info d-flex align-items-center">
-                              <div className="rating-img d-flex align-items-center">
-                                <img src={Icon1} alt="Icon" />
-                                <p>{course.total_lectures} Lesson</p>
-                              </div>
-                              <div className="course-view d-flex align-items-center">
-                                <img src={Icon2} alt="Icon" />
-                                <p>{course.course_level_name}</p>
-                              </div>
-                            </div>
-                            <div className="rating mb-0">
-                              {[...Array(5)].map((star, index) => (
-                                <i
-                                  key={index}
-                                  className={`fas fa-star ${
-                                    index < course.rating ? "filled" : ""
-                                  }`}
-                                />
-                              ))}
-                              <span className="d-inline-block average-rating">
-                                <span>{course.rating}</span>
-                              </span>
-                            </div>
-                            <div>
-                              <Link to={`/course-info/${course.id}`}>
-                                <StartLessonButton>
-                                  Start the Lesson
-                                </StartLessonButton>
-                              </Link>
                             </div>
                           </div>
                         </div>
                       </div>
+                    ))
+                  ) : (
+                    <div className="col-12 text-center">
+                      <div className="alert alert-info">
+                        You have not enrolled in any courses yet.
+                      </div>
                     </div>
-                  ))
-                ) : (
-                  <div className="col-12 text-center">
-                    <div className="alert alert-info">
-                      You have not enrolled in any courses yet.
-                    </div>
-                  </div>
-                )}
-              </div>}
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
