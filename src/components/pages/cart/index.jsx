@@ -314,9 +314,15 @@ const Cart = () => {
                             </Link>
                             <div className="price">
                               <h3
-                                className={item.after_discount_price === 0 ? "free-color" : ""}
+                                className={
+                                  item.after_discount_price === 0
+                                    ? "free-color"
+                                    : ""
+                                }
                               >
-                                {item.after_discount_price === 0 ? "FREE" : `${item.after_discount_price}`}
+                                {item.after_discount_price === 0
+                                  ? "FREE"
+                                  : `${item.after_discount_price}`}
                               </h3>
                             </div>
                           </div>
@@ -404,8 +410,8 @@ const Cart = () => {
                             {cartData.discount ? (
                               <>
                                 <span className="text-muted text-decoration-line-through me-2">
-                                  {/* ${totalPrice} */}$
-                                  {cartData.item.after_discount_price}
+                                  ${totalPrice}
+                                  {/* {cartData.item.after_discount_price} */}
                                 </span>
                                 <span className="text-danger">
                                   ${cartData.discount}/- OFF
