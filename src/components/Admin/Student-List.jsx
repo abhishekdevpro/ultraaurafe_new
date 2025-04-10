@@ -1,4 +1,3 @@
-
 // import React, { useState, useEffect } from 'react';
 // import styled from 'styled-components';
 // import axios from 'axios';
@@ -224,8 +223,8 @@
 //                       </Table>
 //                     </TableWrapper>
 //                     <PaginationWrapper>
-//                       <PageButton 
-//                         onClick={() => handlePageChange(currentPage - 1)} 
+//                       <PageButton
+//                         onClick={() => handlePageChange(currentPage - 1)}
 //                         disabled={currentPage === 1}
 //                       >
 //                         Previous
@@ -239,8 +238,8 @@
 //                           {page + 1}
 //                         </PageButton>
 //                       ))}
-//                       <PageButton 
-//                         onClick={() => handlePageChange(currentPage + 1)} 
+//                       <PageButton
+//                         onClick={() => handlePageChange(currentPage + 1)}
 //                         disabled={currentPage === totalPages}
 //                       >
 //                         Next
@@ -338,17 +337,12 @@ const StudentList = () => {
 
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
-  const AllStudents = allStudent.slice(
-    indexOfFirstCourse,
-    indexOfLastCourse
-  );
+  const AllStudents = allStudent.slice(indexOfFirstCourse, indexOfLastCourse);
   const totalPages = Math.ceil(allStudent.length / coursesPerPage);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
-
-
 
   return (
     <div className="main-wrapper">
@@ -372,7 +366,7 @@ const StudentList = () => {
             <div className="col-xl-9 col-lg-9">
               <div className="card">
                 <div className="card-header">
-                  <h5 className="card-title">Course List</h5>
+                  <h5 className="card-title">Student List</h5>
                 </div>
                 <div className="card-body">
                   <div className="table-responsive">
@@ -391,16 +385,16 @@ const StudentList = () => {
                         {AllStudents.map((student) => (
                           <tr key={student.id}>
                             <td>
-                              <Link >
+                              <Link>
                                 {student.first_name} {student.last_name}
                               </Link>
                             </td>
-                            <td>
-                            {student.email}
-                            </td>
+                            <td>{student.email}</td>
                             <td>{student.phone}</td>
                             <td>
-                              {new Date(student.created_at).toLocaleDateString()}
+                              {new Date(
+                                student.created_at
+                              ).toLocaleDateString()}
                             </td>
                             <td>{student.is_active ? "Active" : "Inactive"}</td>
                             <td>
@@ -415,7 +409,9 @@ const StudentList = () => {
                                     handleActivateDeactivate(student)
                                   }
                                 >
-                                  {student.is_active ? "Deactivate" : "Activate"}
+                                  {student.is_active
+                                    ? "Deactivate"
+                                    : "Activate"}
                                 </button>
                               </div>
                             </td>

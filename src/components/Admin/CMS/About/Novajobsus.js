@@ -17,6 +17,7 @@ import pic10 from "../../../../assests/1 (10).png";
 import pic11 from "../../../../assests/1 (11).png";
 import pic12 from "../../../../assests/1 (12).png";
 import PropTypes from "prop-types";
+import { toast } from "react-toastify";
 function Novajobsus({ novaJobsusData }) {
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -156,7 +157,7 @@ function Novajobsus({ novaJobsusData }) {
           },
         }
       );
-
+      toast.success("Content updated successfully!");
       console.log("API Response:", response.data);
     } catch (error) {
       console.error("Error updating content:", error);

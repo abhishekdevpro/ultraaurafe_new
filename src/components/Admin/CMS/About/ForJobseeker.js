@@ -4,6 +4,7 @@ import "react-quill/dist/quill.snow.css"; // Quill editor styles
 import logo2 from "../../../../assests/logo2.jpg";
 import axios from "axios";
 import PropTypes from "prop-types";
+import { toast } from "react-toastify";
 function ForJobseeker({ forJobseekerData }) {
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -86,7 +87,7 @@ function ForJobseeker({ forJobseekerData }) {
           },
         }
       );
-
+      toast.success("Content updated successfully!");
       console.log("API Response:", response.data);
     } catch (error) {
       console.error("Error updating content:", error);

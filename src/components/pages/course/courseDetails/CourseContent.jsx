@@ -555,7 +555,6 @@ const CourseContent = ({ courseData }) => {
               <ChevronIcon size={20} isOpen={open[section.id]} />
             </SectionHeader>
             <SectionContent isOpen={open[section.id]}>
-             
               {isEnrolled ? (
                 <LectureListComponent
                   section={section}

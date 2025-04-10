@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Home, LogOut, Menu, X, Star } from "react-feather";
+import { Home, LogOut, Menu, X } from "react-feather";
 import { Link, useNavigate } from "react-router-dom";
-import styled from 'styled-components';
+import styled from "styled-components";
 import logo5 from "../../assets/Ultra_Aura.png";
 import { User17 } from "../imagepath";
 
@@ -11,8 +11,9 @@ const HeaderWrapper = styled.header`
   left: 0;
   right: 0;
   z-index: 1000;
-  background-color: ${props => props.navbar ? '#ffffff' : 'transparent'};
-  box-shadow: ${props => props.navbar ? '0 2px 10px rgba(0, 0, 0, 0.1)' : 'none'};
+  background-color: ${(props) => (props.navbar ? "#ffffff" : "transparent")};
+  box-shadow: ${(props) =>
+    props.navbar ? "0 2px 10px rgba(0, 0, 0, 0.1)" : "none"};
   transition: all 0.3s ease;
 `;
 
@@ -43,7 +44,7 @@ const MenuButton = styled.button`
   border: none;
   cursor: pointer;
   transition: transform 0.2s;
-  
+
   &:hover {
     transform: scale(1.1);
   }
@@ -62,7 +63,7 @@ const NavMenu = styled.div`
   @media (max-width: 768px) {
     position: fixed;
     top: 0;
-    right: ${props => props.mobileMenu ? '0' : '-100%'};
+    right: ${(props) => (props.mobileMenu ? "0" : "-100%")};
     height: 100vh;
     width: 300px;
     flex-direction: column;
@@ -82,7 +83,7 @@ const CloseButton = styled.button`
   align-self: flex-end;
   margin-bottom: 1rem;
   font-size: 1.5rem;
-  color: #FF875A;
+  color: #ff875a;
 
   @media (max-width: 768px) {
     display: flex;
@@ -96,7 +97,7 @@ const ProfileDropdown = styled.div`
 `;
 
 const ProfileMenu = styled.div`
-  display: ${props => props.show ? 'flex' : 'none'};
+  display: ${(props) => (props.show ? "flex" : "none")};
   position: absolute;
   right: 0;
   top: 100%;
@@ -191,7 +192,7 @@ const NavItem = styled(Link)`
 `;
 
 const Overlay = styled.div`
-  display: ${props => props.show ? 'block' : 'none'};
+  display: ${(props) => (props.show ? "block" : "none")};
   position: fixed;
   top: 0;
   left: 0;
@@ -215,9 +216,9 @@ export function AdminHeader() {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [profile]);
 
@@ -231,10 +232,9 @@ export function AdminHeader() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('adminToken');
-    navigate('/');
-    window.location.href ='/';
-  
+    localStorage.removeItem("adminToken");
+    navigate("/");
+    window.location.href = "/";
   };
 
   const changeHeaderBackground = () => {
@@ -266,28 +266,21 @@ export function AdminHeader() {
             <X size={24} />
           </CloseButton>
           <ProfileDropdown ref={profile}>
-            <ProfileImage
-              src={User17}
-              alt="User"
-              onClick={profileClick}
-            />
+            <ProfileImage src={User17} alt="User" onClick={profileClick} />
             <ProfileMenu show={showProfile || mobileMenu}>
               <ProfileInfo>
-                <ProfileImage1
-                  src={User17}
-                  alt="User"
-                />
+                <ProfileImage1 src={User17} alt="User" />
                 <div>
                   <h6>Admin User</h6>
                   <p>Administrator</p>
                 </div>
               </ProfileInfo>
-              <NavItem to="/admin/dashboard">
+              <NavItem to="/admin/admin-dashboard">
                 <Home size={20} /> Dashboard
               </NavItem>
-              <NavItem to="">
+              {/* <NavItem to="">
                 <Star size={20} /> Edit Profile
-              </NavItem>
+              </NavItem> */}
               <NavItem onClick={handleLogout}>
                 <LogOut size={20} /> Logout
               </NavItem>

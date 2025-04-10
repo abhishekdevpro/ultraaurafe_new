@@ -4,6 +4,7 @@ import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import logo5 from "../../../../assests/logo5.jpg";
 import PropTypes from "prop-types";
+import { toast } from "react-toastify";
 function MoreServices({ moreServicesData }) {
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -111,7 +112,7 @@ function MoreServices({ moreServicesData }) {
           },
         }
       );
-
+      toast.success("Content updated successfully!");
       console.log("API Response:", response.data);
     } catch (error) {
       console.error("Error updating content:", error);
