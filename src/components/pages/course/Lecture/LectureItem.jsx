@@ -97,7 +97,6 @@
 // import FeatherIcon from 'feather-icons-react';
 // import { Button, Modal } from 'react-bootstrap';
 
-
 // const LectureItem = ({ lecture, courseId, sectionId }) => {
 //   const [isExpanded, setIsExpanded] = useState(false);
 //   const [showPDFModal, setShowPDFModal] = useState(false);
@@ -391,14 +390,14 @@
 //     justify-content: center;
 //     height: 100vh;
 //   }
-  
+
 //   .modal-content {
 //     width: 80vw;
 //     max-width: 900px;
 //     border-radius: 10px;
 //     overflow: hidden;
 //   }
-  
+
 //   @media (max-width: 768px) {
 //     .modal-content {
 //       width: 90vw;
@@ -799,14 +798,14 @@
 // };
 
 // export default LectureItem;
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import FeatherIcon from 'feather-icons-react';
-import { Button, Modal as BootstrapModal } from 'react-bootstrap';
-import styled from 'styled-components';
-import ReactPlayer from 'react-player';
-import axios from 'axios';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import FeatherIcon from "feather-icons-react";
+import { Button, Modal as BootstrapModal } from "react-bootstrap";
+import styled from "styled-components";
+import ReactPlayer from "react-player";
+import axios from "axios";
 
 const LectureItemWrapper = styled.li`
   background-color: #f8f9fa;
@@ -932,7 +931,7 @@ const LectureItem = ({ lecture, courseId, sectionId }) => {
     setError(null);
 
     if (!lecture.lecture_videos || lecture.lecture_videos.length === 0) {
-      setError('No videos available for this lecture');
+      setError("No videos available for this lecture");
       setShowVideoModal(true);
       return;
     }
@@ -940,19 +939,19 @@ const LectureItem = ({ lecture, courseId, sectionId }) => {
     try {
       setLoading(true);
       const streamingURL = `https://api.novajobs.us/api/trainers/streaming/${courseId}/${sectionId}/${lecture.id}/${lecture.lecture_videos[0].id}`;
-      console.log('Fetching Streaming URL:', streamingURL);
+      console.log("Fetching Streaming URL:", streamingURL);
 
-      const response = await axios.get(streamingURL, { responseType: 'blob' });
+      const response = await axios.get(streamingURL, { responseType: "blob" });
 
-      const videoBlob = new Blob([response.data], { type: 'video/mp4' });
+      const videoBlob = new Blob([response.data], { type: "video/mp4" });
       const videoUrl = URL.createObjectURL(videoBlob);
 
       setStreamingUrl(videoUrl);
-      console.log('Video URL:', videoUrl);
+      console.log("Video URL:", videoUrl);
       setShowVideoModal(true);
     } catch (error) {
-      console.error('Error fetching video:', error);
-      setError('Unable to fetch video. Please try again later.');
+      console.error("Error fetching video:", error);
+      setError("Unable to fetch video. Please try again later.");
       setShowVideoModal(true);
     } finally {
       setLoading(false);
@@ -976,14 +975,10 @@ const LectureItem = ({ lecture, courseId, sectionId }) => {
 
   return (
     <LectureItemWrapper>
-      <LectureHeader>
+      <LectureHeader style={{ cursor: "move" }}>
         <LectureName>{lecture.lecture_name}</LectureName>
         <ButtonGroup>
-          <Button
-            variant="outline-info"
-            size="sm"
-            onClick={toggleExpand}
-          >
+          <Button variant="outline-info" size="sm" onClick={toggleExpand}>
             {isExpanded ? (
               <>
                 <FeatherIcon icon="x-circle" size="14" />
@@ -1007,38 +1002,40 @@ const LectureItem = ({ lecture, courseId, sectionId }) => {
       </LectureHeader>
       {isExpanded && (
         <LectureContent>
-          {lecture.lecture_resources_pdf && lecture.lecture_resources_pdf.length > 0 && (
-            <ResourceSection>
-              <strong>PDF Resources:</strong>
-              <ul>
-                {lecture.lecture_resources_pdf.map((pdf, index) => (
-                  <li key={index}>
-                    <Button
-                      variant="link"
-                      size="sm"
-                      onClick={() => handlePDFClick(pdf)}
-                    >
-                      PDF {index + 1}
-                    </Button>
-                  </li>
-                ))}
-              </ul>
-            </ResourceSection>
-          )}
-          {lecture.lecture_resources_link && lecture.lecture_resources_link.length > 0 && (
-            <ResourceSection>
-              <strong>External Links:</strong>
-              <ul>
-                {lecture.lecture_resources_link.map((link, index) => (
-                  <li key={index}>
-                    <a href={link} target="_blank" rel="noopener noreferrer">
-                      Link {index + 1}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </ResourceSection>
-          )}
+          {lecture.lecture_resources_pdf &&
+            lecture.lecture_resources_pdf.length > 0 && (
+              <ResourceSection>
+                <strong>PDF Resources:</strong>
+                <ul>
+                  {lecture.lecture_resources_pdf.map((pdf, index) => (
+                    <li key={index}>
+                      <Button
+                        variant="link"
+                        size="sm"
+                        onClick={() => handlePDFClick(pdf)}
+                      >
+                        PDF {index + 1}
+                      </Button>
+                    </li>
+                  ))}
+                </ul>
+              </ResourceSection>
+            )}
+          {lecture.lecture_resources_link &&
+            lecture.lecture_resources_link.length > 0 && (
+              <ResourceSection>
+                <strong>External Links:</strong>
+                <ul>
+                  {lecture.lecture_resources_link.map((link, index) => (
+                    <li key={index}>
+                      <a href={link} target="_blank" rel="noopener noreferrer">
+                        Link {index + 1}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </ResourceSection>
+            )}
           {lecture.lecture_videos && lecture.lecture_videos.length > 0 && (
             <ResourceSection>
               <strong>Video Resources:</strong>
@@ -1076,7 +1073,9 @@ const LectureItem = ({ lecture, courseId, sectionId }) => {
           )}
         </ModalBody>
         <ModalFooter>
-          <Button variant="secondary" onClick={handlePDFModalClose}>Close</Button>
+          <Button variant="secondary" onClick={handlePDFModalClose}>
+            Close
+          </Button>
         </ModalFooter>
       </StyledModal>
 
@@ -1093,12 +1092,14 @@ const LectureItem = ({ lecture, courseId, sectionId }) => {
               controls
               width="100%"
               height="auto"
-              style={{ maxHeight: '70vh' }}
+              style={{ maxHeight: "70vh" }}
             />
           )}
         </ModalBody>
         <ModalFooter>
-          <Button variant="secondary" onClick={handleVideoModalClose}>Close</Button>
+          <Button variant="secondary" onClick={handleVideoModalClose}>
+            Close
+          </Button>
         </ModalFooter>
       </StyledModal>
     </LectureItemWrapper>
@@ -1113,8 +1114,10 @@ LectureItem.propTypes = {
     lecture_resources_link: PropTypes.arrayOf(PropTypes.string),
     lecture_videos: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
-  courseId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  sectionId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  courseId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
+  sectionId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
 };
 
 export default LectureItem;

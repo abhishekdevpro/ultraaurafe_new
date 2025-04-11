@@ -315,15 +315,7 @@
 // };
 
 // export default SectionsList;
-import React, { useState, useEffect, useCallback } from "react";
-import { Link, useParams } from "react-router-dom";
-import axios from "axios";
-import Footer from "../../../footer";
-import CourseHeader from "../header";
-import LectureItem from "../Lecture/LectureItem";
-import FeatherIcon from "feather-icons-react/build/FeatherIcon";
-import styled from "styled-components";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+
 const CourseTitle = styled.h2`
   font-size: 28px;
   font-weight: bold;
@@ -499,7 +491,15 @@ const ErrorMessage = styled.div`
   border-radius: 8px;
   margin-bottom: 20px;
 `;
-
+import React, { useState, useEffect, useCallback } from "react";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
+import Footer from "../../../footer";
+import CourseHeader from "../header";
+import LectureItem from "../Lecture/LectureItem";
+import FeatherIcon from "feather-icons-react/build/FeatherIcon";
+import styled from "styled-components";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 const SectionsList = () => {
   const { id } = useParams();
   const [sections, setSections] = useState([]);
@@ -551,41 +551,116 @@ const SectionsList = () => {
   if (error) {
     return <ErrorMessage>{error}</ErrorMessage>;
   }
+  // const handleDragEnd = async (result) => {
+  //   if (!result.destination) return;
+
+  //   const reordered = Array.from(sections);
+  //   const [moved] = reordered.splice(result.source.index, 1);
+  //   reordered.splice(result.destination.index, 0, moved);
+
+  //   // Update local state
+  //   setSections(reordered);
+
+  //   // Get token
+  //   const token = adminToken;
+
+  //   // Loop through each section and update its order
+  //   try {
+  //     await Promise.all(
+  //       reordered.map((section, index) =>
+  //         axios.patch(
+  //           `https://api.novajobs.us/api/trainers/${id}/${section.id}/section`,
+  //           {
+  //             order: index + 1, // assuming order is 1-based
+  //             section_name: section.section_name,
+  //             section_objective: section.section_objective,
+  //           },
+  //           {
+  //             headers: {
+  //               Authorization: token,
+  //               "Content-Type": "application/json",
+  //             },
+  //           }
+  //         )
+  //       )
+  //     );
+  //   } catch (err) {
+  //     console.error("Failed to update section order", err);
+  //   }
+  // };
   const handleDragEnd = async (result) => {
-    if (!result.destination) return;
+    const { source, destination, type } = result;
 
-    const reordered = Array.from(sections);
-    const [moved] = reordered.splice(result.source.index, 1);
-    reordered.splice(result.destination.index, 0, moved);
+    if (!destination) return;
 
-    // Update local state
-    setSections(reordered);
+    // SECTION reorder
+    if (type === "section") {
+      const reordered = Array.from(sections);
+      const [moved] = reordered.splice(source.index, 1);
+      reordered.splice(destination.index, 0, moved);
+      setSections(reordered);
+      const token = adminToken;
 
-    // Get token
-    const token = adminToken;
-
-    // Loop through each section and update its order
-    try {
-      await Promise.all(
-        reordered.map((section, index) =>
-          axios.patch(
-            `https://api.novajobs.us/api/trainers/${id}/${section.id}/section`,
-            {
-              order: index + 1, // assuming order is 1-based
-              section_name: section.section_name,
-              section_objective: section.section_objective,
-            },
-            {
-              headers: {
-                Authorization: token,
-                "Content-Type": "application/json",
+      try {
+        await Promise.all(
+          reordered.map((section, index) =>
+            axios.patch(
+              `https://api.novajobs.us/api/trainers/${id}/${section.id}/section`,
+              {
+                order: index + 1,
+                section_name: section.section_name,
+                section_objective: section.section_objective,
               },
-            }
+              {
+                headers: {
+                  Authorization: token,
+                  "Content-Type": "application/json",
+                },
+              }
+            )
           )
-        )
+        );
+      } catch (err) {
+        console.error("Failed to update section order", err);
+      }
+    }
+
+    // LECTURE reorder
+    if (type === "lecture") {
+      const sourceSectionId = parseInt(source.droppableId.split("-")[1]);
+      const destinationSectionId = parseInt(
+        destination.droppableId.split("-")[1]
       );
-    } catch (err) {
-      console.error("Failed to update section order", err);
+
+      const newSections = [...sections];
+      const sourceSection = newSections.find((s) => s.id === sourceSectionId);
+      const destinationSection = newSections.find(
+        (s) => s.id === destinationSectionId
+      );
+
+      const [movedLecture] = sourceSection.lectures.splice(source.index, 1);
+      destinationSection.lectures.splice(destination.index, 0, movedLecture);
+
+      setSections(newSections);
+      const token = adminToken;
+      try {
+        await Promise.all(
+          destinationSection.lectures.map((lecture, index) =>
+            axios.patch(
+              `https://api.novajobs.us/api/trainers/lectureupdate/${id}/${destinationSectionId}/${lecture.id}`,
+              { order: index + 1 },
+              {
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                  Authorization: `${token}`,
+                },
+              }
+            )
+          )
+        );
+      } catch (err) {
+        console.error("Failed to update lecture order", err);
+      }
     }
   };
   return (
@@ -713,8 +788,111 @@ const SectionsList = () => {
                     //     )}
                     //   </SectionItem>
                     // ))
+                    // <DragDropContext onDragEnd={handleDragEnd}>
+                    //   <Droppable droppableId="sections">
+                    //     {(provided) => (
+                    //       <div
+                    //         {...provided.droppableProps}
+                    //         ref={provided.innerRef}
+                    //       >
+                    //         {sections.map((section, index) => (
+                    //           <Draggable
+                    //             key={section.id}
+                    //             draggableId={section.id.toString()}
+                    //             index={index}
+                    //           >
+                    //             {(provided) => (
+                    //               <SectionItem
+                    //                 ref={provided.innerRef}
+                    //                 {...provided.draggableProps}
+                    //                 {...provided.dragHandleProps}
+                    //               >
+                    //                 <SectionHeader
+                    //                   style={{
+                    //                     cursor: "move",
+                    //                   }}
+                    //                   onClick={() => toggleSection(section.id)}
+                    //                 >
+                    //                   <h5>{section.section_name}</h5>
+                    //                   <div className="button-group">
+                    //                     <Link
+                    //                       to={`/edit-section/${id}/${section.id}`}
+                    //                       className="btn btn-sm btn-warning"
+                    //                     >
+                    //                       <FeatherIcon
+                    //                         icon="edit"
+                    //                         className="me-2"
+                    //                       />
+                    //                       <span>Edit</span>
+                    //                     </Link>
+                    //                     <button
+                    //                       className="btn btn-sm btn-info"
+                    //                       onClick={(e) => {
+                    //                         e.stopPropagation();
+                    //                         toggleSection(section.id);
+                    //                       }}
+                    //                     >
+                    //                       {expandedSectionId === section.id ? (
+                    //                         <>
+                    //                           <FeatherIcon
+                    //                             icon="x-circle"
+                    //                             className="me-2"
+                    //                           />
+                    //                           <span>Close</span>
+                    //                         </>
+                    //                       ) : (
+                    //                         <>
+                    //                           <FeatherIcon
+                    //                             icon="eye"
+                    //                             className="me-2"
+                    //                           />
+                    //                           <span>View</span>
+                    //                         </>
+                    //                       )}
+                    //                     </button>
+                    //                   </div>
+                    //                 </SectionHeader>
+                    //                 {expandedSectionId === section.id && (
+                    //                   <SectionContent>
+                    //                     <h6>Lectures:</h6>
+                    //                     {section.lectures &&
+                    //                     section.lectures.length > 0 ? (
+                    //                       <ul className="lecture-list">
+                    //                         {section.lectures.map((lecture) => (
+                    //                           <LectureItem
+                    //                             key={lecture.id}
+                    //                             lecture={lecture}
+                    //                             courseId={id}
+                    //                             sectionId={section.id}
+                    //                           />
+                    //                         ))}
+                    //                       </ul>
+                    //                     ) : (
+                    //                       <p>No lectures available</p>
+                    //                     )}
+                    //                     <Link
+                    //                       to={`/add-lecture/${id}/${section.id}`}
+                    //                       className="btn btn-sm btn-primary mt-3"
+                    //                     >
+                    //                       <FeatherIcon
+                    //                         icon="plus"
+                    //                         className="me-2"
+                    //                       />
+                    //                       <span>Add Lecture</span>
+                    //                     </Link>
+                    //                   </SectionContent>
+                    //                 )}
+                    //               </SectionItem>
+                    //             )}
+                    //           </Draggable>
+                    //         ))}
+                    //         {provided.placeholder}
+                    //       </div>
+                    //     )}
+                    //   </Droppable>
+                    // </DragDropContext>
                     <DragDropContext onDragEnd={handleDragEnd}>
-                      <Droppable droppableId="sections">
+                      <Droppable droppableId="sections" type="section">
                         {(provided) => (
                           <div
                             {...provided.droppableProps}
@@ -730,13 +908,11 @@ const SectionsList = () => {
                                   <SectionItem
                                     ref={provided.innerRef}
                                     {...provided.draggableProps}
-                                    {...provided.dragHandleProps}
                                   >
                                     <SectionHeader
-                                      style={{
-                                        cursor: "move",
-                                      }}
+                                      {...provided.dragHandleProps}
                                       onClick={() => toggleSection(section.id)}
+                                      style={{ cursor: "move" }}
                                     >
                                       <h5>{section.section_name}</h5>
                                       <div className="button-group">
@@ -780,21 +956,52 @@ const SectionsList = () => {
                                     {expandedSectionId === section.id && (
                                       <SectionContent>
                                         <h6>Lectures:</h6>
-                                        {section.lectures &&
-                                        section.lectures.length > 0 ? (
-                                          <ul className="lecture-list">
-                                            {section.lectures.map((lecture) => (
-                                              <LectureItem
-                                                key={lecture.id}
-                                                lecture={lecture}
-                                                courseId={id}
-                                                sectionId={section.id}
-                                              />
-                                            ))}
-                                          </ul>
-                                        ) : (
-                                          <p>No lectures available</p>
-                                        )}
+                                        <Droppable
+                                          droppableId={`section-${section.id}`}
+                                          type="lecture"
+                                        >
+                                          {(provided) => (
+                                            <ul
+                                              className="lecture-list"
+                                              ref={provided.innerRef}
+                                              {...provided.droppableProps}
+                                            >
+                                              {section.lectures &&
+                                              section.lectures.length > 0 ? (
+                                                section.lectures.map(
+                                                  (lecture, idx) => (
+                                                    <Draggable
+                                                      key={lecture.id}
+                                                      draggableId={`lecture-${lecture.id}`}
+                                                      index={idx}
+                                                    >
+                                                      {(provided) => (
+                                                        <li
+                                                          ref={
+                                                            provided.innerRef
+                                                          }
+                                                          {...provided.draggableProps}
+                                                          {...provided.dragHandleProps}
+                                                        >
+                                                          <LectureItem
+                                                            lecture={lecture}
+                                                            courseId={id}
+                                                            sectionId={
+                                                              section.id
+                                                            }
+                                                          />
+                                                        </li>
+                                                      )}
+                                                    </Draggable>
+                                                  )
+                                                )
+                                              ) : (
+                                                <p>No lectures available</p>
+                                              )}
+                                              {provided.placeholder}
+                                            </ul>
+                                          )}
+                                        </Droppable>
                                         <Link
                                           to={`/add-lecture/${id}/${section.id}`}
                                           className="btn btn-sm btn-primary mt-3"

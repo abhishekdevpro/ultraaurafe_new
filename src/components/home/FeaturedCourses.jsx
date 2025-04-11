@@ -980,7 +980,7 @@ const AllCoursesButton = styled(Link)`
 
   &:hover {
     background-color: #e63975;
-    color:white;
+    color: white;
   }
 
   @media (max-width: 768px) {
@@ -1473,16 +1473,7 @@ const DynamicCourseGrid = () => {
               <CourseGrid>
                 {limitedCourses.map((course) => (
                   <CourseCard key={course.id}>
-                    {/* {course.coupon_discount_display ? 
-                 <ClaimCoupon>
-                    {course.coupon_discount_display}
-                  </ClaimCoupon>
-                  : <></>} */}
                     <Link to={`/course-info/${course.id}`}>
-                      {/* <CourseImage
-                      src={`https://api.novajobs.us${course.course_banner_image}`}
-                      alt={course.course_title}
-                    /> */}
                       <CourseImage
                         src={
                           course.course_banner_image.startsWith("https")
