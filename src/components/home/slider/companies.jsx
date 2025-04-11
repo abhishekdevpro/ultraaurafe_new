@@ -65,8 +65,7 @@ const Companies = () => {
     //     </div>
     //   </div>
     // </OwlCarousel>
-    <>
-    </>
+    <></>
   );
 };
 

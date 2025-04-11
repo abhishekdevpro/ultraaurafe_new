@@ -39,9 +39,13 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import PartnerList from "./PartnerList";
 import SubHeader from "../header/Sub-header";
-import home from './home-bg2.png'
+import home from "./home-bg2.png";
 // import HomePage from "./HeroSection.jsx";
 // Container for the search bar
+import ultraaura from "../../assests/ultraaura-logo.png";
+import novajobs from "../../assests/novajobs-logo.png";
+import homecare from "../../assests/novahomecare-logo.png";
+import paradigmshift from "../../assests/paradigmshift-logo.png";
 const Container = styled.div`
   margin-bottom: 1rem;
   display: flex;
@@ -185,7 +189,7 @@ export const Home = () => {
   const [levelOptions, setLevelOptions] = useState([]);
   // const [runTour, setRunTour] = useState(true);
   // const [isLoaded, setIsLoaded] = useState(false);
-  // const [tourCompleted, setTourCompleted] = useState(false);    
+  // const [tourCompleted, setTourCompleted] = useState(false);
   // const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const navigate = useNavigate(); // Initialize useNavigate
   const mobileSidebar = useSelector((state) => state.sidebarSlice.expandMenu);
@@ -199,7 +203,7 @@ export const Home = () => {
     "Certifications",
   ]; // Array of texts for animation
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
-console.log(currentTextIndex);
+  console.log(currentTextIndex);
 
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
@@ -255,353 +259,351 @@ console.log(currentTextIndex);
     navigate(`/course-list?${queryParams.toString()}`); // Use navigate for routing
   };
 
- 
   return (
     // <>
-//       <div className="main-wrapper">
-//       <Joyride
-//           steps={steps}
-//           run={runTour}
-//           continuous
-//           scrollToFirstStep
-//           showSkipButton
-//           showProgress
-//           styles={{
-//             options: {
-//               zIndex: 1000,
-//               arrowColor: '#fff',
-//               backgroundColor: '#333',
-//               textColor: '#fff',
-//               overlayColor: 'rgba(0, 0, 0, 0.5)',
-//             },
-//           }}
-//         />
-//         <Header />
-//         <SubHeader />
-       
-// <section className="home-slide py-5">
-//   <div className="container">
-//     <div className="row align-items-center">
-//       <div className="col-lg-8 mb-4 mb-lg-0">
-//         <div className="home-slide-face">
-//         <h1 style={{ fontSize: '36px' }} className="mb-4 text-center font-bold">
-//   Empower Your Learning Journey
-// </h1>
+    //       <div className="main-wrapper">
+    //       <Joyride
+    //           steps={steps}
+    //           run={runTour}
+    //           continuous
+    //           scrollToFirstStep
+    //           showSkipButton
+    //           showProgress
+    //           styles={{
+    //             options: {
+    //               zIndex: 1000,
+    //               arrowColor: '#fff',
+    //               backgroundColor: '#333',
+    //               textColor: '#fff',
+    //               overlayColor: 'rgba(0, 0, 0, 0.5)',
+    //             },
+    //           }}
+    //         />
+    //         <Header />
+    //         <SubHeader />
 
-//         <p className="lead mb-5">
-//           Join a community of learners and educators committed to your growth and innovation. Connecting Trainers and Learners Through Comprehensive Education
-//           </p>
-//           <div className="form-container">
-//                     <button onClick={() => setRunTour(true)} className="btn btn-primary mt-3">
-//                       Start Tour
-//                     </button>
-//                   </div>
-          
-//           {/* Your existing Container and form code here */}
-//           <Container>
-//             <BannerContent>
-//               <FormContainer action="/course-list">
-//                 <FormInner>
-//                   <InputGroup>
-//                     <SearchIcon className="fa-solid fa-magnifying-glass" />
-//                     <InputField
-//                       type="text"
-//                       placeholder="Search Course"
-//                       value={searchKeyword}
-//                       onChange={(e) => setSearchKeyword(e.target.value)}
-//                     />
-//                     <Select
-//                       options={categoryOptions}
-//                       value={selectedCategory}
-//                       placeholder="Category"
-//                       onChange={setSelectedCategory}
-//                       styles={customSelectStyles}
-//                     />
-//                     <Select
-//                       options={levelOptions}
-//                       value={selectedLevel}
-//                       placeholder="Levels"
-//                       onChange={setSelectedLevel}
-//                       styles={customSelectStyles}
-//                     />
-//                     <SearchButton type="button" onClick={handleSearch}>
-//                       <i className="fas fa-arrow-right" />
-//                     </SearchButton>
-//                   </InputGroup>
-//                 </FormInner>
-//               </FormContainer>
-//             </BannerContent>
-//           </Container>
-//           <div className="row g-4">
-//   <div className="col-md-6 d-flex">
-//     <div
-//       className="card w-100 shadow-lg transition-transform hover-lift"
-//       style={{
-//         backgroundColor: '#ffdeda',
-//         transition: 'transform 0.3s ease-in-out',
-//         boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-//         borderRadius: '15px' // Add border radius for rounded corners
-//       }}
-//     >
-//       <div className="card-body d-flex flex-column p-4 rounded">
-//         <h4 className="card-title mb-3">Are you a Facilitator?</h4>
-//         <div className="row flex-grow-1">
-//           <div className="col-12 col-md-8 d-flex flex-column">
-//             <p className="card-text flex-grow-1">
-//               Partner with Ultra Aura to offer skills training and job placement opportunities that create a lasting impact on individuals and their families
-//             </p>
-//             <div className="mt-auto">
-//               <Link to="https://vendors.ultraaura.education" className="btn btn-primary btn-lg">
-//                 Partner with US
-//               </Link>
-//             </div>
-//           </div>
-//           <div className="col-md-4 d-none d-md-flex align-items-center">
-//             <img
-//               className="img-fluid rounded transition-transform hover-scale"
-//               alt="Partner illustration"
-//               src={Become2}
-//               style={{
-//                 width: '150px',
-//                 height: '150px',
-//                 objectFit: 'contain',
-//                 transition: 'transform 0.3s ease-in-out'
-//               }}
-//             />
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   </div>
+    // <section className="home-slide py-5">
+    //   <div className="container">
+    //     <div className="row align-items-center">
+    //       <div className="col-lg-8 mb-4 mb-lg-0">
+    //         <div className="home-slide-face">
+    //         <h1 style={{ fontSize: '36px' }} className="mb-4 text-center font-bold">
+    //   Empower Your Learning Journey
+    // </h1>
 
-//   <div className="col-md-6 d-flex">
-//     <div
-//       className="card w-100 shadow-lg transition-transform hover-lift"
-//       style={{
-//         backgroundColor: '#ffe88f',
-//         transition: 'transform 0.3s ease-in-out',
-//         boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-//         borderRadius: '15px' // Add border radius for rounded corners
-//       }}
-//     >
-//       <div className="card-body d-flex flex-column p-4 rounded">
-//         <h4 className="card-title mb-3">Are you a Seeker?</h4>
-//         <div className="row flex-grow-1">
-//           <div className="col-12 col-md-8 d-flex flex-column">
-//             <p className="card-text flex-grow-1">
-//               A new day awaits! Choose from our wide range of specialized courses to unlock exciting new possibilities for your future
-//             </p>
-//             <div className="mt-auto">
-//               <Link to="/register" className="btn btn-primary btn-lg">
-//                 Sign up
-//               </Link>
-//             </div>
-//           </div>
-//           <div className="col-md-4 d-none d-md-flex align-items-center">
-//             <img
-//               className="img-fluid rounded transition-transform hover-scale"
-//               alt="Education illustration"
-//               src={Become1}
-//               style={{
-//                 width: '150px',
-//                 height: '150px',
-//                 objectFit: 'contain',
-//                 transition: 'transform 0.3s ease-in-out'
-//               }}
-//             />
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   </div>
-// </div>
+    //         <p className="lead mb-5">
+    //           Join a community of learners and educators committed to your growth and innovation. Connecting Trainers and Learners Through Comprehensive Education
+    //           </p>
+    //           <div className="form-container">
+    //                     <button onClick={() => setRunTour(true)} className="btn btn-primary mt-3">
+    //                       Start Tour
+    //                     </button>
+    //                   </div>
 
-//         </div>
-//       </div>
-      
-//       <div className="col-lg-4 d-none d-lg-block">
-//         <div className="girl-slide-img">
-//           <img src={home} alt="Featured illustration" className="img-fluid" />
-//         </div>
-//       </div>
-//     </div>
-//   </div>
-// </section>
+    //           {/* Your existing Container and form code here */}
+    //           <Container>
+    //             <BannerContent>
+    //               <FormContainer action="/course-list">
+    //                 <FormInner>
+    //                   <InputGroup>
+    //                     <SearchIcon className="fa-solid fa-magnifying-glass" />
+    //                     <InputField
+    //                       type="text"
+    //                       placeholder="Search Course"
+    //                       value={searchKeyword}
+    //                       onChange={(e) => setSearchKeyword(e.target.value)}
+    //                     />
+    //                     <Select
+    //                       options={categoryOptions}
+    //                       value={selectedCategory}
+    //                       placeholder="Category"
+    //                       onChange={setSelectedCategory}
+    //                       styles={customSelectStyles}
+    //                     />
+    //                     <Select
+    //                       options={levelOptions}
+    //                       value={selectedLevel}
+    //                       placeholder="Levels"
+    //                       onChange={setSelectedLevel}
+    //                       styles={customSelectStyles}
+    //                     />
+    //                     <SearchButton type="button" onClick={handleSearch}>
+    //                       <i className="fas fa-arrow-right" />
+    //                     </SearchButton>
+    //                   </InputGroup>
+    //                 </FormInner>
+    //               </FormContainer>
+    //             </BannerContent>
+    //           </Container>
+    //           <div className="row g-4">
+    //   <div className="col-md-6 d-flex">
+    //     <div
+    //       className="card w-100 shadow-lg transition-transform hover-lift"
+    //       style={{
+    //         backgroundColor: '#ffdeda',
+    //         transition: 'transform 0.3s ease-in-out',
+    //         boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
+    //         borderRadius: '15px' // Add border radius for rounded corners
+    //       }}
+    //     >
+    //       <div className="card-body d-flex flex-column p-4 rounded">
+    //         <h4 className="card-title mb-3">Are you a Facilitator?</h4>
+    //         <div className="row flex-grow-1">
+    //           <div className="col-12 col-md-8 d-flex flex-column">
+    //             <p className="card-text flex-grow-1">
+    //               Partner with Ultra Aura to offer skills training and job placement opportunities that create a lasting impact on individuals and their families
+    //             </p>
+    //             <div className="mt-auto">
+    //               <Link to="https://vendors.ultraaura.education" className="btn btn-primary btn-lg">
+    //                 Partner with US
+    //               </Link>
+    //             </div>
+    //           </div>
+    //           <div className="col-md-4 d-none d-md-flex align-items-center">
+    //             <img
+    //               className="img-fluid rounded transition-transform hover-scale"
+    //               alt="Partner illustration"
+    //               src={Become2}
+    //               style={{
+    //                 width: '150px',
+    //                 height: '150px',
+    //                 objectFit: 'contain',
+    //                 transition: 'transform 0.3s ease-in-out'
+    //               }}
+    //             />
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
 
-// <style>{`
-//   .transition-transform {
-//     transition: transform 0.3s ease-in-out;
-//   }
-  
-//   .hover-lift:hover {
-//     transform: translateY(-10px);
-//   }
-  
-//   .hover-scale:hover {
-//     transform: scale(1.05);
-//   }
-  
-//   .btn-lg {
-//     padding: 0.75rem 1.5rem;
-//     font-size: 1.1rem;
-//   }
-// `}</style>
-       
-//         <FeaturedCourses />
-//         {/* What's new Featured Course */}
+    //   <div className="col-md-6 d-flex">
+    //     <div
+    //       className="card w-100 shadow-lg transition-transform hover-lift"
+    //       style={{
+    //         backgroundColor: '#ffe88f',
+    //         transition: 'transform 0.3s ease-in-out',
+    //         boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
+    //         borderRadius: '15px' // Add border radius for rounded corners
+    //       }}
+    //     >
+    //       <div className="card-body d-flex flex-column p-4 rounded">
+    //         <h4 className="card-title mb-3">Are you a Seeker?</h4>
+    //         <div className="row flex-grow-1">
+    //           <div className="col-12 col-md-8 d-flex flex-column">
+    //             <p className="card-text flex-grow-1">
+    //               A new day awaits! Choose from our wide range of specialized courses to unlock exciting new possibilities for your future
+    //             </p>
+    //             <div className="mt-auto">
+    //               <Link to="/register" className="btn btn-primary btn-lg">
+    //                 Sign up
+    //               </Link>
+    //             </div>
+    //           </div>
+    //           <div className="col-md-4 d-none d-md-flex align-items-center">
+    //             <img
+    //               className="img-fluid rounded transition-transform hover-scale"
+    //               alt="Education illustration"
+    //               src={Become1}
+    //               style={{
+    //                 width: '150px',
+    //                 height: '150px',
+    //                 objectFit: 'contain',
+    //                 transition: 'transform 0.3s ease-in-out'
+    //               }}
+    //             />
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
 
-//         {/* Master Skills */}
-//         <section className="section master-skill">
-//           <div className="container">
-//             <div className="row">
-//               <div className="col-lg-7 col-md-12">
-//                 <div className="section-header aos" data-aos="fade-up">
-//                   <div className="section-sub-head">
-//                     <span>What’s New</span>
-//                     <h2>Master the skills to drive your career</h2>
-//                   </div>
-//                 </div>
-//                 <div className="section-text aos" data-aos="fade-up">
-//                   <p>
-//                     Get certified, master modern tech skills, and level up your
-//                     career — whether you’re starting out or a seasoned pro. 95%
-//                     of eLearning learners report our hands-on content directly
-//                     helped their careers.
-//                   </p>
-//                 </div>
-//                 <div className="career-group aos" data-aos="fade-up">
-//                   <div className="row">
-//                     <div className="col-lg-6 col-md-6 d-flex">
-//                       <div className="certified-group blur-border d-flex">
-//                         <div className="get-certified d-flex align-items-center">
-//                           <div className="blur-box">
-//                             <div className="certified-img ">
-//                               <img src={Icon01} alt="" className="img-fluid" />
-//                             </div>
-//                           </div>
-//                           <p>Stay motivated with engaging instructors</p>
-//                         </div>
-//                       </div>
-//                     </div>
-//                     <div className="col-lg-6 col-md-6 d-flex">
-//                       <div className="certified-group blur-border d-flex">
-//                         <div className="get-certified d-flex align-items-center">
-//                           <div className="blur-box">
-//                             <div className="certified-img ">
-//                               <img src={Icon02} alt="" className="img-fluid" />
-//                             </div>
-//                           </div>
-//                           <p>Keep up with in the latest in cloud</p>
-//                         </div>
-//                       </div>
-//                     </div>
-//                     <div className="col-lg-6 col-md-6 d-flex">
-//                       <div className="certified-group blur-border d-flex">
-//                         <div className="get-certified d-flex align-items-center">
-//                           <div className="blur-box">
-//                             <div className="certified-img ">
-//                               <img src={Icon03} alt="" className="img-fluid" />
-//                             </div>
-//                           </div>
-//                           <p>Get certified with 100+ certification courses</p>
-//                         </div>
-//                       </div>
-//                     </div>
-//                     <div className="col-lg-6 col-md-6 d-flex">
-//                       <div className="certified-group blur-border d-flex">
-//                         <div className="get-certified d-flex align-items-center">
-//                           <div className="blur-box">
-//                             <div className="certified-img ">
-//                               <img src={Icon04} alt="" className="img-fluid" />
-//                             </div>
-//                           </div>
-//                           <p>Build skills your way, from labs to courses</p>
-//                         </div>
-//                       </div>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-//               <div className="col-lg-5 col-md-12 d-flex align-items-end">
-//                 <div className="career-img aos" data-aos="fade-up">
-//                   <img src={Join} alt="" className="img-fluid" />
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </section>
-//         {/* /Master Skills */}
+    //         </div>
+    //       </div>
 
-//         {/* Trending Course */}
-//         {/* <TrendingCourse /> */}
-//         {/* Trending Course */}
+    //       <div className="col-lg-4 d-none d-lg-block">
+    //         <div className="girl-slide-img">
+    //           <img src={home} alt="Featured illustration" className="img-fluid" />
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </section>
 
-//         {/* Share knowledge */}
-//         <section className="section share-knowledge">
-//           <div className="container">
-//             <div className="row">
-//               <div className="col-md-6">
-//                 <div className="knowledge-img aos" data-aos="fade-up">
-//                   <img src={Share} alt="" className="img-fluid" />
-//                 </div>
-//               </div>
-//               <div className="col-md-6 d-flex align-items-center">
-//                 <div className="join-mentor aos" data-aos="fade-up">
-//                   <h2>Want to share your knowledge? Join us a Trainer</h2>
-//                   <p>
-//                     Share your expertise and inspire the next generation by
-//                     joining UltraAura as an instructor. Shape the future of
-//                     education with flexible teaching opportunities and a global
-//                     reach.
-//                   </p>
-//                   <ul className="course-list">
-//                     <li>
-//                       <i className="fa-solid fa-circle-check" />
-//                       Quick Onboarding
-//                     </li>
-//                     <li>
-//                       <i className="fa-solid fa-circle-check" />
-//                       100% Online platform
-//                     </li>
-//                   </ul>
-//                   <div className="all-btn all-category d-flex align-items-center">
-//                     <Link to="/login" className="btn btn-primary">
-//                       Join as Trainer Now
-//                     </Link>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </section>
+    // <style>{`
+    //   .transition-transform {
+    //     transition: transform 0.3s ease-in-out;
+    //   }
 
-       
-//         {/* Companies */}
-//         <PartnerList />
-//         <section className="section lead-companies">
-//           <div className="container">
-//             <div className="section-header aos" data-aos="fade-up">
-//               <div className="section-sub-head feature-head text-center">
-//                 <span>Trusted By</span>
-//                 <h2>We Work with Some of the Best - Globally</h2>
-//               </div>
-//             </div>
-//             <div className="lead-group aos" data-aos="fade-up">
-//               <Companies />
-//             </div>
-//           </div>
-//         </section>
-//         {/* Companies */}
+    //   .hover-lift:hover {
+    //     transform: translateY(-10px);
+    //   }
 
-//         {/* Footer */}
-//         <Footer />
-//         {/* /Footer */}
-//       </div>
-//     </>
+    //   .hover-scale:hover {
+    //     transform: scale(1.05);
+    //   }
 
-<>
+    //   .btn-lg {
+    //     padding: 0.75rem 1.5rem;
+    //     font-size: 1.1rem;
+    //   }
+    // `}</style>
+
+    //         <FeaturedCourses />
+    //         {/* What's new Featured Course */}
+
+    //         {/* Master Skills */}
+    //         <section className="section master-skill">
+    //           <div className="container">
+    //             <div className="row">
+    //               <div className="col-lg-7 col-md-12">
+    //                 <div className="section-header aos" data-aos="fade-up">
+    //                   <div className="section-sub-head">
+    //                     <span>What’s New</span>
+    //                     <h2>Master the skills to drive your career</h2>
+    //                   </div>
+    //                 </div>
+    //                 <div className="section-text aos" data-aos="fade-up">
+    //                   <p>
+    //                     Get certified, master modern tech skills, and level up your
+    //                     career — whether you’re starting out or a seasoned pro. 95%
+    //                     of eLearning learners report our hands-on content directly
+    //                     helped their careers.
+    //                   </p>
+    //                 </div>
+    //                 <div className="career-group aos" data-aos="fade-up">
+    //                   <div className="row">
+    //                     <div className="col-lg-6 col-md-6 d-flex">
+    //                       <div className="certified-group blur-border d-flex">
+    //                         <div className="get-certified d-flex align-items-center">
+    //                           <div className="blur-box">
+    //                             <div className="certified-img ">
+    //                               <img src={Icon01} alt="" className="img-fluid" />
+    //                             </div>
+    //                           </div>
+    //                           <p>Stay motivated with engaging instructors</p>
+    //                         </div>
+    //                       </div>
+    //                     </div>
+    //                     <div className="col-lg-6 col-md-6 d-flex">
+    //                       <div className="certified-group blur-border d-flex">
+    //                         <div className="get-certified d-flex align-items-center">
+    //                           <div className="blur-box">
+    //                             <div className="certified-img ">
+    //                               <img src={Icon02} alt="" className="img-fluid" />
+    //                             </div>
+    //                           </div>
+    //                           <p>Keep up with in the latest in cloud</p>
+    //                         </div>
+    //                       </div>
+    //                     </div>
+    //                     <div className="col-lg-6 col-md-6 d-flex">
+    //                       <div className="certified-group blur-border d-flex">
+    //                         <div className="get-certified d-flex align-items-center">
+    //                           <div className="blur-box">
+    //                             <div className="certified-img ">
+    //                               <img src={Icon03} alt="" className="img-fluid" />
+    //                             </div>
+    //                           </div>
+    //                           <p>Get certified with 100+ certification courses</p>
+    //                         </div>
+    //                       </div>
+    //                     </div>
+    //                     <div className="col-lg-6 col-md-6 d-flex">
+    //                       <div className="certified-group blur-border d-flex">
+    //                         <div className="get-certified d-flex align-items-center">
+    //                           <div className="blur-box">
+    //                             <div className="certified-img ">
+    //                               <img src={Icon04} alt="" className="img-fluid" />
+    //                             </div>
+    //                           </div>
+    //                           <p>Build skills your way, from labs to courses</p>
+    //                         </div>
+    //                       </div>
+    //                     </div>
+    //                   </div>
+    //                 </div>
+    //               </div>
+    //               <div className="col-lg-5 col-md-12 d-flex align-items-end">
+    //                 <div className="career-img aos" data-aos="fade-up">
+    //                   <img src={Join} alt="" className="img-fluid" />
+    //                 </div>
+    //               </div>
+    //             </div>
+    //           </div>
+    //         </section>
+    //         {/* /Master Skills */}
+
+    //         {/* Trending Course */}
+    //         {/* <TrendingCourse /> */}
+    //         {/* Trending Course */}
+
+    //         {/* Share knowledge */}
+    //         <section className="section share-knowledge">
+    //           <div className="container">
+    //             <div className="row">
+    //               <div className="col-md-6">
+    //                 <div className="knowledge-img aos" data-aos="fade-up">
+    //                   <img src={Share} alt="" className="img-fluid" />
+    //                 </div>
+    //               </div>
+    //               <div className="col-md-6 d-flex align-items-center">
+    //                 <div className="join-mentor aos" data-aos="fade-up">
+    //                   <h2>Want to share your knowledge? Join us a Trainer</h2>
+    //                   <p>
+    //                     Share your expertise and inspire the next generation by
+    //                     joining UltraAura as an instructor. Shape the future of
+    //                     education with flexible teaching opportunities and a global
+    //                     reach.
+    //                   </p>
+    //                   <ul className="course-list">
+    //                     <li>
+    //                       <i className="fa-solid fa-circle-check" />
+    //                       Quick Onboarding
+    //                     </li>
+    //                     <li>
+    //                       <i className="fa-solid fa-circle-check" />
+    //                       100% Online platform
+    //                     </li>
+    //                   </ul>
+    //                   <div className="all-btn all-category d-flex align-items-center">
+    //                     <Link to="/login" className="btn btn-primary">
+    //                       Join as Trainer Now
+    //                     </Link>
+    //                   </div>
+    //                 </div>
+    //               </div>
+    //             </div>
+    //           </div>
+    //         </section>
+
+    //         {/* Companies */}
+    //         <PartnerList />
+    //         <section className="section lead-companies">
+    //           <div className="container">
+    //             <div className="section-header aos" data-aos="fade-up">
+    //               <div className="section-sub-head feature-head text-center">
+    //                 <span>Trusted By</span>
+    //                 <h2>We Work with Some of the Best - Globally</h2>
+    //               </div>
+    //             </div>
+    //             <div className="lead-group aos" data-aos="fade-up">
+    //               <Companies />
+    //             </div>
+    //           </div>
+    //         </section>
+    //         {/* Companies */}
+
+    //         {/* Footer */}
+    //         <Footer />
+    //         {/* /Footer */}
+    //       </div>
+    //     </>
+
+    <>
       <div className="main-wrapper">
-     {/* {isLoaded &&  <Joyride
+        {/* {isLoaded &&  <Joyride
   steps={steps}
   run={runTour}
   continuous
@@ -639,7 +641,7 @@ console.log(currentTextIndex);
   }}
 />
 } */}
-        
+
         <Header />
         <SubHeader />
 
@@ -648,11 +650,16 @@ console.log(currentTextIndex);
             <div className="row align-items-center">
               <div className="col-lg-8 mb-4 mb-lg-0">
                 <div className="home-slide-face">
-                  <h1 style={{ fontSize: '36px' }} className="mb-4 text-center font-bold">
+                  <h1
+                    style={{ fontSize: "36px" }}
+                    className="mb-4 text-center font-bold"
+                  >
                     Empower Your Learning Journey
                   </h1>
                   <p className="lead mb-5">
-                    Join a community of learners and educators committed to your growth and innovation. Connecting Trainers and Learners Through Comprehensive Education
+                    Join a community of learners and educators committed to your
+                    growth and innovation. Connecting Trainers and Learners
+                    Through Comprehensive Education
                   </p>
                   {/* {!tourCompleted && (
                   <div className="form-container" >
@@ -661,7 +668,7 @@ console.log(currentTextIndex);
         </button>
                   </div>
       )} */}
-                  
+
                   <Container>
                     <BannerContent>
                       <FormContainer action="/course-list">
@@ -696,77 +703,109 @@ console.log(currentTextIndex);
                       </FormContainer>
                     </BannerContent>
                   </Container>
-                  
+
                   {/* Facilitator and Seeker cards */}
                   <div className="row g-4">
                     {/* Facilitator Card */}
                     <div className="col-md-6 d-flex">
-                      <div className="card w-100 shadow-lg transition-transform hover-lift" style={{ backgroundColor: '#ffdeda', borderRadius: '15px' }}>
+                      <div
+                        className="card w-100 shadow-lg transition-transform hover-lift"
+                        style={{
+                          backgroundColor: "#ffdeda",
+                          borderRadius: "15px",
+                        }}
+                      >
                         <div className="card-body d-flex flex-column p-4 rounded">
-                        <div className="row flex-grow-1">
-  <div className="col-12 col-md-8 d-flex flex-column">
-  <h4 className="card-title mb-3 " style={{fontSize:"1.2rem" }}>Are you a Trainer ?</h4>
-    <p className="card-text flex-grow-1">
-      Partner with Ultra Aura to offer skills training and job placement opportunities that create a lasting impact on individuals and their families
-    </p>
-    <div className="mt-auto">
-      <Link to="https://vendors.ultraaura.education" className="btn btn-primary btn-lg">
-        Partner with US
-      </Link>
-    </div>
-  </div>
-  <div className="col-md-4 d-none d-md-flex align-items-center">
-    <img
-      className="img-fluid rounded transition-transform hover-scale"
-      alt="Partner illustration"
-      src={Become2}
-      style={{
-        width: '150px',
-        height: '150px',
-        objectFit: 'contain',
-        transition: 'transform 0.3s ease-in-out'
-      }}
-    />
-  </div>
-</div>
-
-
+                          <div className="row flex-grow-1">
+                            <div className="col-12 col-md-8 d-flex flex-column">
+                              <h4
+                                className="card-title mb-3 "
+                                style={{ fontSize: "1.2rem" }}
+                              >
+                                Are you a Trainer ?
+                              </h4>
+                              <p className="card-text flex-grow-1">
+                                Partner with Ultra Aura to offer skills training
+                                and job placement opportunities that create a
+                                lasting impact on individuals and their families
+                              </p>
+                              <div className="mt-auto">
+                                <Link
+                                  to="https://vendors.ultraaura.education"
+                                  className="btn btn-primary btn-lg"
+                                >
+                                  Partner with US
+                                </Link>
+                              </div>
+                            </div>
+                            <div className="col-md-4 d-none d-md-flex align-items-center">
+                              <img
+                                className="img-fluid rounded transition-transform hover-scale"
+                                alt="Partner illustration"
+                                src={Become2}
+                                style={{
+                                  width: "150px",
+                                  height: "150px",
+                                  objectFit: "contain",
+                                  transition: "transform 0.3s ease-in-out",
+                                }}
+                              />
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
 
                     {/* Seeker Card */}
                     <div className="col-md-6 d-flex">
-                      <div className="card w-100 shadow-lg transition-transform hover-lift" style={{ backgroundColor: '#ffe88f', borderRadius: '15px' }}>
+                      <div
+                        className="card w-100 shadow-lg transition-transform hover-lift"
+                        style={{
+                          backgroundColor: "#ffe88f",
+                          borderRadius: "15px",
+                        }}
+                      >
                         <div className="card-body d-flex flex-column p-4 rounded">
-                          <h4 className="card-title mb-3" style={{fontSize:"1.2rem" }}>Seeking a Job, Train with Experts</h4>
+                          <h4
+                            className="card-title mb-3"
+                            style={{ fontSize: "1.2rem" }}
+                          >
+                            Seeking a Job, Train with Experts
+                          </h4>
                           <div className="row flex-grow-1">
-  <div className="col-12 col-md-8 d-flex flex-column">
-    <p className="card-text flex-grow-1">
-      A new day awaits! Choose from our wide range of specialized courses to unlock exciting new possibilities for your future
-    </p>
-    <div className="mt-auto sign-up">
-      <Link to={localStorage.getItem("token")?"/":"/login"} className="btn btn-primary btn-lg">
-        Sign up
-      </Link>
-    </div>
-  </div>
-  <div className="col-md-4 d-none d-md-flex align-items-center">
-    <img
-      className="img-fluid rounded transition-transform hover-scale"
-      alt="Education illustration"
-      src={Become1}
-      style={{
-        width: '150px',
-        height: '150px',
-        objectFit: 'contain',
-        transition: 'transform 0.3s ease-in-out'
-      }}
-    />
-  </div>
-</div>
-
-                          
+                            <div className="col-12 col-md-8 d-flex flex-column">
+                              <p className="card-text flex-grow-1">
+                                A new day awaits! Choose from our wide range of
+                                specialized courses to unlock exciting new
+                                possibilities for your future
+                              </p>
+                              <div className="mt-auto sign-up">
+                                <Link
+                                  to={
+                                    localStorage.getItem("token")
+                                      ? "/"
+                                      : "/login"
+                                  }
+                                  className="btn btn-primary btn-lg"
+                                >
+                                  Sign up
+                                </Link>
+                              </div>
+                            </div>
+                            <div className="col-md-4 d-none d-md-flex align-items-center">
+                              <img
+                                className="img-fluid rounded transition-transform hover-scale"
+                                alt="Education illustration"
+                                src={Become1}
+                                style={{
+                                  width: "150px",
+                                  height: "150px",
+                                  objectFit: "contain",
+                                  transition: "transform 0.3s ease-in-out",
+                                }}
+                              />
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -777,7 +816,11 @@ console.log(currentTextIndex);
               {/* Right Column */}
               <div className="col-lg-4 d-none d-lg-block">
                 <div className="girl-slide-img">
-                  <img src={home} alt="Featured illustration" className="img-fluid" />
+                  <img
+                    src={home}
+                    alt="Featured illustration"
+                    className="img-fluid"
+                  />
                 </div>
               </div>
             </div>
@@ -804,143 +847,194 @@ console.log(currentTextIndex);
 
         {/* Master Skills Section */}
         <section className="section master-skill">
-        <div className="container">
-  <div className="row">
-    <div className="col-lg-7 col-md-12">
-      <div className="section-header aos" data-aos="fade-up">
-        <div className="section-sub-head">
-          <span>What is New</span>
-          <h2>Master the skills to drive your career</h2>
-        </div>
-      </div>
-      <div className="section-text aos" data-aos="fade-up">
-        <p>
-          Get certified, master modern tech skills, and level up your career — whether you’re starting out or a seasoned pro. 95% of eLearning learners report our hands-on content directly helped their careers.
-        </p>
-      </div>
-      <div className="career-group aos" data-aos="fade-up">
-        <div className="row">
-          <div className="col-lg-6 col-md-6 d-flex">
-            <div className="certified-group blur-border d-flex">
-              <div className="get-certified d-flex align-items-center">
-                <div className="blur-box">
-                  <div className="certified-img">
-                    <img src={Icon01} alt="" className="img-fluid" />
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-7 col-md-12">
+                <div className="section-header aos" data-aos="fade-up">
+                  <div className="section-sub-head">
+                    <span>What is New</span>
+                    <h2>Master the skills to drive your career</h2>
                   </div>
                 </div>
-                <p>Stay motivated with engaging instructors</p>
+                <div className="section-text aos" data-aos="fade-up">
+                  <p>
+                    Get certified, master modern tech skills, and level up your
+                    career — whether you’re starting out or a seasoned pro. 95%
+                    of eLearning learners report our hands-on content directly
+                    helped their careers.
+                  </p>
+                </div>
+                <div className="career-group aos" data-aos="fade-up">
+                  <div className="row">
+                    <div className="col-lg-6 col-md-6 d-flex">
+                      <div className="certified-group blur-border d-flex">
+                        <div className="get-certified d-flex align-items-center">
+                          <div className="blur-box">
+                            <div className="certified-img">
+                              <img src={Icon01} alt="" className="img-fluid" />
+                            </div>
+                          </div>
+                          <p>Stay motivated with engaging instructors</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-6 col-md-6 d-flex">
+                      <div className="certified-group blur-border d-flex">
+                        <div className="get-certified d-flex align-items-center">
+                          <div className="blur-box">
+                            <div className="certified-img">
+                              <img src={Icon02} alt="" className="img-fluid" />
+                            </div>
+                          </div>
+                          <p>Keep up with the latest in cloud</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-6 col-md-6 d-flex">
+                      <div className="certified-group blur-border d-flex">
+                        <div className="get-certified d-flex align-items-center">
+                          <div className="blur-box">
+                            <div className="certified-img">
+                              <img src={Icon03} alt="" className="img-fluid" />
+                            </div>
+                          </div>
+                          <p>Get certified with 100+ certification courses</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-6 col-md-6 d-flex">
+                      <div className="certified-group blur-border d-flex">
+                        <div className="get-certified d-flex align-items-center">
+                          <div className="blur-box">
+                            <div className="certified-img">
+                              <img src={Icon04} alt="" className="img-fluid" />
+                            </div>
+                          </div>
+                          <p>Build skills your way, from labs to courses</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-5 col-md-12 d-flex align-items-end">
+                <div className="career-img aos" data-aos="fade-up">
+                  <img src={Join} alt="" className="img-fluid" />
+                </div>
               </div>
             </div>
           </div>
-          <div className="col-lg-6 col-md-6 d-flex">
-            <div className="certified-group blur-border d-flex">
-              <div className="get-certified d-flex align-items-center">
-                <div className="blur-box">
-                  <div className="certified-img">
-                    <img src={Icon02} alt="" className="img-fluid" />
-                  </div>
-                </div>
-                <p>Keep up with the latest in cloud</p>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-6 col-md-6 d-flex">
-            <div className="certified-group blur-border d-flex">
-              <div className="get-certified d-flex align-items-center">
-                <div className="blur-box">
-                  <div className="certified-img">
-                    <img src={Icon03} alt="" className="img-fluid" />
-                  </div>
-                </div>
-                <p>Get certified with 100+ certification courses</p>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-6 col-md-6 d-flex">
-            <div className="certified-group blur-border d-flex">
-              <div className="get-certified d-flex align-items-center">
-                <div className="blur-box">
-                  <div className="certified-img">
-                    <img src={Icon04} alt="" className="img-fluid" />
-                  </div>
-                </div>
-                <p>Build skills your way, from labs to courses</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div className="col-lg-5 col-md-12 d-flex align-items-end">
-      <div className="career-img aos" data-aos="fade-up">
-        <img src={Join} alt="" className="img-fluid" />
-      </div>
-    </div>
-  </div>
-</div>
-
         </section>
 
         {/* Share Knowledge Section */}
         <section className="section share-knowledge">
-        <div className="container">
-             <div className="row">
-               <div className="col-md-6">
-                 <div className="knowledge-img aos" data-aos="fade-up">
-                   <img src={Share} alt="" className="img-fluid" />
-                 </div>
-               </div>
-               <div className="col-md-6 d-flex align-items-center">
-                 <div className="join-mentor aos" data-aos="fade-up">
-                   <h2>Want to share your knowledge? Join us a Trainer</h2>
-                   <p>
-                     Share your expertise and inspire the next generation by
-                     joining UltraAura as an instructor. Shape the future of
-                     education with flexible teaching opportunities and a global
-                     reach.
-                   </p>
-                   <ul className="course-list">
-                     <li>
-                       <i className="fa-solid fa-circle-check" />
-                       Quick Onboarding
-                     </li>
-                     <li>
-                       <i className="fa-solid fa-circle-check" />
-                       100% Online platform
-                     </li>
-                   </ul>
-                   <div className="all-btn all-category d-flex align-items-center">
-                     <Link to="https://trainers.ultraaura.education/" className="btn btn-primary">
-                     Join Us as a Trainer
-                     </Link>
-                   </div>
-                 </div>
-               </div>
-             </div>
-           </div>
+          <div className="container">
+            <div className="row">
+              <div className="col-md-6">
+                <div className="knowledge-img aos" data-aos="fade-up">
+                  <img src={Share} alt="" className="img-fluid" />
+                </div>
+              </div>
+              <div className="col-md-6 d-flex align-items-center">
+                <div className="join-mentor aos" data-aos="fade-up">
+                  <h2>Want to share your knowledge? Join us a Trainer</h2>
+                  <p>
+                    Share your expertise and inspire the next generation by
+                    joining UltraAura as an instructor. Shape the future of
+                    education with flexible teaching opportunities and a global
+                    reach.
+                  </p>
+                  <ul className="course-list">
+                    <li>
+                      <i className="fa-solid fa-circle-check" />
+                      Quick Onboarding
+                    </li>
+                    <li>
+                      <i className="fa-solid fa-circle-check" />
+                      100% Online platform
+                    </li>
+                  </ul>
+                  <div className="all-btn all-category d-flex align-items-center">
+                    <Link
+                      to="https://trainers.ultraaura.education/"
+                      className=" btn-primary"
+                    >
+                      Join Us as a Trainer
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Partner Companies Section */}
         <PartnerList />
         <section className="section lead-companies">
-        <div className="container">
-             <div className="section-header aos" data-aos="fade-up">
-               <div className="section-sub-head feature-head text-center">
-                 <span>Trusted By</span>
-                 <h2>We Work with Some of the Best - Globally</h2>
-               </div>
-             </div>
-             <div className="lead-group aos" data-aos="fade-up">
-               <Companies />
-             </div>
-           </div>
+          <div className="container">
+            <div className="section-header aos" data-aos="fade-up">
+              <div className="section-sub-head feature-head text-center">
+                <span>Trusted By</span>
+                <h2>“We work with some of the best brands, Globally</h2>
+              </div>
+            </div>
+
+            <div className="d-flex justify-content-between align-items-center ">
+              <div>
+                <img
+                  src={ultraaura}
+                  alt="Ultraaura"
+                  style={{
+                    width: "300px",
+                    // height: "300px",
+                    objectFit: "contain",
+                  }}
+                />
+              </div>
+              <div>
+                <img
+                  src={novajobs}
+                  alt="Novajobs"
+                  style={{
+                    width: "300px",
+                    // height: "300px",
+                    objectFit: "contain",
+                  }}
+                />
+              </div>
+              <div>
+                <img
+                  src={homecare}
+                  alt="Homecare"
+                  style={{
+                    width: "300px",
+                    // height: "300px",
+                    objectFit: "contain",
+                  }}
+                />
+              </div>
+              <div>
+                <img
+                  src={paradigmshift}
+                  alt="Paradigmshift"
+                  style={{
+                    width: "300px",
+                    // height: "300px",
+                    objectFit: "contain",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="lead-group aos" data-aos="fade-up">
+              <Companies />
+            </div>
+          </div>
         </section>
 
         <Footer />
       </div>
     </>
-  
-
   );
 };
 

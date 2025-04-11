@@ -15,17 +15,17 @@ const InstructorProfile = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  
+
   // Extract the user_type from the query string
-  const userType = queryParams.get('user_type');
-  console.log(userType,"yjjjj");
+  const userType = queryParams.get("user_type");
+  console.log(userType, "yjjjj");
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
         let apiUrl = `https://api.novajobs.us/api/trainers/trainer-profile/${id}`;
 
         // Add the user_type query param if userType is 4
-        if (userType === '4') {
+        if (userType === "4") {
           apiUrl = `https://api.novajobs.us/api/trainers/trainer-profile/${id}?type=academy`;
         }
 
@@ -85,20 +85,23 @@ const InstructorProfile = () => {
       toast.error("Failed to add course to favorites. Please try again.");
     }
   };
-  if (!profileData) return <div>
-    <FullPageLoader />
-  </div>;
+  if (!profileData)
+    return (
+      <div>
+        <FullPageLoader />
+      </div>
+    );
 
   const { trainer, courses } = profileData;
 
   if (!trainer) {
     return (
       <div className="d-flex justify-content-center align-items-center">
-        <div className="text-center">
+        {/* <div className="text-center">
           <i className="bi bi-exclamation-triangle-fill text-warning fs-1 mb-3"></i>
           <div className=" ">Trainer Not Found</div>
           <p className="text-muted">We could not find the trainer you are looking for.</p>
-        </div>
+        </div> */}
       </div>
     );
   }
@@ -135,7 +138,8 @@ const InstructorProfile = () => {
                 </Link>
                 <h4>
                   <Link to="#">
-                    {trainer.first_name || "Instructor"} {trainer?.last_name || ""}
+                    {trainer.first_name || "Instructor"}{" "}
+                    {trainer?.last_name || ""}
                   </Link>
                   <span>{trainer.jobtitle || "Jobtitle"}</span>
                 </h4>
@@ -164,7 +168,7 @@ const InstructorProfile = () => {
                   )}
                   {trainer.youtube && (
                     <li className="list-inline-item">
-                      <Link to={trainer.youtube ||""}>
+                      <Link to={trainer.youtube || ""}>
                         <i className="fa-brands fa-youtube"></i>
                       </Link>
                     </li>

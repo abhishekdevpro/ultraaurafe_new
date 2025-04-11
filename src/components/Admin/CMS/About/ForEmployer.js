@@ -4,6 +4,7 @@ import "react-quill/dist/quill.snow.css"; // Quill editor styles
 import axios from "axios";
 import logo3 from "../../../../assests/logo3.jpg";
 import PropTypes from "prop-types";
+import { toast } from "react-toastify";
 function ForEmployer({ forEmployerData }) {
   // State for heading and paragraph content
   const [loading, setLoading] = useState(false);
@@ -96,6 +97,7 @@ function ForEmployer({ forEmployerData }) {
       );
 
       console.log("API Response:", response.data);
+      toast.success("Content updated successfully!");
     } catch (error) {
       console.error("Error updating content:", error);
     } finally {

@@ -5,8 +5,6 @@
 // import { User16 } from "../../imagepath";
 // //import StudentSettingPageHeader from "./settingPageHeader";
 
-
-
 // import axios from "axios";
 // import { useState,useEffect } from "react";
 // // import StudentSettingPageHeader from "./settingPageHeader";
@@ -20,10 +18,10 @@
 //     last_name: "",
 //     address: "",
 //     phone: "",
-  
+
 //     website: "",
 //     email: "",
-   
+
 //     photo: "",
 //     headline: "",
 //     twitter_profile: "",
@@ -47,10 +45,10 @@
 //           last_name: data.last_name,
 //           address: data.address,
 //           phone: data.phone,
-         
+
 //           website: data.website,
 //           email: data.email,
-         
+
 //           photo: data.photo ? `https://api.novajobs.us${data.photo}` : "", // Properly setting the photo URL
 //           headline: data.headline,
 //           twitter_profile: data.twitter_profile,
@@ -109,7 +107,7 @@
 //     for (const key in profileData) {
 //       formData.append(key, profileData[key]);
 //     }
-  
+
 //     axios
 //       .patch("https://api.novajobs.us/api/students/edit-profile", formData, {
 //         headers: {
@@ -126,7 +124,7 @@
 //         toast.error("Error updating profile"); // Failure toast
 //       });
 //   };
-  
+
 //   return (
 //     <div className="main-wrapper">
 //       <StudentHeader activeMenu={"Settings"} />
@@ -155,7 +153,7 @@
 //         <div className="container">
 //           <div className="row">
 //             <StudentSidebar />
-            
+
 //             <div className="col-xl-9 col-lg-9">
 //               <div className="settings-widget card-details">
 //                 <div className="settings-menu p-0">
@@ -251,7 +249,7 @@
 //                               />
 //                             </div>
 //                           </div>
-                          
+
 //                           <div className="col-md-6">
 //                             <div className="input-block">
 //                               <label className="form-label">Website</label>
@@ -337,7 +335,7 @@
 //                               />
 //                             </div>
 //                           </div>
-                         
+
 //                           <div className="col-md-12">
 //                             <button className="btn btn-primary" type="submit">
 //                               Update Profile
@@ -360,7 +358,6 @@
 
 // export default StudentSetting;
 
-
 import React from "react";
 import { Link } from "react-router-dom";
 import StudentHeader from "../header";
@@ -377,11 +374,11 @@ const StudentSetting = () => {
   const [photoPreview, setPhotoPreview] = useState("");
   const [photoFile, setPhotoFile] = useState(null);
 
-  const { 
-    register, 
-    handleSubmit, 
-    setValue, 
-    formState: { errors } 
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
   } = useForm({
     defaultValues: {
       first_name: "",
@@ -396,7 +393,7 @@ const StudentSetting = () => {
       facebook_profile: "",
       linkedin_profile: "",
       youtube_profile: "",
-    }
+    },
   });
 
   useEffect(() => {
@@ -408,7 +405,7 @@ const StudentSetting = () => {
       })
       .then((response) => {
         const data = response.data.data;
-        
+
         // Set form values
         setValue("first_name", data.first_name);
         setValue("last_name", data.last_name);
@@ -421,7 +418,7 @@ const StudentSetting = () => {
         setValue("facebook_profile", data.facebook_profile);
         setValue("linkedin_profile", data.linkedin_profile);
         setValue("youtube_profile", data.youtube_profile);
-        
+
         // Set photo preview
         if (data.photo) {
           setPhotoPreview(`https://api.novajobs.us${data.photo}`);
@@ -447,17 +444,17 @@ const StudentSetting = () => {
 
   const onSubmit = (data) => {
     const formData = new FormData();
-    
+
     // Append all form data
-    Object.keys(data).forEach(key => {
+    Object.keys(data).forEach((key) => {
       formData.append(key, data[key]);
     });
-    
+
     // Append photo file separately if it exists
     if (photoFile) {
       formData.append("photo", photoFile);
     }
-  
+
     axios
       .patch("https://api.novajobs.us/api/students/edit-profile", formData, {
         headers: {
@@ -474,7 +471,7 @@ const StudentSetting = () => {
         toast.error("Error updating profile");
       });
   };
-  
+
   return (
     <div className="main-wrapper">
       <StudentHeader activeMenu={"Settings"} />
@@ -503,13 +500,15 @@ const StudentSetting = () => {
         <div className="container">
           <div className="row">
             <StudentSidebar />
-            
+
             <div className="col-xl-9 col-lg-9">
               <div className="settings-widget card-details">
                 <div className="settings-menu p-0">
-                <div className="profile-heading">
+                  <div className="profile-heading">
                     <h3>Settings</h3>
-                    <p>You have full control to manage your own account settings</p>
+                    <p>
+                      You have full control to manage your own account settings
+                    </p>
                   </div>
                   <div className="edit-profile-info px-4 p-3">
                     <h5>Personal Details</h5>
@@ -518,7 +517,10 @@ const StudentSetting = () => {
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="course-group profile-upload-group mb-0 d-flex">
                       <div className="course-group-img profile-edit-field d-flex align-items-center">
-                        <Link to="/student/student-profile" className="profile-pic">
+                        <Link
+                          to="/student/student-profile"
+                          className="profile-pic"
+                        >
                           <img
                             src={photoPreview || User16}
                             alt="Profile"
@@ -530,7 +532,10 @@ const StudentSetting = () => {
                           <div className="new-employee-field">
                             <div className="d-flex align-items-center mt-2">
                               <div className="image-upload mb-0">
-                                <input type="file" onChange={handleFileChange} />
+                                <input
+                                  type="file"
+                                  onChange={handleFileChange}
+                                />
                                 <div className="image-uploads">
                                   <i className="bx bx-cloud-upload" />
                                 </div>
@@ -547,17 +552,22 @@ const StudentSetting = () => {
                             <label className="form-label">First Name</label>
                             <input
                               type="text"
-                              className={`form-control ${errors.first_name ? 'is-invalid' : ''}`}
-                              {...register("first_name", { 
+                              className={`form-control ${
+                                errors.first_name ? "is-invalid" : ""
+                              }`}
+                              {...register("first_name", {
                                 required: "First name is required",
                                 minLength: {
                                   value: 2,
-                                  message: "First name must be at least 2 characters"
-                                }
+                                  message:
+                                    "First name must be at least 2 characters",
+                                },
                               })}
                             />
                             {errors.first_name && (
-                              <div className="invalid-feedback">{errors.first_name.message}</div>
+                              <div className="invalid-feedback">
+                                {errors.first_name.message}
+                              </div>
                             )}
                           </div>
                         </div>
@@ -566,17 +576,22 @@ const StudentSetting = () => {
                             <label className="form-label">Last Name</label>
                             <input
                               type="text"
-                              className={`form-control ${errors.last_name ? 'is-invalid' : ''}`}
-                              {...register("last_name", { 
+                              className={`form-control ${
+                                errors.last_name ? "is-invalid" : ""
+                              }`}
+                              {...register("last_name", {
                                 required: "Last name is required",
                                 minLength: {
                                   value: 2,
-                                  message: "Last name must be at least 2 characters"
-                                }
+                                  message:
+                                    "Last name must be at least 2 characters",
+                                },
                               })}
                             />
                             {errors.last_name && (
-                              <div className="invalid-feedback">{errors.last_name.message}</div>
+                              <div className="invalid-feedback">
+                                {errors.last_name.message}
+                              </div>
                             )}
                           </div>
                         </div>
@@ -595,107 +610,148 @@ const StudentSetting = () => {
                             <label className="form-label">Phone</label>
                             <input
                               type="text"
-                              className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
+                              className={`form-control ${
+                                errors.phone ? "is-invalid" : ""
+                              }`}
                               {...register("phone", {
                                 pattern: {
                                   value: /^[0-9+\-\s()]*$/,
-                                  message: "Please enter a valid phone number"
-                                }
+                                  message: "Please enter a valid phone number",
+                                },
                               })}
                             />
                             {errors.phone && (
-                              <div className="invalid-feedback">{errors.phone.message}</div>
+                              <div className="invalid-feedback">
+                                {errors.phone.message}
+                              </div>
                             )}
                           </div>
                         </div>
-                        
+
                         <div className="col-md-6">
                           <div className="input-block">
                             <label className="form-label">Website</label>
                             <input
                               type="text"
-                              className={`form-control ${errors.website ? 'is-invalid' : ''}`}
+                              className={`form-control ${
+                                errors.website ? "is-invalid" : ""
+                              }`}
                               {...register("website", {
                                 pattern: {
-                                  value: /^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?$/,
-                                  message: "Please enter a valid URL"
-                                }
+                                  value:
+                                    /^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?$/,
+                                  message: "Please enter a valid URL",
+                                },
                               })}
                             />
                             {errors.website && (
-                              <div className="invalid-feedback">{errors.website.message}</div>
+                              <div className="invalid-feedback">
+                                {errors.website.message}
+                              </div>
                             )}
                           </div>
                         </div>
                         <div className="col-md-6">
                           <div className="input-block">
-                            <label className="form-label">Twitter Profile</label>
+                            <label className="form-label">
+                              Twitter Profile
+                            </label>
                             <input
                               type="text"
-                              className={`form-control ${errors.twitter_profile ? 'is-invalid' : ''}`}
+                              className={`form-control ${
+                                errors.twitter_profile ? "is-invalid" : ""
+                              }`}
                               {...register("twitter_profile", {
                                 pattern: {
-                                  value: /^(https?:\/\/)?(www\.)?twitter\.com\/[a-zA-Z0-9_]{1,15}\/?$/,
-                                  message: "Please enter a valid Twitter profile URL"
-                                }
+                                  value:
+                                    /^(https?:\/\/)?(www\.)?twitter\.com\/[a-zA-Z0-9_]{1,15}\/?$/,
+                                  message:
+                                    "Please enter a valid Twitter profile URL",
+                                },
                               })}
                             />
                             {errors.twitter_profile && (
-                              <div className="invalid-feedback">{errors.twitter_profile.message}</div>
+                              <div className="invalid-feedback">
+                                {errors.twitter_profile.message}
+                              </div>
                             )}
                           </div>
                         </div>
                         <div className="col-md-6">
                           <div className="input-block">
-                            <label className="form-label">Facebook Profile</label>
+                            <label className="form-label">
+                              Facebook Profile
+                            </label>
                             <input
                               type="text"
-                              className={`form-control ${errors.facebook_profile ? 'is-invalid' : ''}`}
+                              className={`form-control ${
+                                errors.facebook_profile ? "is-invalid" : ""
+                              }`}
                               {...register("facebook_profile", {
                                 pattern: {
-                                  value: /^(https?:\/\/)?(www\.)?facebook\.com\/[a-zA-Z0-9.]{1,}$/,
-                                  message: "Please enter a valid Facebook profile URL"
-                                }
+                                  value:
+                                    /^(https?:\/\/)?(www\.)?facebook\.com\/[a-zA-Z0-9.]{1,}$/,
+                                  message:
+                                    "Please enter a valid Facebook profile URL",
+                                },
                               })}
                             />
                             {errors.facebook_profile && (
-                              <div className="invalid-feedback">{errors.facebook_profile.message}</div>
+                              <div className="invalid-feedback">
+                                {errors.facebook_profile.message}
+                              </div>
                             )}
                           </div>
                         </div>
                         <div className="col-md-6">
                           <div className="input-block">
-                            <label className="form-label">Linkedin Profile</label>
+                            <label className="form-label">
+                              Linkedin Profile
+                            </label>
                             <input
                               type="text"
-                              className={`form-control ${errors.linkedin_profile ? 'is-invalid' : ''}`}
+                              className={`form-control ${
+                                errors.linkedin_profile ? "is-invalid" : ""
+                              }`}
                               {...register("linkedin_profile", {
                                 pattern: {
-                                  value: /^(https?:\/\/)?(www\.)?linkedin\.com\/(in|company)\/[a-zA-Z0-9\-_%]+/,
-                                  message: "Please enter a valid LinkedIn profile URL"
-                                }
+                                  value:
+                                    /^(https?:\/\/)?(www\.)?linkedin\.com\/(in|company)\/[a-zA-Z0-9\-_%]+/,
+                                  message:
+                                    "Please enter a valid LinkedIn profile URL",
+                                },
                               })}
                             />
                             {errors.linkedin_profile && (
-                              <div className="invalid-feedback">{errors.linkedin_profile.message}</div>
+                              <div className="invalid-feedback">
+                                {errors.linkedin_profile.message}
+                              </div>
                             )}
                           </div>
                         </div>
                         <div className="col-md-6">
                           <div className="input-block">
-                            <label className="form-label">Youtube Profile</label>
+                            <label className="form-label">
+                              Youtube Profile
+                            </label>
                             <input
                               type="text"
-                              className={`form-control ${errors.youtube_profile ? 'is-invalid' : ''}`}
+                              className={`form-control ${
+                                errors.youtube_profile ? "is-invalid" : ""
+                              }`}
                               {...register("youtube_profile", {
                                 pattern: {
-                                  value: /^(https?:\/\/)?(www\.)?youtube\.com\/(channel|user|c)\/[a-zA-Z0-9\-_%]+/,
-                                  message: "Please enter a valid YouTube profile URL"
-                                }
+                                  value:
+                                    /^(https?:\/\/)?(www\.)?youtube\.com\/(channel|user|c)\/[a-zA-Z0-9\-_%]+/,
+                                  message:
+                                    "Please enter a valid YouTube profile URL",
+                                },
                               })}
                             />
                             {errors.youtube_profile && (
-                              <div className="invalid-feedback">{errors.youtube_profile.message}</div>
+                              <div className="invalid-feedback">
+                                {errors.youtube_profile.message}
+                              </div>
                             )}
                           </div>
                         </div>
@@ -704,18 +760,23 @@ const StudentSetting = () => {
                             <label className="form-label">Email</label>
                             <input
                               type="email"
-                              className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                              className={`form-control ${
+                                errors.email ? "is-invalid" : ""
+                              }`}
                               {...register("email", {
                                 required: "Email is required",
                                 pattern: {
-                                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                  message: "Invalid email address"
-                                }
+                                  value:
+                                    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                  message: "Invalid email address",
+                                },
                               })}
                               readOnly
                             />
                             {errors.email && (
-                              <div className="invalid-feedback">{errors.email.message}</div>
+                              <div className="invalid-feedback">
+                                {errors.email.message}
+                              </div>
                             )}
                           </div>
                         </div>
@@ -723,21 +784,26 @@ const StudentSetting = () => {
                           <div className="input-block">
                             <label className="form-label">Headline</label>
                             <textarea
-                              className={`form-control ${errors.headline ? 'is-invalid' : ''}`}
+                              className={`form-control ${
+                                errors.headline ? "is-invalid" : ""
+                              }`}
                               style={{ height: "150px" }}
                               {...register("headline", {
                                 maxLength: {
                                   value: 500,
-                                  message: "Headline cannot exceed 500 characters"
-                                }
+                                  message:
+                                    "Headline cannot exceed 500 characters",
+                                },
                               })}
                             />
                             {errors.headline && (
-                              <div className="invalid-feedback">{errors.headline.message}</div>
+                              <div className="invalid-feedback">
+                                {errors.headline.message}
+                              </div>
                             )}
                           </div>
                         </div>
-                       
+
                         <div className="col-md-12">
                           <button className="btn btn-primary" type="submit">
                             Update Profile

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styled from 'styled-components';
-import { FaBars, FaTimes } from 'react-icons/fa';
-import logo5 from '../../../assets/Ultra_Aura.png';
+import styled from "styled-components";
+import { FaBars, FaTimes } from "react-icons/fa";
+import logo5 from "../../../assets/Ultra_Aura.png";
 
 const StyledHeader = styled.header`
   position: sticky;
@@ -12,9 +12,11 @@ const StyledHeader = styled.header`
   transition: all 0.3s ease-in-out;
 
   .header__main-header {
-    background-color: ${props => props.navbar ? 'rgba(255, 255, 255, 0.95)' : 'transparent'};
+    background-color: ${(props) =>
+      props.navbar ? "rgba(255, 255, 255, 0.95)" : "transparent"};
     transition: background-color 0.3s ease;
-    box-shadow: ${props => props.navbar ? '0 2px 4px rgba(0,0,0,0.1)' : 'none'};
+    box-shadow: ${(props) =>
+      props.navbar ? "0 2px 4px rgba(0,0,0,0.1)" : "none"};
   }
 
   .header__container {
@@ -33,7 +35,7 @@ const StyledHeader = styled.header`
   .header__logo {
     display: flex;
     align-items: center;
-    
+
     img {
       height: 30px;
       width: auto;
@@ -74,7 +76,8 @@ const StyledHeader = styled.header`
     margin-right: 10px;
   }
 
-  .header__sign-button, .header__login-button {
+  .header__sign-button,
+  .header__login-button {
     padding: 0.5rem 1rem;
     border-radius: 9999px;
     font-size: 0.9rem;
@@ -105,6 +108,7 @@ const StyledHeader = styled.header`
 
     &:hover {
       background-color: #dd6b20;
+      color: white;
     }
   }
 
@@ -121,7 +125,7 @@ const StyledHeader = styled.header`
   .header__mobile-menu {
     position: fixed;
     top: 0;
-    right: ${props => props.isMenuOpen ? '0' : '-100%'};
+    right: ${(props) => (props.isMenuOpen ? "0" : "-100%")};
     width: 80%;
     height: 100vh;
     background-color: #ffffff;
@@ -156,7 +160,7 @@ const StyledHeader = styled.header`
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    display: ${props => props.isMenuOpen ? 'block' : 'none'};
+    display: ${(props) => (props.isMenuOpen ? "block" : "none")};
     z-index: 999;
   }
 `;
@@ -176,7 +180,10 @@ const Header = () => {
 
     if (role) {
       setIsLoggedIn(true);
-      const dashboardUrl = role === "student" ? "/student/student-setting" : "/instructor/instructor-dashboard";
+      const dashboardUrl =
+        role === "student"
+          ? "/student/student-setting"
+          : "/instructor/instructor-dashboard";
       setDashboardLink(dashboardUrl);
       const profilePhotoUrl = localStorage.getItem("profilePhotoUrl");
       setProfilePhoto(profilePhotoUrl);
@@ -214,15 +221,28 @@ const Header = () => {
     <>
       {isLoggedIn ? (
         <>
-          <Link className="header__nav-link header__sign-button" to={dashboardLink}>
+          <Link
+            className="header__nav-link header__sign-button"
+            to={dashboardLink}
+          >
             {profilePhoto ? (
-              <img src={profilePhoto} alt="Profile" className="header__profile-photo" />
+              <img
+                src={profilePhoto}
+                alt="Profile"
+                className="header__profile-photo"
+              />
             ) : (
-              <i className="fas fa-user-circle" style={{ marginRight: "10px" }} />
+              <i
+                className="fas fa-user-circle"
+                style={{ marginRight: "10px" }}
+              />
             )}
             Dashboard
           </Link>
-          <button className="header__nav-link header__login-button" onClick={handleLogout}>
+          <button
+            className="header__nav-link header__login-button"
+            onClick={handleLogout}
+          >
             Logout
           </button>
         </>
@@ -234,10 +254,16 @@ const Header = () => {
           <Link className="header__nav-link header__sign-button" to="/login">
             Sign In
           </Link>
-          <Link className="header__nav-link header__login-button" to="/register">
+          <Link
+            className="header__nav-link header__login-button"
+            to="/register"
+          >
             Sign Up
           </Link>
-          <Link className="header__nav-link header__login-button" to="/partner-signin">
+          <Link
+            className="header__nav-link header__login-button"
+            to="/partner-signin"
+          >
             Partner With Us
           </Link>
         </>

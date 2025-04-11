@@ -91,10 +91,21 @@ const CourseCard = styled.div`
 // `;
 
 // Course image with hover zoom effect
+// const CourseImage = styled.img`
+//   width: 100%;
+//   height: 150px;
+//   // object-fit: contain;
+//   border-radius: 10px;
+//   transition: transform 0.3s;
+
+//   ${CourseCard}:hover & {
+//     transform: scale(1.05);
+//   }
+// `;
 const CourseImage = styled.img`
   width: 100%;
-  height: 130px;
-  object-fit: contain;
+  height: 150px;
+  /* object-fit: contain; */
   border-radius: 10px;
   transition: transform 0.3s;
 
@@ -320,7 +331,6 @@ const InnerPage = ({ courses = [] }) => {
               <CourseCard key={course.id}>
                 <Link to={`/course-info/${course.id}`}>
                   <CourseImage
-                    // src={`https://api.novajobs.us${course.course_banner_image}`}
                     src={
                       course.course_banner_image.startsWith("https")
                         ? course.course_banner_image
@@ -449,130 +459,124 @@ const InnerPage = ({ courses = [] }) => {
             </PaginationButton>
           </PaginationContainer>
         )} */}
-         <div className="card-footer">
-                  <nav aria-label="Page navigation">
-                    <ul className="pagination justify-content-center">
-                      {/* Previous Button */}
-                      <li
-                        className={`page-item ${
-                          currentPage === 1 ? "disabled" : ""
-                        }`}
+        <div className="card-footer">
+          <nav aria-label="Page navigation">
+            <ul className="pagination justify-content-center">
+              {/* Previous Button */}
+              <li
+                className={`page-item ${currentPage === 1 ? "disabled" : ""}`}
+              >
+                <button
+                  className="page-link"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                >
+                  Previous
+                </button>
+              </li>
+
+              {/* First Page */}
+              <li className={`page-item ${currentPage === 1 ? "active" : ""}`}>
+                <button
+                  className="page-link"
+                  onClick={() => handlePageChange(1)}
+                >
+                  1
+                </button>
+              </li>
+
+              {/* Show second page if necessary */}
+              {currentPage > 3 && totalPages > 4 && (
+                <li className="page-item">
+                  <button
+                    className="page-link"
+                    onClick={() => handlePageChange(2)}
+                  >
+                    2
+                  </button>
+                </li>
+              )}
+
+              {/* Dots if needed */}
+              {currentPage > 4 && totalPages > 5 && (
+                <li className="page-item disabled">
+                  <span className="page-link">...</span>
+                </li>
+              )}
+
+              {/* Middle Pages */}
+              {Array.from({ length: 3 }, (_, i) => currentPage - 1 + i)
+                .filter((page) => page > 2 && page < totalPages - 1)
+                .map((page) => (
+                  <li
+                    key={page}
+                    className={`page-item ${
+                      currentPage === page ? "active" : ""
+                    }`}
+                  >
+                    <button
+                      className="page-link"
+                      onClick={() => handlePageChange(page)}
+                    >
+                      {page}
+                    </button>
+                  </li>
+                ))}
+
+              {/* Dots before last pages if necessary */}
+              {currentPage < totalPages - 3 && totalPages > 5 && (
+                <li className="page-item disabled">
+                  <span className="page-link">...</span>
+                </li>
+              )}
+
+              {/* Show last two pages */}
+              {totalPages > 1 && (
+                <>
+                  {totalPages > 3 && (
+                    <li
+                      className={`page-item ${
+                        currentPage === totalPages - 1 ? "active" : ""
+                      }`}
+                    >
+                      <button
+                        className="page-link"
+                        onClick={() => handlePageChange(totalPages - 1)}
                       >
-                        <button
-                          className="page-link"
-                          onClick={() => handlePageChange(currentPage - 1)}
-                        >
-                          Previous
-                        </button>
-                      </li>
+                        {totalPages - 1}
+                      </button>
+                    </li>
+                  )}
+                  <li
+                    className={`page-item ${
+                      currentPage === totalPages ? "active" : ""
+                    }`}
+                  >
+                    <button
+                      className="page-link"
+                      onClick={() => handlePageChange(totalPages)}
+                    >
+                      {totalPages}
+                    </button>
+                  </li>
+                </>
+              )}
 
-                      {/* First Page */}
-                      <li
-                        className={`page-item ${
-                          currentPage === 1 ? "active" : ""
-                        }`}
-                      >
-                        <button
-                          className="page-link"
-                          onClick={() => handlePageChange(1)}
-                        >
-                          1
-                        </button>
-                      </li>
-
-                      {/* Show second page if necessary */}
-                      {currentPage > 3 && totalPages > 4 && (
-                        <li className="page-item">
-                          <button
-                            className="page-link"
-                            onClick={() => handlePageChange(2)}
-                          >
-                            2
-                          </button>
-                        </li>
-                      )}
-
-                      {/* Dots if needed */}
-                      {currentPage > 4 && totalPages > 5 && (
-                        <li className="page-item disabled">
-                          <span className="page-link">...</span>
-                        </li>
-                      )}
-
-                      {/* Middle Pages */}
-                      {Array.from({ length: 3 }, (_, i) => currentPage - 1 + i)
-                        .filter((page) => page > 2 && page < totalPages - 1)
-                        .map((page) => (
-                          <li
-                            key={page}
-                            className={`page-item ${
-                              currentPage === page ? "active" : ""
-                            }`}
-                          >
-                            <button
-                              className="page-link"
-                              onClick={() => handlePageChange(page)}
-                            >
-                              {page}
-                            </button>
-                          </li>
-                        ))}
-
-                      {/* Dots before last pages if necessary */}
-                      {currentPage < totalPages - 3 && totalPages > 5 && (
-                        <li className="page-item disabled">
-                          <span className="page-link">...</span>
-                        </li>
-                      )}
-
-                      {/* Show last two pages */}
-                      {totalPages > 1 && (
-                        <>
-                          {totalPages > 3 && (
-                            <li
-                              className={`page-item ${
-                                currentPage === totalPages - 1 ? "active" : ""
-                              }`}
-                            >
-                              <button
-                                className="page-link"
-                                onClick={() => handlePageChange(totalPages - 1)}
-                              >
-                                {totalPages - 1}
-                              </button>
-                            </li>
-                          )}
-                          <li
-                            className={`page-item ${
-                              currentPage === totalPages ? "active" : ""
-                            }`}
-                          >
-                            <button
-                              className="page-link"
-                              onClick={() => handlePageChange(totalPages)}
-                            >
-                              {totalPages}
-                            </button>
-                          </li>
-                        </>
-                      )}
-
-                      {/* Next Button */}
-                      <li
-                        className={`page-item ${
-                          currentPage === totalPages ? "disabled" : ""
-                        }`}
-                      >
-                        <button
-                          className="page-link"
-                          onClick={() => handlePageChange(currentPage + 1)}
-                        >
-                          Next
-                        </button>
-                      </li>
-                    </ul>
-                  </nav>
-                </div>
+              {/* Next Button */}
+              <li
+                className={`page-item ${
+                  currentPage === totalPages ? "disabled" : ""
+                }`}
+              >
+                <button
+                  className="page-link"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                >
+                  Next
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </Container>
     </Wrapper>
   );

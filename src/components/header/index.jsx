@@ -110,6 +110,7 @@ const StyledHeader = styled.header`
 
     &:hover {
       background-color: #dd6b20;
+      color: white;
     }
   }
 
