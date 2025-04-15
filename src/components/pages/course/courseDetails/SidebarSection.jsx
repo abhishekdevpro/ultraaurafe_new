@@ -19,7 +19,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import the CSS for toast notifications
 import styled from "styled-components";
 import ShareButton from "./Sharebutton";
-import { Loader } from "lucide-react";
+// import { Loader } from "lucide-react";
 import ReactPlayer from "react-player";
 // import Joyride from "react-joyride";
 
@@ -217,6 +217,55 @@ const VideoSection = styled.div`
       font-size: 14px;
     }
   }
+`;
+
+const LoadingOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(30, 30, 30, 0.4);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+`;
+
+const LoaderContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.2rem;
+`;
+
+
+
+const ThumbnailLoaderOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  z-index: 2;
+`;
+
+const LoaderText = styled.div`
+  color: #fff;
+  margin-top: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
 `;
 
 const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
@@ -523,18 +572,16 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                             },
                           }}
                         />
-                        {loading && (
-                          <div className="d-flex justify-content-center align-items-center">
-                            <div
-                              className="spinner-border text-primary"
-                              role="status"
-                            >
-                              <span className="visually-hidden">
-                                Loading...
-                              </span>
-                            </div>
-                          </div>
-                        )}
+                 {loading && (
+  <LoadingOverlay>
+    <LoaderContainer>
+      <div className="spinner-border text-light" role="status" />
+      <div>Saving your lecture, please wait...</div>
+    </LoaderContainer>
+  </LoadingOverlay>
+)}
+
+
                       </div>
                     ) : (
                       // Regular video player for streamed content
@@ -549,40 +596,36 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                     )
                   ) : (
                     // Video thumbnail with play button
-                    <div className="video-thumbnail-container">
-                      <button
-                        onClick={handleVideoPlay}
-                        className="video-thumbnail"
-                      >
-                        {loading ? (
-                          <img
-                            src={Loader}
-                            alt="Loading..."
-                            className="loader"
-                          />
-                        ) : (
-                          <div className="default-thumbnail">
-                            <img
-                              src={
-                                courseFeatureData?.course_banner_image?.startsWith(
-                                  "http"
-                                )
-                                  ? courseFeatureData.course_banner_image
-                                  : `https://api.novajobs.us${
-                                      courseFeatureData?.course_banner_image ||
-                                      ""
-                                    }`
-                              }
-                              alt="Course Banner"
-                              className="default-image"
-                            />
-                            <div className="play-icon">
-                              <i className="fa-solid fa-play" />
-                            </div>
+                    <div className="video-thumbnail-container" style={{ position: "relative" }}>
+                    <button onClick={handleVideoPlay} className="video-thumbnail">
+                      <div className="default-thumbnail">
+                        <img
+                          src={
+                            courseFeatureData?.course_banner_image?.startsWith("http")
+                              ? courseFeatureData.course_banner_image
+                              : `https://api.novajobs.us${
+                                  courseFeatureData?.course_banner_image || ""
+                                }`
+                          }
+                          alt="Course Banner"
+                          className="default-image"
+                        />
+                        <div className="play-icon">
+                          <i className="fa-solid fa-play" />
+                        </div>
+                      </div>
+                  
+                      {loading && (
+                        <ThumbnailLoaderOverlay>
+                          <div className="text-center">
+                            <div className="spinner-border text-light" role="status" />
+                            <LoaderText>Preparing video preview...</LoaderText>
                           </div>
-                        )}
-                      </button>
-                    </div>
+                        </ThumbnailLoaderOverlay>
+                      )}
+                    </button>
+                  </div>
+                  
                   )}
 
                   <div className="video-details">
