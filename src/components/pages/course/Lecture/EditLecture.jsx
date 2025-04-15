@@ -1,4 +1,3 @@
-
 import React, { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -103,19 +102,28 @@ const EditLecture = () => {
         formData.append("lecture_content", lectureData.lecture_content);
         formData.append("links", lectureData.links);
 
-        // Append video file only if a new one is selected
-        
+        // Handle video upload based on selected option
         if (videoOption === "upload" && videoFile instanceof File) {
           formData.append("files", videoFile);
+          formData.append("content_type", "video");
         } else if (videoOption === "youtube" && youtubeUrl) {
-          formData.append("youtube_url", youtubeUrl); // Make sure your backend supports this field
+          // For YouTube URL, send it as a text field
+          formData.append("youtube_url", youtubeUrl);
+          formData.append("content_type", "youtube");
+          // Send empty string for files to indicate no file upload
+          formData.append("files", "");
         }
-        
 
         // Append PDF file only if a new one is selected
         if (pdfFile && pdfFile instanceof File) {
           formData.append("resources", pdfFile);
         }
+
+        // Log form data entries
+        for (let pair of formData.entries()) {
+          console.log(pair[0], pair[1]);
+        }
+
         const response = await axios.patch(
           `https://api.novajobs.us/api/trainers/lectureupdate/${courseid}/${sectionid}/${lectureid}`,
           formData,
@@ -139,7 +147,7 @@ const EditLecture = () => {
         setIsSaving(false);
       }
     }, 300),
-    [courseid, sectionid, lectureid, token, lectureData, videoFile, pdfFile, isSaving, navigate]
+    [courseid, sectionid, lectureid, token, lectureData, videoFile, pdfFile, isSaving, navigate, videoOption, youtubeUrl]
   );
 
   // Get file name from URL
