@@ -39,23 +39,26 @@ const EditLecture = () => {
         );
         const data = response.data.data;
 
-        // Handle links - ensure it's a string
-        const parsedLinks = data?.lecture_resources_link || "";
-        
+        // Set lecture data
         setLectureData({
           lecture_name: data.lecture_name || "",
-          links: parsedLinks,
           lecture_content: data.lecture_content || "",
+          links: data.lecture_resources_link || "",
         });
 
         // Set existing video URL if available
-        if (data?.lecture_videos && data.lecture_videos.length > 0) {
+        if (data.lecture_videos && data.lecture_videos.length > 0) {
           setExistingVideoUrl(data.lecture_videos[0]?.video_url || "");
         }
 
         // Set existing PDF URL if available
         if (data?.lecture_resources_pdf && data.lecture_resources_pdf.length > 0) {
           setExistingPdfUrl(data.lecture_resources_pdf[0] || "");
+        }
+
+        // Set YouTube URL if available
+        if (data.youtube_url) {
+          setYoutubeUrl(data.youtube_url);
         }
 
       } catch (error) {
