@@ -650,16 +650,6 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                         </button>
                       }
 
-                      {token &&
-                        courseData.is_student_enroll &&
-                        courseData.is_certificate && (
-                          <button
-                            onClick={handleDownload}
-                            className="btn-enroll w-100"
-                          >
-                            Download Certificate
-                          </button>
-                        )}
                       {token && courseData.is_student_enroll && (
                         <button
                           className="btn-enroll w-100"
@@ -668,6 +658,19 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                           Take Test
                         </button>
                       )}
+                      {
+                        token && (
+                          // courseData.is_student_enroll &&
+                          // courseData.is_certificate && (
+                          <button
+                            onClick={handleDownload}
+                            className="btn-enroll w-100"
+                          >
+                            Download Certificate
+                          </button>
+                        )
+                        // )}
+                      }
                     </ButtonWrapper>
                   </div>
                 </div>
