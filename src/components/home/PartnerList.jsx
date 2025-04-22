@@ -125,38 +125,6 @@ const partnerData = [
   },
 ];
 
-// const PartnerList = () => {
-//   return (
-//     <PartnersContainer>
-//       <Title>Our Partners</Title>
-//       <PartnersRow>
-//         {partnerData.map((partner, index) => (
-//           <PartnerCard key={index}>
-//             <CardContent>
-//               <IconContainer>
-//                 <PartnerIcon src={partner.icon} alt={`${partner.name} icon`} />
-//               </IconContainer>
-//               <PartnerName>{partner.name}</PartnerName>
-//               <PartnerDescription>{partner.description}</PartnerDescription>
-//             </CardContent>
-//             <CardFooter>
-//               <a
-//               href={partner.url}
-//               target="_blank"
-//               // rel="noopener noreferrer"
-//               style={{ textDecoration: "none" }}
-//               >
-//               <LearnMoreButton>
-//                 Learn More
-//                 </LearnMoreButton>
-//               </a>
-//             </CardFooter>
-//           </PartnerCard>
-//         ))}
-//       </PartnersRow>
-//     </PartnersContainer>
-//   );
-// };
 
 const PartnerList = () => {
   return (

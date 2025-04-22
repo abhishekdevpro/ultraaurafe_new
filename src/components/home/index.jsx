@@ -979,52 +979,43 @@ export const Home = () => {
               </div>
             </div>
 
-            <div className="d-flex justify-content-between align-items-center ">
-              <div>
-                <img
-                  src={ultraaura}
-                  alt="Ultraaura"
-                  style={{
-                    width: "300px",
-                    // height: "300px",
-                    objectFit: "contain",
-                  }}
-                />
-              </div>
-              <div>
-                <img
-                  src={novajobs}
-                  alt="Novajobs"
-                  style={{
-                    width: "300px",
-                    // height: "300px",
-                    objectFit: "contain",
-                  }}
-                />
-              </div>
-              <div>
-                <img
-                  src={homecare}
-                  alt="Homecare"
-                  style={{
-                    width: "300px",
-                    // height: "300px",
-                    objectFit: "contain",
-                  }}
-                />
-              </div>
-              <div>
-                <img
-                  src={paradigmshift}
-                  alt="Paradigmshift"
-                  style={{
-                    width: "300px",
-                    // height: "300px",
-                    objectFit: "contain",
-                  }}
-                />
-              </div>
-            </div>
+            <div className="container">
+  <div className="row justify-content-center align-items-center text-center">
+    <div className="col-6 col-sm-4 col-md-3 mb-4">
+      <img
+        src={ultraaura}
+        alt="Ultraaura"
+        className="img-fluid"
+        style={{ objectFit: "contain" }}
+      />
+    </div>
+    <div className="col-6 col-sm-4 col-md-3 mb-4">
+      <img
+        src={novajobs}
+        alt="Novajobs"
+        className="img-fluid"
+        style={{ objectFit: "contain" }}
+      />
+    </div>
+    <div className="col-6 col-sm-4 col-md-3 mb-4">
+      <img
+        src={homecare}
+        alt="Homecare"
+        className="img-fluid"
+        style={{ objectFit: "contain" }}
+      />
+    </div>
+    <div className="col-6 col-sm-4 col-md-3 mb-4">
+      <img
+        src={paradigmshift}
+        alt="Paradigmshift"
+        className="img-fluid"
+        style={{ objectFit: "contain" }}
+      />
+    </div>
+  </div>
+</div>
+
 
             <div className="lead-group aos" data-aos="fade-up">
               <Companies />

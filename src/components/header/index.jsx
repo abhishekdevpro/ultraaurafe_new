@@ -28,6 +28,7 @@ const StyledHeader = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 
     @media (min-width: 768px) {
       padding: 1rem;
@@ -81,6 +82,7 @@ const StyledHeader = styled.header`
   .header__sign-button,
   .header__login-button {
     padding: 0.5rem 1rem;
+     border: 0px solid #ed8936;
     border-radius: 9999px;
     font-size: 0.9rem;
     transition: all 0.3s ease;

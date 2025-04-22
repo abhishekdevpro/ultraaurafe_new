@@ -1,4 +1,3 @@
-
 import React, { useCallback, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -17,8 +16,6 @@ const AddLecture = () => {
     localStorage.getItem("vendorToken") ||
     localStorage.getItem("adminToken");
 
-  console.log(courseid, sectionid, "id hu bhai");
-
   const [lectureData, setLectureData] = useState({
     lecture_name: "",
     files: null,
@@ -26,6 +23,10 @@ const AddLecture = () => {
     links: "",
     lecture_content: "", // Add lecture_content to state
   });
+  const [youtubeUrl, setYoutubeUrl] = useState(""); // State for YouTube URL
+  const [videoOption, setVideoOption] = useState("upload"); // State for video option
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     setLectureData({ ...lectureData, [e.target.name]: e.target.value });
@@ -40,45 +41,6 @@ const AddLecture = () => {
     setLectureData({ ...lectureData, lecture_content: value }); // Update lecture_content
   };
 
-  // const handleSave = async () => {
-  //   try {
-  //     const formData = new FormData();
-  //     for (const key in lectureData) {
-  //       if (lectureData[key]) {
-  //         formData.append(key, lectureData[key]);
-  //       }
-  //     }
-  //     const response = await axios.post(
-  //       `https://api.novajobs.us/api/trainers/${courseid}/${sectionid}/upload`,
-  //       formData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //           Authorization: `${token}`,
-  //         },
-  //       }
-  //     );
-
-  //     console.log("Lecture saved successfully:", response.data);
-
-  //     // Store the lecture data in session storage
-  //     sessionStorage.setItem("lectureData", JSON.stringify(lectureData));
-
-  //     // Show success toast
-  //     toast.success("Lecture saved successfully!");
-
-  //     // Navigate after a short delay to allow the toast to be visible
-  //     setTimeout(() => {
-  //       navigate(`/course-details/${courseid}`);
-  //     }, 2000); // 2 seconds delay
-  //   } catch (error) {
-  //     console.error("Error saving lecture:", error);
-  //     toast.error("Error saving lecture. Please try again.");
-  //   }
-  // };
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
-
   const handleSave = useCallback(
     debounce(async () => {
       if (isLoading) return; // Prevent multiple submissions
@@ -90,6 +52,10 @@ const AddLecture = () => {
           if (lectureData[key]) {
             formData.append(key, lectureData[key]);
           }
+        }
+        // Add YouTube URL to form data
+        if (youtubeUrl) {
+          formData.append("youtube_url", youtubeUrl);
         }
 
         const response = await axios.post(
@@ -104,14 +70,9 @@ const AddLecture = () => {
         );
 
         console.log("Lecture saved successfully:", response.data);
-
-        // Store the lecture data in session storage
         sessionStorage.setItem("lectureData", JSON.stringify(lectureData));
-
-        // Show success toast
         toast.success("Lecture saved successfully!");
 
-        // Navigate after a short delay to allow the toast to be visible
         setTimeout(() => {
           navigate(`/course-details/${courseid}`);
         }, 2000); // 2 seconds delay
@@ -122,8 +83,9 @@ const AddLecture = () => {
         setIsLoading(false);
       }
     }, 300), // 300ms debounce time
-    [courseid, sectionid, token, lectureData, navigate]
+    [courseid, sectionid, token, lectureData, youtubeUrl, navigate]
   );
+
   return (
     <div className="main-wrapper">
       <CourseHeader activeMenu={"AddLecture"} />
@@ -173,26 +135,66 @@ const AddLecture = () => {
                             />
                           </div>
                           <div className="input-block">
-                            <label className="add-course-label">
-                              Files (MP4 only)
-                            </label>
-                            <div className="relative-form">
-                              <span>
-                                {lectureData.files
-                                  ? lectureData.files.name
-                                  : "No File Selected"}
-                              </span>
-                              <label className="relative-file-upload">
-                                Upload File
+                            <label className="add-course-label">Choose Video Type</label>
+                            <div className="d-flex gap-3 mb-3">
+                              <label>
                                 <input
-                                  type="file"
-                                  name="files"
-                                  accept=".mp4"
-                                  onChange={handleFileChange}
-                                />
+                                  type="radio"
+                                  name="videoOption"
+                                  value="upload"
+                                  checked={videoOption === "upload"}
+                                  onChange={() => setVideoOption("upload")}
+                                />{" "}
+                                Upload Video
+                              </label>
+                              <label>
+                                <input
+                                  type="radio"
+                                  name="videoOption"
+                                  value="youtube"
+                                  checked={videoOption === "youtube"}
+                                  onChange={() => setVideoOption("youtube")}
+                                />{" "}
+                                YouTube URL
                               </label>
                             </div>
                           </div>
+                          {videoOption === "upload" ? (
+                            <div className="input-block">
+                              <label className="add-course-label">
+                                Files (MP4 only)
+                              </label>
+                              <div className="relative-form">
+                                <span>
+                                  {lectureData.files
+                                    ? lectureData.files.name
+                                    : "No File Selected"}
+                                </span>
+                                <label className="relative-file-upload">
+                                  Upload File
+                                  <input
+                                    type="file"
+                                    name="files"
+                                    accept=".mp4"
+                                    onChange={handleFileChange}
+                                  />
+                                </label>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="input-block">
+                              <label className="add-course-label">
+                                YouTube URL
+                              </label>
+                              <input
+                                type="url"
+                                className="form-control"
+                                placeholder="Enter YouTube video URL"
+                                value={youtubeUrl}
+                                onChange={(e) => setYoutubeUrl(e.target.value)}
+                              />
+                            </div>
+                          )}
                           <div className="input-block">
                             <label className="add-course-label">
                               Resources (PDF only)
@@ -237,26 +239,19 @@ const AddLecture = () => {
                         </form>
                       </div>
                       <div className="widget-btn">
-                        {/* <Link to="#" className="btn btn-info-light" onClick={handleSave}>
-                          Save Lecture
-                        </Link> */}
                         <button
                           onClick={handleSave}
                           disabled={isLoading}
                           className="btn btn-primary"
                         >
                           {isLoading ? (
-                            <>
-                              <span
-                                className="spinner-border spinner-border-sm me-2"
-                                role="status"
-                                aria-hidden="true"
-                              ></span>
-                              Saving Lecture...
-                            </>
-                          ) : (
-                            "Save Lecture"
-                          )}
+                            <span
+                              className="spinner-border spinner-border-sm me-2"
+                              role="status"
+                              aria-hidden="true"
+                            ></span>
+                          ) : null}
+                          Save Lecture
                         </button>
                       </div>
                     </div>

@@ -187,15 +187,7 @@ export default function StudentSidebar() {
                  NovaJobs
                 </Link>
               </li>
-              {/* <li className={`nav-item ${location.pathname === '/student/student-courses' ? 'active' : ''}`}>
-                <Link
-                  to="/student/student-courses"
-                  className="nav-link"
-                >
-                  <i className="bx bxs-graduation" />
-                  Enrolled Courses
-                </Link>
-              </li> */}
+           
               <li
   className={`nav-item ${location.pathname === '/student/student-courses' ? 'active' : ''}`}
   data-tour="enrolled-courses" // Unique identifier for Joyride

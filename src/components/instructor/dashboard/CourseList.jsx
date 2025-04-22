@@ -111,6 +111,7 @@ const CourseTable = () => {
                     <button
                     disabled={!course.is_active}
                       className="btn btn-primary action-btn"
+                      style={{ background: "linear-gradient(135deg, #ffe6f0, #e6f0ff)",color: "#007bff"  }}
                       onClick={() =>
                         handleEditCourse(course.id, course.is_active)
                       }
