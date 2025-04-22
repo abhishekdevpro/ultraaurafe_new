@@ -555,6 +555,8 @@ const LectureListComponent = ({
   const navigate = useNavigate();
   const [showTestModal, setShowTestModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [selectedSection, setSelectedSection] = useState(null);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
@@ -575,8 +577,33 @@ const LectureListComponent = ({
   const renderLectureContent = (content) => {
     return { __html: content };
   };
+  // const handleTakeTest = () => {
+  //   if (
+  //     !courseData?.course_id ||
+  //     !courseData?.section_response[0]?.section_name ||
+  //     !courseData?.section_response[0]?.id
+  //   ) {
+  //     toast.error("Course information is missing.");
+  //     return;
+  //   }
+
+  //   setShowTestModal(false);
+  //   setLoading(true);
+
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //     const courseId = courseData.course_id;
+  //     const sectionName = courseData.section_response[0].section_name;
+  //     const sectionId = courseData.section_response[0].id;
+  //     window.location.href = `/student/student-skilltest/${courseId}/${sectionName}?section=${sectionId}`;
+  //   }, 2000);
+  // };
   const handleTakeTest = () => {
-    if (!courseData?.course_id || !courseData?.course_title) {
+    if (
+      !courseData?.course_id ||
+      !selectedSection?.section_name ||
+      !selectedSection?.id
+    ) {
       toast.error("Course information is missing.");
       return;
     }
@@ -586,7 +613,10 @@ const LectureListComponent = ({
 
     setTimeout(() => {
       setLoading(false);
-      window.location.href = `/student/student-skilltest/${courseData.course_id}/${courseData.course_title}`;
+      const courseId = courseData.course_id;
+      const sectionName = selectedSection.section_name;
+      const sectionId = selectedSection.id;
+      window.location.href = `/student/student-skilltest/${courseId}/${sectionName}?section=${sectionId}`;
     }, 2000);
   };
 
@@ -676,7 +706,10 @@ const LectureListComponent = ({
 
           <button
             className="btn-enroll w-100 mt-3"
-            onClick={() => setShowTestModal(true)}
+            onClick={() => {
+              setSelectedSection(section);
+              setShowTestModal(true);
+            }}
           >
             Take Test
           </button>
@@ -729,10 +762,14 @@ LectureListComponent.propTypes = {
   handlePDFClick: PropTypes.func.isRequired,
   loadingStates: PropTypes.objectOf(PropTypes.bool).isRequired,
   courseData: PropTypes.shape({
+    is_student_enroll: PropTypes.bool,
     course_id: PropTypes.number.isRequired,
-    course_title: PropTypes.string.isRequired,
-    is_student_enroll: PropTypes.bool.isRequired,
-    is_certificate: PropTypes.bool.isRequired,
+    section_response: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        section_name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
   }).isRequired,
 };
 
