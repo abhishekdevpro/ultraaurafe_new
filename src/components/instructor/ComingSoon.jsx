@@ -41,10 +41,11 @@ export const Coming = () => {
       <div className="page-content">
         <div className="container">
           <div className="row">
+            <div className="col-xl-3 col-lg-3">   
             {/* Sidebar */}
             {token?<InstructorSidebar />:<StudentSidebar />}
             {/* /Sidebar */}
-
+            </div>
             {/* Main Content */}
             <div className="col-xl-9 col-lg-9">
               <div className="coming-soon-content text-center">

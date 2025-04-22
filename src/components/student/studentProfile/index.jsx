@@ -74,7 +74,9 @@ const navigate = useNavigate()
           <div className="container">
             <div className="row">
               {/* sidebar */}
+              <div className="col-xl-3 col-lg-3">
               <StudentSidebar />
+              </div>
               {/* /Sidebar */}
               {/* Student Profile */}
               <div className="col-xl-9 col-lg-9">
