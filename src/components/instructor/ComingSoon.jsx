@@ -43,14 +43,16 @@ export const Coming = () => {
           <div className="row">
             <div className="col-xl-3 col-lg-3">   
             {/* Sidebar */}
-            {token?<InstructorSidebar />:<StudentSidebar />}
+            {token?<InstructorSidebar />:<StudentSidebar />}  
+
             {/* /Sidebar */}
             </div>
             {/* Main Content */}
             <div className="col-xl-9 col-lg-9">
               <div className="coming-soon-content text-center">
                 <h1>Coming Soon</h1>
-                <p>We are working hard to bring you the dashboard experience. Stay tuned!</p>
+                <p>We are working hard to bring you the dashboard experience.
+                   Stay tuned!</p>
               </div>
             </div>
             {/* /Main Content */}
