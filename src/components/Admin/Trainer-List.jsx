@@ -1020,7 +1020,9 @@ const TrainerList = () => {
       <div className="page-content">
         <div className="container">
           <div className="row">
+            <div className="col-xl-3 col-lg-3">
             <AdminSidebar />
+            </div>
             <div className="col-xl-9 col-lg-9">
               <div className="card">
                 <div className="card-header">

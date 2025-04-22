@@ -631,7 +631,7 @@
 // };
 
 // export default CourseList;
-
+  
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -656,6 +656,7 @@ const AdminCourseList = () => {
   useEffect(() => {
     fetchCourses(sortOrder);
   }, [token, sortOrder]);
+
   // useEffect(() => {
   //   const timer = setTimeout(() => {
   //     fetchCourses(sortOrder);
@@ -676,7 +677,6 @@ const AdminCourseList = () => {
         }
       );
       setAllCourses(response.data.data);
-      // setLoading(false)
     } catch (error) {
       console.error("Error fetching courses:", error);
       toast.error("Error fetching courses. Please try again.");
@@ -776,6 +776,7 @@ const AdminCourseList = () => {
     // if(courseId){
     //   return
     // }
+
     try {
       const response = await axios.delete(
         `https://api.novajobs.us/api/uaadmin/delete-course/${courseId}`,
@@ -921,15 +922,16 @@ const AdminCourseList = () => {
       </div>
       <div className="page-content">
         <div className="container">
-          <div className="row">
+        <div className="row">
+            <div className="col-xl-3 col-lg-3">
             <AdminSidebar />
+            </div>
             <div className="col-xl-9 col-lg-9">
               <div className="card">
                 <div className="card-header d-flex justify-content-between align-items-center">
                   <h5 className="card-title mb-0">Course List</h5>
                   <div className="sort-filter">
                     <div className="form-group mb-0 d-flex align-items-center">
-                      {/* <label htmlFor="sortOrder" className="me-2 mb-0"></label> */}
                       <select
                         id="sortOrder"
                         className="form-select form-select-sm"
@@ -946,11 +948,11 @@ const AdminCourseList = () => {
                   <FullPageLoader />
                 ) : (
                   <div className="card-body">
-                    <div className="table-responsive">
+                    <div className="table-responsive" style={{ position: 'relative', overflowX: 'auto' }}>
                       <table className="table table-hover table-center mb-0">
                         <thead>
                           <tr>
-                            <th>Course Title</th>
+                            <th style={{ position: 'sticky', left: 0, background: '#fff', zIndex: 100 }}>Course Title</th>
                             <th>Trainer Name</th>
                             <th>Price</th>
                             <th>Created At</th>
@@ -961,7 +963,7 @@ const AdminCourseList = () => {
                         <tbody>
                           {currentCourses.map((course) => (
                             <tr key={course.id}>
-                              <td>
+                              <td className="border" style={{ position: 'sticky', left: 0, background: '#fff', zIndex: 99 }}>
                                 <Link to={`/course-info/${course.id}`}>
                                   {course.course_title}
                                 </Link>

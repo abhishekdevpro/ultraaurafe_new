@@ -14,12 +14,14 @@ const SidebarContainer = styled.div`
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;
-    width: 250px;
+    width: 80vw;
     transform: ${props => (props.isOpen ? 'translateX(0)' : 'translateX(-100%)')};
     transition: transform 0.3s ease;
     background: white;
     z-index: 10000;
+    .theiaStickySidebar {
+      width: 100%;
+    }
   }
   @media (min-width: 769px) {
     transform: none;
@@ -44,8 +46,8 @@ const Backdrop = styled.div`
 // Toggle button for mobile
 const ToggleButton = styled.button`
   position: fixed;
-  top: 180px;
-  left: 320px;
+  top: 20px;
+  left: 20px;
   z-index: 11000;
   background: linear-gradient(135deg, #6e8efb, #a777e3);
   color: white;
@@ -166,7 +168,7 @@ export default function StudentSidebar() {
       <ToggleButton onClick={() => setIsSidebarOpen(prev => !prev)}>☰</ToggleButton>
       <Backdrop isOpen={isSidebarOpen} onClick={() => setIsSidebarOpen(false)} />
       <SidebarContainer isOpen={isSidebarOpen}>
-        <div className="col-xl-3 col-lg-3 theiaStickySidebar">
+        <div className=" theiaStickySidebar">
           <StickyBox offsetTop={20} offsetBottom={20}>
             <div className="settings-widget dash-profile">
               <div className="settings-menu">
