@@ -104,8 +104,9 @@ export const Dashboard = () => {
       <div className="page-content">
         <div className="container">
           <div className="row">
-            {/* Sidebar */}
+           <div className="col-xl-3 col-lg-3">
             <AdminSidebar />
+           </div>
             <div className="col-xl-9 col-lg-9">
               <div className="row justify-content-center">
                 <div className="col-lg-4 col-md-6 d-flex">

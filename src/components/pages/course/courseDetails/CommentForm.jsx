@@ -145,7 +145,7 @@ const StarIcon = styled(Star)`
 //     </Card>
 //   );
 // };
-const CommentForm = ({ courseId }) => {
+const CommentForm = ({ courseId, onCommentSubmit }) => {
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
   const [isEnrolled, setIsEnrolled] = useState(false);
@@ -185,6 +185,8 @@ const CommentForm = ({ courseId }) => {
         toast.success("Comment and rating posted successfully!");
         setComment("");
         setRating(0);
+        // Notify parent to refresh comments
+        onCommentSubmit && onCommentSubmit();
       } else {
         toast.error("Failed to post comment and rating.");
       }
@@ -263,6 +265,7 @@ const CommentForm = ({ courseId }) => {
 // PropTypes for validation
 CommentForm.propTypes = {
   courseId: PropTypes.string.isRequired,
+  onCommentSubmit: PropTypes.func,
 };
 
 export default CommentForm;

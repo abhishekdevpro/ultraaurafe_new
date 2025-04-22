@@ -110,7 +110,7 @@ const VerifyCertificate = () => {
               </div>
               <div className="mentor-course text-center">
                 <h2>
-                  Welcome to <br /> Ultraaura Certificates.
+                  Welcome to <br /> UltraAura Certificates.
                 </h2>
               </div>
             </div>

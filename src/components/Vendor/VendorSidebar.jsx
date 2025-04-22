@@ -35,7 +35,7 @@ export default function VendorSidebar() {
 
 
   return (
-    <div className="col-xl-3 col-lg-3 theiaStickySidebar">
+    <div className=" theiaStickySidebar">
       <StickyBox offsetTop={20} offsetBottom={20}>
         <div className="settings-widget dash-profile">
           <div className="settings-menu">
