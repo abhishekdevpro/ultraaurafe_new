@@ -83,16 +83,17 @@ const Login = () => {
     <div className="main-wrapper log-wrap">
       <div className="row">
         {/* Left side with logo */}
-        <div className="col-md-6 login-bg">
-          <div className="welcome-login">
-            <div className="login-banner">
-              <img src={logo5} className="img-fluid" alt="UltraAura Logo" />
-            </div>
-            <div className="mentor-course text-center">
-              <h2>Welcome to UltraAura.</h2>
-            </div>
-          </div>
-        </div>
+        <div className="col-md-6 login-bg d-flex align-items-center justify-content-center min-vh-100">
+  <div className="welcome-login text-center">
+    <div className="login-banner">
+      <img src={logo5} className="img-fluid" alt="UltraAura Logo" />
+    </div>
+    <div className="mentor-course">
+      <h2>Welcome to UltraAura</h2>
+    </div>
+  </div>
+</div>
+
 
         {/* Right side with login form */}
         <div className="col-md-6 login-wrap-bg">
