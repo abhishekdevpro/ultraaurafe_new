@@ -9,18 +9,18 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
-// const Banner = styled.div`
-//   background-color: #333; // Changed to a darker color for better contrast with white text
-//   padding: 40px 0;
-//   text-align: center;
-//   margin-bottom: 20px;
-//   color: white;
+const Banner = styled.div`
+  background-color: #333; // Changed to a darker color for better contrast with white text
+  
+  text-align: center;
+  margin-bottom: 20px;
+  color: white;
 
-//   h1 {
-//     font-size: 2.5rem;
-//     margin: 0; // Ensure no extra margin if not needed
-//   }
-// `;
+  h1 {
+    font-size: 2.5rem;
+    margin: 0; // Ensure no extra margin if not needed
+  }
+`;
 
 const Section = styled.section`
   margin-bottom: 40px;
@@ -65,15 +65,17 @@ const AIResumePage = () => {
   return (
     <>
       <PageHeader />
+      <Banner>
         <div className="page-banner">
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-12">
-                <h1 className="mb-0">AI Resume Building</h1>
+                <h1 className="mb-0 ">AI Resume Building</h1>
               </div>
             </div>
           </div>
         </div>
+      </Banner>
       <Container>
         <Section>
           <p>
