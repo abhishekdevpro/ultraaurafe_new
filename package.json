@@ -1,13 +1,17 @@
 {
   "name": "dlms",
   "version": "0.1.0",
-  "homepage": "https://ultraaurafe-new.vercel.app",
+  "homepage": "https://trainers.ultraaura.education",
   "private": true,
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^41.4.2",
     "@ckeditor/ckeditor5-react": "^6.3.0",
     "@popperjs/core": "^2.11.8",
+    "@reactour/tour": "^3.7.0",
     "@reduxjs/toolkit": "^2.2.7",
+    "@stripe/react-stripe-js": "^2.9.0",
+    "@stripe/stripe-js": "^4.10.0",
+    "@tailwindcss/postcss": "^4.1.3",
     "@types/react-redux": "^7.1.33",
     "aos": "^2.3.4",
     "axios": "^1.7.4",
@@ -16,13 +20,17 @@
     "feather-icons-react": "^0.7.0",
     "html-react-parser": "^5.1.15",
     "install": "^0.13.0",
+    "jwt-decode": "^4.0.0",
     "lodash": "^4.17.21",
     "lucide-react": "^0.438.0",
+    "node-modules": "^1.0.1",
+    "postcss": "^8.5.3",
     "prop-type": "^0.0.1",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-apexcharts": "^1.4.1",
-    "react-bootstrap": "^2.10.4",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-bootstrap": "^2.10.7",
     "react-bootstrap-daterangepicker": "^8.0.0",
     "react-circular-progressbar": "^2.1.0",
     "react-countup": "^6.5.3",
@@ -30,14 +38,19 @@
     "react-datepicker": "^6.9.0",
     "react-dom": "^18.3.1",
     "react-feather": "^2.0.10",
+    "react-google-recaptcha": "^3.1.0",
+    "react-helmet-async": "^2.0.5",
+    "react-hook-form": "^7.55.0",
     "react-icons": "^5.3.0",
+    "react-joyride": "^2.9.2",
     "react-modal": "^3.16.1",
     "react-owl-carousel": "^2.3.3",
     "react-player": "^2.16.0",
     "react-quill": "^2.0.0",
     "react-redux": "^9.1.2",
-    "react-router-dom": "^6.18.0",
+    "react-router-dom": "^6.26.2",
     "react-select": "^5.8.0",
+    "react-share": "^5.1.2",
     "react-slick": "^0.30.2",
     "react-sticky-box": "^2.0.5",
     "react-tag-input-component": "^2.0.2",
@@ -45,14 +58,15 @@
     "react-type-animation": "^3.2.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.12",
-    "swiper": "^11.1.9"
+    "swiper": "^11.1.9",
+    "tailwindcss": "^4.1.3"
   },
   "overrides": {
     "semver": "~7.5.2"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "eslint": "^8.53.0",
+    "eslint": "^8.57.1",
     "eslint-plugin-react": "^7.33.2",
     "react-scripts": "^5.0.1"
   },
@@ -71,6 +85,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test"
+    "test": "react-scripts test",
+    "lint": "eslint ."
   }
 }

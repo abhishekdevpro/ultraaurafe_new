@@ -5,7 +5,7 @@ import OwlCarousel from "react-owl-carousel";
 import FeatherIcon from "feather-icons-react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import logo5 from "../../header/logo5.png";
+import logo5 from "../../../assets/Ultra_Aura.png";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -44,7 +44,7 @@ const Login = () => {
                 localStorage.setItem("vendorToken", token);
     
                 toast.success("Login successful!");
-                navigate("/vendor-dashboard"); // Adjust the path as needed
+                navigate("/vendor/vendor-dashboard"); // Adjust the path as needed
             }
         } catch (error) {
             console.error("Login failed", error);
@@ -161,13 +161,15 @@ const Login = () => {
                                             </button>
                                         </div>
                                     </form>
-                                    <div className="signup-link">
-                                        <p>Don’t have an account?{" "}
-                                            <Link to="/partner-signup">
-                                                Sign up
-                                            </Link>
-                                        </p>
-                                    </div>
+                                    <div className="signup-link text-center mt-4">
+    <p className="mb-0">
+        Don’t have an account?{" "}
+        <Link to="/partner-signup" className="text-primary fw-bold">
+            Sign up
+        </Link>
+    </p>
+</div>
+
                                 </div>
                             </div>
                             <div className="google-bg text-center">

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import StudentHeader from "../header";
 import StudentSidebar from "../sidebar";
 import StudentSettingPageHeader from "./settingPageHeader";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import the CSS for toast notifications
 
 const StudentChangePassword = () => {
@@ -135,7 +135,6 @@ const StudentChangePassword = () => {
         </div>
       </div>
       {/* /Page Content */}
-      <ToastContainer />
     </div>
   );
 };

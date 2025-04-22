@@ -7,8 +7,19 @@ import { Chapter,Chart,Cloud,Icon1,Import,Key,Mobile,People,Play,Teacher,Timer,T
 import CourseHeader from "../header";
 import Instructor from "./instructor";
 import Overview from "./overview";
-
 const CourseDetails2 = () => {
+  const handleShare = () => {
+    
+    const shareLink = `${window.location.origin}${window.location.pathname}`; 
+
+    navigator.clipboard.writeText(shareLink)
+      .then(() => {
+        alert("Link copied to clipboard!");
+      })
+      .catch((err) => {
+        console.error("Failed to copy: ", err);
+      });
+  };
   return (
     <>
       <div className="main-wrapper">
@@ -59,7 +70,7 @@ const CourseDetails2 = () => {
                         <div className="play-icon">
                           <i className="fa-solid fa-play" />
                         </div>
-                        <img className="img-fluid" src={VideoBg} alt="" />
+                        <video className="img-fluid" src={VideoBg} alt="" autoPlay />
                       </Link>
                     </div>
 
@@ -146,11 +157,11 @@ const CourseDetails2 = () => {
                                   </Link>
                                 </div>
                                 <div className="col-sm-6">
-                                  <Link to="#" className="btn btn-wish w-100">
+                                  <button onClick={()=>handleShare()} className="btn btn-wish w-100" >
                                     {/* <i className="feather-share-2" />  */}
-                                    <FeatherIcon icon="share-2" />
+                                    <FeatherIcon icon="share-2"  />
                                     Share
-                                  </Link>
+                                  </button>
                                 </div>
                                 <div className="col-sm-6">
                                   <Link
@@ -265,7 +276,7 @@ const CourseDetails2 = () => {
                           Overview
                         </Link>
                       </li>
-                      <li>
+                      <li className=".course-content">
                         <Link to="#Course_Content">Course Content</Link>
                       </li>
                       <li>

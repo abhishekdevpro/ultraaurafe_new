@@ -1,146 +1,10 @@
-// import React from "react";
-// import { Link } from "react-router-dom";
-// import { Icon19, Icon20, Icon21 } from "../imagepath";
-// import logo5 from './logo5.png'
-
-// const Footer = () => {
-//   return (
-//     <footer className="footer">
-//     {/* Footer Top */}
-//     <div className="footer-top">
-//       <div className="container">
-//         <div className="row">
-//           {/* Row 1 */}
-//           <div className="col-12 d-flex flex-column flex-md-row mb-4">
-//             <div className="col-md-3 mb-4 mb-md-0">
-//               {/* Footer Widget */}
-//               <div className="footer-widget footer-about">
-//                 <div className="footer-logo">
-//                   <img src={logo5} alt="logo" className="img-fluid" />
-//                 </div>
-//                 <div className="footer-about-content">
-//                   <p>UltraAura.Education - An AI enabled Edtech Company</p>
-//                 </div>
-//                 <div className="footer-contact-info">
-//                 <div className="footer-address d-flex align-items-center mb-2">
-//                   <img src={Icon20} alt="" className="img-fluid me-2" />
-//                   <p>1509 Lady St, Columbia, SC 29201,<br /> United States</p>
-//                 </div>
-//                 <p className="mb-2">
-//                   <img src={Icon19} alt="" className="img-fluid me-2" />
-//                   info@ultraaura.education
-//                 </p>
-//                 <p className="mb-0">
-//                   <img src={Icon21} alt="" className="img-fluid me-2" />
-//                   1803-967-7715
-//                 </p>
-//               </div>
-//               </div>
-//               {/* /Footer Widget */}
-//             </div>
-//             <div className="col-md-3 mb-4 mb-md-0">
-//               {/* Footer Widget */}
-//               <div className="footer-widget footer-menu">
-//                 <h2 className="footer-title">About us</h2>
-//                 <ul className="list-unstyled">
-//                   <li><Link to="/about-us">Aboutus</Link></li>
-//                   <li><Link to="/careers">Careers</Link></li>
-//                   <li><Link to="/trainers">Trainers</Link></li>
-                 
-//                 </ul>
-//               </div>
-//               {/* /Footer Widget */}
-//             </div>
-//             <div className="col-md-3 mb-4 mb-md-0">
-//               {/* Footer Widget */}
-//               <div className="footer-widget footer-menu">
-//                 <h2 className="footer-title">For Students</h2>
-//                 <ul className="list-unstyled">
-//                   <li><Link to="/studentspage">Students</Link></li>
-//                   <li><Link to="/refund">Refund-policy</Link></li>
-//                   <li><Link to="/skilltests">Skill-tests</Link></li>
-//                   <li><Link to="certifications">Cetifications</Link></li>
-//                   <li><Link to="/ai-resume">AI Resume building</Link></li>
-//                 </ul>
-//               </div>
-//               {/* /Footer Widget */}
-//             </div>
-//             <div className="col-md-3">
-//               {/* Footer Widget */}
-//               <div className="footer-widget footer-menu">
-//                 <h2 className="footer-title">
-//                   <Link to={'/partners'}>
-//                     Partner with UltraAura
-//                   </Link>
-//                 </h2>
-//                 <ul className="list-unstyled">
-//                   <li><Link to="/login">Student Login</Link></li>
-//                   <li><Link to="/login">Trainer Login</Link></li>
-//                   <li><Link to="/partner-signup">Partner Login</Link></li>
-//                 </ul>
-//               </div>
-//               {/* /Footer Widget */}
-//             </div>
-//           </div>
-//           {/* Row 2 */}
-//           <div className="col-12">
-//             <div className="footer-widget footer-contact">
-//               <h2 className="footer-title">Newsletter</h2>
-//               <div className="news-letter mb-3">
-//                 <form>
-//                   <input
-//                     type="email"
-//                     className="form-control"
-//                     placeholder="Enter your email address"
-//                     name="email"
-//                   />
-//                 </form>
-//               </div>
-              
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//     {/* /Footer Top */}
-  
-//     {/* Footer Bottom */}
-//     <div className="footer-bottom bg-light py-3">
-//       <div className="container">
-//         {/* Copyright */}
-//         <div className="copyright">
-//           <div className="row align-items-center">
-//             <div className="col-md-6 mb-2 mb-md-0">
-//               <div className="privacy-policy">
-//                 <ul className="list-inline mb-0">
-//                   <li className="list-inline-item"><Link to="/term-condition">Terms</Link></li>
-//                   <li className="list-inline-item"><Link to="/privacy-policy">Privacy</Link></li>
-//                 </ul>
-//               </div>
-//             </div>
-//             <div className="col-md-6 text-md-end">
-//               <div className="copyright-text">
-//                 <p className="mb-0">© 2024 UltraAura. All rights reserved.</p>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//         {/* /Copyright */}
-//       </div>
-//     </div>
-//     {/* /Footer Bottom */}
-//   </footer>
-  
-  
-//   );
-// };
-
-// export default Footer;
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Icon19, Icon20 } from "../imagepath";
-import logo5 from './logo5.png';
+import logo5 from "../../assets/Ultra_Aura.png";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 // Styled Components
 const FooterWrapper = styled.footer`
@@ -149,7 +13,7 @@ const FooterWrapper = styled.footer`
 `;
 
 const FooterTop = styled.div`
-  padding: 60px 0;
+  padding: 0px 0;
 `;
 
 const Container = styled.div`
@@ -198,6 +62,13 @@ const FooterLogo = styled.div`
     max-width: 150px;
   }
 `;
+const FooterLogo2 = styled.div`
+  margin-bottom: 20px;
+
+  img {
+    max-width: 100px;
+  }
+`;
 
 const FooterAboutContent = styled.p`
   margin-bottom: 20px;
@@ -206,7 +77,8 @@ const FooterAboutContent = styled.p`
 `;
 
 const FooterContactInfo = styled.div`
-  .footer-address, p {
+  .footer-address,
+  p {
     margin-bottom: 10px;
     font-size: 14px;
     display: flex;
@@ -230,10 +102,10 @@ const FooterTitle = styled.h2`
 const FooterMenuList = styled.ul`
   list-style: none;
   padding: 0;
-  
+
   li {
     margin-bottom: 10px;
-    
+
     a {
       text-decoration: none;
       color: #555;
@@ -250,6 +122,11 @@ const FooterMenuList = styled.ul`
 const NewsletterForm = styled.form`
   display: flex;
   align-items: center;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 10px;
+  box-sizing: border-box;
 
   input {
     flex: 1;
@@ -258,6 +135,17 @@ const NewsletterForm = styled.form`
     border: 1px solid #ddd;
     border-radius: 4px 0 0 4px;
     margin-right: -1px;
+    width: 100%;
+    box-sizing: border-box;
+
+    @media (max-width: 768px) {
+      font-size: 13px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 12px;
+      padding: 8px;
+    }
   }
 
   button {
@@ -273,10 +161,33 @@ const NewsletterForm = styled.form`
     &:hover {
       background-color: #0056b3;
     }
+
+    @media (max-width: 768px) {
+      font-size: 13px;
+      padding: 9px 12px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 12px;
+      padding: 8px 10px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+
+    input {
+      border-radius: 4px;
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+
+    button {
+      border-radius: 4px;
+      width: 100%;
+    }
   }
 `;
-
-
 
 const FooterBottom = styled.div`
   background-color: #e9ecef;
@@ -300,10 +211,10 @@ const PrivacyPolicy = styled.div`
     list-style: none;
     padding: 0;
     display: flex;
-    
+
     li {
       margin-right: 15px;
-      
+
       a {
         text-decoration: none;
         color: #555;
@@ -328,8 +239,29 @@ const CopyrightText = styled.p`
   color: #555;
 `;
 
-// Footer Component
 const Footer = () => {
+  const [email, setEmail] = useState("");
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "https://api.novajobs.us/api/jobseeker/user-subscribe",
+        { email }
+      );
+      if (response.status === 200) {
+        toast.success("Subscribed successfully!");
+        setEmail("");
+      }
+    } catch (error) {
+      toast.error("Subscription failed. Please try again.");
+      console.error("Subscription error:", error);
+    }
+  };
   return (
     <FooterWrapper>
       <FooterTop>
@@ -338,64 +270,108 @@ const Footer = () => {
             <CompanyInfoColumn>
               <FooterWidget>
                 <FooterLogo>
-                  <img src={logo5} alt="logo" />
+                  <Link to={"/home"}>
+                    <img src={logo5} alt="logo" />
+                  </Link>
                 </FooterLogo>
                 <FooterAboutContent>
-                   An AI enabled Edtech Company
+                  <b>An AI enabled Edtech Company</b>
                 </FooterAboutContent>
                 <FooterContactInfo>
                   <div className="footer-address">
                     <img src={Icon20} alt="" />
-                    <p>
-                      1509 Lady St, Columbia, SC 29201,<br /> United States
-                    </p>
+                    <p>P O Box 1084, Columbia, SC 29202</p>
                   </div>
                   <p>
                     <img src={Icon19} alt="" />
                     info@ultraaura.education
                   </p>
-                 
+                  <p>
+                    <img src={Icon19} alt="" />
+                    hr@ultraaura.education
+                  </p>
                 </FooterContactInfo>
+                <FooterLogo2>
+                  <img
+                    src="https://abhishekdevpro-nova-home-care-fe.vercel.app/assets/logo2-06lVAt2c.png"
+                    alt=""
+                  />
+                </FooterLogo2>
               </FooterWidget>
               <FooterWidget>
                 <FooterTitle>Newsletter</FooterTitle>
-                <NewsletterForm>
+                <NewsletterForm onSubmit={handleSubscribe}>
                   <input
                     type="email"
                     placeholder="Enter your email address"
                     name="email"
+                    value={email}
+                    onChange={handleEmailChange}
+                    required
                   />
                   <button type="submit">Subscribe</button>
                 </NewsletterForm>
+                {/* {subscriptionStatus && <p>{subscriptionStatus}</p>} */}
               </FooterWidget>
             </CompanyInfoColumn>
             <LinksColumn>
               <FooterWidget>
                 <FooterTitle>About us</FooterTitle>
                 <FooterMenuList>
-                  <li><Link to="/about-us">About Us</Link></li>
-                  <li><Link to="/careers">Careers</Link></li>
-                  <li><Link to="/trainers">Trainers</Link></li>
+                  <li>
+                    <Link to="/about-us">About Us</Link>
+                  </li>
+                  <li>
+                    <Link to="/verify-certificate">Verify Certificate</Link>
+                  </li>
+                  <li>
+                    <Link to="/careers">Careers</Link>
+                  </li>
+                  <li>
+                    <Link to="/trainers">Trainers</Link>
+                  </li>
                 </FooterMenuList>
               </FooterWidget>
               <FooterWidget>
                 <FooterTitle>For Students</FooterTitle>
                 <FooterMenuList>
-                  <li><Link to="/studentspage">Students</Link></li>
-                  <li><Link to="/refund">Refund Policy</Link></li>
-                  <li><Link to="/skilltests">Skill Tests</Link></li>
-                  <li><Link to="/certifications">Certifications</Link></li>
-                  <li><Link to="/ai-resume">AI Resume Building</Link></li>
+                  <li>
+                    <Link to="/studentspage">Students</Link>
+                  </li>
+                  <li>
+                    <Link to="/refund">Refund Policy</Link>
+                  </li>
+                  <li>
+                    <Link to="/skilltests">Skill Tests</Link>
+                  </li>
+                  <li>
+                    <Link to="/certifications">Certifications</Link>
+                  </li>
+                  <li>
+                    <Link to="/ai-resume">AI Resume Building</Link>
+                  </li>
                 </FooterMenuList>
               </FooterWidget>
               <FooterWidget>
                 <FooterTitle>
-                  <Link to={'/partners'}>Partner with UltraAura</Link>
+                  <Link to={"/partners"}>Partner with UltraAura</Link>
                 </FooterTitle>
                 <FooterMenuList>
-                  <li><Link to="/login">Student Login</Link></li>
-                  <li><Link to="/login">Trainer Login</Link></li>
-                  <li><Link to="/partner-signup">Partner Signup</Link></li>
+                  <li>
+                    <Link to="https://ultraaura.education/login">
+                      Student Login
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="https://trainers.ultraaura.education/">
+                      Trainer Login
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="https://vendors.ultraaura.education/">
+                      Partner Signup
+                    </Link>
+                  </li>
                 </FooterMenuList>
               </FooterWidget>
             </LinksColumn>
@@ -407,11 +383,17 @@ const Footer = () => {
           <Copyright>
             <PrivacyPolicy>
               <ul>
-                <li><Link to="/term-condition">Terms</Link></li>
-                <li><Link to="/privacy-policy">Privacy</Link></li>
+                <li>
+                  <Link to="/term-condition">Terms</Link>
+                </li>
+                <li>
+                  <Link to="/privacy-policy">Privacy</Link>
+                </li>
               </ul>
             </PrivacyPolicy>
-            <CopyrightText>© 2024 UltraAura. All rights reserved.</CopyrightText>
+            <CopyrightText>
+              © {new Date().getFullYear()} UltraAura. All rights reserved.
+            </CopyrightText>
           </Copyright>
         </Container>
       </FooterBottom>

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Footer from "../../footer";
 import { InstructorHeader } from "../../instructor/header";
 import InstructorSidebar from "../sidebar";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import CourseTable from "./CourseList";
 import axios from 'axios';
 
@@ -14,15 +14,20 @@ export const Dashboard = () => {
   // Define the state variable to store courses
   const [allCourses, setAllCourses] = useState([]);
   const [error, setError] = useState(null);
+  const token = localStorage.getItem("trainerToken");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAllCourses = async () => {
+      if(!token){
+        navigate('/login')
+      }
       try {
         const response = await axios.get(
           "https://api.novajobs.us/api/trainers/all-courses",
           {
             headers: {
-              Authorization: localStorage.getItem("token"),
+              Authorization: `${token}`,
             },
           }
         );
@@ -31,6 +36,9 @@ export const Dashboard = () => {
       } catch (error) {
         console.error("Error fetching all courses:", error);
         setError("Error fetching all courses.");
+        if(error.response && error.response.status == 401){
+          window.location.href = '/login'
+        }
       }
     };
     fetchAllCourses();
@@ -47,13 +55,14 @@ export const Dashboard = () => {
       <div className="breadcrumb-bar breadcrumb-bar-info">
         <div className="container">
           <div className="row">
-            <div className="col-md-12 col-12">
+            <div className="col-md-12 col-12 pt-4">
               <div className="breadcrumb-list">
                 <h2 className="breadcrumb-title">Dashboard</h2>
                 <nav aria-label="breadcrumb" className="page-breadcrumb">
                   <ol className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/home">Home</Link>
+                      {/* <Link to="/home">Home</Link> */}
+                      <Link to="/">Home</Link>
                     </li>
                     <li className="breadcrumb-item active" aria-current="page">
                       Dashboard

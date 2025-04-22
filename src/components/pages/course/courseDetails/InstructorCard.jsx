@@ -7,7 +7,7 @@
 
 // const InstructorCard = ({ trainerID }) => {
 //     const [trainer, setTrainer] = useState(null);
-  
+
 //     useEffect(() => {
 //       const fetchTrainer = async () => {
 //         try {
@@ -18,14 +18,14 @@
 //           console.error('Error fetching trainer data:', error);
 //         }
 //       };
-  
+
 //       fetchTrainer();
 //     }, [trainerID]);
-  
+
 //     if (!trainer) {
 //       return <div>Loading...</div>;
 //     }
-  
+
 //     return (
 //       <div className="card instructor-sec">
 //         <div className="card-body">
@@ -79,7 +79,6 @@
 //       </div>
 //     );
 //   };
-  
 
 // export default InstructorCard;
 
@@ -167,10 +166,10 @@
 // };
 
 // export default InstructorCard;
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const InstructorCard = ({ trainerID }) => {
   const [trainer, setTrainer] = useState(null);
@@ -178,19 +177,35 @@ const InstructorCard = ({ trainerID }) => {
   useEffect(() => {
     const fetchTrainer = async () => {
       try {
-        const response = await axios.get(`https://api.novajobs.us/api/trainers/trainer-profile/${trainerID}`);
+        const response = await axios.get(
+          `https://api.novajobs.us/api/trainers/trainer-profile/${trainerID}`
+        );
         console.log(response);
         setTrainer(response.data.data.trainer);
       } catch (error) {
-        console.error('Error fetching trainer data:', error);
+        console.error("Error fetching trainer data:", error);
       }
     };
 
     fetchTrainer();
   }, [trainerID]);
 
+  // if (!trainer) {
+  //   return <div>Loading...</div>;
+  // }
   if (!trainer) {
-    return <div>Loading...</div>;
+    return (
+      <div className="d-flex justify-content-center align-items-center">
+        {/* <div className="text-center">
+          <i className="bi bi-exclamation-triangle-fill text-warning fs-1 mb-3"></i>
+          <div className=" ">Trainer Not Found</div>
+          <p className="text-muted">
+            We could not find the trainer you are looking for.
+          </p>
+        </div>
+        */}
+      </div>
+    );
   }
 
   return (
@@ -201,12 +216,20 @@ const InstructorCard = ({ trainerID }) => {
           <div className="about-instructor">
             <div className="abt-instructor-img">
               <Link to={`/instructor/instructor-profile/${trainerID}`}>
-                <img src={`https://api.novajobs.us/${trainer.photo}`} alt={`${trainer.first_name} ${trainer.last_name}`} className="img-fluid" />
+                <img
+                  src={`https://api.novajobs.us/${trainer.photo}`}
+                  alt={`${trainer.first_name} ${trainer.last_name}`}
+                  className="img-fluid"
+                />
               </Link>
             </div>
             <div className="instructor-detail">
-              <h5><Link to={`/instructor/instructor-profile/${trainerID}`}>{trainer.first_name} {trainer.last_name}</Link></h5>
-              <p>{trainer.jobtitle || 'Instructor'}</p>
+              <h5>
+                <Link to={`/instructor/instructor-profile/${trainerID}`}>
+                  {trainer.first_name} {trainer.last_name}
+                </Link>
+              </h5>
+              <p>{trainer.jobtitle || "Instructor"}</p>
             </div>
           </div>
         </div>

@@ -90,7 +90,7 @@ const NewPassword2 = () => {
                 }
             );
 
-            if (response.status === 200) {
+            if (response.data.status === 200) {
                 toast.success("Password reset successfully!");
                 navigate("/login"); // Redirect to login page
             } else {
@@ -98,12 +98,12 @@ const NewPassword2 = () => {
             }
         } catch (err) {
             console.log(err);
-            toast.error("Error resetting password.");
+            toast.error(err.response.data.message || "Error resetting password.");
         }
     };
 
     return (
-        <>
+        <>   
             <div className="main-wrapper">
                 <div className="row">
                     {/* Login Banner */}

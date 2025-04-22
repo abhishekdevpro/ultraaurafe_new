@@ -1,4 +1,3 @@
-
 // import React, { useState, useEffect } from "react";
 // import { Link } from "react-router-dom";
 // import axios from "axios";
@@ -177,7 +176,7 @@
 //                                     />
 //                                   ))}
 //                                   <span className="d-inline-block average-rating">
-//                                     <span>{course.rating.toFixed(1)}</span> 
+//                                     <span>{course.rating.toFixed(1)}</span>
 //                                   </span>
 //                                 </div>
 //                               </div>
@@ -210,13 +209,14 @@ import Footer from "../../footer";
 import StudentSidebar from "../sidebar";
 import { Icon01, Icon2 } from "../../imagepath";
 import { toast } from "react-toastify";
+import FullPageLoader from "../../home/FullPageLoader";
 
 const StudentWishlist = () => {
   const [wishlistCourses, setWishlistCourses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
 
   const fetchWishlist = async () => {
     try {
@@ -243,17 +243,17 @@ const StudentWishlist = () => {
   const toggleWishlist = async (courseId) => {
     try {
       await axios.post(
-        'https://api.novajobs.us/api/students/course-favorite',
+        "https://api.novajobs.us/api/students/course-favorite",
         { course_id: courseId },
         {
           headers: {
-            'Authorization': `${token}`,
-            'Content-Type': 'application/json',
-          }
+            Authorization: `${token}`,
+            "Content-Type": "application/json",
+          },
         }
       );
-      
-      toast.success('Course removed from favorites!', {
+
+      toast.success("Course removed from favorites!", {
         // onClose: () => {
         //   // Refresh the page after the toast is closed
         //   window.location.reload();
@@ -262,12 +262,12 @@ const StudentWishlist = () => {
       // Refresh the wishlist
       fetchWishlist();
     } catch (error) {
-      console.error('Failed to remove course from favorites:', error);
-      toast.error('Failed to remove course from favorites. Please try again.');
+      console.error("Failed to remove course from favorites:", error);
+      toast.error("Failed to remove course from favorites. Please try again.");
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  
   if (error) return <div>{error}</div>;
 
   return (
@@ -310,7 +310,7 @@ const StudentWishlist = () => {
                   <div className="profile-heading">
                     <h3>Wishlist</h3>
                   </div>
-                  <div className="checkout-form pb-0">
+                  {isLoading?<FullPageLoader /> :<div className="checkout-form pb-0">
                     {wishlistCourses.length === 0 ? (
                       <div className="text-center py-5">
                         <h4>No courses in the wishlist</h4>
@@ -318,7 +318,10 @@ const StudentWishlist = () => {
                     ) : (
                       <div className="row">
                         {wishlistCourses.map((course) => (
-                          <div key={course.id} className="col-xxl-4 col-md-6 d-flex">
+                          <div
+                            key={course.id}
+                            className="col-xxl-4 col-md-6 d-flex"
+                          >
                             <div className="course-box flex-fill">
                               <div className="product">
                                 <div className="product-img">
@@ -326,7 +329,14 @@ const StudentWishlist = () => {
                                     <img
                                       className="img-fluid"
                                       alt={course.title}
-                                      src={`https://api.novajobs.us${course.course_banner_image}`}
+                                      // src={`https://api.novajobs.us${course.course_banner_image}`}
+                                      src={
+                                        course.course_banner_image.startsWith(
+                                          "https"
+                                        )
+                                          ? course.course_banner_image
+                                          : `https://api.novajobs.us${course.course_banner_image}`
+                                      }
                                     />
                                   </Link>
                                   <div className="price">
@@ -339,7 +349,9 @@ const StudentWishlist = () => {
                                 <div className="product-content">
                                   <div className="course-group d-flex">
                                     <div className="course-group-img d-flex">
-                                      <Link to={`/instructor/instructor-profile/${course.instructor_id}`}>
+                                      <Link
+                                        to={`/instructor/instructor-profile/${course.instructor_id}`}
+                                      >
                                         <img
                                           src={`https://api.novajobs.us${course.trainer_photo}`}
                                           alt={course.trainer_first_name}
@@ -348,15 +360,22 @@ const StudentWishlist = () => {
                                       </Link>
                                       <div className="course-name">
                                         <h4>
-                                          <Link to={`/instructor/instructor-profile/${course.instructor_id}`}>
-                                            {course.trainer_first_name}{" "}{course.trainer_last_name}
+                                          <Link
+                                            to={`/instructor/instructor-profile/${course.instructor_id}`}
+                                          >
+                                            {course.trainer_first_name}{" "}
+                                            {course.trainer_last_name}
                                           </Link>
                                         </h4>
                                         <p>Instructor</p>
                                       </div>
                                     </div>
                                     <div className="course-share d-flex align-items-center justify-content-center">
-                                      <div onClick={() => toggleWishlist(course.id)}>
+                                      <div
+                                        onClick={() =>
+                                          toggleWishlist(course.id)
+                                        }
+                                      >
                                         <i className="fa-solid fa-heart " />
                                       </div>
                                     </div>
@@ -381,12 +400,14 @@ const StudentWishlist = () => {
                                       <i
                                         key={index}
                                         className={`fas fa-star ${
-                                          index < Math.floor(course.rating) ? "filled" : ""
+                                          index < Math.floor(course.rating)
+                                            ? "filled"
+                                            : ""
                                         } me-1`}
                                       />
                                     ))}
                                     <span className="d-inline-block average-rating">
-                                      <span>{course.rating.toFixed(1)}</span> 
+                                      <span>{course.rating.toFixed(1)}</span>
                                     </span>
                                   </div>
                                 </div>
@@ -396,7 +417,7 @@ const StudentWishlist = () => {
                         ))}
                       </div>
                     )}
-                  </div>
+                  </div>}
                 </div>
               </div>
             </div>

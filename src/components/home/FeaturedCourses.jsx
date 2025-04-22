@@ -1,199 +1,22 @@
-
-// // // import React, { useState, useEffect } from "react";
-// // // import axios from "axios";
-// // // import { Link, useNavigate } from "react-router-dom";
-// // // import { Icon01, Icon02 } from "../imagepath";
-// // // import OwlCarousel from "react-owl-carousel";
-// // // import { toast } from "react-toastify";
-
-// // // const FeaturedCourses = () => {
-// // //   const [courses, setCourses] = useState([]);
-// // //   const [loading, setLoading] = useState(true);
-// // //   const [isClassAdded, setIsClassAdded] = useState([]);
-// // //   const navigate = useNavigate();
-
-// // //   useEffect(() => {
-// // //     const fetchCourses = async () => {
-// // //       try {
-// // //         const response = await axios.get("https://api.novajobs.us/api/trainers/all-courses");
-// // //         console.log(response, "courses");
-// // //         setCourses(response.data.data.slice(0, 3)); // Limit to 3 courses
-// // //       } catch (error) {
-// // //         console.error("Error fetching courses:", error);
-// // //       } finally {
-// // //         setLoading(false);
-// // //       }
-// // //     };
-
-// // //     fetchCourses();
-// // //   }, []);
-
-// // //   if (loading) {
-// // //     return <div>Loading...</div>;
-// // //   }
-
-// // //   const handleToggleFavorite = async (index, courseId) => {
-// // //     const updatedClasses = [...isClassAdded];
-// // //     updatedClasses[index] = !updatedClasses[index];
-// // //     setIsClassAdded(updatedClasses);
-
-// // //     try {
-// // //       const token = localStorage.getItem('token');
-// // //       await axios.post(
-// // //         'https://api.novajobs.us/api/students/course-favorite',
-// // //         { course_id: courseId },
-// // //         {
-// // //           headers: {
-// // //             'Authorization': `${token}`,
-// // //             'Content-Type': 'application/json',
-// // //           }
-// // //         }
-// // //       );
-// // //       toast.success('Course added to favorites!');
-// // //     } catch (error) {
-// // //       console.error('Failed to add course to favorites:', error);
-// // //       navigate('/login');
-// // //     }
-// // //   };
-
-// // //   const settings = {
-// // //     loop: true,
-// // //     margin: 10,
-// // //     nav: true,
-// // //     dots: true,
-// // //     autoplay: true,
-// // //     autoplayTimeout: 3000,
-// // //     smartSpeed: 1000,
-// // //     responsive: {
-// // //       0: {
-// // //         items: 1,
-// // //       },
-// // //       600: {
-// // //         items: 2,
-// // //       },
-// // //       1000: {
-// // //         items: 3,
-// // //       },
-// // //     },
-// // //   };
-
-// // //   return (
-// // //     <section className="section new-course">
-// // //       <div className="container">
-// // //         <div className="section-header aos" data-aos="fade-up">
-// // //           <div className="section-sub-head">
-// // //             <h2>Explore courses as per your needs</h2>
-// // //           </div>
-// // //           <div className="all-btn all-category d-flex align-items-center">
-// // //             <Link to="/course-list" className="btn btn-primary">
-// // //               All Courses
-// // //             </Link>
-// // //           </div>
-// // //         </div>
-// // //         <div className="ss" data-aos="fade-up">
-// // //           <p className="mb-0">
-// // //             Gain practical, in-demand skills through online courses taught by industry experts. Enhance your career with real-world knowledge from leaders in the field.
-// // //           </p>
-// // //         </div>
-// // //         <div className="course-feature">
-// // //           <OwlCarousel {...settings} className="owl-carousel course-carousel owl-theme">
-// // //             {courses.map((course, index) => (
-// // //               <div key={course.id} className="course-box d-flex aos" data-aos="fade-up">
-// // //                 <div className="product" style={{
-// // //                   color: "white",
-// // //                   background: "linear-gradient(135deg, blue, #feb47b)",
-// // //                 }}>
-// // //                   <div className="product-img text-white">
-// // //                     <Link to={`/course-info/${course.id}`}>
-// // //                       <img
-// // //                         className="img-fluid"
-// // //                         alt={course.course_title}
-// // //                         style={{ height: "320px", width: "420px" }}
-// // //                         src={`https://api.novajobs.us${course.course_banner_image}`}
-// // //                       />
-// // //                     </Link>
-// // //                     <div className="price text-white">
-// // //                       <h3>
-// // //                         ${course.course_price}
-// // //                         {course.after_discount_price > 0 && (
-// // //                           <span>${course.after_discount_price}</span>
-// // //                         )}
-// // //                       </h3>
-// // //                     </div>
-// // //                   </div>
-// // //                   <div className="product-content">
-// // //                     <div className="course-group d-flex">
-// // //                       <div className="course-group-img d-flex">
-// // //                         <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
-// // //                           <img
-// // //                             src="https://cdn.pixabay.com/photo/2015/03/04/22/35/avatar-659652_640.png"
-// // //                             alt={`${course.trainer_first_name} ${course.trainer_last_name}`}
-// // //                             className="img-fluid"
-// // //                           />
-// // //                         </Link>
-// // //                         <div className="course-name">
-// // //                           <h4>
-// // //                             <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
-// // //                               {course.trainer_first_name || "john"} {course.trainer_last_name}
-// // //                             </Link>
-// // //                           </h4>
-// // //                           <p style={{ color: "white" }}>Instructor</p>
-// // //                         </div>
-// // //                       </div>
-// // //                       <div className="course-share d-flex align-items-center justify-content-center">
-// // //                         <Link to="#" onClick={() => handleToggleFavorite(index, course.id)}>
-// // //                           <i className={`fa-regular fa-heart ${isClassAdded[index] ? 'color-active' : ''}`} />
-// // //                         </Link>
-// // //                       </div>
-// // //                     </div>
-// // //                     <h3 className="title instructor-text">
-// // //                       <Link to={`/course-info/${course.id}`} style={{ color: "white" }}>
-// // //                         Course: {course.course_title}
-// // //                       </Link>
-// // //                     </h3>
-// // //                     <p className="fs-6">Category: {course.course_category_name || "Science & Technology"}</p>
-// // //                     <div className="course-info d-flex align-items-center">
-// // //                       <div className="rating-img align-items-center">
-// // //                         <img src={Icon01} alt="icon" style={{ height: "20px" }} />
-// // //                         <p style={{ color: "white" }} className="d-flex">{course.students_counts} + Students</p>
-// // //                       </div>
-// // //                       <div className="course-view align-items-center">
-// // //                         <img src={Icon02} alt="icon" style={{ height: "20px" }} />
-// // //                         <p style={{ color: "white" }}>{course.time_spent_on_course}</p>
-// // //                       </div>
-// // //                     </div>
-// // //                     <div className="d-flex align-items-center justify-content-between">
-// // //                       <span className="d-inline-block average-rating fs-6">
-// // //                         <span className="fs-8" style={{ fontSize: "15px", color: "white" }}>
-// // //                           Level: {course.course_level_name || "Professionals"}
-// // //                         </span>
-// // //                       </span>
-// // //                     </div>
-// // //                   </div>
-// // //                 </div>
-// // //               </div>
-// // //             ))}
-// // //           </OwlCarousel>
-// // //         </div>
-// // //       </div>
-// // //     </section>
-// // //   );
-// // // };
-
-// // // export default FeaturedCourses;
-
 // import React, { useState, useEffect } from "react";
 // import axios from "axios";
-// import { Link } from "react-router-dom";
+// import { Link, useNavigate } from "react-router-dom";
 // import styled from "styled-components";
-// import { Icon01, Icon02 } from "../imagepath"; // Assuming these icons are available
+// import { Icon01, Icon02 } from "../imagepath";
+// import banner from "../../assets/img/bg-banner-02.png";
+// import { toast } from "react-toastify";
 
+// // Container styling for center alignment and padding
+// const Wrapper = styled.div`
+//   background-image: url(${banner});
+// `;
 // const Container = styled.div`
 //   max-width: 1200px;
 //   margin: 0 auto;
 //   padding: 40px 20px;
 // `;
 
+// // Header styling with responsive adjustments
 // const Header = styled.div`
 //   display: flex;
 //   justify-content: space-between;
@@ -207,12 +30,14 @@
 //   }
 // `;
 
+// // Title styling
 // const Title = styled.h2`
 //   font-size: 2rem;
 //   font-weight: bold;
 //   color: #333;
 // `;
 
+// // Styled button for "All Courses" with hover effects
 // const AllCoursesButton = styled(Link)`
 //   background-color: #ff4081;
 //   color: white;
@@ -230,7 +55,8 @@
 //   }
 // `;
 
-// const CategoryFilter = styled.div`
+// // Filter for course levels with a scrollable style
+// const LevelFilter = styled.div`
 //   display: flex;
 //   overflow-x: auto;
 //   margin-bottom: 2rem;
@@ -247,10 +73,11 @@
 //   }
 // `;
 
-// const CategoryButton = styled.button`
+// const LevelButton = styled.button`
 //   padding: 0.5rem 1rem;
 //   border: none;
-//   background-color: ${props => props.active ? "#f0f0f0" : "transparent"};
+//   background-color: ${(props) => (props.active ? "#ff4081" : "transparent")};
+//   color: ${(props) => (props.active ? "white" : "#333")};
 //   border-radius: 5px;
 //   cursor: pointer;
 //   white-space: nowrap;
@@ -261,59 +88,149 @@
 //   }
 // `;
 
+// // Course grid layout for responsiveness
 // const CourseGrid = styled.div`
 //   display: grid;
-//   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-//   gap: 2rem;
+//   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+//   gap: 1rem;
 // `;
 
+// // Course card with improved hover and scale effects
+// // const CourseCard = styled.div`
+// //   background-color: white;
+// //   border-radius: 10px;
+// //   overflow: hidden;
+// //   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+// //   transition: transform 0.3s, box-shadow 0.3s;
+// //   border: 2px solid #f0f0f0;
+// //   padding: 0.5rem;
+
+// //   &:hover {
+// //     transform: translateY(-10px);
+// //     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+// //     border-color: #ff4081;
+// //   }
+// // `;
+
+// // // Course image with hover zoom effect
+// // const CourseImage = styled.img`
+// //   width: 100%;
+// //   height: 130px;
+// //   object-fit: contain;
+// //   border-radius: 10px;
+// //   transition: transform 0.3s;
+
+// //   ${CourseCard}:hover & {
+// //     transform: scale(1.05);
+// //   }
+// // `;
+// // const ClaimCoupon = styled.div`
+// //    position: absolute;
+// //   top: 10px;
+// //   left: 10px;
+// //   background-color: rgba(34, 197, 94, 0.9); /* Green background with opacity */
+// //   color: white;
+// //   padding: 5px 10px;
+// //   border-radius: 5px;
+// //   font-size: 0.875rem;
+// //   cursor: pointer;
+
+// // `;
 // const CourseCard = styled.div`
 //   background-color: white;
 //   border-radius: 10px;
 //   overflow: hidden;
 //   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-//   transition: transform 0.3s;
+//   transition: transform 0.3s, box-shadow 0.3s;
+//   border: 2px solid #f0f0f0;
+//   padding: 0.5rem;
+//   position: relative; /* Ensure ClaimCoupon positions relative to the CourseCard */
 
 //   &:hover {
-//     transform: translateY(-5px);
+//     transform: translateY(-10px);
+//     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+//     border-color: #ff4081;
 //   }
 // `;
 
+// // ClaimCoupon positioned over the image with enhanced styling
+// // const ClaimCoupon = styled.div`
+// //   position: absolute;
+// //   top: 10px;
+// //   left: 10px;
+// //   background-color: rgba(34, 197, 94, 0.9); /* Green background with slight opacity */
+// //   color: white;
+// //   padding: 6px 12px;
+// //   border-radius: 8px;
+// //   font-size: 0.875rem;
+// //   cursor: pointer;
+// //   font-weight: bold;
+// //   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+// //   transition: background-color 0.3s, transform 0.3s;
+// //   z-index:999;
+
+// //   &:hover {
+// //     background-color: rgba(34, 197, 94, 1); /* Slightly darker green on hover */
+// //     transform: scale(1.05);
+// //   }
+// // `;
+
+// // Course image with hover zoom effect
 // const CourseImage = styled.img`
 //   width: 100%;
-//   height: 200px;
-//   object-fit: cover;
-// `;
+//   height: 130px;
+//   object-fit: contain;
+//   border-radius: 10px;
+//   transition: transform 0.3s;
 
+//   ${CourseCard}:hover & {
+//     transform: scale(1.05);
+//   }
+// `;
+// // Course content styling
 // const CourseContent = styled.div`
-//   padding: 1rem;
+//   padding: 1rem 1.5rem;
 // `;
 
 // const InstructorInfo = styled.div`
 //   display: flex;
 //   align-items: center;
-//   margin-bottom: 1rem;
+//   margin-bottom: 0.5rem;
+//   background: #f9f9f9;
+//   padding: 0.5rem 1rem;
+//   border-radius: 8px;
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 // `;
 
 // const InstructorAvatar = styled.img`
-//   width: 40px;
-//   height: 40px;
+//   width: 50px;
+//   height: 50px;
 //   border-radius: 50%;
 //   margin-right: 1rem;
+//   object-fit: cover;
+//   border: 2px solid #ddd;
 // `;
 
 // const InstructorName = styled.span`
-//   font-size: 0.9rem;
-//   color: #666;
+//   font-size: 1rem;
+//   font-weight: bold;
+//   color: #333;
 // `;
 
+// // Course title with hover effect
 // const CourseTitle = styled.h3`
 //   font-size: 1.2rem;
 //   font-weight: bold;
 //   margin-bottom: 1rem;
 //   color: #333;
+//   padding:0.2rem
+
+//   &:hover {
+//     color: #ff4081;
+//   }
 // `;
 
+// // Course stats styling
 // const CourseStats = styled.div`
 //   display: flex;
 //   justify-content: space-between;
@@ -334,17 +251,42 @@
 //   }
 // `;
 
+// // Pricing section with styling
 // const CoursePrice = styled.div`
-//   font-size: 1.2rem;
-//   font-weight: bold;
-//   color: #ff4081;
-// `;
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   margin-bottom: 10px;
 
-// const LevelFilter = styled(CategoryFilter)`
-//   margin-top: 1rem;
-// `;
+//   .discounted-price {
+//     font-size: 1.5rem;
+//     color: #ff4d4f;
+//     font-weight: bold;
+//     margin-right: 10px;
+//   }
 
-// const LevelButton = styled(CategoryButton)``;
+//   .original-price {
+//     font-size: 1.2rem;
+//     color: #999;
+//     text-decoration: line-through;
+//   }
+
+//   .course-discount {
+//     font-size: 1rem;
+//     color: #007bff;
+//     background-color: #e6f7ff;
+//     padding: 5px 10px;
+//     border-radius: 5px;
+//     transition: transform 0.3s ease, background-color 0.3s ease;
+//     cursor: pointer;
+
+//     &:hover {
+//       transform: scale(1.1);
+//       background-color: #bae7ff;
+//       color: #0056b3;
+//     }
+//   }
+// `;
 
 // const NoCoursesMessage = styled.div`
 //   text-align: center;
@@ -353,22 +295,34 @@
 //   margin-top: 2rem;
 // `;
 
+// // Bottom button styling for better UX
+// const AllCoursesButtonBottom = styled(AllCoursesButton)`
+//   display: block;
+//   width: 100%;
+//   margin: 2rem auto 0;
+//   text-align: center;
+// `;
+
 // const DynamicCourseGrid = () => {
+//   // State and data fetching code remains the same...
 //   const [courses, setCourses] = useState([]);
 //   const [levels, setLevels] = useState([]);
 //   const [loading, setLoading] = useState(true);
 //   const [activeLevel, setActiveLevel] = useState("ALL");
-//   const [displayCount,] = useState(6); // State for limiting the number of displayed courses
+//   const [displayCount] = useState(6);
+//   const [isClassAdded, setIsClassAdded] = useState([]);
+//   const navigate = useNavigate();
+//   const token = localStorage.getItem("token");
 
 //   useEffect(() => {
 //     const fetchData = async () => {
 //       try {
 //         const [coursesResponse, levelsResponse] = await Promise.all([
 //           axios.get("https://api.novajobs.us/api/trainers/all-courses"),
-//           axios.get("https://api.novajobs.us/api/trainers/course-level")
+//           axios.get("https://api.novajobs.us/api/trainers/course-level"),
 //         ]);
 //         setCourses(coursesResponse.data.data);
-//         setLevels(["ALL", ...levelsResponse.data.data.map(level => level.name)]);
+//         setLevels([{ id: "ALL", name: "ALL" }, ...levelsResponse.data.data]);
 //       } catch (error) {
 //         console.error("Error fetching data:", error);
 //       } finally {
@@ -381,97 +335,187 @@
 
 //   const normalizedActiveLevel = activeLevel.toLowerCase();
 
-//   const filteredCourses = courses.filter(course => 
-//     normalizedActiveLevel === "all" || course.course_level_name.toLowerCase() === normalizedActiveLevel
+//   const filteredCourses = courses.filter(
+//     (course) =>
+//       normalizedActiveLevel === "all" ||
+//       course.course_level_name.toLowerCase() === normalizedActiveLevel
 //   );
 
-//   const limitedCourses = filteredCourses.slice(0, displayCount); // Slice the filtered courses array
+//   const limitedCourses = filteredCourses.slice(0, displayCount);
+
+//   const toggleClass = async (index, courseId) => {
+//     const updatedClasses = [...isClassAdded];
+//     updatedClasses[index] = !updatedClasses[index];
+//     setIsClassAdded(updatedClasses);
+
+//     try {
+//       if (!token) {
+//         toast.error("Please log in to add courses to favorites.");
+//         navigate("/login");
+//         return;
+//       }
+//       await axios.post(
+//         "https://api.novajobs.us/api/students/course-favorite",
+//         { course_id: courseId },
+//         {
+//           headers: {
+//             Authorization: `${token}`,
+//             "Content-Type": "application/json",
+//           },
+//         }
+//       );
+//       toast.success("Course added to favorites!");
+//     } catch (error) {
+//       console.error("Failed to add course to favorites:", error);
+//       toast.error("Failed to add course to favorites. Please try again.");
+//     }
+//   };
+
+//   // const handleAllCoursesClick = () => {
+//   //   const selectedLevel = levels.find(
+//   //     (level) => level.name.toLowerCase().trim() === activeLevel.toLowerCase().trim()
+//   //   );
+
+//   //   let url = "/course-list";
+//   //   if (selectedLevel && selectedLevel.id !== "ALL") {
+//   //     url += `?course_level_id=${selectedLevel.id}`;
+//   //   }
+
+//   //   navigate(url); // Navigate to the course-list page with parameters
+//   // };
+//   const handleAllCoursesClick = () => {
+//     const selectedLevel = levels.find(
+//       (level) =>
+//         level.name.toLowerCase().trim() === activeLevel.toLowerCase().trim()
+//     );
+
+//     const queryParams = new URLSearchParams();
+
+//     if (selectedLevel && selectedLevel.id !== "ALL") {
+//       queryParams.append("course_level_id", selectedLevel.id);
+//     }
+
+//     const queryString = queryParams.toString();
+//     const url = queryString ? `/course-list?${queryString}` : "/course-list";
+
+//     console.log("Navigating to:", url);
+//     window.location.href = url;
+//   };
 
 //   if (loading) {
 //     return <Container>Loading...</Container>;
 //   }
 
 //   return (
-//     <>
-//     <Container>
-//       <Header>
-//         <Title>Our Popular Online Courses</Title>
-//         <AllCoursesButton to="/course-list">All Courses</AllCoursesButton>
-//       </Header>
+//     <Wrapper>
+//       <Container>
+//         <Header>
+//           <Title className="courses">Our Popular Online Courses</Title>
+//           <AllCoursesButton to={"/course-list"}>All Courses</AllCoursesButton>
+//         </Header>
 
-//       <LevelFilter>
-//         {levels.map((course_level_name) => (
-//           <LevelButton
-//             key={course_level_name}
-//             onClick={() => setActiveLevel(course_level_name)}
-//             active={activeLevel === course_level_name}
-//           >
-//             {course_level_name}
-//           </LevelButton>
-//         ))}
-//       </LevelFilter>
+//         <LevelFilter>
+//           {levels.map((level) => (
+//             <LevelButton
+//               key={level.id}
+//               onClick={() => setActiveLevel(level.name)}
+//               active={activeLevel === level.name}
+//             >
+//               {level.name}
+//             </LevelButton>
+//           ))}
+//         </LevelFilter>
 
-//       {limitedCourses.length === 0 ? (
-//         <NoCoursesMessage>No courses available for this level.</NoCoursesMessage>
-//       ) : (
-//         <>
-//           <CourseGrid>
-//             {limitedCourses.map((course) => (
-//               <CourseCard key={course.id}>
-//                 <Link to={`/course-info/${course.id}`}>
-//                 <CourseImage
-//                   src={`https://api.novajobs.us${course.course_banner_image}`}
-//                   alt={course.course_title}
-//                 />
-//                 </Link>
-//                 <CourseContent>
-//                   <InstructorInfo>
-//                     <InstructorAvatar
-//                       src="https://cdn.pixabay.com/photo/2015/03/04/22/35/avatar-659652_640.png"
-//                       alt="Instructor"
-//                     />
-//                     <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
-//                     <InstructorName>
-//                       {course.trainer_first_name} {course.trainer_last_name}
-//                     </InstructorName>
-//                     </Link>
-//                   </InstructorInfo>
+//         {limitedCourses.length === 0 ? (
+//           <NoCoursesMessage>
+//             No courses available for this level.
+//           </NoCoursesMessage>
+//         ) : (
+//           <>
+//             <CourseGrid>
+//               {limitedCourses.map((course) => (
+//                 <CourseCard key={course.id}>
+
 //                   <Link to={`/course-info/${course.id}`}>
-//                   <CourseTitle>{course.course_title}</CourseTitle>
+//                     <CourseImage
+//                       src={`https://api.novajobs.us${course.course_banner_image}`}
+//                       alt={course.course_title}
+//                     />
 //                   </Link>
-//                   <CourseStats>
-//                     <StatItem>
-//                       <img src={Icon01} alt="Students" />
-//                       <span>{course.students_counts} students</span>
-//                     </StatItem>
-//                     <StatItem>
-//                       <img src={Icon02} alt="Duration" />
-//                       <span>{course.time_spent_on_course}</span>
-//                     </StatItem>
-//                   </CourseStats>
-//                   <CoursePrice>${course.course_price}</CoursePrice>
-//                 </CourseContent>
-//               </CourseCard>
-//             ))}
-//           </CourseGrid>
-         
-//         </>
-//       )}
-//     </Container>
-   
-//     </>
+//                   <CourseContent>
+//                     <InstructorInfo>
+//                       <InstructorAvatar
+//                         src="https://cdn.pixabay.com/photo/2015/03/04/22/35/avatar-659652_640.png"
+//                         alt="Instructor"
+//                       />
+//                       <div>
+//                         <Link
+//                           to={`/instructor/instructor-profile/${course.trainer_id}`}
+//                         >
+//                           <InstructorName>
+//                             {course.trainer_first_name}{" "}
+//                             {course.trainer_last_name}
+//                           </InstructorName>
+//                         </Link>
+//                         <p className="text-muted">Instructor</p>
+//                       </div>
+//                       <div className="course-share d-flex align-items-center justify-content-center">
+//                         <Link to="#" onClick={() => toggleClass(course.id)}>
+//                           <i
+//                             className={`fa-regular fa-heart ${
+//                               isClassAdded[course.id] && token
+//                                 ? "color-active"
+//                                 : ""
+//                             }`}
+//                           />
+//                         </Link>
+//                       </div>
+//                     </InstructorInfo>
+//                     <Link to={`/course-info/${course.id}`}>
+//                       <CourseTitle>{course.course_title}</CourseTitle>
+//                     </Link>
+//                     <CourseStats>
+//                       <StatItem>
+//                         <img src={Icon01} alt="Students" />
+//                         <span>{course.students_counts} students</span>
+//                       </StatItem>
+//                       <StatItem>
+//                         <img src={Icon02} alt="Duration" />
+//                         <span>{course.time_spent_on_course}</span>
+//                       </StatItem>
+//                     </CourseStats>
+//                     <CoursePrice>
+//   <div>
+//     <span className="discounted-price">
+//       ${course.after_discount_price}
+//     </span>
+//     <span className="original-price">
+//       ${course.course_price}
+//     </span>
+//   </div>
+//   {course.discount_percent > 0 && (
+//     <span className="course-discount">
+//       {course.discount_percent}% OFF
+//     </span>
+//   )}
+// </CoursePrice>
+//                   </CourseContent>
+//                 </CourseCard>
+//               ))}
+//             </CourseGrid>
+//             <AllCoursesButtonBottom onClick={handleAllCoursesClick}>
+//               {activeLevel === "ALL"
+//                 ? "All Courses"
+//                 : `All ${activeLevel} Courses`}
+//             </AllCoursesButtonBottom>
+//           </>
+//         )}
+//       </Container>
+//     </Wrapper>
 //   );
 // };
 
 // export default DynamicCourseGrid;
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import { Link, useNavigate } from "react-router-dom";
-// import styled from "styled-components";
-// import { Icon01, Icon02 } from "../imagepath"; // Assuming these icons are available
-
-// // Styled components remain unchanged
-
 // const Container = styled.div`
 //   max-width: 1200px;
 //   margin: 0 auto;
@@ -557,6 +601,8 @@
 //   overflow: hidden;
 //   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 //   transition: transform 0.3s;
+//   border:2px solid black;
+//   padding: 1rem ;
 
 //   &:hover {
 //     transform: translateY(-5px);
@@ -567,28 +613,58 @@
 //   width: 100%;
 //   height: 200px;
 //   object-fit: cover;
+//   border-radius: 10px;
+//   transition: transform 0.3s;
+
+//   hover & {
+//     transform: scale(1.05);
+//   }
 // `;
 
 // const CourseContent = styled.div`
 //   padding: 1rem;
 // `;
 
+// // const InstructorInfo = styled.div`
+// //   display: flex;
+// //   align-items: center;
+// //   margin-bottom: 1rem;
+// // `;
+
+// // const InstructorAvatar = styled.img`
+// //   width: 40px;
+// //   height: 40px;
+// //   border-radius: 50%;
+// //   margin-right: 1rem;
+// // `;
+
+// // const InstructorName = styled.span`
+// //   font-size: 0.9rem;
+// //   color: #666;
+// // `;
 // const InstructorInfo = styled.div`
 //   display: flex;
 //   align-items: center;
 //   margin-bottom: 1rem;
+//   background: #f9f9f9; /* Light background for better contrast */
+//   padding: 0.8rem 1rem; /* Padding for space around content */
+//   border-radius: 8px; /* Rounded corners */
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for a floating effect */
 // `;
 
 // const InstructorAvatar = styled.img`
-//   width: 40px;
-//   height: 40px;
+//   width: 50px;
+//   height: 50px;
 //   border-radius: 50%;
 //   margin-right: 1rem;
+//   object-fit: cover; /* Ensures the image fills the circle without distortion */
+//   border: 2px solid #ddd; /* Border to highlight the avatar */
 // `;
 
 // const InstructorName = styled.span`
-//   font-size: 0.9rem;
-//   color: #666;
+//   font-size: 1rem;
+//   font-weight: bold;
+//   color: #333; /* Darker color for better readability */
 // `;
 
 // const CourseTitle = styled.h3`
@@ -619,9 +695,18 @@
 // `;
 
 // const CoursePrice = styled.div`
-//   font-size: 1.2rem;
-//   font-weight: bold;
-//   color: #ff4081;
+//   .discounted-price {
+//     font-size: 1.5rem;
+//     color: #ff4d4f;
+//     font-weight: bold;
+//     margin-right: 10px;
+//   }
+
+//   .original-price {
+//     font-size: 1.2rem;
+//     color: #999;
+//     text-decoration: line-through;
+//   }
 // `;
 
 // const LevelFilter = styled(CategoryFilter)`
@@ -638,18 +723,25 @@
 // `;
 // const AllCoursesButtonBottom = styled(AllCoursesButton)`
 //   display: block;
+//   width:100%;
 //   margin: 2rem auto 0;
 //   text-align: center;
 // `;
 
-
+// import React, { useState, useEffect } from "react";
+// import axios from "axios";
+// import { Link, useNavigate } from "react-router-dom";
+// import styled from "styled-components";
+// import { Icon01, Icon02 } from "../imagepath";
+// import { toast } from "react-toastify";
 
 // const DynamicCourseGrid = () => {
 //   const [courses, setCourses] = useState([]);
 //   const [levels, setLevels] = useState([]);
 //   const [loading, setLoading] = useState(true);
 //   const [activeLevel, setActiveLevel] = useState("ALL");
-//   const [displayCount,] = useState(6);
+//   const [displayCount] = useState(6);
+//   const [isClassAdded, setIsClassAdded] = useState([]);
 //   const navigate = useNavigate();
 
 //   useEffect(() => {
@@ -657,7 +749,7 @@
 //       try {
 //         const [coursesResponse, levelsResponse] = await Promise.all([
 //           axios.get("https://api.novajobs.us/api/trainers/all-courses"),
-//           axios.get("https://api.novajobs.us/api/trainers/course-level")
+//           axios.get("https://api.novajobs.us/api/trainers/course-level"),
 //         ]);
 //         setCourses(coursesResponse.data.data);
 //         setLevels([{ id: "ALL", name: "ALL" }, ...levelsResponse.data.data]);
@@ -673,20 +765,71 @@
 
 //   const normalizedActiveLevel = activeLevel.toLowerCase();
 
-//   const filteredCourses = courses.filter(course => 
-//     normalizedActiveLevel === "all" || course.course_level_name.toLowerCase() === normalizedActiveLevel
+//   const filteredCourses = courses.filter(
+//     (course) =>
+//       normalizedActiveLevel === "all" ||
+//       course.course_level_name.toLowerCase() === normalizedActiveLevel
 //   );
 
 //   const limitedCourses = filteredCourses.slice(0, displayCount);
 
-//   const handleAllCoursesClick = () => {
-//     const selectedLevel = levels.find(level => level.name === activeLevel);
-//     console.log(selectedLevel,selectedLevel.id,"levl");
-//     if (selectedLevel && selectedLevel.id) {
-//       navigate(`/course-list?course_level_id=${selectedLevel.id}`);
-//     } else {
-//       navigate("/course-list");
+//   const toggleClass = async (index, courseId) => {
+//     const updatedClasses = [...isClassAdded];
+//     updatedClasses[index] = !updatedClasses[index];
+//     setIsClassAdded(updatedClasses);
+
+//     try {
+//       const token = localStorage.getItem("token");
+//       if (!token) {
+//         toast.error("Please log in to add courses to favorites.");
+//         navigate("/login");
+//         return;
+//       }
+//       await axios.post(
+//         "https://api.novajobs.us/api/students/course-favorite",
+//         { course_id: courseId },
+//         {
+//           headers: {
+//             Authorization: `${token}`,
+//             "Content-Type": "application/json",
+//           }
+//         }
+//       );
+//       toast.success("Course added to favorites!");
+//     } catch (error) {
+//       console.error("Failed to add course to favorites:", error);
+//       toast.error("Failed to add course to favorites. Please try again.");
 //     }
+//   };
+
+//   // const handleAllCoursesClick = () => {
+//   //   const selectedLevel = levels.find(
+//   //     (level) => level.name.toLowerCase().trim() === activeLevel.toLowerCase().trim()
+//   //   );
+
+//   //   let url = "/course-list";
+//   //   if (selectedLevel && selectedLevel.id !== "ALL") {
+//   //     url += `?course_level_id=${selectedLevel.id}`;
+//   //   }
+
+//   //   navigate(url); // Navigate to the course-list page with parameters
+//   // };
+//   const handleAllCoursesClick = () => {
+//     const selectedLevel = levels.find(level =>
+//       level.name.toLowerCase().trim() === activeLevel.toLowerCase().trim()
+//     );
+
+//     const queryParams = new URLSearchParams();
+
+//     if (selectedLevel && selectedLevel.id !== "ALL") {
+//       queryParams.append("course_level_id", selectedLevel.id);
+//     }
+
+//     const queryString = queryParams.toString();
+//     const url = queryString ? `/course-list?${queryString}` : "/course-list";
+
+//     console.log("Navigating to:", url);
+//     window.location.href = url;
 //   };
 
 //   if (loading) {
@@ -697,7 +840,7 @@
 //     <Container>
 //       <Header>
 //         <Title>Our Popular Online Courses</Title>
-//         <AllCoursesButton onClick={handleAllCoursesClick}>All Courses</AllCoursesButton>
+//         <AllCoursesButton to={"/course-list"}>All Courses</AllCoursesButton>
 //       </Header>
 
 //       <LevelFilter>
@@ -725,17 +868,30 @@
 //                     alt={course.course_title}
 //                   />
 //                 </Link>
+//                 <hr />
 //                 <CourseContent>
 //                   <InstructorInfo>
 //                     <InstructorAvatar
 //                       src="https://cdn.pixabay.com/photo/2015/03/04/22/35/avatar-659652_640.png"
 //                       alt="Instructor"
 //                     />
+//                     <div>
 //                     <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
 //                       <InstructorName>
 //                         {course.trainer_first_name} {course.trainer_last_name}
 //                       </InstructorName>
 //                     </Link>
+//                     <p className="text-muted">instructor</p>
+//                     </div>
+//                     <div className="course-share d-flex align-items-center justify-content-center">
+//                       <Link to="#" onClick={() => toggleClass(course.id)}>
+//                         <i
+//                           className={`fa-regular fa-heart ${
+//                             isClassAdded[course.id] ? "color-active" : ""
+//                           }`}
+//                         />
+//                       </Link>
+//                     </div>
 //                   </InstructorInfo>
 //                   <Link to={`/course-info/${course.id}`}>
 //                     <CourseTitle>{course.course_title}</CourseTitle>
@@ -750,13 +906,20 @@
 //                       <span>{course.time_spent_on_course}</span>
 //                     </StatItem>
 //                   </CourseStats>
-//                   <CoursePrice>${course.course_price}</CoursePrice>
+//                   <CoursePrice>
+//                     <span className="discounted-price">
+//                       ${course.after_discount_price}
+//                     </span>
+//                     <span className="original-price">
+//                       ${course.course_price}
+//                     </span>
+//                   </CoursePrice>
 //                 </CourseContent>
 //               </CourseCard>
 //             ))}
 //           </CourseGrid>
 //           <AllCoursesButtonBottom onClick={handleAllCoursesClick}>
-//             All {activeLevel} Courses
+//             {activeLevel === "ALL" ? "All Courses" : `All ${activeLevel} Courses`}
 //           </AllCoursesButtonBottom>
 //         </>
 //       )}
@@ -765,23 +928,27 @@
 // };
 
 // export default DynamicCourseGrid;
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { Icon01, Icon02 } from "../imagepath";
+import banner from "../../assets/img/bg-banner-02.png";
+import { toast } from "react-toastify";
+import FullPageLoader from "./FullPageLoader";
+// import FullPageLoader from "./FullPageLoader";
 
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import { Link, useNavigate } from "react-router-dom";
-// import styled from "styled-components";
-// import { Icon01, Icon02 } from "../imagepath"; // Assuming these icons are available
-
-// // Styled components remain unchanged
-
-// // Your existing styled components code...
-
+// Container styling for center alignment and padding
+const Wrapper = styled.div`
+  background-image: url(${banner});
+`;
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
 `;
 
+// Header styling with responsive adjustments
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
@@ -795,12 +962,14 @@ const Header = styled.div`
   }
 `;
 
+// Title styling
 const Title = styled.h2`
   font-size: 2rem;
   font-weight: bold;
   color: #333;
 `;
 
+// Styled button for "All Courses" with hover effects
 const AllCoursesButton = styled(Link)`
   background-color: #ff4081;
   color: white;
@@ -811,6 +980,7 @@ const AllCoursesButton = styled(Link)`
 
   &:hover {
     background-color: #e63975;
+    color: white;
   }
 
   @media (max-width: 768px) {
@@ -818,7 +988,8 @@ const AllCoursesButton = styled(Link)`
   }
 `;
 
-const CategoryFilter = styled.div`
+// Filter for course levels with a scrollable style
+const LevelFilter = styled.div`
   display: flex;
   overflow-x: auto;
   margin-bottom: 2rem;
@@ -835,10 +1006,11 @@ const CategoryFilter = styled.div`
   }
 `;
 
-const CategoryButton = styled.button`
+const LevelButton = styled.button`
   padding: 0.5rem 1rem;
   border: none;
-  background-color: ${props => props.active ? "#f0f0f0" : "transparent"};
+  background-color: ${(props) => (props.active ? "#ff4081" : "transparent")};
+  color: ${(props) => (props.active ? "white" : "#333")};
   border-radius: 5px;
   cursor: pointer;
   white-space: nowrap;
@@ -849,59 +1021,149 @@ const CategoryButton = styled.button`
   }
 `;
 
+// Course grid layout for responsiveness
 const CourseGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
 `;
 
+// Course card with improved hover and scale effects
+// const CourseCard = styled.div`
+//   background-color: white;
+//   border-radius: 10px;
+//   overflow: hidden;
+//   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+//   transition: transform 0.3s, box-shadow 0.3s;
+//   border: 2px solid #f0f0f0;
+//   padding: 0.5rem;
+
+//   &:hover {
+//     transform: translateY(-10px);
+//     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+//     border-color: #ff4081;
+//   }
+// `;
+
+// // Course image with hover zoom effect
+// const CourseImage = styled.img`
+//   width: 100%;
+//   height: 130px;
+//   object-fit: contain;
+//   border-radius: 10px;
+//   transition: transform 0.3s;
+
+//   ${CourseCard}:hover & {
+//     transform: scale(1.05);
+//   }
+// `;
+// const ClaimCoupon = styled.div`
+//    position: absolute;
+//   top: 10px;
+//   left: 10px;
+//   background-color: rgba(34, 197, 94, 0.9); /* Green background with opacity */
+//   color: white;
+//   padding: 5px 10px;
+//   border-radius: 5px;
+//   font-size: 0.875rem;
+//   cursor: pointer;
+
+// `;
 const CourseCard = styled.div`
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border: 2px solid #f0f0f0;
+  padding: 0.5rem;
+  position: relative; /* Ensure ClaimCoupon positions relative to the CourseCard */
 
   &:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    border-color: #ff4081;
   }
 `;
 
+// ClaimCoupon positioned over the image with enhanced styling
+// const ClaimCoupon = styled.div`
+//   position: absolute;
+//   top: 10px;
+//   left: 10px;
+//   background-color: rgba(34, 197, 94, 0.9); /* Green background with slight opacity */
+//   color: white;
+//   padding: 6px 12px;
+//   border-radius: 8px;
+//   font-size: 0.875rem;
+//   cursor: pointer;
+//   font-weight: bold;
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+//   transition: background-color 0.3s, transform 0.3s;
+//   z-index:999;
+
+//   &:hover {
+//     background-color: rgba(34, 197, 94, 1); /* Slightly darker green on hover */
+//     transform: scale(1.05);
+//   }
+// `;
+
+// Course image with hover zoom effect
 const CourseImage = styled.img`
   width: 100%;
-  height: 200px;
-  object-fit: cover;
-`;
+  height: 150px;
+  /* object-fit: contain; */
+  border-radius: 10px;
+  transition: transform 0.3s;
 
+  ${CourseCard}:hover & {
+    transform: scale(1.05);
+  }
+`;
+// Course content styling
 const CourseContent = styled.div`
-  padding: 1rem;
+  padding: 1rem 1.5rem;
 `;
 
 const InstructorInfo = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+  background: #f9f9f9;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 const InstructorAvatar = styled.img`
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   margin-right: 1rem;
+  object-fit: cover;
+  border: 2px solid #ddd;
 `;
 
 const InstructorName = styled.span`
-  font-size: 0.9rem;
-  color: #666;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
 `;
 
+// Course title with hover effect
 const CourseTitle = styled.h3`
   font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 1rem;
   color: #333;
+  padding:0.2rem
+
+  &:hover {
+    color: #ff4081;
+  }
 `;
 
+// Course stats styling
 const CourseStats = styled.div`
   display: flex;
   justify-content: space-between;
@@ -922,26 +1184,42 @@ const StatItem = styled.div`
   }
 `;
 
+// Pricing section with styling
 const CoursePrice = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+
   .discounted-price {
     font-size: 1.5rem;
     color: #ff4d4f;
     font-weight: bold;
     margin-right: 10px;
   }
-  
+
   .original-price {
     font-size: 1.2rem;
     color: #999;
     text-decoration: line-through;
   }
-`;
 
-const LevelFilter = styled(CategoryFilter)`
-  margin-top: 1rem;
-`;
+  .course-discount {
+    font-size: 1rem;
+    color: #007bff;
+    background-color: #e6f7ff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    cursor: pointer;
 
-const LevelButton = styled(CategoryButton)``;
+    &:hover {
+      transform: scale(1.1);
+      background-color: #bae7ff;
+      color: #0056b3;
+    }
+  }
+`;
 
 const NoCoursesMessage = styled.div`
   text-align: center;
@@ -949,376 +1227,33 @@ const NoCoursesMessage = styled.div`
   color: #ff4081;
   margin-top: 2rem;
 `;
+
+// Bottom button styling for better UX
 const AllCoursesButtonBottom = styled(AllCoursesButton)`
   display: block;
-  width:100%;
+  width: 100%;
   margin: 2rem auto 0;
   text-align: center;
 `;
 
-// const DynamicCourseGrid = () => {
-//   const [courses, setCourses] = useState([]);
-//   const [levels, setLevels] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [activeLevel, setActiveLevel] = useState("ALL");
-//   const [displayCount,] = useState(6);
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const [coursesResponse, levelsResponse] = await Promise.all([
-//           axios.get("https://api.novajobs.us/api/trainers/all-courses"),
-//           axios.get("https://api.novajobs.us/api/trainers/course-level")
-//         ]);
-//         setCourses(coursesResponse.data.data);
-//         setLevels([{ id: "ALL", name: "ALL" }, ...levelsResponse.data.data]);
-//       } catch (error) {
-//         console.error("Error fetching data:", error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchData();
-//   }, []);
-
-//   const normalizedActiveLevel = activeLevel.toLowerCase();
-
-//   const filteredCourses = courses.filter(course => 
-//     normalizedActiveLevel === "all" || course.course_level_name.toLowerCase() === normalizedActiveLevel
-//   );
-
-//   const limitedCourses = filteredCourses.slice(0, displayCount);
-
-//   // const handleAllCoursesClick = () => {
-//   //   const selectedLevel = levels.find(level => level.name === activeLevel);
-//   //   if (selectedLevel && selectedLevel.id !== "ALL") {
-//   //     navigate(`/course-list?course_level_id=${selectedLevel.id}`);
-//   //   } else {
-//   //     navigate("/course-list");
-//   //   }
-//   // };
-//   const handleAllCoursesClick = () => {
-//     const selectedLevel = levels.find(level => level.name.trim() === activeLevel.trim());
-//     console.log(selectedLevel,"lvl",selectedLevel.id);
-//     if (selectedLevel ) {
-//       console.log(selectedLevel && selectedLevel.id !== "ALL");
-//       navigate(`/course-list?course_level_id=${selectedLevel.id}`);
-//     } else {
-//       navigate("/course-list");
-//     }
-//   };
-  
-
-//   if (loading) {
-//     return <Container>Loading...</Container>;
-//   }
-
-//   return (
-//     <Container>
-//       <Header>
-//         <Title>Our Popular Online Courses</Title>
-//         <AllCoursesButton onClick={handleAllCoursesClick}>All Courses</AllCoursesButton>
-//       </Header>
-
-//       <LevelFilter>
-//         {levels.map((level) => (
-//           <LevelButton
-//             key={level.id}
-//             onClick={() => setActiveLevel(level.name)}
-//             active={activeLevel === level.name}
-//           >
-//             {level.name}
-//           </LevelButton>
-//         ))}
-//       </LevelFilter>
-
-//       {limitedCourses.length === 0 ? (
-//         <NoCoursesMessage>No courses available for this level.</NoCoursesMessage>
-//       ) : (
-//         <>
-//           <CourseGrid>
-//             {limitedCourses.map((course) => (
-//               <CourseCard key={course.id}>
-//                 <Link to={`/course-info/${course.id}`}>
-//                   <CourseImage
-//                     src={`https://api.novajobs.us${course.course_banner_image}`}
-//                     alt={course.course_title}
-//                   />
-//                 </Link>
-//                 <CourseContent>
-//                   <InstructorInfo>
-//                     <InstructorAvatar
-//                       src="https://cdn.pixabay.com/photo/2015/03/04/22/35/avatar-659652_640.png"
-//                       alt="Instructor"
-//                     />
-//                     <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
-//                       <InstructorName>
-//                         {course.trainer_first_name} {course.trainer_last_name}
-//                       </InstructorName>
-//                     </Link>
-//                   </InstructorInfo>
-//                   <Link to={`/course-info/${course.id}`}>
-//                     <CourseTitle>{course.course_title}</CourseTitle>
-//                   </Link>
-//                   <CourseStats>
-//                     <StatItem>
-//                       <img src={Icon01} alt="Students" />
-//                       <span>{course.students_counts} students</span>
-//                     </StatItem>
-//                     <StatItem>
-//                       <img src={Icon02} alt="Duration" />
-//                       <span>{course.time_spent_on_course}</span>
-//                     </StatItem>
-//                   </CourseStats>
-//                   <CoursePrice>${course.course_price}</CoursePrice>
-//                 </CourseContent>
-//               </CourseCard>
-//             ))}
-//           </CourseGrid>
-//           <AllCoursesButtonBottom 
-//           onClick={handleAllCoursesClick}>
-//             All {activeLevel} Courses
-//           </AllCoursesButtonBottom>
-//         </>
-//       )}
-//     </Container>
-//   );
-// };
-
-// export default DynamicCourseGrid;
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import { Link, useNavigate} from "react-router-dom";
-// import styled from "styled-components";
-// import { Icon01, Icon02 } from "../imagepath"; // Assuming these icons are available
-// import { toast } from "react-toastify";
-
-// // Styled components remain unchanged
-// // ... (all your styled components here)
-
-// const DynamicCourseGrid = () => {
-//   const [courses, setCourses] = useState([]);
-//   const [levels, setLevels] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [activeLevel, setActiveLevel] = useState("ALL");
-//   const [displayCount,] = useState(6);
-//   const [isClassAdded, setIsClassAdded] = useState([]);
-//   const navigate = useNavigate();
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const [coursesResponse, levelsResponse] = await Promise.all([
-//           axios.get("https://api.novajobs.us/api/trainers/all-courses"),
-//           axios.get("https://api.novajobs.us/api/trainers/course-level")
-//         ]);
-//         setCourses(coursesResponse.data.data);
-//         setLevels([{ id: "ALL", name: "ALL" }, ...levelsResponse.data.data]);
-//       } catch (error) {
-//         console.error("Error fetching data:", error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchData();
-//   }, []);
-
-//   const normalizedActiveLevel = activeLevel.toLowerCase();
-
-//   const filteredCourses = courses.filter(course => 
-//     normalizedActiveLevel === "all" || course.course_level_name.toLowerCase() === normalizedActiveLevel
-//   );
-
-//   const limitedCourses = filteredCourses.slice(0, displayCount);
-//   const toggleClass = async (index, courseId) => {
-//     const updatedClasses = [...isClassAdded];
-//     updatedClasses[index] = !updatedClasses[index];
-//     setIsClassAdded(updatedClasses);
-
-//     try {
-//       const token = localStorage.getItem('token');
-//       if (!token) {
-//         toast.error("Please log in to add courses to favorites.")
-//         navigate('/login');
-//         return;
-//       }
-//       await axios.post(
-//         'https://api.novajobs.us/api/students/course-favorite',
-//         { course_id: courseId },
-//         {
-//           headers: {
-//             'Authorization': `${token}`,
-//             'Content-Type': 'application/json',
-//           }
-//         }
-//       );
-//       // Show success toast
-//       toast.success('Course added to favorites!');
-//     } catch (error) {
-//       console.error('Failed to add course to favorites:', error);
-//       // Show error toast
-//       toast.error('Failed to add course to favorites. Please try again.');
-//     }
-//   };
-
-// // const handleAllCoursesClick = () => {
-// //   // navigate('/course-list')
-// //   const selectedLevel = levels.find(level =>
-// //     level.name.toLowerCase().trim() === activeLevel.toLowerCase().trim()
-// //   );
-// //   console.log(selectedLevel);
-// //   if (selectedLevel) {
-// //     const url =
-// //       selectedLevel.id !== "ALL"
-// //         ? `/course-list?course_level_id=${selectedLevel.id}`
-// //         : "/course-list";
-// //     console.log(selectedLevel);
-// //     console.log("Navigating to:", url);
-// //     // navigate(url); // This should navigate correctly
-//     // window.location.href = url;
-    
-// //   } else {
-// //     console.log("No matching level found, navigating to: /course-list");
-// //     navigate("/course-list");
-// //   }
-// // };
-
-// const handleAllCoursesClick = () => {
-//   // const navigate = useNavigate();
-  
-//   const selectedLevel = levels.find(level =>
-//     level.name.toLowerCase().trim() === activeLevel.toLowerCase().trim()
-//   );
-
-//   console.log(selectedLevel);
-
-//   if (selectedLevel) {
-//     const url =
-//       selectedLevel.id !== "ALL"
-//         ? `/course-list?course_level_id=${selectedLevel.id}`
-//         : "/course-list";
-    
-//     console.log("Navigating to:", url);
-//     navigate(url);
-//     // window.location.href = url;
-
-//   } else {
-//     console.log("No matching level found, navigating to: /course-list");
-//     navigate("/course-list");
-//     // window.location.href('/course-list');
-
-//   }
-// };
-
-//   if (loading) {
-//     return <Container>Loading...</Container>;
-//   }
-
-//   return (
-//     <Container>
-//       <Header>
-//         <Title>Our Popular Online Courses</Title>
-//         <AllCoursesButton to={'/course-list'}>All Courses</AllCoursesButton>
-//       </Header>
-
-//       <LevelFilter>
-//         {levels.map((level) => (
-//           <LevelButton
-//             key={level.id}
-//             onClick={() => setActiveLevel(level.name)}
-//             active={activeLevel === level.name}
-//           >
-//             {level.name}
-//           </LevelButton>
-//         ))}
-//       </LevelFilter>
-
-//       {limitedCourses.length === 0 ? (
-//         <NoCoursesMessage>No courses available for this level.</NoCoursesMessage>
-//       ) : (
-//         <>
-//           <CourseGrid>
-//             {limitedCourses.map((course) => (
-//               <CourseCard key={course.id}>
-//                 <Link to={`/course-info/${course.id}`}>
-//                   <CourseImage
-//                     src={`https://api.novajobs.us${course.course_banner_image}`}
-//                     alt={course.course_title}
-//                   />
-//                 </Link>
-//                 <CourseContent>
-//                   <InstructorInfo>
-//                     <InstructorAvatar
-//                       src="https://cdn.pixabay.com/photo/2015/03/04/22/35/avatar-659652_640.png"
-//                       alt="Instructor"
-//                     />
-//                     <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
-//                       <InstructorName>
-//                         {course.trainer_first_name} {course.trainer_last_name}
-//                       </InstructorName>
-//                     </Link>
-//                     <div className="course-share d-flex align-items-center justify-content-center">
-//                                           <Link to="#" onClick={() => toggleClass(course.id)}>
-//                                             <i className={`fa-regular fa-heart ${isClassAdded[course.id] ? 'color-active' : ''}`} />
-//                                           </Link>
-//                                         </div>
-//                   </InstructorInfo>
-//                   <Link to={`/course-info/${course.id}`}>
-//                     <CourseTitle>{course.course_title}</CourseTitle>
-//                   </Link>
-//                   <CourseStats>
-//                     <StatItem>
-//                       <img src={Icon01} alt="Students" />
-//                       <span>{course.students_counts} students</span>
-//                     </StatItem>
-//                     <StatItem>
-//                       <img src={Icon02} alt="Duration" />
-//                       <span>{course.time_spent_on_course}</span>
-//                     </StatItem>
-//                   </CourseStats>
-//                   <CoursePrice>${course.course_price}</CoursePrice>
-//                 </CourseContent>
-//               </CourseCard>
-//             ))}
-//           </CourseGrid>
-//           <AllCoursesButtonBottom onClick={handleAllCoursesClick}>
-//             {activeLevel=='ALL'? "All Courses" : `All ${activeLevel} Courses`}
-//           </AllCoursesButtonBottom>
-//         </>
-//       )}
-//     </Container>
-//   );
-// };
-
-// export default DynamicCourseGrid;
-
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { Icon01, Icon02 } from "../imagepath";
-import { toast } from "react-toastify";
-
-// Styled components remain unchanged
-// ... (all your styled components here)
-
 const DynamicCourseGrid = () => {
+  // State and data fetching code remains the same...
   const [courses, setCourses] = useState([]);
   const [levels, setLevels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeLevel, setActiveLevel] = useState("ALL");
-  const [displayCount,] = useState(6);
+  const [displayCount] = useState(6);
   const [isClassAdded, setIsClassAdded] = useState([]);
+  // const [showLoader, setShowLoader] = useState(false)
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [coursesResponse, levelsResponse] = await Promise.all([
           axios.get("https://api.novajobs.us/api/trainers/all-courses"),
-          axios.get("https://api.novajobs.us/api/trainers/course-level")
+          axios.get("https://api.novajobs.us/api/trainers/course-level"),
         ]);
         setCourses(coursesResponse.data.data);
         setLevels([{ id: "ALL", name: "ALL" }, ...levelsResponse.data.data]);
@@ -1334,137 +1269,301 @@ const DynamicCourseGrid = () => {
 
   const normalizedActiveLevel = activeLevel.toLowerCase();
 
-  const filteredCourses = courses.filter(course => 
-    normalizedActiveLevel === "all" || course.course_level_name.toLowerCase() === normalizedActiveLevel
+  const filteredCourses = courses.filter(
+    (course) =>
+      normalizedActiveLevel === "all" ||
+      course.course_level_name.toLowerCase() === normalizedActiveLevel
   );
 
   const limitedCourses = filteredCourses.slice(0, displayCount);
 
-  const toggleClass = async (index, courseId) => {
-    const updatedClasses = [...isClassAdded];
-    updatedClasses[index] = !updatedClasses[index];
-    setIsClassAdded(updatedClasses);
+  // const toggleClass = async (index, courseId) => {
+  //   const updatedClasses = [...isClassAdded];
+  //   updatedClasses[index] = !updatedClasses[index];
+  //   setIsClassAdded(updatedClasses);
+
+  //   try {
+  //     if (!token) {
+  //       toast.error("Please log in to add courses to favorites.");
+  //       navigate("/login");
+  //       return;
+  //     }
+  //     await axios.post(
+  //       "https://api.novajobs.us/api/students/course-favorite",
+  //       { course_id: courseId },
+  //       {
+  //         headers: {
+  //           Authorization: `${token}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     toast.success("Course added to favorites!");
+  //   } catch (error) {
+  //     console.error("Failed to add course to favorites:", error);
+  //     toast.error("Failed to add course to favorites. Please try again.");
+  //   }
+  // };
+  // const toggleClass = async (courseId, isFavorite) => {
+  //   const updatedClasses = [...isClassAdded];
+  //   updatedClasses[courseId] = !isFavorite;
+  //   setIsClassAdded(updatedClasses);
+
+  //   try {
+  //     if (isFavorite) {
+  //       // Remove from favorites
+  //       await axios.post(
+  //         "https://api.novajobs.us/api/students/course-favorite",
+  //         { course_id: courseId },
+  //         {
+  //           headers: {
+  //             Authorization: `${token}`,
+  //             "Content-Type": "application/json",
+  //           },
+  //         }
+  //       );
+  //       // Show success toast
+  //       toast.success("Course removed from favorites!");
+  //     } else {
+  //       // Add to favorites
+  //       await axios.post(
+  //         "https://api.novajobs.us/api/students/course-favorite",
+  //         { course_id: courseId },
+  //         {
+  //           headers: {
+  //             Authorization: `${token}`,
+  //             "Content-Type": "application/json",
+  //           },
+  //         }
+  //       );
+  //       // Show success toast
+  //       toast.success("Course added to favorites!");
+  //     }
+  //   } catch (error) {
+  //     console.error("Failed to update course favorites:", error);
+  //     // Show error toast
+  //     toast.error("You need to login first.");
+  //     navigate("/login");
+  //   }
+  // };
+  const toggleClass = async (courseId) => {
+    if (!localStorage.getItem("token")) {
+      toast.error("You need to login first.");
+      navigate("/login");
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+
+    const updatedFavorites = { ...isClassAdded };
+    const isFavorite = updatedFavorites[courseId];
+
+    updatedFavorites[courseId] = !isFavorite; // Toggle state
+    setIsClassAdded(updatedFavorites);
 
     try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        toast.error("Please log in to add courses to favorites.")
-        navigate('/login');
-        return;
-      }
-      await axios.post(
-        'https://api.novajobs.us/api/students/course-favorite',
-        { course_id: courseId },
-        {
-          headers: {
-            'Authorization': `${token}`,
-            'Content-Type': 'application/json',
+      if (isFavorite) {
+        // Remove from favorites
+        await axios.post(
+          "https://api.novajobs.us/api/students/course-favorite",
+          { course_id: courseId },
+          {
+            headers: {
+              Authorization: `${token}`,
+              "Content-Type": "application/json",
+            },
           }
-        }
-      );
-      toast.success('Course added to favorites!');
+        );
+        toast.success("Course removed from favorites!");
+      } else {
+        // Add to favorites
+        await axios.post(
+          "https://api.novajobs.us/api/students/course-favorite",
+          { course_id: courseId },
+          {
+            headers: {
+              Authorization: `${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        toast.success("Course added to favorites!");
+      }
     } catch (error) {
-      console.error('Failed to add course to favorites:', error);
-      toast.error('Failed to add course to favorites. Please try again.');
+      console.error("Failed to update course favorites:", error);
+      toast.error("Something went wrong. Please try again.");
     }
   };
 
+  // const handleAllCoursesClick = () => {
+  //   const selectedLevel = levels.find(
+  //     (level) => level.name.toLowerCase().trim() === activeLevel.toLowerCase().trim()
+  //   );
+
+  //   let url = "/course-list";
+  //   if (selectedLevel && selectedLevel.id !== "ALL") {
+  //     url += `?course_level_id=${selectedLevel.id}`;
+  //   }
+
+  //   navigate(url); // Navigate to the course-list page with parameters
+  // };
   const handleAllCoursesClick = () => {
-    const selectedLevel = levels.find(level =>
-      level.name.toLowerCase().trim() === activeLevel.toLowerCase().trim()
+    const selectedLevel = levels.find(
+      (level) =>
+        level.name.toLowerCase().trim() === activeLevel.toLowerCase().trim()
     );
 
-    console.log("Selected level:", selectedLevel);
+    const queryParams = new URLSearchParams();
 
-    let url = "/course-list";
     if (selectedLevel && selectedLevel.id !== "ALL") {
-      url += `?course_level_id=${selectedLevel.id}`;
+      queryParams.append("course_level_id", selectedLevel.id);
     }
 
+    const queryString = queryParams.toString();
+    const url = queryString ? `/course-list?${queryString}` : "/course-list";
+
     console.log("Navigating to:", url);
-    navigate(url);
+    window.location.href = url;
   };
 
   if (loading) {
-    return <Container>Loading...</Container>;
+    return (
+      <Container>
+        <FullPageLoader />
+      </Container>
+    );
   }
+  // const handleClick = ()=>{
+  //   setShowLoader(true);
+  //   setTimeout(() => {
+  //     navigate("/course-list"); // Navigate after 3 seconds
+  //   }, 3000);
+  // }
 
   return (
-    <Container>
-      <Header>
-        <Title>Our Popular Online Courses</Title>
-        <AllCoursesButton onClick={handleAllCoursesClick}>All Courses</AllCoursesButton>
-      </Header>
+    <>
+      {/* {showLoader && <FullPageLoader />} */}
+      <Wrapper>
+        <Container>
+          <Header>
+            <Title>
+              <span className="courses">Our Popular Online Courses</span>
+            </Title>
+            <AllCoursesButton to={"/course-list"}>All Courses</AllCoursesButton>
+          </Header>
 
-      <LevelFilter>
-        {levels.map((level) => (
-          <LevelButton
-            key={level.id}
-            onClick={() => setActiveLevel(level.name)}
-            active={activeLevel === level.name}
-          >
-            {level.name}
-          </LevelButton>
-        ))}
-      </LevelFilter>
-
-      {limitedCourses.length === 0 ? (
-        <NoCoursesMessage>No courses available for this level.</NoCoursesMessage>
-      ) : (
-        <>
-          <CourseGrid>
-            {limitedCourses.map((course) => (
-              <CourseCard key={course.id}>
-                <Link to={`/course-info/${course.id}`}>
-                  <CourseImage
-                    src={`https://api.novajobs.us${course.course_banner_image}`}
-                    alt={course.course_title}
-                  />
-                </Link>
-                <CourseContent>
-                  <InstructorInfo>
-                    <InstructorAvatar
-                      src="https://cdn.pixabay.com/photo/2015/03/04/22/35/avatar-659652_640.png"
-                      alt="Instructor"
-                    />
-                    <Link to={`/instructor/instructor-profile/${course.trainer_id}`}>
-                      <InstructorName>
-                        {course.trainer_first_name} {course.trainer_last_name}
-                      </InstructorName>
-                    </Link>
-                    <div className="course-share d-flex align-items-center justify-content-center">
-                      <Link to="#" onClick={() => toggleClass(course.id)}>
-                        <i className={`fa-regular fa-heart ${isClassAdded[course.id] ? 'color-active' : ''}`} />
-                      </Link>
-                    </div>
-                  </InstructorInfo>
-                  <Link to={`/course-info/${course.id}`}>
-                    <CourseTitle>{course.course_title}</CourseTitle>
-                  </Link>
-                  <CourseStats>
-                    <StatItem>
-                      <img src={Icon01} alt="Students" />
-                      <span>{course.students_counts} students</span>
-                    </StatItem>
-                    <StatItem>
-                      <img src={Icon02} alt="Duration" />
-                      <span>{course.time_spent_on_course}</span>
-                    </StatItem>
-                  </CourseStats>
-                  <CoursePrice>
-    <span className="discounted-price">${course.after_discount_price}</span>
-    <span className="original-price">${course.course_price}</span>
-  </CoursePrice>
-                </CourseContent>
-              </CourseCard>
+          <LevelFilter>
+            {levels.map((level) => (
+              <LevelButton
+                key={level.id}
+                onClick={() => setActiveLevel(level.name)}
+                active={activeLevel === level.name}
+              >
+                {level.name}
+              </LevelButton>
             ))}
-          </CourseGrid>
-          <AllCoursesButtonBottom onClick={handleAllCoursesClick}>
-            {activeLevel === 'ALL' ? "All Courses" : `All ${activeLevel} Courses`}
-          </AllCoursesButtonBottom>
-        </>
-      )}
-    </Container>
+          </LevelFilter>
+
+          {limitedCourses.length === 0 ? (
+            <NoCoursesMessage>
+              No courses available for this level.
+            </NoCoursesMessage>
+          ) : (
+            <>
+              <CourseGrid>
+                {limitedCourses.map((course) => (
+                  <CourseCard key={course.id}>
+                    <Link to={`/course-info/${course.id}`}>
+                      <CourseImage
+                        src={
+                          course.course_banner_image.startsWith("https")
+                            ? course.course_banner_image
+                            : `https://api.novajobs.us${course.course_banner_image}`
+                        }
+                        alt={course.course_title}
+                      />
+                    </Link>
+                    <CourseContent>
+                      <InstructorInfo>
+                        <InstructorAvatar
+                          src={
+                            course.trainer_photo
+                              ? `https://api.novajobs.us${course.trainer_photo}`
+                              : "https://cdn.pixabay.com/photo/2015/03/04/22/35/avatar-659652_640.png"
+                          }
+                          alt="Instructor"
+                        />
+                        <div>
+                          <Link
+                            to={`/instructor/instructor-profile/${course.trainer_id}`}
+                          >
+                            {/* <InstructorName>
+                            {course.trainer_first_name}{" "}
+                            {course.trainer_last_name}
+                          </InstructorName> */}
+                            <InstructorName>
+                              {course.trainer_display_name ||
+                                `${course.trainer_first_name} ${course.trainer_last_name}`}
+                            </InstructorName>
+                          </Link>
+                          <p className="text-muted">
+                            {course.trainer_job_title || "Instructor"}
+                          </p>
+                        </div>
+                        <div className="course-share d-flex align-items-center justify-content-center">
+                          <Link to="#" onClick={() => toggleClass(course.id)}>
+                            <i
+                              className={`fa-regular fa-heart ${
+                                isClassAdded[course.id] && token
+                                  ? "color-active"
+                                  : ""
+                              }`}
+                            />
+                          </Link>
+                        </div>
+                      </InstructorInfo>
+                      <Link to={`/course-info/${course.id}`}>
+                        <CourseTitle>{course.course_title}</CourseTitle>
+                      </Link>
+                      <CourseStats>
+                        <StatItem>
+                          <img src={Icon01} alt="Students" />
+                          <span>{course.students_counts} students</span>
+                        </StatItem>
+                        <StatItem>
+                          <img src={Icon02} alt="Duration" />
+                          <span>{course.time_spent_on_course}</span>
+                        </StatItem>
+                      </CourseStats>
+                      <CoursePrice>
+                        <div>
+                          <span className="discounted-price">
+                            ${course.after_discount_price}
+                          </span>
+                          <span className="original-price">
+                            ${course.course_price}
+                          </span>
+                        </div>
+                        {course.discount_percent > 0 && (
+                          <span className="course-discount">
+                            {course.discount_percent}% OFF
+                          </span>
+                        )}
+                      </CoursePrice>
+                    </CourseContent>
+                  </CourseCard>
+                ))}
+              </CourseGrid>
+              <AllCoursesButtonBottom onClick={handleAllCoursesClick}>
+                {activeLevel === "ALL"
+                  ? "All Courses"
+                  : `All ${activeLevel} Courses`}
+              </AllCoursesButtonBottom>
+            </>
+          )}
+        </Container>
+      </Wrapper>
+    </>
   );
 };
 

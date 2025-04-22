@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Chapter,
@@ -12,12 +12,16 @@ import {
   Teacher,
   Timer2,
   Users,
-  Video2,
+  // Video2,
 } from "../../../imagepath";
 import { Modal, Button, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import the CSS for toast notifications
 import styled from "styled-components";
 import ShareButton from "./Sharebutton";
+// import { Loader } from "lucide-react";
+import ReactPlayer from "react-player";
+// import Joyride from "react-joyride";
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -215,8 +219,56 @@ const VideoSection = styled.div`
   }
 `;
 
+const LoadingOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(30, 30, 30, 0.4);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+`;
+
+const LoaderContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.2rem;
+`;
+
+
+
+const ThumbnailLoaderOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  z-index: 2;
+`;
+
+const LoaderText = styled.div`
+  color: #fff;
+  margin-top: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+`;
+
 const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
-  console.log(courseData, "from sidebar");
   const [showPopup, setShowPopup] = useState(false);
   const [loading, setLoading] = useState(false);
   const [videoUrl, setVideoUrl] = useState(null);
@@ -224,24 +276,49 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   const [isClassAdded, setIsClassAdded] = useState([]);
   const token = localStorage.getItem("token");
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showTestModal, setShowTestModal] = useState(false);
+  const [userInfo, setUserInfo] = useState("");
+  const [isYoutubeVideo, setIsYoutubeVideo] = useState(false);
+  const [isEnrolled, setIsEnrolled] = useState(false);
+  useEffect(() => {
+    // When videoUrl changes, check if we should use YouTube or regular video
+    if (videoUrl) {
+      if (courseFeatureData.youtube_url) {
+        setIsYoutubeVideo(true);
+      } else {
+        setIsYoutubeVideo(false);
+      }
+    }
+  }, [videoUrl, courseFeatureData.youtube_url]);
 
   const toggleReadMore = () => {
     setIsExpanded(!isExpanded);
   };
 
+  const handleTakeTest = () => {
+    setShowTestModal(false);
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+      window.location.href = `/student/student-skilltest/${courseData.course_id}/${courseData.course_title}`;
+    }, 2000);
+  };
+
   // The length at which content should be truncated
   const truncateLength = 100; // Adjust this value as needed
   const fullContent = courseFeatureData.learning_objectives || "";
-  
+
   // Check if content needs to be truncated
   const isTruncated = fullContent.length > truncateLength;
-  const handleEnrollClick = () => {
-    if (token) {
-      setShowPopup(true);
-    } else {
-      navigate("/login");
-    }
-  };
+
+  // const handleEnrollClick = () => {
+  //   if (token) {
+  //     setShowPopup(true);
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // };
 
   const handleDownload = async () => {
     try {
@@ -279,6 +356,78 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
       toast.error("Failed to download certificate. Please try again.");
     }
   };
+
+  const fetchProfile = async () => {
+    try {
+      const response = await axios.get(
+        "https://api.novajobs.us/api/students/profile",
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+      setUserInfo(response.data.data);
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProfile();
+  }, [userInfo.id]);
+
+  const handleBuyNow = async () => {
+    if (token) {
+      try {
+        const response = await axios.post(
+          "https://api.novajobs.us/api/students/cart",
+          {
+            student_id: userInfo.id,
+            course_id: Number(courseId),
+            quantity: 1,
+          },
+          {
+            headers: {
+              Authorization: `${token}`,
+            },
+          }
+        );
+        toast.success(
+          response.data.message || "Course Added To cart Successfully "
+        );
+
+        console.log("isEnrolled updated:", isEnrolled);
+        setIsEnrolled(true);
+        window.location.href = "/cart";
+      } catch (error) {
+        console.error("Error adding item to cart:", error);
+        toast.error(error.message || "Error to add the course in the cart");
+      }
+    } else {
+      navigate("/login");
+    }
+  };
+  useEffect(() => {
+    const fetchCourseDetails = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.novajobs.us/api/students/pro/course-details/${courseId}`,
+          {
+            headers: {
+              Authorization: `${token}`,
+            },
+          }
+        );
+        const courseData = response.data.data;
+        setIsEnrolled(courseData.is_student_enroll); // Ensure this updates correctly
+      } catch (error) {
+        console.error("Error fetching course details:", error);
+      }
+    };
+
+    fetchCourseDetails();
+  }, [courseId, token]);
 
   const toggleClass = async (courseId, isFavorite) => {
     const updatedClasses = [...isClassAdded];
@@ -318,7 +467,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
     } catch (error) {
       console.error("Failed to update course favorites:", error);
       // Show error toast
-      toast.error("FYou need to login first.");
+      toast.error("You need to login first.");
       navigate("/login");
     }
   };
@@ -339,9 +488,15 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
           },
         }
       );
-      toast.success("Purchase Successful ");
-      console.log("Purchase successful:", response.data);
+
+      if (response.status == 200) {
+        toast.success(response.data.message || "Purchase Successful ");
+      }
+
       setShowPopup(false);
+      setTimeout(function () {
+        window.location.reload();
+      }, 3000);
     } catch (error) {
       console.error("Error during purchase:", error);
       toast.error("There was an issue with the purchase. Please try again.");
@@ -352,258 +507,347 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
 
   const handleVideoPlay = async () => {
     setLoading(true);
-    try {
-      const response = await axios.get(
-        `https://api.novajobs.us/api/students/streaming/${courseId}`,
-        {
-          responseType: "blob",
-        }
-      );
 
-      const videoBlob = new Blob([response.data], { type: "video/mp4" });
-      const videoUrl = URL.createObjectURL(videoBlob);
-
-      setVideoUrl(videoUrl);
-      console.log("Video URL:", videoUrl);
-    } catch (error) {
-      console.error("Error fetching video:", error);
-      alert("Unable to fetch video. Please try again later.");
-    } finally {
+    // First check if there's a YouTube URL
+    if (courseFeatureData.youtube_url) {
+      setIsYoutubeVideo(true);
+      setVideoUrl(courseFeatureData.youtube_url);
       setLoading(false);
+    } else {
+      // Otherwise, try to get the streaming video
+      try {
+        const response = await axios.get(
+          `https://api.novajobs.us/api/students/streaming/${courseId}`,
+          {
+            responseType: "blob",
+          }
+        );
+
+        const videoBlob = new Blob([response.data], { type: "video/mp4" });
+        const url = URL.createObjectURL(videoBlob);
+
+        setIsYoutubeVideo(false);
+        setVideoUrl(url);
+      } catch (error) {
+        console.error("Error fetching video:", error?.response?.data.message);
+        toast.error(error.response?.data?.message || "No video found");
+      } finally {
+        setLoading(false);
+      }
     }
   };
-  const isFavorite = isClassAdded[courseData.course_id];
-  return (
-    <div className="col-lg-4">
-      <div className="sidebar-sec">
-        {/* Video Section */}
-        <VideoSection>
-          <div className="video-sec vid-bg">
-            <div className="card">
-              <div className="card-body">
-                {videoUrl ? (
-                  <video controls>
-                    <source src={videoUrl} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                ) : (
-                  <button
-                    onClick={handleVideoPlay}
-                    className="video-thumbnail"
-                    data-fancybox=""
-                  >
-                    <div className="play-icon">
-                      <i className="fa-solid fa-play" />
-                    </div>
-                    <img src={Video2} alt="Video Thumbnail" />
-                  </button>
-                )}
 
-                <div className="video-details">
-                  <div className="course-fee">
-                    <h2>FREE</h2>
-                    <p>
-                      <span>$99.00</span> 50% off
-                    </p>
-                  </div>
-                  <div className="row gx-2">
-                    <div className="col-md-6 addHeart">
-                      {isFavorite && localStorage.getItem("token") ? (
-                        <button
-                          className="btn btn-danger w-100"
-                          onClick={() =>
-                            toggleClass(courseData.course_id, isFavorite)
+  const isFavorite = isClassAdded[courseData.course_id];
+  console.log(courseFeatureData.youtube_url, "jjjj");
+  return (
+    <>
+      <div className="col-lg-4">
+        <div className="sidebar-sec">
+          {/* Video Section */}
+          <VideoSection>
+            <div className="video-sec vid-bg">
+              <div className="card">
+                <div className="card-body">
+                  {videoUrl ? (
+                    isYoutubeVideo ? (
+                      // YouTube Player
+                      <div className="video-thumbnail-container">
+                        <ReactPlayer
+                          url={videoUrl}
+                          controls={true}
+                          width="100%"
+                          height="100%"
+                          onReady={() => setLoading(false)}
+                          onStart={() => setLoading(false)}
+                          onBuffer={() => setLoading(true)}
+                          onBufferEnd={() => setLoading(false)}
+                          onError={() => setLoading(false)}
+                          config={{
+                            youtube: {
+                              playerVars: {
+                                showinfo: 1,
+                                controls: 1,
+                                rel: 0,
+                              },
+                            },
+                          }}
+                        />
+                 {loading && (
+  <LoadingOverlay>
+    <LoaderContainer>
+      <div className="spinner-border text-light" role="status" />
+      <div>Saving your lecture, please wait...</div>
+    </LoaderContainer>
+  </LoadingOverlay>
+)}
+
+
+                      </div>
+                    ) : (
+                      // Regular video player for streamed content
+                      <video
+                        controls
+                        onLoadStart={() => setLoading(true)}
+                        onLoadedData={() => setLoading(false)}
+                      >
+                        <source src={videoUrl} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                    )
+                  ) : (
+                    // Video thumbnail with play button
+                    <div className="video-thumbnail-container" style={{ position: "relative" }}>
+                    <button onClick={handleVideoPlay} className="video-thumbnail">
+                      <div className="default-thumbnail">
+                        <img
+                          src={
+                            courseFeatureData?.course_banner_image?.startsWith("http")
+                              ? courseFeatureData.course_banner_image
+                              : `https://api.novajobs.us${
+                                  courseFeatureData?.course_banner_image || ""
+                                }`
                           }
-                        >
-                          <i className="feather icon-heart me-2" />
-                          Remove
+                          alt="Course Banner"
+                          className="default-image"
+                        />
+                        <div className="play-icon">
+                          <i className="fa-solid fa-play" />
+                        </div>
+                      </div>
+                  
+                      {loading && (
+                        <ThumbnailLoaderOverlay>
+                          <div className="text-center">
+                            <div className="spinner-border text-light" role="status" />
+                            <LoaderText>Preparing video preview...</LoaderText>
+                          </div>
+                        </ThumbnailLoaderOverlay>
+                      )}
+                    </button>
+                  </div>
+                  
+                  )}
+
+                  <div className="video-details">
+                    {courseFeatureData.course_price == 0 ? (
+                      <div className="course-fee">
+                        <h2>FREE</h2>
+                        <p>
+                          <span>$99.00</span> 50% off
+                        </p>
+                      </div>
+                    ) : (
+                      " "
+                    )}
+                    <div className="row gx-2">
+                      <div className="col-md-6 addHeart">
+                        {isFavorite && localStorage.getItem("token") ? (
+                          <button
+                            className="btn btn-danger w-100"
+                            onClick={() =>
+                              toggleClass(courseData.course_id, isFavorite)
+                            }
+                          >
+                            <i className="feather icon-heart me-2" />
+                            Remove
+                          </button>
+                        ) : (
+                          <button
+                            className="btn btn-wish w-100"
+                            onClick={() =>
+                              toggleClass(courseData.course_id, isFavorite)
+                            }
+                          >
+                            <i className="feather icon-heart me-2" />
+                            Add to Wishlist
+                          </button>
+                        )}
+                      </div>
+                      <div className="col-md-6 addHeart">
+                        <ShareButton
+                          courseUrl={`https://ultraaura.education/course-info/${courseData.course_id}`}
+                        />
+                      </div>
+                    </div>
+                    <ButtonWrapper>
+                      {/* {token && courseData.is_student_enroll ? (
+                        <button className="btn-enroll w-100" disabled>
+                          Enrolled
                         </button>
                       ) : (
                         <button
-                          className="btn btn-wish w-100"
-                          onClick={() =>
-                            toggleClass(courseData.course_id, isFavorite)
-                          }
-                        >
-                          <i className="feather icon-heart me-2" />
-                          Add to Wishlist
-                        </button>
-                      )}
-                    </div>
-                    {/* <div className="col-md-6 addHeart">
-                      <Link to="#" className="btn btn-wish w-100">
-                        <i className="feather icon-share-2 me-2" />
-                        Share
-                      </Link>
-                    </div> */}
-                    <div className="col-md-6 addHeart">
-                      <ShareButton courseUrl={`http://localhost:3000/course-info/${courseData.course_id}` }/>
-                    </div>
-                  </div>
-                  <ButtonWrapper>
-                    {token && courseData.is_student_enroll ? (
-                      <button className="btn-enroll w-100" disabled>
-                        Enrolled
-                      </button>
-                    ) : (
-                      <button
-                        onClick={handleEnrollClick}
-                        className="btn-enroll w-100"
-                      >
-                        Enroll Now
-                      </button>
-                    )}
-
-                    {token && (
-                      <Link
-                        to={`/student/student-skilltest/${courseData.course_id}/${courseData.course_title}`}
-                      >
-                        <button className="btn-enroll w-100">Take Test</button>
-                      </Link>
-                    )}
-
-                    {token &&
-                      courseData.is_student_enroll &&
-                      courseData.is_certificate && (
-                        <button
-                          onClick={handleDownload}
+                          onClick={handleEnrollClick}
                           className="btn-enroll w-100"
                         >
-                          Download Certificate
+                          Enroll Now
+                        </button>
+                      )} */}
+
+                      {
+                        <button
+                          className="btn-enroll w-100 buynow"
+                          onClick={handleBuyNow}
+                          disabled={isEnrolled} // Disable button after enrollment
+                        >
+                          {isEnrolled ? "Enrolled" : "Buy Now"}
+                        </button>
+                      }
+
+                      {token &&
+                        courseData.is_student_enroll &&
+                        courseData.is_certificate && (
+                          <button
+                            onClick={handleDownload}
+                            className="btn-enroll w-100"
+                          >
+                            Download Certificate
+                          </button>
+                        )}
+                      {token && courseData.is_student_enroll && (
+                        <button
+                          className="btn-enroll w-100"
+                          onClick={() => setShowTestModal(true)}
+                        >
+                          Take Test
                         </button>
                       )}
-                  </ButtonWrapper>
+                    </ButtonWrapper>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </VideoSection>
+          </VideoSection>
 
-        {/* Checkout Popup */}
-        <Modal show={showPopup} onHide={() => setShowPopup(false)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Confirm Purchase</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p>Are you sure you want to enroll in this course?</p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowPopup(false)}>
-              Cancel
-            </Button>
-            <Button variant="primary" onClick={handleCheckout}>
-              {loading ? (
-                <Spinner as="span" animation="border" size="sm" />
-              ) : (
-                "Confirm and Enroll"
+          {/* Checkout Popup */}
+          <Modal show={showPopup} onHide={() => setShowPopup(false)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Confirm Purchase</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <p>Are you sure you want to enroll in this course?</p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => setShowPopup(false)}>
+                Cancel
+              </Button>
+              <Button variant="primary" onClick={handleCheckout}>
+                {loading ? (
+                  <Spinner as="span" animation="border" size="sm" />
+                ) : (
+                  "Confirm and Enroll"
+                )}
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
+          <Modal show={showTestModal} onHide={() => setShowTestModal(false)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Confirm Action</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <p>Are you sure you want to take the test for this course?</p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                variant="secondary"
+                onClick={() => setShowTestModal(false)}
+              >
+                Cancel
+              </Button>
+              <Button variant="primary" onClick={handleTakeTest}>
+                {loading ? (
+                  <Spinner as="span" animation="border" size="sm" />
+                ) : (
+                  "Confirm and Take Test"
+                )}
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
+          {/* Include Section */}
+          <div className="card include-sec">
+            <div className="card-body">
+              <div className="cat-title includes">
+                <h4>Includes</h4>
+              </div>
+              <ul>
+                <li>
+                  <img src={Mobile} className="me-2" alt="" /> On-demand video
+                </li>
+                <li>
+                  <img src={Play} className="me-2" alt="" />
+                  Downloadable resources
+                </li>
+                <li>
+                  <img src={Key} className="me-2" alt="" /> Full access
+                </li>
+                <li>
+                  <img src={Mobile} className="me-2" alt="" /> Access on mobile
+                  screen
+                </li>
+                <li>
+                  <img src={Cloud} className="me-2" alt="" /> Assignments
+                </li>
+                <li>
+                  <img src={Teacher} className="me-2" alt="" /> Certificate of
+                  Completion
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Features Section */}
+          <div className="card feature-sec">
+            <div className="card-body">
+              <div className="cat-title">
+                <h4>Features</h4>
+              </div>
+              <ul>
+                <li>
+                  <img src={Users} className="me-2" alt="" /> Enrolled:{" "}
+                  <span>{courseFeatureData.enrolled_student_count}</span>
+                </li>
+                <li>
+                  <img src={Timer2} className="me-2" alt="" /> Duration:{" "}
+                  <span>{courseFeatureData.time_spent_on_course}</span>
+                </li>
+                <li>
+                  <img src={Chapter} className="me-2" alt="" /> Lectures:{" "}
+                  <span> {courseFeatureData.total_lectures} </span>
+                </li>
+                <li>
+                  <img src={Chart} className="me-2" alt="" /> Level:{" "}
+                  <span>{courseFeatureData.course_level_name}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="card feature-sec">
+            <div className="card-body">
+              <div className="cat-title">
+                <h4>Learning Objective</h4>
+              </div>
+              <div className="content">
+                {/* Truncate and conditionally render content */}
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      isExpanded || !isTruncated
+                        ? fullContent
+                        : fullContent.slice(0, truncateLength) + "...",
+                  }}
+                />
+              </div>
+              {isTruncated && (
+                <button onClick={toggleReadMore} className="read-more-btn">
+                  {isExpanded ? "Show Less" : "Read More"}
+                </button>
               )}
-            </Button>
-          </Modal.Footer>
-        </Modal>
-
-        {/* Include Section */}
-        <div className="card include-sec">
-          <div className="card-body">
-            <div className="cat-title">
-              <h4>Includes</h4>
             </div>
-            <ul>
-              <li>
-                <img src={Mobile} className="me-2" alt="" /> On-demand video
-              </li>
-              <li>
-                <img src={Play} className="me-2" alt="" />
-                Downloadable resources
-              </li>
-              <li>
-                <img src={Key} className="me-2" alt="" /> Full access
-              </li>
-              <li>
-                <img src={Mobile} className="me-2" alt="" /> Access on mobile
-                screen
-              </li>
-              <li>
-                <img src={Cloud} className="me-2" alt="" /> Assignments
-              </li>
-              <li>
-                <img src={Teacher} className="me-2" alt="" /> Certificate of
-                Completion
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Features Section */}
-        <div className="card feature-sec">
-          <div className="card-body">
-            <div className="cat-title">
-              <h4>Features</h4>
-            </div>
-            <ul>
-              <li>
-                <img src={Users} className="me-2" alt="" /> Enrolled:{" "}
-                <span>{courseFeatureData.enrolled_student_count}</span>
-              </li>
-              <li>
-                <img src={Timer2} className="me-2" alt="" /> Duration:{" "}
-                <span>{courseFeatureData.time_spent_on_course}</span>
-              </li>
-              <li>
-                <img src={Chapter} className="me-2" alt="" /> Lectures:{" "}
-                <span> {courseFeatureData.total_lectures} </span>
-              </li>
-              {/* <li><img src={Video2} className="me-2" alt="" /> Video:<span> 12 hours</span></li> */}
-              <li>
-                <img src={Chart} className="me-2" alt="" /> Level:{" "}
-                <span>{courseFeatureData.course_level_name}</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="card feature-sec">
-          <div className="card-body">
-            <div className="cat-title">
-              <h4>Learning Objective</h4>
-            </div>
-            <div className="content">
-        {/* Truncate and conditionally render content */}
-        <p
-          dangerouslySetInnerHTML={{
-            __html: isExpanded || !isTruncated ? fullContent : fullContent.slice(0, truncateLength) + '...',
-          }}
-        />
-      </div>
-      {isTruncated && (
-        <button onClick={toggleReadMore} className="read-more-btn">
-          {isExpanded ? 'Show Less' : 'Read More'}
-        </button>
-      )}
-      {/* <style jsx>{`
-        .course-feature {
-          margin: 1rem 0;
-        }
-        .content {
-          font-size: 1rem;
-          line-height: 1.5;
-        }
-        .read-more-btn {
-          margin-top: 0.5rem;
-          padding: 0.5rem 1rem;
-          background-color: #007bff;
-          color: white;
-          border: none;
-          border-radius: 0.25rem;
-          cursor: pointer;
-          transition: background-color 0.3s;
-        }
-        .read-more-btn:hover {
-          background-color: #0056b3;
-        }
-      `}</style> */}
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
@@ -611,10 +855,13 @@ SidebarSection.propTypes = {
   courseId: PropTypes.number.isRequired,
   courseFeatureData: PropTypes.shape({
     enrolled_student_count: PropTypes.number.isRequired,
+    course_price: PropTypes.number.isRequired,
     time_spent_on_course: PropTypes.string.isRequired,
     total_lectures: PropTypes.number.isRequired,
     course_level_name: PropTypes.string.isRequired,
     learning_objectives: PropTypes.string.isRequired,
+    course_banner_image: PropTypes.string.isRequired,
+    youtube_url: PropTypes.string.isRequired,
   }).isRequired,
   courseData: PropTypes.shape({
     course_id: PropTypes.number.isRequired,

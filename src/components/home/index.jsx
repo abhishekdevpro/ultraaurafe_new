@@ -1,18 +1,19 @@
 import React, { useState } from "react";
+// import Joyride from 'react-joyride';
 import Header from "../header";
 import {
-  bannerimg,
+  // bannerimg,
   Become1,
   Become2,
-  CertificateIcon,
-  CourseIcon,
-  GratuateIcon,
+  // CertificateIcon,
+  // CourseIcon,
+  // GratuateIcon,
   Icon01,
   Icon02,
   Icon03,
   Icon04,
   Join,
-  PencilIcon,
+  // PencilIcon,
   Share,
 } from "../imagepath";
 import { useSelector } from "react-redux";
@@ -32,13 +33,19 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
 import FeaturedCourses from "./FeaturedCourses";
-import { useNavigate } from "react-router-dom";
-import { TypeAnimation } from "react-type-animation";
 // import { useNavigate } from "react-router-dom";
+// import { TypeAnimation } from "react-type-animation";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import PartnerList from "./PartnerList";
 import SubHeader from "../header/Sub-header";
+import home from "./home-bg2.png";
+// import HomePage from "./HeroSection.jsx";
 // Container for the search bar
+import ultraaura from "../../assests/ultraaura-logo.png";
+import novajobs from "../../assests/novajobs-logo.png";
+import homecare from "../../assests/novahomecare-logo.png";
+import paradigmshift from "../../assests/paradigmshift-logo.png";
 const Container = styled.div`
   margin-bottom: 1rem;
   display: flex;
@@ -148,29 +155,6 @@ const BannerContent = styled.div`
   display: flex;
   justify-content: center;
 `;
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
-  gap: 1rem;
-`;
-
-const StyledButton = styled.button`
-  background: ${(props) => (props.primary ? "#f66962" : "#ffffff")};
-  color: ${(props) => (props.primary ? "#ffffff" : "#f66962")};
-  border: 2px solid #f66962;
-  border-radius: 25px;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background: ${(props) => (props.primary ? "#fc7f50" : "#f66962")};
-    color: #ffffff;
-  }
-`;
 
 const customSelectStyles = {
   container: (base) => ({
@@ -198,12 +182,14 @@ const customSelectStyles = {
 };
 
 export const Home = () => {
-  // const [setValue] = useState(null);
   const [searchKeyword, setSearchKeyword] = useState(""); // State for the search input
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [levelOptions, setLevelOptions] = useState([]);
+  // const [runTour, setRunTour] = useState(true);
+  // const [isLoaded, setIsLoaded] = useState(false);
+  // const [tourCompleted, setTourCompleted] = useState(false);
   // const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const navigate = useNavigate(); // Initialize useNavigate
   const mobileSidebar = useSelector((state) => state.sidebarSlice.expandMenu);
@@ -217,6 +203,7 @@ export const Home = () => {
     "Certifications",
   ]; // Array of texts for animation
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  console.log(currentTextIndex);
 
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
@@ -272,366 +259,600 @@ export const Home = () => {
     navigate(`/course-list?${queryParams.toString()}`); // Use navigate for routing
   };
 
-  const handleAllCourses = () => {
-    navigate("/course-list");
-  };
-
-  // const loadChatbot = () => {
-  //   // Check if the script is already added to avoid duplicate injections
-  //   if (document.getElementById("chatling-embed-script")) return;
-
-  //   // Create and append the chatbot configuration script
-  //   const configScript = document.createElement("script");
-  //   configScript.type = "text/javascript";
-  //   configScript.text = `window.chtlConfig = { chatbotId: "5594648998" };`;
-  //   document.body.appendChild(configScript);
-
-  //   // Create and append the chatbot embed script
-  //   const embedScript = document.createElement("script");
-  //   embedScript.id = "chatling-embed-script";
-  //   embedScript.async = true;
-  //   embedScript.src = "https://chatling.ai/js/embed.js";
-  //   embedScript.onload = () => {
-  //     // Optionally, add initialization code here if required
-  //     console.log("Chatbot script loaded");
-  //   };
-  //   embedScript.onerror = () => {
-  //     console.error("Failed to load the chatbot script");
-  //   };
-  //   document.body.appendChild(embedScript);
-  // };
-
   return (
+    // <>
+    //       <div className="main-wrapper">
+    //       <Joyride
+    //           steps={steps}
+    //           run={runTour}
+    //           continuous
+    //           scrollToFirstStep
+    //           showSkipButton
+    //           showProgress
+    //           styles={{
+    //             options: {
+    //               zIndex: 1000,
+    //               arrowColor: '#fff',
+    //               backgroundColor: '#333',
+    //               textColor: '#fff',
+    //               overlayColor: 'rgba(0, 0, 0, 0.5)',
+    //             },
+    //           }}
+    //         />
+    //         <Header />
+    //         <SubHeader />
+
+    // <section className="home-slide py-5">
+    //   <div className="container">
+    //     <div className="row align-items-center">
+    //       <div className="col-lg-8 mb-4 mb-lg-0">
+    //         <div className="home-slide-face">
+    //         <h1 style={{ fontSize: '36px' }} className="mb-4 text-center font-bold">
+    //   Empower Your Learning Journey
+    // </h1>
+
+    //         <p className="lead mb-5">
+    //           Join a community of learners and educators committed to your growth and innovation. Connecting Trainers and Learners Through Comprehensive Education
+    //           </p>
+    //           <div className="form-container">
+    //                     <button onClick={() => setRunTour(true)} className="btn btn-primary mt-3">
+    //                       Start Tour
+    //                     </button>
+    //                   </div>
+
+    //           {/* Your existing Container and form code here */}
+    //           <Container>
+    //             <BannerContent>
+    //               <FormContainer action="/course-list">
+    //                 <FormInner>
+    //                   <InputGroup>
+    //                     <SearchIcon className="fa-solid fa-magnifying-glass" />
+    //                     <InputField
+    //                       type="text"
+    //                       placeholder="Search Course"
+    //                       value={searchKeyword}
+    //                       onChange={(e) => setSearchKeyword(e.target.value)}
+    //                     />
+    //                     <Select
+    //                       options={categoryOptions}
+    //                       value={selectedCategory}
+    //                       placeholder="Category"
+    //                       onChange={setSelectedCategory}
+    //                       styles={customSelectStyles}
+    //                     />
+    //                     <Select
+    //                       options={levelOptions}
+    //                       value={selectedLevel}
+    //                       placeholder="Levels"
+    //                       onChange={setSelectedLevel}
+    //                       styles={customSelectStyles}
+    //                     />
+    //                     <SearchButton type="button" onClick={handleSearch}>
+    //                       <i className="fas fa-arrow-right" />
+    //                     </SearchButton>
+    //                   </InputGroup>
+    //                 </FormInner>
+    //               </FormContainer>
+    //             </BannerContent>
+    //           </Container>
+    //           <div className="row g-4">
+    //   <div className="col-md-6 d-flex">
+    //     <div
+    //       className="card w-100 shadow-lg transition-transform hover-lift"
+    //       style={{
+    //         backgroundColor: '#ffdeda',
+    //         transition: 'transform 0.3s ease-in-out',
+    //         boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
+    //         borderRadius: '15px' // Add border radius for rounded corners
+    //       }}
+    //     >
+    //       <div className="card-body d-flex flex-column p-4 rounded">
+    //         <h4 className="card-title mb-3">Are you a Facilitator?</h4>
+    //         <div className="row flex-grow-1">
+    //           <div className="col-12 col-md-8 d-flex flex-column">
+    //             <p className="card-text flex-grow-1">
+    //               Partner with Ultra Aura to offer skills training and job placement opportunities that create a lasting impact on individuals and their families
+    //             </p>
+    //             <div className="mt-auto">
+    //               <Link to="https://vendors.ultraaura.education" className="btn btn-primary btn-lg">
+    //                 Partner with US
+    //               </Link>
+    //             </div>
+    //           </div>
+    //           <div className="col-md-4 d-none d-md-flex align-items-center">
+    //             <img
+    //               className="img-fluid rounded transition-transform hover-scale"
+    //               alt="Partner illustration"
+    //               src={Become2}
+    //               style={{
+    //                 width: '150px',
+    //                 height: '150px',
+    //                 objectFit: 'contain',
+    //                 transition: 'transform 0.3s ease-in-out'
+    //               }}
+    //             />
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+
+    //   <div className="col-md-6 d-flex">
+    //     <div
+    //       className="card w-100 shadow-lg transition-transform hover-lift"
+    //       style={{
+    //         backgroundColor: '#ffe88f',
+    //         transition: 'transform 0.3s ease-in-out',
+    //         boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
+    //         borderRadius: '15px' // Add border radius for rounded corners
+    //       }}
+    //     >
+    //       <div className="card-body d-flex flex-column p-4 rounded">
+    //         <h4 className="card-title mb-3">Are you a Seeker?</h4>
+    //         <div className="row flex-grow-1">
+    //           <div className="col-12 col-md-8 d-flex flex-column">
+    //             <p className="card-text flex-grow-1">
+    //               A new day awaits! Choose from our wide range of specialized courses to unlock exciting new possibilities for your future
+    //             </p>
+    //             <div className="mt-auto">
+    //               <Link to="/register" className="btn btn-primary btn-lg">
+    //                 Sign up
+    //               </Link>
+    //             </div>
+    //           </div>
+    //           <div className="col-md-4 d-none d-md-flex align-items-center">
+    //             <img
+    //               className="img-fluid rounded transition-transform hover-scale"
+    //               alt="Education illustration"
+    //               src={Become1}
+    //               style={{
+    //                 width: '150px',
+    //                 height: '150px',
+    //                 objectFit: 'contain',
+    //                 transition: 'transform 0.3s ease-in-out'
+    //               }}
+    //             />
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
+
+    //         </div>
+    //       </div>
+
+    //       <div className="col-lg-4 d-none d-lg-block">
+    //         <div className="girl-slide-img">
+    //           <img src={home} alt="Featured illustration" className="img-fluid" />
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </section>
+
+    // <style>{`
+    //   .transition-transform {
+    //     transition: transform 0.3s ease-in-out;
+    //   }
+
+    //   .hover-lift:hover {
+    //     transform: translateY(-10px);
+    //   }
+
+    //   .hover-scale:hover {
+    //     transform: scale(1.05);
+    //   }
+
+    //   .btn-lg {
+    //     padding: 0.75rem 1.5rem;
+    //     font-size: 1.1rem;
+    //   }
+    // `}</style>
+
+    //         <FeaturedCourses />
+    //         {/* What's new Featured Course */}
+
+    //         {/* Master Skills */}
+    //         <section className="section master-skill">
+    //           <div className="container">
+    //             <div className="row">
+    //               <div className="col-lg-7 col-md-12">
+    //                 <div className="section-header aos" data-aos="fade-up">
+    //                   <div className="section-sub-head">
+    //                     <span>What’s New</span>
+    //                     <h2>Master the skills to drive your career</h2>
+    //                   </div>
+    //                 </div>
+    //                 <div className="section-text aos" data-aos="fade-up">
+    //                   <p>
+    //                     Get certified, master modern tech skills, and level up your
+    //                     career — whether you’re starting out or a seasoned pro. 95%
+    //                     of eLearning learners report our hands-on content directly
+    //                     helped their careers.
+    //                   </p>
+    //                 </div>
+    //                 <div className="career-group aos" data-aos="fade-up">
+    //                   <div className="row">
+    //                     <div className="col-lg-6 col-md-6 d-flex">
+    //                       <div className="certified-group blur-border d-flex">
+    //                         <div className="get-certified d-flex align-items-center">
+    //                           <div className="blur-box">
+    //                             <div className="certified-img ">
+    //                               <img src={Icon01} alt="" className="img-fluid" />
+    //                             </div>
+    //                           </div>
+    //                           <p>Stay motivated with engaging instructors</p>
+    //                         </div>
+    //                       </div>
+    //                     </div>
+    //                     <div className="col-lg-6 col-md-6 d-flex">
+    //                       <div className="certified-group blur-border d-flex">
+    //                         <div className="get-certified d-flex align-items-center">
+    //                           <div className="blur-box">
+    //                             <div className="certified-img ">
+    //                               <img src={Icon02} alt="" className="img-fluid" />
+    //                             </div>
+    //                           </div>
+    //                           <p>Keep up with in the latest in cloud</p>
+    //                         </div>
+    //                       </div>
+    //                     </div>
+    //                     <div className="col-lg-6 col-md-6 d-flex">
+    //                       <div className="certified-group blur-border d-flex">
+    //                         <div className="get-certified d-flex align-items-center">
+    //                           <div className="blur-box">
+    //                             <div className="certified-img ">
+    //                               <img src={Icon03} alt="" className="img-fluid" />
+    //                             </div>
+    //                           </div>
+    //                           <p>Get certified with 100+ certification courses</p>
+    //                         </div>
+    //                       </div>
+    //                     </div>
+    //                     <div className="col-lg-6 col-md-6 d-flex">
+    //                       <div className="certified-group blur-border d-flex">
+    //                         <div className="get-certified d-flex align-items-center">
+    //                           <div className="blur-box">
+    //                             <div className="certified-img ">
+    //                               <img src={Icon04} alt="" className="img-fluid" />
+    //                             </div>
+    //                           </div>
+    //                           <p>Build skills your way, from labs to courses</p>
+    //                         </div>
+    //                       </div>
+    //                     </div>
+    //                   </div>
+    //                 </div>
+    //               </div>
+    //               <div className="col-lg-5 col-md-12 d-flex align-items-end">
+    //                 <div className="career-img aos" data-aos="fade-up">
+    //                   <img src={Join} alt="" className="img-fluid" />
+    //                 </div>
+    //               </div>
+    //             </div>
+    //           </div>
+    //         </section>
+    //         {/* /Master Skills */}
+
+    //         {/* Trending Course */}
+    //         {/* <TrendingCourse /> */}
+    //         {/* Trending Course */}
+
+    //         {/* Share knowledge */}
+    //         <section className="section share-knowledge">
+    //           <div className="container">
+    //             <div className="row">
+    //               <div className="col-md-6">
+    //                 <div className="knowledge-img aos" data-aos="fade-up">
+    //                   <img src={Share} alt="" className="img-fluid" />
+    //                 </div>
+    //               </div>
+    //               <div className="col-md-6 d-flex align-items-center">
+    //                 <div className="join-mentor aos" data-aos="fade-up">
+    //                   <h2>Want to share your knowledge? Join us a Trainer</h2>
+    //                   <p>
+    //                     Share your expertise and inspire the next generation by
+    //                     joining UltraAura as an instructor. Shape the future of
+    //                     education with flexible teaching opportunities and a global
+    //                     reach.
+    //                   </p>
+    //                   <ul className="course-list">
+    //                     <li>
+    //                       <i className="fa-solid fa-circle-check" />
+    //                       Quick Onboarding
+    //                     </li>
+    //                     <li>
+    //                       <i className="fa-solid fa-circle-check" />
+    //                       100% Online platform
+    //                     </li>
+    //                   </ul>
+    //                   <div className="all-btn all-category d-flex align-items-center">
+    //                     <Link to="/login" className="btn btn-primary">
+    //                       Join as Trainer Now
+    //                     </Link>
+    //                   </div>
+    //                 </div>
+    //               </div>
+    //             </div>
+    //           </div>
+    //         </section>
+
+    //         {/* Companies */}
+    //         <PartnerList />
+    //         <section className="section lead-companies">
+    //           <div className="container">
+    //             <div className="section-header aos" data-aos="fade-up">
+    //               <div className="section-sub-head feature-head text-center">
+    //                 <span>Trusted By</span>
+    //                 <h2>We Work with Some of the Best - Globally</h2>
+    //               </div>
+    //             </div>
+    //             <div className="lead-group aos" data-aos="fade-up">
+    //               <Companies />
+    //             </div>
+    //           </div>
+    //         </section>
+    //         {/* Companies */}
+
+    //         {/* Footer */}
+    //         <Footer />
+    //         {/* /Footer */}
+    //       </div>
+    //     </>
+
     <>
       <div className="main-wrapper">
+        {/* {isLoaded &&  <Joyride
+  steps={steps}
+  run={runTour}
+  continuous
+  scrollToFirstStep
+  showSkipButton
+  // showProgress
+  spotlightClicks={false}
+  hideBeacon={true}
+  styles={{
+    options: {
+      zIndex: 1000, // Ensure tooltips are above all other content
+      overlayColor: 'rgba(0, 0, 0, 0.4)', // Dim background during the tour
+    },
+    tooltip: {
+      backgroundColor: 'rgba(240, 235, 235, 0.8)', // Tooltip background opacity (adjust opacity here)
+      color: '#0e0d0d', // Tooltip text color
+      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)', // Optional shadow for better contrast
+    },
+    // spotlight: {
+    //   backgroundColor: 'rgba(14, 14, 14, 0.5)', // Overlay behind the highlighted element
+    // },
+    spotlight: {
+      display: 'none', // Hides the spotlight effect entirely
+    },
+    beacon: {
+      display: 'none', // Just in case, ensure it never displays
+    },
+   
+
+  }}
+  callback={({ status }) => {
+    if (status === 'finished' || status === 'skipped') {
+      setRunTour(false);
+    }
+  }}
+/>
+} */}
+
         <Header />
         <SubHeader />
-        {/* banner */}
-        <section className="home-slide d-flex align-items-center">
-          <div className="container">
-            <div className="row ">
-              <div className="col-md-7">
-                <div className="home-slide-face aos" data-aos="fade-up">
-                  {console.log(currentTextIndex)}
-                  {/* <div className="home-slide-text text-center">
-  <h5 className="d-none d-md-block">Empowering Futures: Anytime, Anywhere</h5>
-  <h2>
-    Take the next step towards your{" "}
-    <span className="animated-text">
-      {animatedText[currentTextIndex]}
-    </span>{" "}
-    at Ultra Aura with technology-enabled learning.
-  </h2>
-  <p className="d-none d-md-block">Own your future by learning new skills online</p>
-</div> */}
-                  <div className="home-slide-text text-center">
-                    {/* <h2 className="mb-2 " style={{fontWeight:"700"}}> Empowering Futures: Anytime, Anywhere</h2> */}
-                    <h2 className="mb-2" style={{ fontWeight: "700" }}>
-                      Empowering Futures:
-                      <span>
-                        <TypeAnimation
-                          sequence={[
-                            "Anytime", // Types "Anytime"
-                            1500, // Pause for 1.5 seconds after typing "Anytime"
-                            "", // Clears the text
-                            500, // Short pause before typing the next word
-                            "Anywhere", // Types "Anywhere"
-                            1500, // Pause for 1.5 seconds after typing "Anywhere"
-                            "", // Clears the text
-                            500, // Short pause before repeating
-                          ]}
-                          // wrapper="span"
-                          speed={-15} // Slower typing speed (adjust this value for slower typing)
-                          deletionSpeed={0} // Slower deletion speed
-                          repeat={Infinity} // Repeat the animation indefinitely
-                        />
-                      </span>
-                    </h2>
-                    {/* <h2>Take the next step towards your {" "}
-                 <TypeAnimation
-                   sequence={[
-                     
-                     " at Ultra Aura with technology-enabled learning.",
-                     1000,
-                     " Own your future by learning new skills online",
-                     1000,
-                    
-                   ]}
-                   wrapper="span"
-                   speed={50}
-                   repeat={Infinity}
-                 />
-               </h2> */}
-                    <Container>
-                      <BannerContent>
-                        <FormContainer action="/course-list">
-                          <FormInner>
-                            <InputGroup>
-                              <SearchIcon className="fa-solid fa-magnifying-glass" />
-                              <InputField
-                                type="text"
-                                placeholder="Search Course"
-                                value={searchKeyword}
-                                onChange={(e) =>
-                                  setSearchKeyword(e.target.value)
-                                }
-                              />
-                              <Select
-                                options={categoryOptions}
-                                value={selectedCategory}
-                                placeholder="Category"
-                                onChange={setSelectedCategory}
-                                styles={customSelectStyles}
-                              />
-                              <Select
-                                options={levelOptions}
-                                value={selectedLevel}
-                                placeholder="Levels"
-                                onChange={setSelectedLevel}
-                                styles={customSelectStyles}
-                              />
-                              <SearchButton
-                                type="button"
-                                onClick={handleSearch}
-                              >
-                                <i className="fas fa-arrow-right" />
-                              </SearchButton>
-                            </InputGroup>
-                          </FormInner>
-                        </FormContainer>
-                      </BannerContent>
-                    </Container>
-                    <ButtonContainer>
-                      <StyledButton onClick={handleAllCourses}>
-                        All Courses
-                      </StyledButton>
-                     {/* <StyledButton primary onClick={loadChatbot}>
-                        AI Assist
-                      </StyledButton>{" "} */}
-                    </ButtonContainer>
-                  </div>
 
-                  {/* <div className="container my-4">
-                    <div className="banner-content">
-                      <form className="form" action="/course-list">
-                        <div className="form-inner">
-                          <div className="input-group homeSearch">
-                            <i className="fa-solid fa-magnifying-glass search-icon" />
-                            <input
+        <section className="home-slide py-5">
+          <div className="container">
+            <div className="row align-items-center">
+              <div className="col-lg-8 mb-4 mb-lg-0">
+                <div className="home-slide-face">
+                  <h1
+                    style={{ fontSize: "36px" }}
+                    className="mb-4 text-center font-bold"
+                  >
+                    Empower Your Learning Journey
+                  </h1>
+                  <p className="lead mb-5">
+                    Join a community of learners and educators committed to your
+                    growth and innovation. Connecting Trainers and Learners
+                    Through Comprehensive Education
+                  </p>
+                  {/* {!tourCompleted && (
+                  <div className="form-container" >
+        <button onClick={() => setRunTour(true)} className="start-tour-btn" style={{backgroundColor:"#ff875a",color:"white", border:"hidden",borderRadius:"10"}}>
+          Start Tour
+        </button>
+                  </div>
+      )} */}
+
+                  <Container>
+                    <BannerContent>
+                      <FormContainer action="/course-list">
+                        <FormInner>
+                          <InputGroup>
+                            <SearchIcon className="fa-solid fa-magnifying-glass" />
+                            <InputField
                               type="text"
-                              className="form-control"
                               placeholder="Search Course"
                               value={searchKeyword}
                               onChange={(e) => setSearchKeyword(e.target.value)}
                             />
-                            <span className="input-group-append mx-2">
-                              <Select
-                                options={categoryOptions}
-                                value={selectedCategory}
-                                placeholder="Category"
-                                onChange={setSelectedCategory}
-                                styles={style}
+                            <Select
+                              options={categoryOptions}
+                              value={selectedCategory}
+                              placeholder="Category"
+                              onChange={setSelectedCategory}
+                              styles={customSelectStyles}
+                            />
+                            <Select
+                              options={levelOptions}
+                              value={selectedLevel}
+                              placeholder="Levels"
+                              onChange={setSelectedLevel}
+                              styles={customSelectStyles}
+                            />
+                            <SearchButton type="button" onClick={handleSearch}>
+                              <i className="fas fa-arrow-right form-container" />
+                            </SearchButton>
+                          </InputGroup>
+                        </FormInner>
+                      </FormContainer>
+                    </BannerContent>
+                  </Container>
+
+                  {/* Facilitator and Seeker cards */}
+                  <div className="row g-4">
+                    {/* Facilitator Card */}
+                    <div className="col-md-6 d-flex">
+                      <div
+                        className="card w-100 shadow-lg transition-transform hover-lift"
+                        style={{
+                          backgroundColor: "#ffdeda",
+                          borderRadius: "15px",
+                        }}
+                      >
+                        <div className="card-body d-flex flex-column p-4 rounded">
+                          <div className="row flex-grow-1">
+                            <div className="col-12 col-md-8 d-flex flex-column">
+                              <h4
+                                className="card-title mb-3 "
+                                style={{ fontSize: "1.2rem" }}
+                              >
+                                Are you a Trainer ?
+                              </h4>
+                              <p className="card-text flex-grow-1">
+                                Partner with Ultra Aura to offer skills training
+                                and job placement opportunities that create a
+                                lasting impact on individuals and their families
+                              </p>
+                              <div className="mt-auto">
+                                <Link
+                                  to="https://vendors.ultraaura.education"
+                                  className="btn btn-primary btn-lg"
+                                >
+                                  Partner with US
+                                </Link>
+                              </div>
+                            </div>
+                            <div className="col-md-4 d-none d-md-flex align-items-center">
+                              <img
+                                className="img-fluid rounded transition-transform hover-scale"
+                                alt="Partner illustration"
+                                src={Become2}
+                                style={{
+                                  width: "150px",
+                                  height: "150px",
+                                  objectFit: "contain",
+                                  transition: "transform 0.3s ease-in-out",
+                                }}
                               />
-                            </span>
-                            <span className="input-group-append mx-2">
-                              <Select
-                                options={levelOptions}
-                                value={selectedLevel}
-                                placeholder="Levels"
-                                onChange={setSelectedLevel}
-                                styles={style}
-                              />
-                            </span>
-                            <button className="btn btn-primary rounded" type="button" onClick={handleSearch}>
-                              <i className="fas fa-arrow-right" />
-                            </button>
+                            </div>
                           </div>
                         </div>
-                      </form>
+                      </div>
                     </div>
-                  </div> */}
 
-                  {/* <div className="trust-user">
-                    <p>
-                      Trusted by Users <br />
-                      Now Live worldwide
-                    </p>
-                    <div className="trust-rating d-flex align-items-center">
-                      <div className="rate-head">
-                        <h2>
-                          <span className="d-flex">
-                            <CountUp
-                              start={0}
-                              end={1000}
-                              delay={1}
-                              format={formatValue}
-                            />
-                            +
-                          </span>
-                        </h2>
-                      </div>
-                      <div className="rating d-flex align-items-center">
-                        <h2 className="d-inline-block average-rating">4.4</h2>
-                        <i className="fas fa-star filled me-1" />
-                        <i className="fas fa-star filled me-1" />
-                        <i className="fas fa-star filled me-1" />
-                        <i className="fas fa-star filled me-1" />
-                        <i className="fas fa-star filled me-1" />
+                    {/* Seeker Card */}
+                    <div className="col-md-6 d-flex">
+                      <div
+                        className="card w-100 shadow-lg transition-transform hover-lift"
+                        style={{
+                          backgroundColor: "#ffe88f",
+                          borderRadius: "15px",
+                        }}
+                      >
+                        <div className="card-body d-flex flex-column p-4 rounded">
+                          <h4
+                            className="card-title mb-3"
+                            style={{ fontSize: "1.2rem" }}
+                          >
+                            Seeking a Job, Train with Experts
+                          </h4>
+                          <div className="row flex-grow-1">
+                            <div className="col-12 col-md-8 d-flex flex-column">
+                              <p className="card-text flex-grow-1">
+                                A new day awaits! Choose from our wide range of
+                                specialized courses to unlock exciting new
+                                possibilities for your future
+                              </p>
+                              <div className="mt-auto sign-up">
+                                <Link
+                                  to={
+                                    localStorage.getItem("token")
+                                      ? "/"
+                                      : "/login"
+                                  }
+                                  className="btn btn-primary btn-lg"
+                                >
+                                  Sign up
+                                </Link>
+                              </div>
+                            </div>
+                            <div className="col-md-4 d-none d-md-flex align-items-center">
+                              <img
+                                className="img-fluid rounded transition-transform hover-scale"
+                                alt="Education illustration"
+                                src={Become1}
+                                style={{
+                                  width: "150px",
+                                  height: "150px",
+                                  objectFit: "contain",
+                                  transition: "transform 0.3s ease-in-out",
+                                }}
+                              />
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div> */}
+                  </div>
                 </div>
               </div>
-              <div className="col-md-5 d-flex align-items-center">
-                <div className="girl-slide-img aos" data-aos="fade-up">
-                  <img src={bannerimg} alt="" />
+
+              {/* Right Column */}
+              <div className="col-lg-4 d-none d-lg-block">
+                <div className="girl-slide-img">
+                  <img
+                    src={home}
+                    alt="Featured illustration"
+                    className="img-fluid"
+                  />
                 </div>
               </div>
             </div>
           </div>
         </section>
-        {/* /banner */}
 
-        {/* Home banner bottom */}
-        <section className="section student-course">
-          <div className="container">
-            <div className="course-widget">
-              <div className="row">
-                <div className="col-lg-3 col-md-6">
-                  <div className="course-full-width">
-                    <div
-                      className="blur-border course-radius align-items-center aos"
-                      data-aos="fade-up"
-                    >
-                      <div className="online-course d-flex align-items-center">
-                        <div className="course-img">
-                          <img src={PencilIcon} alt="" />
-                        </div>
-                        <div className="course-inner-content">
-                          <h4>
-                            {/* <span>10</span>K */}
-                            <span className="d-flex">
-                              {/* <CountUp
-                                start={0}
-                                end={10}
-                                delay={1}
-                                duration={4}
-                              /> */}
-                              100+
-                            </span>
-                          </h4>
-                          <p>Online Courses</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-3 col-md-6 d-flex">
-                  <div className="course-full-width">
-                    <div
-                      className="blur-border course-radius aos"
-                      data-aos="fade-up"
-                    >
-                      <div className="online-course d-flex align-items-center">
-                        <div className="course-img">
-                          <img src={CourseIcon} alt="" />
-                        </div>
-                        <div className="course-inner-content">
-                          <h4>
-                            <span className="d-flex">
-                              {/* <CountUp start={0} end={200} delay={1} />+ */}
-                              50+
-                            </span>
-                          </h4>
-                          <p>Expert Tutors</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-3 col-md-6 d-flex">
-                  <div className="course-full-width">
-                    <div
-                      className="blur-border course-radius aos"
-                      data-aos="fade-up"
-                    >
-                      <div className="online-course d-flex align-items-center">
-                        <div className="course-img">
-                          <img src={CertificateIcon} alt="" />
-                        </div>
-                        <div className="course-inner-content">
-                          <h4>
-                            <span className="d-flex">
-                              {/* <CountUp
-                                start={0}
-                                end={6}
-                                delay={1}
-                                duration={5}
-                              />
-                              K+ */}
-                              100+
-                            </span>
-                          </h4>
-                          <p>Ceritified Courses</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-3 col-md-6 d-flex">
-                  <div className="course-full-width">
-                    <div
-                      className="blur-border course-radius aos"
-                      data-aos="fade-up"
-                    >
-                      <div className="online-course d-flex align-items-center">
-                        <div className="course-img">
-                          <img src={GratuateIcon} alt="" />
-                        </div>
-                        <div className="course-inner-content">
-                          <h4>
-                            <span className="d-flex">
-                              {/* <CountUp
-                                start={0}
-                                end={60}
-                                delay={1}
-                                duration={2}
-                              />
-                              K + */}
-                              100+
-                            </span>
-                          </h4>
-                          <p>Online Students</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        {/* Home banner bottom */}
+        <style>{`
+          .transition-transform {
+            transition: transform 0.3s ease-in-out;
+          }
+          .hover-lift:hover {
+            transform: translateY(-10px);
+          }
+          .hover-scale:hover {
+            transform: scale(1.05);
+          }
+          .btn-lg {
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem;
+          }
+        `}</style>
 
-        {/* Top Category with Owl Carousel */}
-        {/* <TopCategory /> */}
-        {/* Top Category with Owl Carousel */}
-
-        {/* What's new Featured Course */}
-        {/* <section className="section new-course">
-         
-        </section> */}
         <FeaturedCourses />
-        {/* What's new Featured Course */}
 
-        {/* Master Skills */}
+        {/* Master Skills Section */}
         <section className="section master-skill">
           <div className="container">
             <div className="row">
               <div className="col-lg-7 col-md-12">
                 <div className="section-header aos" data-aos="fade-up">
                   <div className="section-sub-head">
-                    <span>What’s New</span>
+                    <span>What is New</span>
                     <h2>Master the skills to drive your career</h2>
                   </div>
                 </div>
@@ -649,7 +870,7 @@ export const Home = () => {
                       <div className="certified-group blur-border d-flex">
                         <div className="get-certified d-flex align-items-center">
                           <div className="blur-box">
-                            <div className="certified-img ">
+                            <div className="certified-img">
                               <img src={Icon01} alt="" className="img-fluid" />
                             </div>
                           </div>
@@ -661,11 +882,11 @@ export const Home = () => {
                       <div className="certified-group blur-border d-flex">
                         <div className="get-certified d-flex align-items-center">
                           <div className="blur-box">
-                            <div className="certified-img ">
+                            <div className="certified-img">
                               <img src={Icon02} alt="" className="img-fluid" />
                             </div>
                           </div>
-                          <p>Keep up with in the latest in cloud</p>
+                          <p>Keep up with the latest in cloud</p>
                         </div>
                       </div>
                     </div>
@@ -673,7 +894,7 @@ export const Home = () => {
                       <div className="certified-group blur-border d-flex">
                         <div className="get-certified d-flex align-items-center">
                           <div className="blur-box">
-                            <div className="certified-img ">
+                            <div className="certified-img">
                               <img src={Icon03} alt="" className="img-fluid" />
                             </div>
                           </div>
@@ -685,7 +906,7 @@ export const Home = () => {
                       <div className="certified-group blur-border d-flex">
                         <div className="get-certified d-flex align-items-center">
                           <div className="blur-box">
-                            <div className="certified-img ">
+                            <div className="certified-img">
                               <img src={Icon04} alt="" className="img-fluid" />
                             </div>
                           </div>
@@ -704,13 +925,8 @@ export const Home = () => {
             </div>
           </div>
         </section>
-        {/* /Master Skills */}
 
-        {/* Trending Course */}
-        {/* <TrendingCourse /> */}
-        {/* Trending Course */}
-
-        {/* Share knowledge */}
+        {/* Share Knowledge Section */}
         <section className="section share-knowledge">
           <div className="container">
             <div className="row">
@@ -739,8 +955,11 @@ export const Home = () => {
                     </li>
                   </ul>
                   <div className="all-btn all-category d-flex align-items-center">
-                    <Link to="/login" className="btn btn-primary">
-                      Join as Trainer Now
+                    <Link
+                      to="https://trainers.ultraaura.education/"
+                      className=" btn-primary"
+                    >
+                      Join Us as a Trainer
                     </Link>
                   </div>
                 </div>
@@ -749,87 +968,62 @@ export const Home = () => {
           </div>
         </section>
 
-        <section className="section py-5" data-aos="fade-up">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-6 col-md-6 d-flex">
-                <div className="student-mentor cube-instuctor ">
-                  <h4>Partner with US</h4>
-                  <div className="row">
-                    <div className="col-lg-7 col-md-12">
-                      <div className="top-instructors">
-                        <p>
-                          Collaborate with UltraAura to expand educational
-                          opportunities and make a lasting impact. Partner with
-                          us to drive innovation and empower learners worldwide.
-                        </p>
-                        <div className="all-btn all-category d-flex align-items-center">
-                          <Link
-                            to="/partner-signin"
-                            className="btn btn-primary"
-                          >
-                            Partner with US
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-5 col-md-12">
-                      <div className="mentor-img">
-                        <img className="img-fluid" alt="" src={Become2} />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-6 col-md-6 d-flex">
-                <div className="student-mentor yellow-mentor">
-                  <h4>Transform Access To Education</h4>
-                  <div className="row">
-                    <div className="col-lg-8 col-md-12">
-                      <div className="top-instructors">
-                        <p>
-                          Create an account to receive our newsletter, course
-                          recommendations and promotions.
-                        </p>
-                        <div className="all-btn all-category d-flex align-items-center">
-                          <Link to="/register" className="btn btn-primary">
-                            Sign up
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-4 col-md-12">
-                      <div className="mentor-img">
-                        <img className="img-fluid" alt="" src={Become1} />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        {/* /Become a instructor */}
-        {/* Companies */}
+        {/* Partner Companies Section */}
         <PartnerList />
         <section className="section lead-companies">
           <div className="container">
             <div className="section-header aos" data-aos="fade-up">
               <div className="section-sub-head feature-head text-center">
                 <span>Trusted By</span>
-                <h2>We Work with Some of the Best - Globally</h2>
+                <h2>“We work with some of the best brands, Globally</h2>
               </div>
             </div>
+
+            <div className="container">
+  <div className="row justify-content-center align-items-center text-center">
+    <div className="col-6 col-sm-4 col-md-3 mb-4">
+      <img
+        src={ultraaura}
+        alt="Ultraaura"
+        className="img-fluid"
+        style={{ objectFit: "contain" }}
+      />
+    </div>
+    <div className="col-6 col-sm-4 col-md-3 mb-4">
+      <img
+        src={novajobs}
+        alt="Novajobs"
+        className="img-fluid"
+        style={{ objectFit: "contain" }}
+      />
+    </div>
+    <div className="col-6 col-sm-4 col-md-3 mb-4">
+      <img
+        src={homecare}
+        alt="Homecare"
+        className="img-fluid"
+        style={{ objectFit: "contain" }}
+      />
+    </div>
+    <div className="col-6 col-sm-4 col-md-3 mb-4">
+      <img
+        src={paradigmshift}
+        alt="Paradigmshift"
+        className="img-fluid"
+        style={{ objectFit: "contain" }}
+      />
+    </div>
+  </div>
+</div>
+
+
             <div className="lead-group aos" data-aos="fade-up">
               <Companies />
             </div>
           </div>
         </section>
-        {/* Companies */}
 
-        {/* Footer */}
         <Footer />
-        {/* /Footer */}
       </div>
     </>
   );

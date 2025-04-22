@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import OwlCarousel from "react-owl-carousel";
-import { LoginImg, logo } from "../../imagepath";
+import { LoginImg} from "../../imagepath";
+import logo from '../../../assets/Ultra_Aura.png';
 import { Link, useParams, useNavigate } from "react-router-dom";
+
 import axios from 'axios';
-import { toast } from 'react-toastify'; // Import toast for notifications
+import { toast} from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css"; // Import toast for notifications
 
 const NewPassword = () => {
     const [eye, setEye] = useState(true);
@@ -16,6 +19,7 @@ const NewPassword = () => {
     });
     const { token } = useParams(); // Get token from URL parameters
     const navigate = useNavigate(); // For navigation after password reset
+    
 
     // Function to toggle password visibility
     const onEyeClick = () => {
@@ -25,6 +29,15 @@ const NewPassword = () => {
     const onEyeClick2 = () => {
         setEye2(!eye2);
     };
+     
+    window.onerror = function (message, source, lineno, colno, error) {
+        console.error("Error in newpassword:", message);
+        console.log("Source file:", source);
+        console.log("Line:", lineno, "Column:", colno);
+        console.log("Error object:", error);
+      };
+      
+
 
     // Configure Owl Carousel settings
     const settings = {
@@ -70,7 +83,7 @@ const NewPassword = () => {
         }
 
         if (formData.newPassword !== formData.confirmNewPassword) {
-            toast.error("Passwords do not match");
+            toast.error( "Passwords do not match");
             return;
         }
 
@@ -90,20 +103,27 @@ const NewPassword = () => {
                 }
             );
 
-            if (response.status === 200) {
+            // if (response.data.status === 200) {
+            if (response.data) {
                 toast.success("Password reset successfully!");
-                navigate("/login"); // Redirect to login page
+                try {
+                    navigate("/login"); // Ensure '/login' route exists
+                } catch (error) {
+                    console.error("Navigation Error:", error);
+                }
+
             } else {
                 toast.error("Failed to reset password.");
             }
         } catch (err) {
             console.log(err);
-            toast.error("Error resetting password.");
+            toast.error(err.response.data.message ||"Error resetting password.");
         }
     };
 
     return (
         <>
+          
             <div className="main-wrapper">
                 <div className="row">
                     {/* Login Banner */}
@@ -118,7 +138,6 @@ const NewPassword = () => {
                                 </div>
                                 <div className="mentor-course text-center">
                                     <h2>Welcome to <br /> Ultraaura Courses.</h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
                                 </div>
                             </div>
                             {/* Repeat other slides as necessary */}
@@ -132,7 +151,7 @@ const NewPassword = () => {
                                 <div className="img-logo">
                                     <img src={logo} className="img-fluid" alt="Logo" />
                                     <div className="back-home">
-                                        <Link to="#">Back to Home</Link>
+                                        <Link to="/">Back to Home</Link>
                                     </div>
                                 </div>
                                 <h1>Setup New Password</h1>

@@ -984,7 +984,7 @@ export const Home2 = () => {
               <div className="header-two-text" data-aos="fade-up">
                 <p className="mb-0">
                   Get certified, master modern tech skills, and level up your
-                  career — whether you’re starting out or a seasoned pro. 95% of
+                  career — whether you are starting out or a seasoned pro. 95% of
                   eLearning learners report our hands-on content directly helped
                   their careers.
                 </p>

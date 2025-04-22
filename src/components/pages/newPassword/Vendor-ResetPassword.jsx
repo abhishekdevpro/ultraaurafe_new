@@ -70,7 +70,7 @@ const NewPasswordVendor = () => {
         }
 
         if (formData.newPassword !== formData.confirmNewPassword) {
-            toast.error("Passwords do not match");
+            toast.error("Passwords do not match localhost wala chl rha h");
             return;
         }
 
@@ -89,21 +89,20 @@ const NewPasswordVendor = () => {
                     },
                 }
             );
+            console.log("Response Data:", response?.data);
 
-            if (response.status === 200) {
-                toast.success("Password reset successfully!");
-                navigate("/login"); // Redirect to login page
-            } else {
-                toast.error("Failed to reset password.");
-            }
+            // Display success message and navigate
+            toast.success("Password reset successfully!");
+            navigate("/login");
+    
         } catch (err) {
             console.log(err);
-            toast.error("Error resetting password.");
+            toast.error(err.response.data.message || "Error resetting password.");
         }
     };
 
     return (
-        <>
+        <> 
             <div className="main-wrapper">
                 <div className="row">
                     {/* Login Banner */}
@@ -118,7 +117,7 @@ const NewPasswordVendor = () => {
                                 </div>
                                 <div className="mentor-course text-center">
                                     <h2>Welcome to <br /> Ultraaura Courses.</h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                
                                 </div>
                             </div>
                             {/* Repeat other slides as necessary */}

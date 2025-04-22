@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import OwlCarousel from "react-owl-carousel";
 // import {NetIcon1, NetIcon2 } from "../../imagepath";
 import axios from "axios";
-import logo5 from '../../../assets/logo5.png'
+import logo5 from '../../../assets/Ultra_Aura.png'
 import { toast } from "react-toastify";
-import FeatherIcon from "feather-icons-react";
-import styled from "styled-components";
+
 const hasNumber = (value) => {
   return new RegExp(/[0-9]/).test(value);
 };
@@ -23,29 +22,29 @@ const strengthColor = (count) => {
   if (count < 3) return "strong";
   if (count < 4) return "heavy";
 };
-const DropdownWrapper = styled.div`
-    position: relative;
+// const DropdownWrapper = styled.div`
+//     position: relative;
 
-    .select-icon {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-    }
+//     .select-icon {
+//       position: absolute;
+//       right: 10px;
+//       top: 50%;
+//       transform: translateY(-50%);
+//       pointer-events: none;
+//     }
 
-    select {
-      appearance: none;
-      width: 100%;
-      padding-right: 35px;
-    }
-  `;
+//     select {
+//       appearance: none;
+//       width: 100%;
+//       padding-right: 35px;
+//     }
+//   `;
 const Register = () => {
+  const [loading, setLoading] = useState(false);
   const [eye, seteye] = useState(true);
   const [password, setPassword] = useState("");
   const [validationError, setValidationError] = useState("");
   const [strength, setStrength] = useState("");
-  const [userType, setUserType] = useState("");
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
@@ -61,7 +60,7 @@ const Register = () => {
     city_id: 0,
     qualification_id: 0,
   });
-  const navigate = useNavigate(); // Initialize useNavigate
+  // const navigate = useNavigate(); // Initialize useNavigate
   const onEyeClick = () => {
     seteye(!eye);
   };
@@ -201,37 +200,11 @@ const Register = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   const apiUrl = userType === "student"
-  //     ? "https://api.novajobs.us/api/students/register"
-  //     : "https://api.novajobs.us/api/trainers/register";
-  
-  //   // Convert IDs to integers
-  //   const dataToSubmit = {
-  //     ...formData,
-  //     country_id: parseInt(formData.country_id, 10) || 0,
-  //     state_id: parseInt(formData.state_id, 10) || 0,
-  //     city_id: parseInt(formData.city_id, 10) || 0,
-  //     qualification_id: parseInt(formData.qualification_id, 10) || 0,
-  //   };
-  
-  //   try {
-  //     const response = await axios.post(apiUrl, dataToSubmit);
-  //     console.log("Registration successful:", response.data);
-  //     navigate('/login');
-  //     // Handle successful registration (e.g., show success message, redirect)
-  //   } catch (error) {
-  //     console.error("Registration failed:", error);
-  //     // Handle registration error (e.g., show error message)
-  //   }
-  // };
-  
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const apiUrl = userType === "student"
-      ? "https://api.novajobs.us/api/students/register"
-      : "https://api.novajobs.us/api/trainers/register";
+    setLoading(true);
+
+    const apiUrl = "https://api.novajobs.us/api/students/register"
   
     const dataToSubmit = {
       ...formData,
@@ -245,12 +218,12 @@ const Register = () => {
       const response = await axios.post(apiUrl, dataToSubmit);
       console.log("Registration successful:", response.data);
       
-      // Store the token
-      const tokenKey = userType === "student" ? "studentToken" : "trainerToken";
-      localStorage.setItem(tokenKey, response.data.token);
+      // // Store the token
+      // const tokenKey = userType === "student" ? "studentToken" : "trainerToken";
+      // localStorage.setItem(tokenKey, response.data.token);
       
       // Show success message
-      toast.success('Registration successful! Redirecting to login...', {
+      toast.success(response?.data?.message || 'Registration successful!', {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -259,14 +232,28 @@ const Register = () => {
         draggable: true,
       });
 
-      // Redirect after a short delay
-      setTimeout(() => {
-        navigate('/login');
-      }, 3000);
+      // Reset form data
+      setFormData({
+        first_name: "",
+        last_name: "",
+        phone: "",
+        email: "",
+        password: "",
+        country_id: 0,
+        state_id: 0,
+        city_id: 0,
+        qualification_id: 0, 
+      });
+
+      // Redirect after a short delay if needed
+      // setTimeout(() => {
+      //   navigate('/login');
+      // }, 3000);
     } catch (error) {
       console.error("Registration failed:", error);
       
       // Show error message
+      console.log(error.response?.data?.message);
       toast.error(error.response?.data?.message || 'Registration failed. Please try again.', {
         position: "top-right",
         autoClose: 5000,
@@ -275,15 +262,15 @@ const Register = () => {
         pauseOnHover: true,
         draggable: true,
       });
+    } finally {
+      setLoading(false);
     }
   };
+
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await axios.get(
-          userType === "student"
-            ? "https://api.novajobs.us/api/students/countries"
-            : "https://api.novajobs.us/api/trainers/countries"
+        const response = await axios.get( "https://api.novajobs.us/api/students/countries"
         );
 
         setCountries(response.data.data);
@@ -292,35 +279,60 @@ const Register = () => {
       }
     };
     fetchCountries();
-  }, [userType]);
+  },[]);
 
+  // useEffect(() => {
+  //   if (formData.country_id) {
+  //     const fetchStates = async () => {
+  //       try {
+  //         const response = await axios.get(
+  //           userType === "student"
+  //             ? `https://api.novajobs.us/api/students/stats/${formData.country_id}`
+  //             : `https://api.novajobs.us/api/trainers/stats/${formData.country_id}`
+  //         );
+
+  //         setStates(response.data.data);
+  //         console.log(response.data.data,"states");
+  //       } catch (error) {
+  //         console.error("Error fetching states:", error);
+  //       }
+  //     };
+  //     fetchStates();
+  //   }
+  // }, [formData.country_id, userType]);
   useEffect(() => {
     if (formData.country_id) {
       const fetchStates = async () => {
         try {
-          const response = await axios.get(
-            userType === "student"
-              ? `https://api.novajobs.us/api/students/stats/${formData.country_id}`
-              : `https://api.novajobs.us/api/trainers/stats/${formData.country_id}`
+          const response = await axios.get( `https://api.novajobs.us/api/students/stats/${formData.country_id}`
           );
 
-          setStates(response.data.data);
+          // Ensure response.data.data is an array before setting states
+          if (Array.isArray(response.data.data)) {
+            setStates(response.data.data);
+          } else {
+            console.error("Expected an array from API response");
+            setStates([]); // Reset to empty array if not an array
+          }
+
+          console.log(response.data.data, "states");
         } catch (error) {
           console.error("Error fetching states:", error);
+          setStates([]); // Reset to empty array on error
         }
       };
       fetchStates();
+    } else {
+      setStates([]); // Reset to empty array if country_id is not set
     }
-  }, [formData.country_id, userType]);
+  }, [formData.country_id]);
 
   useEffect(() => {
     if (formData.state_id) {
       const fetchCities = async () => {
         try {
           const response = await axios.get(
-            userType === "student"
-              ? `https://api.novajobs.us/api/students/cities/${formData.state_id}`
-              : `https://api.novajobs.us/api/trainers/cities/${formData.state_id}`
+               `https://api.novajobs.us/api/students/cities/${formData.state_id}`
           );
 
           setCities(response.data.data);
@@ -330,10 +342,9 @@ const Register = () => {
       };
       fetchCities();
     }
-  }, [formData.state_id, userType]);
+  }, [formData.state_id]);
 
   useEffect(() => {
-    if (userType === "student") {
       const fetchQualifications = async () => {
         try {
           const response = await axios.get(
@@ -343,13 +354,12 @@ const Register = () => {
         } catch (error) {
           console.error("Error fetching qualifications:", error);
         }
-      };
+      }
       fetchQualifications();
-    }
-  }, [userType]);
+  },[]);
 
   return (
-    <>
+    <> 
       <div className="main-wrapper log-wrap">
         <div className="row">
           {/* Login Banner */}
@@ -415,18 +425,10 @@ const Register = () => {
                     <Link to="/home">Back to Home</Link>
                   </div>
                 </div>
-                <h1>Sign up</h1>
+                <h1>Sign up As an Student </h1>
                 <form onSubmit={handleSubmit}>
-                  <div className="input-block">
+                  {/* <div className="input-block">
                     <label className=" font-weight-bold">Register as</label>
-                    {/* <select
-                      className="form-control"
-                      value={userType}
-                      onChange={(e) => setUserType(e.target.value)}
-                    >
-                      <option value="student">Student</option>
-                      <option value="trainer">Trainer</option>
-                    </select> */}
                      <DropdownWrapper>
                         <select
                           className="form-control"
@@ -439,7 +441,7 @@ const Register = () => {
                         </select>
                         <FeatherIcon icon="chevron-down" className="select-icon" />
                       </DropdownWrapper>
-                  </div>
+                  </div> */}
                   <div className="input-block">
                     <label className="form-control-label">First Name</label>
                     <input
@@ -532,16 +534,16 @@ const Register = () => {
                       ))}
                     </select>
                   </div>
-                  {userType === "student" && (
+                  
                     <div className="input-block">
-                      <label className="form-control-label">Qualification</label>
+                      <label className="form-control-label">Grades</label>
                       <select
                         name="qualification_id"
                         value={formData.qualification_id}
                         onChange={handleInputChange}
                         className="form-control"
                       >
-                        <option value="">Select Qualification</option>
+                        <option value="">Select Grades</option>
                         {qualifications.map((qualification) => (
                           <option key={qualification.id} value={qualification.id}>
                             {qualification.name}
@@ -549,7 +551,6 @@ const Register = () => {
                         ))}
                       </select>
                     </div>
-                  )}
                   <div className="input-block">
                     <label className="form-control-label">Password</label>
                     <div className="pass-group" id="passwordInput">
@@ -612,12 +613,30 @@ const Register = () => {
                   </div>
                   <div className="d-grid">
                     {/* {console.log(userType,"Role")} */}
-                    <button
+                    {/* <button
                       className="btn btn-primary btn-start"
                       type="submit"
                     >
                       Create Account
-                    </button>
+                    </button> */}
+                     <button
+        className="btn btn-primary btn-start"
+        type="submit"
+        disabled={loading}
+      >
+        {loading ? (
+          <>
+            <span
+              className="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            {" Creating Account..."}
+          </>
+        ) : (
+          "Create Account"
+        )}
+      </button>
                   </div>
                 </form>
               </div>

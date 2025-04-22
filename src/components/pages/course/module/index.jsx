@@ -1,656 +1,271 @@
-// import FeatherIcon from "feather-icons-react/build/FeatherIcon";
-// import React from "react";
-// import { useRef } from "react";
-// import { useState } from "react";
-// import { Link } from "react-router-dom";
-// import useOnClickOutside from "../../../hooks/useOnClickOutside";
-// import { Cart, Course14, Course15, Course4, Messages, Notification, User1, User11, User2, User3, Wish } from "../../../imagepath";
-// import DarkMode from "../../../common/darkMode";
-
-
-// const HeadModule = () => {
-//   const [setShowCart] = useState(false);
-//   // const [showWish, setShowWish] = useState(false);
-//   // const [showNoti, setShowNoti] = useState(false);
-//   const [setShowProfile] = useState(false);
-
-
-//   const cart = useRef();
-//   useOnClickOutside(cart, () => setShowCart(false));
-
-//   const wish = useRef();
-//   useOnClickOutside(wish, () => setShowCart(false));
-  
-//   const noti = useRef();
-//   useOnClickOutside(noti, () => setShowCart(false));
-
-//   const profile = useRef();
-//   useOnClickOutside(profile, () => setShowProfile(false));
-
-//   return (
-//       <ul className="nav header-navbar-rht">
-//         <DarkMode/>
-//   <li className="nav-item">
-//     <Link to="/course-message">
-//       <img src={Messages} alt="img" />
-//     </Link> 
-//   </li>
-//   <li className="nav-item cart-nav">
-//     <Link to="#" className="dropdown-toggle" data-bs-toggle="dropdown">
-//       <img src={Cart} alt="img" />
-//     </Link> 
-//     <div className="wishes-list dropdown-menu dropdown-end dropdown-menu-right modalPosition">
-//       <div className="wish-header">
-//         <Link to="#">View Cart</Link> 
-//         <Link to="#" className="float-end">
-//           Checkout
-//         </Link> 
-//       </div>
-//       <div className="wish-content">
-//         <ul>
-//           <li>
-//             <div className="media">
-//               <div className="d-flex media-wide">
-//                 <div className="avatar">
-//                   <Link to="/course-details">
-//                     <img alt="" src={Course4} />
-//                   </Link> 
-//                 </div>
-//                 <div className="media-body">
-//                   <h6>
-//                     <Link to="/course-details">Learn Angular...</Link> 
-//                   </h6>
-//                   <p>By Dave Franco</p>
-//                   <h5>
-//                     $200 <span>$99.00</span>
-//                   </h5>
-//                 </div>
-//               </div>
-//               <div className="remove-btn">
-//                 <Link to="#" className="btn">
-//                   Remove
-//                 </Link> 
-//               </div>
-//             </div>
-//           </li>
-//           <li>
-//             <div className="media">
-//               <div className="d-flex media-wide">
-//                 <div className="avatar">
-//                   <Link to="/course-details">
-//                     <img alt="" src={Course14} />
-//                   </Link> 
-//                 </div>
-//                 <div className="media-body">
-//                   <h6>
-//                     <Link to="/course-details">Build Responsive Real...</Link> 
-//                   </h6>
-//                   <p>Jenis R.</p>
-//                   <h5>
-//                     $200 <span>$99.00</span>
-//                   </h5>
-//                 </div>
-//               </div>
-//               <div className="remove-btn">
-//                 <Link to="#" className="btn">
-//                   Remove
-//                 </Link> 
-//               </div>
-//             </div>
-//           </li>
-//           <li>
-//             <div className="media">
-//               <div className="d-flex media-wide">
-//                 <div className="avatar">
-//                   <Link to="/course-details">
-//                     <img alt="" src={Course15}/>
-//                   </Link> 
-//                 </div>
-//                 <div className="media-body">
-//                   <h6>
-//                     <Link to="/course-details">C# Developers Double ...</Link> 
-//                   </h6>
-//                   <p>Jesse Stevens</p>
-//                   <h5>
-//                     $200 <span>$99.00</span>
-//                   </h5>
-//                 </div>
-//               </div>
-//               <div className="remove-btn">
-//                 <Link to="#" className="btn">
-//                   Remove
-//                 </Link> 
-//               </div>
-//             </div>
-//           </li>
-//         </ul>
-//         <div className="total-item">
-//           <h6>Subtotal : $ 600</h6>
-//           <h5>Total : $ 600</h5>
-//         </div>
-//       </div>
-//     </div>
-//   </li>
-//   <li className="nav-item wish-nav">
-//     <Link to="#" className="dropdown-toggle" data-bs-toggle="dropdown">
-//       <img src={Wish} alt="img" />
-//     </Link> 
-//     <div className="wishes-list dropdown-menu dropdown-end dropdown-menu-right">
-//       <div className="wish-content">
-//         <ul>
-//           <li>
-//             <div className="media">
-//               <div className="d-flex media-wide">
-//                 <div className="avatar">
-//                   <Link to="/course-details">
-//                     <img alt="" src={Course4}/>
-//                   </Link> 
-//                 </div>
-//                 <div className="media-body">
-//                   <h6>
-//                     <Link to="/course-details">Learn Angular...</Link> 
-//                   </h6>
-//                   <p>By Dave Franco</p>
-//                   <h5>
-//                     $200 <span>$99.00</span>
-//                   </h5>
-//                   <div className="remove-btn">
-//                     <Link to="#" className="btn">
-//                       Add to cart
-//                     </Link> 
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//           </li>
-//           <li>
-//             <div className="media">
-//               <div className="d-flex media-wide">
-//                 <div className="avatar">
-//                   <Link to="/course-details">
-//                     <img alt="" src={Course14} />
-//                   </Link> 
-//                 </div>
-//                 <div className="media-body">
-//                   <h6>
-//                     <Link to="/course-details">Build Responsive Real...</Link> 
-//                   </h6>
-//                   <p>Jenis R.</p>
-//                   <h5>
-//                     $200 <span>$99.00</span>
-//                   </h5>
-//                   <div className="remove-btn">
-//                     <Link to="#" className="btn">
-//                       Add to cart
-//                     </Link> 
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//           </li>
-//           <li>
-//             <div className="media">
-//               <div className="d-flex media-wide">
-//                 <div className="avatar">
-//                   <Link to="/course-details">
-//                     <img alt="" src={Course15} />
-//                   </Link> 
-//                 </div>
-//                 <div className="media-body">
-//                   <h6>
-//                     <Link to="/course-details">C# Developers Double ...</Link> 
-//                   </h6>
-//                   <p>Jesse Stevens</p>
-//                   <h5>
-//                     $200 <span>$99.00</span>
-//                   </h5>
-//                   <div className="remove-btn">
-//                     <Link to="#" className="btn">
-//                       Remove
-//                     </Link> 
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//           </li>
-//         </ul>
-//       </div>
-//     </div>
-//   </li>
-//   <li className="nav-item noti-nav">
-//     <Link to="#" className="dropdown-toggle" data-bs-toggle="dropdown">
-//       <img src={Notification} alt="img" />
-//     </Link> 
-//     <div className="notifications dropdown-menu dropdown-end dropdown-menu-right">
-//       <div className="topnav-dropdown-header">
-//         <span className="notification-title">
-//           Notifications
-//           <select>
-//             <option>All</option>
-//             <option>Unread</option>
-//           </select>
-//         </span>
-//         <Link to="#" className="clear-noti">
-//           Mark all as read <i className="fa-solid fa-circle-check" />
-//         </Link> 
-//       </div>
-//       <div className="noti-content">
-//         <ul className="notification-list">
-//           <li className="notification-message">
-//             <div className="media d-flex">
-//               <div>
-//                 <Link to="/page-notification" className="avatar">
-//                   <img
-//                     className="avatar-img"
-//                     alt=""
-//                     src={User1}
-//                   />
-//                 </Link> 
-//               </div>
-//               <div className="media-body">
-//                 <h6>
-//                   <Link to="/page-notification">
-//                     Lex Murphy requested <span>access to</span> UNIX directory
-//                     tree hierarchy{" "}
-//                   </Link> 
-//                 </h6>
-//                 <button className="btn btn-accept">Accept</button>
-//                 <button className="btn btn-reject">Reject</button>
-//                 <p>Today at 9:42 AM</p>
-//               </div>
-//             </div>
-//           </li>
-//           <li className="notification-message">
-//             <div className="media d-flex">
-//               <div>
-//                 <Link to="/page-notification" className="avatar">
-//                   <img
-//                     className="avatar-img"
-//                     alt=""
-//                     src={User2}
-//                   />
-//                 </Link> 
-//               </div>
-//               <div className="media-body">
-//                 <h6>
-//                   <Link to="/page-notification">
-//                     Ray Arnold left 6 <span>comments on</span> Isla Nublar SOC2
-//                     compliance report
-//                   </Link> 
-//                 </h6>
-//                 <p>Yesterday at 11:42 PM</p>
-//               </div>
-//             </div>
-//           </li>
-//           <li className="notification-message">
-//             <div className="media d-flex">
-//               <div>
-//                 <Link to="/page-notification" className="avatar">
-//                   <img
-//                     className="avatar-img"
-//                     alt=""
-//                     src={User3}
-//                   />
-//                 </Link> 
-//               </div>
-//               <div className="media-body">
-//                 <h6>
-//                   <Link to="/page-notification">
-//                     Dennis Nedry <span>commented on</span> Isla Nublar SOC2
-//                     compliance report
-//                   </Link> 
-//                 </h6>
-//                 <p className="noti-details">
-//                   “Oh, I finished de-bugging the phones, but the system&apos;s
-//                   compiling for eighteen minutes, or twenty. So, some minor
-//                   systems may go on and off for a while.”
-//                 </p>
-//                 <p>Yesterday at 5:42 PM</p>
-//               </div>
-//             </div>
-//           </li>
-//           <li className="notification-message">
-//             <div className="media d-flex">
-//               <div>
-//                 <Link to="/page-notification" className="avatar">
-//                   <img
-//                     className="avatar-img"
-//                     alt=""
-//                     src={User1}
-//                   />
-//                 </Link> 
-//               </div>
-//               <div className="media-body">
-//                 <h6>
-//                   <Link to="/notifications">
-//                     John Hammond <span>created</span> Isla Nublar SOC2
-//                     compliance report{" "}
-//                   </Link> 
-//                 </h6>
-//                 <p>Last Wednesday at 11:15 AM</p>
-//               </div>
-//             </div>
-//           </li>
-//         </ul>
-//       </div>
-//     </div>
-//   </li>
-//   <li className="nav-item user-nav">
-//     <Link to="#" className="dropdown-toggle" data-bs-toggle="dropdown">
-//       <span className="user-img">
-//         <img src={User11} alt="" />
-//         <span className="status online" />
-//       </span>
-//     </Link> 
-//     <div
-//       className="users dropdown-menu dropdown-end dropdown-menu-right"
-//       data-popper-placement="bottom-end"
-//     >
-//       <div className="user-header">
-//         <div className="avatar avatar-sm">
-//           <img
-//             src={User11}
-//             alt="User Image"
-//             className="avatar-img rounded-circle"
-//           />
-//         </div>
-//         <div className="user-text">
-//           <h6>Rolands R</h6>
-//           <p className="text-muted mb-0">Student</p>
-//         </div>
-//       </div>
-//       <Link className="dropdown-item" to="/setting-edit-profile">
-//       <FeatherIcon icon="user" className="me-1"/> Profile
-//       </Link> 
-//       <Link className="dropdown-item" to="/student/setting-student-subscription">
-//       <FeatherIcon icon="star" className="me-1"/> Subscription
-//       </Link> 
-      
-//       <Link className="dropdown-item" to="/home">
-//       <FeatherIcon icon="log-out" className="me-1"/> Logout
-//       </Link> 
-//     </div>
-//   </li>
-// </ul>
-
-//     </>
-//   );
-// };
-
-// export default HeadModule;
 
 // import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 // import React, { useState, useEffect, useRef } from "react";
 // import { Link, useNavigate } from "react-router-dom";
 // import useOnClickOutside from "../../../hooks/useOnClickOutside";
-// import { Cart, Course4, Messages, Notification, User11, Wish } from "../../../imagepath";
-// import DarkMode from "../../../common/darkMode";
-// import axios from 'axios';
+// import { User11, Wish, Notification } from "../../../imagepath";
+// import axios from "axios";
+// import styled from "styled-components";
+// import PropTypes from "prop-types";
+// import { toast } from "react-toastify";
+// import { ShoppingCart } from "lucide-react";
 
-// const HeadModule = () => {
-//   const [, setShowCart] = useState(false);
-//   const [, setShowProfile] = useState(false);
-//   const [studentInfo, setStudentInfo] = useState(null);
+// const Nav = styled.ul`
+//   display: flex;
+//   align-items: center;
+//   list-style: none;
+//   margin: 0;
+//   padding: 0;
+// `;
 
-//   const cart = useRef();
-//   const wish = useRef();
-//   const noti = useRef();
-//   const profile = useRef();
+// const NavItem = styled.li`
+//   position: relative;
+//   margin-left: 20px;
 
-//   const navigate = useNavigate(); // Hook for programmatic navigation
+//   @media (max-width: 768px) {
+//     margin-left: 10px;
+//     &:not(:last-child) {
+//       display: none;
+//     }
+//   }
+// `;
 
-//   useOnClickOutside(cart, () => setShowCart(false));
-//   useOnClickOutside(wish, () => setShowCart(false));
-//   useOnClickOutside(noti, () => setShowCart(false));
-//   useOnClickOutside(profile, () => setShowProfile(false));
+// const UserImg = styled.span`
+//   display: flex;
+//   align-items: center;
+//   cursor: pointer;
+//   position: relative;
 
-//   useEffect(() => {
-//     // Fetch student profile data
-//     const fetchStudentProfile = async () => {
-//       const token = localStorage.getItem('token');
-      
-//       try {
-//         const response = await axios.get('https://api.novajobs.us/api/students/profile', {
-//           headers: {
-//             'Authorization': `${token}`
-//           }
-//         });
-//         setStudentInfo(response.data.data);
-//       } catch (error) {
-//         console.error("Error fetching student profile:", error);
+//   .user-img {
+//     display: flex;
+//     align-items: center;
+
+//     img {
+//       height: 40px;
+//       width: 40px;
+//       border-radius: 50%;
+//       border: 2px solid #fff;
+//     }
+
+//     .status {
+//       height: 12px;
+//       width: 12px;
+//       border-radius: 50%;
+//       background-color: green;
+//       position: absolute;
+//       bottom: 0;
+//       right: 0;
+//       border: 2px solid #fff;
+//     }
+//   }
+// `;
+
+// const DropdownMenu = styled.div`
+//   display: ${(props) => (props.visible ? "block" : "none")};
+//   position: absolute;
+//   top: 100%;
+//   right: 0;
+//   background-color: #fff;
+//   border-radius: 4px;
+//   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+//   min-width: 250px;
+//   z-index: 1000;
+
+//   @media (max-width: 768px) {
+//     width: 280px;
+//   }
+
+//   .user-header {
+//     display: flex;
+//     align-items: center;
+//     padding: 15px;
+//     border-bottom: 1px solid #ddd;
+
+//     .avatar {
+//       margin-right: 15px;
+
+//       img {
+//         height: 60px;
+//         width: 60px;
+//         border-radius: 50%;
+//         border: 2px solid #ddd;
 //       }
-//     };
+//     }
 
-//     fetchStudentProfile();
-//   }, []);
+//     .user-text {
+//       h6 {
+//         margin: 0;
+//         font-size: 18px;
+//         font-weight: 600;
+//       }
+//       p {
+//         margin: 5px 0 0;
+//         font-size: 14px;
+//         color: #666;
+//       }
+//     }
+//   }
 
-//   // Logout function
-//   const handleLogout = () => {
-//     localStorage.removeItem('token'); // Remove token or any other session data
-//     navigate('/home'); // Redirect to login or home page
-//   };
+//   .dropdown-item {
+//     display: flex;
+//     align-items: center;
+//     padding: 12px 15px;
+//     text-decoration: none;
+//     color: #333;
+//     transition: background-color 0.2s, transform 0.2s;
 
-//   return (
-//     <ul className="nav header-navbar-rht">
-//       <DarkMode/>
-//       <li className="nav-item">
-//         <Link to="/course-message">
-//           <img src={Messages} alt="img" />
-//         </Link> 
-//       </li>
-//       <li className="nav-item cart-nav">
-//         <Link to="#" className="dropdown-toggle" data-bs-toggle="dropdown">
-//           <img src={Cart} alt="img" />
-//         </Link> 
-//         <div className="wishes-list dropdown-menu dropdown-end dropdown-menu-right modalPosition">
-//           <div className="wish-header">
-//             <Link to="#">View Cart</Link> 
-//             <Link to="#" className="float-end">Checkout</Link> 
-//           </div>
-//           <div className="wish-content">
-//             <ul>
-//               <li>
-//                 <div className="media">
-//                   <div className="d-flex media-wide">
-//                     <div className="avatar">
-//                       <Link to="/course-details">
-//                         <img alt="" src={Course4} />
-//                       </Link> 
-//                     </div>
-//                     <div className="media-body">
-//                       <h6>
-//                         <Link to="/course-details">Learn Angular...</Link> 
-//                       </h6>
-//                       <p>By Dave Franco</p>
-//                       <h5>$200 <span>$99.00</span></h5>
-//                     </div>
-//                   </div>
-//                   <div className="remove-btn">
-//                     <Link to="#" className="btn">Remove</Link> 
-//                   </div>
-//                 </div>
-//               </li>
-//               {/* Add other course items here */}
-//             </ul>
-//             <div className="total-item">
-//               <h6>Subtotal : $ 600</h6>
-//               <h5>Total : $ 600</h5>
-//             </div>
-//           </div>
-//         </div>
-//       </li>
-//       <li className="nav-item wish-nav">
-//         <Link to="#" className="dropdown-toggle" data-bs-toggle="dropdown">
-//           <img src={Wish} alt="img" />
-//         </Link> 
-//         <div className="wishes-list dropdown-menu dropdown-end dropdown-menu-right">
-//           <div className="wish-content">
-//             <ul>
-//               <li>
-//                 <div className="media">
-//                   <div className="d-flex media-wide">
-//                     <div className="avatar">
-//                       <Link to="/course-details">
-//                         <img alt="" src={Course4} />
-//                       </Link> 
-//                     </div>
-//                     <div className="media-body">
-//                       <h6>
-//                         <Link to="/course-details">Learn Angular...</Link> 
-//                       </h6>
-//                       <p>By Dave Franco</p>
-//                       <h5>$200 <span>$99.00</span></h5>
-//                       <div className="remove-btn">
-//                         <Link to="#" className="btn">Add to cart</Link> 
-//                       </div>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </li>
-//               {/* Add other wishlist items here */}
-//             </ul>
-//           </div>
-//         </div>
-//       </li>
-//       <li className="nav-item noti-nav">
-//         <Link to="#" className="dropdown-toggle" data-bs-toggle="dropdown">
-//           <img src={Notification} alt="img" />
-//         </Link> 
-//         <div className="notifications dropdown-menu dropdown-end dropdown-menu-right">
-//           <div className="topnav-dropdown-header">
-//             <span className="notification-title">
-//               Notifications
-//               <select>
-//                 <option>All</option>
-//                 <option>Unread</option>
-//               </select>
-//             </span>
-//             <Link to="#" className="clear-noti">
-//               Mark all as read <i className="fa-solid fa-circle-check" />
-//             </Link> 
-//           </div>
-//           <div className="noti-content">
-//             <ul className="notification-list">
-//               {/* Add notification items here */}
-//             </ul>
-//           </div>
-//         </div>
-//       </li>
-//       <li className="nav-item user-nav">
-//         <Link to="#" className="dropdown-toggle" data-bs-toggle="dropdown">
-//           <span className="user-img">
-//             <img src={`https://api.novajobs.us${studentInfo?.photo}` || User11} alt="User" />
-//             <span className="status online" />
-//           </span>
-//         </Link> 
-//         <div
-//           className="users dropdown-menu dropdown-end dropdown-menu-right"
-//           data-popper-placement="bottom-end"
-//         >
-//           <div className="user-header">
-//             <div className="avatar avatar-sm">
-//               <img
-//                 src={`https://api.novajobs.us${studentInfo?.photo}` || User11}
-//                 alt="User Image"
-//                 className="avatar-img rounded-circle"
-//               />
-//             </div>
-//             <div className="user-text">
-//               <h6>{studentInfo?.first_name} {studentInfo?.last_name}</h6>
-//               <p className="text-muted mb-0">{studentInfo?.headline || "Student"}</p>
-//             </div>
-//           </div>
-//           <Link className="dropdown-item" to="/setting-edit-profile">
-//             <FeatherIcon icon="user" className="me-1"/> Profile
-//           </Link> 
-//           <Link className="dropdown-item" to="/student/setting-student-subscription">
-//             <FeatherIcon icon="star" className="me-1"/> Subscription
-//           </Link> 
-//           <button className="dropdown-item"  onClick={handleLogout}>
-//             <FeatherIcon icon="log-out" className="me-1"/> Logout
-//           </button> 
-//         </div>
-//       </li>
-//     </ul>
-//   );
-// };
+//     &:last-child {
+//       border-bottom: none;
+//     }
 
-// export default HeadModule;
-// import FeatherIcon from "feather-icons-react/build/FeatherIcon";
-// import React, { useState, useEffect, useRef } from "react";
-// import { Link, useNavigate } from "react-router-dom";
-// import useOnClickOutside from "../../../hooks/useOnClickOutside";
-// import {  User11 } from "../../../imagepath";
-// import DarkMode from "../../../common/darkMode";
-// import axios from 'axios';
+//     &:hover {
+//       background-color: #f5f5f5;
+//       transform: translateX(5px);
+//     }
 
-// const HeadModule = () => {
-//   const [, setShowCart] = useState(false);
-//   const [, setShowProfile] = useState(false);
+//     .me-1 {
+//       margin-right: 12px;
+//       width: 20px;
+//       height: 20px;
+//     }
+//   }
+
+//   .mobile-only {
+//     display: none;
+//     @media (max-width: 768px) {
+//       display: flex;
+//     }
+//   }
+// `;
+
+// const HeadModule = ({ courseId }) => {
+//   const [showProfile, setShowProfile] = useState(false);
 //   const [userInfo, setUserInfo] = useState(null);
 
-//   const cart = useRef();
-//   const wish = useRef();
-//   const noti = useRef();
 //   const profile = useRef();
-
-//   const navigate = useNavigate(); // Hook for programmatic navigation
-
-//   useOnClickOutside(cart, () => setShowCart(false));
-//   useOnClickOutside(wish, () => setShowCart(false));
-//   useOnClickOutside(noti, () => setShowCart(false));
+//   const navigate = useNavigate();
+  
+//   //  console.log("CourseId is " + courseId);
 //   useOnClickOutside(profile, () => setShowProfile(false));
-//   const trainerToken = localStorage.getItem('trainerToken');
-//       const studentToken = localStorage.getItem('token');
+
+//   const trainerToken = localStorage.getItem("trainerToken");
+//   const vendorToken = localStorage.getItem("vendorToken");
+//   const adminToken = localStorage.getItem("adminToken");
+//   const studentToken = localStorage.getItem("token");
+
 //   useEffect(() => {
 //     const fetchUserProfile = async () => {
-    
-//       const token = trainerToken || studentToken;
+      
 
 //       try {
-//         const apiUrl = trainerToken 
-//           ? 'https://api.novajobs.us/api/trainers/profile' 
-//           : 'https://api.novajobs.us/api/students/profile';
+//         let apiUrl = adminToken ? "https://api.novajobs.us/api/uaadmin/profile":"https://api.novajobs.us/api/students/profile"
 
+//         // if (trainerToken) {
+//         //   apiUrl = "https://api.novajobs.us/api/trainers/profile";
+//         // } else if (studentToken) {
+//         //   apiUrl = "https://api.novajobs.us/api/students/profile";
+//         // } else if (adminToken) {
+//         //   apiUrl = "https://api.novajobs.us/api/admin/profile";
+//         // } else if (vendorToken) {
+//         //   apiUrl = "https://api.novajobs.us/api/vendors/profile";
+//         // } else {
+//         //   throw new Error("No valid token found!");
+//         // }
 //         const response = await axios.get(apiUrl, {
 //           headers: {
-//             'Authorization': `${token}`
-//           }
+//             Authorization: adminToken || studentToken,
+//           },
 //         });
 //         setUserInfo(response.data.data);
+//         if(response.data.data){
+//           console.log("This is userinfo Id: "+response.data.data.id);
+//         }
+       
 //       } catch (error) {
 //         console.error("Error fetching user profile:", error);
 //       }
 //     };
 
 //     fetchUserProfile();
-//   }, []);
+//   }, [trainerToken, studentToken, adminToken, vendorToken]);
 
-//   // Logout function
 //   const handleLogout = () => {
-//     localStorage.removeItem('token'); // Remove token or any other session data
-//     localStorage.removeItem('trainerToken'); // Remove trainer token if present
-//     navigate('/home'); // Redirect to login or home page
+//     localStorage.removeItem("token");
+//     localStorage.removeItem("trainerToken");
+//     localStorage.removeItem("vendorToken");
+//     localStorage.removeItem("adminToken");
+//     navigate("/home");
 //   };
 
+//   const handleAddCart = async () => {
+//     try {
+//       const response = await axios.post('https://api.novajobs.us/api/students/cart', 
+//         {
+//         student_id: userInfo.id, 
+//         course_id: Number(courseId), 
+//         quantity: 1,
+//       }, 
+//       {headers: {
+//         Authorization: ` ${studentToken}`,
+        
+//       }},);
+//       console.log('Item added to cart:', response.data.message);
+//       toast.success(response.data.message || "Course Added To cart Successfully ")
+//     } catch (error) {
+//       if(!courseId){
+//         console.log("courseId: ", courseId)
+//       }
+//       console.error('Error adding item to cart:', error);
+//       toast.error(error.message || "Error to add the course in the cart")
+//     }
+//   };
+
+//   const handleNavigation = (path) => {
+//     navigate(path);
+//     setShowProfile(false);
+//   };
+// console.log(userInfo.user_details,";;;;");
 //   return (
-//     <ul className="nav header-navbar-rht">
-//       <DarkMode/>
-      
-      
-//       <li className="nav-item user-nav">
-//         <Link to="#" className="dropdown-toggle" data-bs-toggle="dropdown">
+//     <Nav>
+//       {/* <NavItem>
+//         <Link to="/student/student-messages">
+//           <img src={Messages} alt="Messages" />
+//         </Link>
+//       </NavItem> */}
+
+//       <NavItem>
+//         <Link to="/cart">
+//         <ShoppingCart size={24} strokeWidth={2} />
+//         </Link>
+//       </NavItem>
+
+//       <NavItem>
+//         <Link to="#" 
+//         onClick={handleAddCart}
+//         >
+//           <img src={Wish} alt="Wishlist" />
+//         </Link>
+//       </NavItem>
+
+//       <NavItem>
+//         <Link to="/page-notification">
+//           <img src={Notification} alt="Notifications" />
+//         </Link>
+//       </NavItem>
+
+//       <NavItem ref={profile} onClick={() => setShowProfile(!showProfile)}>
+//         <UserImg>
 //           <span className="user-img">
-//             <img src={`https://api.novajobs.us${userInfo?.photo}` || User11} alt="User" />
+//             <img
+//               src={`https://api.novajobs.us${userInfo?.photo}` || User11}
+//               alt="User"
+//             />
 //             <span className="status online" />
 //           </span>
-//         </Link> 
-//         <div
-//           className="users dropdown-menu dropdown-end dropdown-menu-right"
-//           data-popper-placement="bottom-end"
-//         >
+//         </UserImg>
+//         <DropdownMenu visible={showProfile}>
 //           <div className="user-header">
-//             <div className="avatar avatar-sm">
+//             <div className="avatar">
 //               <img
 //                 src={`https://api.novajobs.us${userInfo?.photo}` || User11}
 //                 alt="User Image"
@@ -658,36 +273,89 @@
 //               />
 //             </div>
 //             <div className="user-text">
-//               <h6>{userInfo?.first_name} {userInfo?.last_name}</h6>
-//               <p className="text-muted mb-0">{trainerToken?"Trainer": "Student"}</p>
+//               <h6>
+//                 {userInfo?.first_name} {userInfo?.last_name}
+//               </h6>
+//               <p className="text-muted mb-0">
+//                 {trainerToken ? "Trainer" : "Student"}
+//               </p>
 //             </div>
 //           </div>
-//           <Link className="dropdown-item" 
-//   to={studentToken ? '/setting-edit-profile' : '/instructor/instructor-edit-profile'}>          
-//             <FeatherIcon icon="user" className="me-1"/> Profile
-//           </Link> 
-//           <Link className="dropdown-item" 
-//           to={studentToken ? '/student/student-dashboard' : '/instructor/instructor-dashboard'}>
-//             <FeatherIcon icon="star" className="me-1"/> Dashboard
-//           </Link> 
-//           <button className="dropdown-item"  onClick={handleLogout}>
-//             <FeatherIcon icon="log-out" className="me-1"/> Logout
-//           </button> 
-//         </div>
-//       </li>
-//     </ul>
+//           <Link
+//             className="dropdown-item mobile-only"
+//             to="/student/student-messages"
+//             onClick={() => handleNavigation("/student/student-messages")}
+//           >
+//             <FeatherIcon icon="message-square" className="me-1" /> Messages
+//           </Link>
+//           <Link
+//             className="dropdown-item mobile-only"
+//             to="/cart"
+//             onClick={() => handleNavigation("/cart")}
+//           >
+//             <FeatherIcon icon="shopping-cart" className="me-1" /> Cart
+//           </Link>
+//           <Link
+//             className="dropdown-item mobile-only"
+//             to="#"
+//             onClick={handleAddCart}
+//           >
+//             <FeatherIcon icon="heart" className="me-1" /> Wishlist
+//           </Link>
+//           <Link
+//             className="dropdown-item mobile-only"
+//             to="/page-notification"
+//             onClick={() => handleNavigation("/page-notification")}
+//           >
+//             <FeatherIcon icon="bell" className="me-1" /> Notifications
+//           </Link>
+//           <Link
+//             className="dropdown-item"
+//             to={
+//               studentToken
+//                 ? "/setting-edit-profile"
+//                 : "/instructor/instructor-edit-profile"
+//             }
+//             onClick={() => handleNavigation(studentToken ? "/setting-edit-profile" : "/instructor/instructor-edit-profile")}
+//           >
+//             <FeatherIcon icon="user" className="me-1" /> Profile
+//           </Link>
+//           <Link
+//             className="dropdown-item"
+//             to={
+//               studentToken
+//                 ? "/student/student-dashboard"
+//                 : "/instructor/instructor-dashboard"
+//             }
+//             onClick={() => handleNavigation(studentToken ? "/student/student-dashboard" : "/instructor/instructor-dashboard")}
+//           >
+//             <FeatherIcon icon="star" className="me-1" /> Dashboard
+//           </Link>
+//           <button className="dropdown-item" onClick={handleLogout}>
+//             <FeatherIcon icon="log-out" className="me-1" /> Logout
+//           </button>
+//         </DropdownMenu>
+//       </NavItem>
+//     </Nav>
 //   );
 // };
 
+// HeadModule.propTypes = {
+//   courseId: PropTypes.number.isRequired,
+// };
+
 // export default HeadModule;
+
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useOnClickOutside from "../../../hooks/useOnClickOutside";
-import { User11 } from "../../../imagepath";
-import DarkMode from "../../../common/darkMode";
-import axios from 'axios';
-import styled from 'styled-components';
+import { User11, Wish, Notification } from "../../../imagepath";
+import axios from "axios";
+import styled from "styled-components";
+import PropTypes from "prop-types";
+import { toast } from "react-toastify";
+import { ShoppingCart } from "lucide-react";
 
 const Nav = styled.ul`
   display: flex;
@@ -700,10 +368,39 @@ const Nav = styled.ul`
 const NavItem = styled.li`
   position: relative;
   margin-left: 20px;
-  
+
   @media (max-width: 768px) {
     margin-left: 10px;
+    &:not(:last-child) {
+      display: none;
+    }
   }
+`;
+
+const Badge = styled.span`
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #ff4444;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border: 1px solid #fff;
+`;
+
+const IconWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const UserImg = styled.span`
@@ -711,18 +408,18 @@ const UserImg = styled.span`
   align-items: center;
   cursor: pointer;
   position: relative;
-  
+
   .user-img {
     display: flex;
     align-items: center;
-    
+
     img {
       height: 40px;
       width: 40px;
       border-radius: 50%;
-      border: 2px solid #fff; /* Adding a border for better visibility */
+      border: 2px solid #fff;
     }
-    
+
     .status {
       height: 12px;
       width: 12px;
@@ -737,37 +434,47 @@ const UserImg = styled.span`
 `;
 
 const DropdownMenu = styled.div`
-  display: ${props => (props.visible ? 'block' : 'none')};
+  display: ${(props) => (props.visible ? "block" : "none")};
   position: absolute;
   top: 100%;
   right: 0;
   background-color: #fff;
   border-radius: 4px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  min-width: 200px;
+  min-width: 250px;
   z-index: 1000;
-  
+
+  @media (max-width: 768px) {
+    width: 280px;
+  }
+
   .user-header {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 15px;
     border-bottom: 1px solid #ddd;
 
     .avatar {
-      margin-right: 10px;
-      
+      margin-right: 15px;
+
       img {
-        height: 50px;
-        width: 50px;
+        height: 60px;
+        width: 60px;
         border-radius: 50%;
-        border: 2px solid #ddd; /* Optional: to match the dropdown border */
+        border: 2px solid #ddd;
       }
     }
 
     .user-text {
       h6 {
         margin: 0;
-        font-size: 16px;
+        font-size: 18px;
+        font-weight: 600;
+      }
+      p {
+        margin: 5px 0 0;
+        font-size: 14px;
+        color: #666;
       }
     }
   }
@@ -775,113 +482,250 @@ const DropdownMenu = styled.div`
   .dropdown-item {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 12px 15px;
     text-decoration: none;
     color: #333;
-    border-bottom: 1px solid #ddd;
-    
+    transition: background-color 0.2s, transform 0.2s;
+
     &:last-child {
       border-bottom: none;
     }
-    
+
     &:hover {
       background-color: #f5f5f5;
+      transform: translateX(5px);
     }
-    
+
     .me-1 {
-      margin-right: 10px;
+      margin-right: 12px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .mobile-only {
+    display: none;
+    @media (max-width: 768px) {
+      display: flex;
     }
   }
 `;
 
-const HeadModule = () => {
-  const [, setShowCart] = useState(false);
+const HeadModule = ({ courseId }) => {
   const [showProfile, setShowProfile] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
+  const [cartCount, setCartCount] = useState(0);
+  const [favoriteCount, setFavoriteCount] = useState(0);
 
-  const cart = useRef();
-  const wish = useRef();
-  const noti = useRef();
   const profile = useRef();
-
-  const navigate = useNavigate(); // Hook for programmatic navigation
-
-  useOnClickOutside(cart, () => setShowCart(false));
-  useOnClickOutside(wish, () => setShowCart(false));
-  useOnClickOutside(noti, () => setShowCart(false));
+  const navigate = useNavigate();
+  
   useOnClickOutside(profile, () => setShowProfile(false));
 
-  const trainerToken = localStorage.getItem('trainerToken');
-  const studentToken = localStorage.getItem('token');
+  const trainerToken = localStorage.getItem("trainerToken");
+  const vendorToken = localStorage.getItem("vendorToken");
+  const adminToken = localStorage.getItem("adminToken");
+  const studentToken = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const token = trainerToken || studentToken;
-
       try {
-        const apiUrl = trainerToken 
-          ? 'https://api.novajobs.us/api/trainers/profile' 
-          : 'https://api.novajobs.us/api/students/profile';
+        let apiUrl = adminToken ? "https://api.novajobs.us/api/uaadmin/profile" : "https://api.novajobs.us/api/students/profile";
 
         const response = await axios.get(apiUrl, {
           headers: {
-            'Authorization': `${token}`
-          }
+            Authorization: adminToken || studentToken,
+          },
         });
+        
         setUserInfo(response.data.data);
+        
+        // Extract cart and favorite counts from user_details
+        if (response.data.data && response.data.data.user_details) {
+          const { user_details } = response.data.data;
+          
+          if (user_details.cart_info && user_details.cart_info.cart_count !== undefined) {
+            setCartCount(user_details.cart_info.cart_count);
+          }
+          
+          if (user_details.course_info && user_details.course_info.favourite_count !== undefined) {
+            setFavoriteCount(user_details.course_info.favourite_count);
+          }
+        }
       } catch (error) {
         console.error("Error fetching user profile:", error);
       }
     };
 
     fetchUserProfile();
-  }, [trainerToken, studentToken]);
+  }, [trainerToken, studentToken, adminToken, vendorToken]);
 
-  // Logout function
   const handleLogout = () => {
-    localStorage.removeItem('token'); // Remove token or any other session data
-    localStorage.removeItem('trainerToken'); // Remove trainer token if present
-    navigate('/home'); // Redirect to login or home page
+    localStorage.removeItem("token");
+    localStorage.removeItem("trainerToken");
+    localStorage.removeItem("vendorToken");
+    localStorage.removeItem("adminToken");
+    navigate("/home");
   };
+
+  const handleAddCart = async () => {
+    try {
+      if (!userInfo || !userInfo.id) {
+        toast.error("User information is not available");
+        return;
+      }
+      
+      const response = await axios.post(
+        'https://api.novajobs.us/api/students/cart', 
+        {
+          student_id: userInfo.id, 
+          course_id: Number(courseId), 
+          quantity: 1,
+        }, 
+        {
+          headers: {
+            Authorization: studentToken,
+          },
+        }
+      );
+      
+      console.log('Item added to cart:', response.data.message);
+      toast.success(response.data.message || "Course Added To cart Successfully");
+      
+      // Update cart count after successful addition
+      setCartCount(prevCount => prevCount + 1);
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
+      toast.error(error.response?.data?.message || "Error adding the course to the cart");
+    }
+  };
+
+  const handleNavigation = (path) => {
+    navigate(path);
+    setShowProfile(false);
+  };
+
+  if (!userInfo) {
+    return <div>Loading...</div>; // Show loading state until user info is fetched
+  }
 
   return (
     <Nav>
-      <DarkMode/>
-      
+      <NavItem>
+        <Link to="/cart">
+          <IconWrapper>
+            <ShoppingCart size={24} strokeWidth={2} />
+            {cartCount > 0 && <Badge>{cartCount}</Badge>}
+          </IconWrapper>
+        </Link>
+      </NavItem>
+
+      <NavItem>
+        <Link to="/student/student-wishlist">
+          <IconWrapper>
+            <img src={Wish} alt="Wishlist" />
+            {favoriteCount > 0 && <Badge>{favoriteCount}</Badge>}
+          </IconWrapper>
+        </Link>
+      </NavItem>
+
+      <NavItem>
+        <Link to="/page-notification">
+          <img src={Notification} alt="Notifications" />
+        </Link>
+      </NavItem>
+
       <NavItem ref={profile} onClick={() => setShowProfile(!showProfile)}>
         <UserImg>
           <span className="user-img">
-            <img src={`https://api.novajobs.us${userInfo?.photo}` || User11} alt="User" />
+            <img
+              src={userInfo.photo ? `https://api.novajobs.us${userInfo.photo}` : User11}
+              alt="User"
+            />
             <span className="status online" />
           </span>
         </UserImg>
         <DropdownMenu visible={showProfile}>
           <div className="user-header">
-            <div className="avatar avatar-sm">
+            <div className="avatar">
               <img
-                src={`https://api.novajobs.us${userInfo?.photo}` || User11}
+                src={userInfo.photo ? `https://api.novajobs.us${userInfo.photo}` : User11}
                 alt="User Image"
                 className="avatar-img rounded-circle"
               />
             </div>
             <div className="user-text">
-              <h6>{userInfo?.first_name} {userInfo?.last_name}</h6>
-              <p className="text-muted mb-0">{trainerToken ? "Trainer" : "Student"}</p>
+              <h6>
+                {userInfo.first_name} {userInfo.last_name}
+              </h6>
+              <p className="text-muted mb-0">
+                {trainerToken ? "Trainer" : "Student"}
+              </p>
             </div>
           </div>
-          <Link className="dropdown-item" to={studentToken ? '/setting-edit-profile' : '/instructor/instructor-edit-profile'}>
-            <FeatherIcon icon="user" className="me-1"/> Profile
+          <Link
+            className="dropdown-item mobile-only"
+            to="/student/student-messages"
+            onClick={() => handleNavigation("/student/student-messages")}
+          >
+            <FeatherIcon icon="message-square" className="me-1" /> Messages
           </Link>
-          <Link className="dropdown-item" to={studentToken ? '/student/student-dashboard' : '/instructor/instructor-dashboard'}>
-            <FeatherIcon icon="star" className="me-1"/> Dashboard
+          <Link
+            className="dropdown-item mobile-only"
+            to="/cart"
+            onClick={() => handleNavigation("/cart")}
+          >
+            <FeatherIcon icon="shopping-cart" className="me-1" /> Cart
+            {cartCount > 0 && <span className="ms-auto bg-primary text-white px-2 py-1 rounded-pill">{cartCount}</span>}
+          </Link>
+          <Link
+            className="dropdown-item mobile-only"
+            to="#"
+            onClick={handleAddCart}
+          >
+            <FeatherIcon icon="heart" className="me-1" /> Wishlist
+            {favoriteCount > 0 && <span className="ms-auto bg-primary text-white px-2 py-1 rounded-pill">{favoriteCount}</span>}
+          </Link>
+          <Link
+            className="dropdown-item mobile-only"
+            to="/page-notification"
+            onClick={() => handleNavigation("/page-notification")}
+          >
+            <FeatherIcon icon="bell" className="me-1" /> Notifications
+          </Link>
+          <Link
+            className="dropdown-item"
+            to={
+              studentToken
+                ? "/setting-edit-profile"
+                : "/instructor/instructor-edit-profile"
+            }
+            onClick={() => handleNavigation(studentToken ? "/setting-edit-profile" : "/instructor/instructor-edit-profile")}
+          >
+            <FeatherIcon icon="user" className="me-1" /> Profile
+          </Link>
+          <Link
+            className="dropdown-item"
+            to={
+              studentToken
+                ? "/student/student-dashboard"
+                : "/instructor/instructor-dashboard"
+            }
+            onClick={() => handleNavigation(studentToken ? "/student/student-dashboard" : "/instructor/instructor-dashboard")}
+          >
+            <FeatherIcon icon="star" className="me-1" /> Dashboard
           </Link>
           <button className="dropdown-item" onClick={handleLogout}>
-            <FeatherIcon icon="log-out" className="me-1"/> Logout
+            <FeatherIcon icon="log-out" className="me-1" /> Logout
           </button>
         </DropdownMenu>
       </NavItem>
     </Nav>
   );
+};
+
+HeadModule.propTypes = {
+  courseId: PropTypes.number,
 };
 
 export default HeadModule;

@@ -81,7 +81,8 @@ const ForgotPasswordVendor = () => {
   };
 
   return (
-    <>
+    <>  
+    
       <div className="main-wrapper">
         <div className="row">
           {/* Login Banner */}
