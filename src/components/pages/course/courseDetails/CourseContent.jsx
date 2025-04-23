@@ -531,22 +531,7 @@ const CourseContent = ({ courseData }) => {
           {courseData.section_response.length} Sections
         </SectionCount>
       </CourseContentHeader>
-      {/* {courseData.section_response.map((section) => (
-        <CourseSection key={section.id}>
-          <SectionHeader onClick={() => toggleOpen(section.id)}>
-            <SectionTitle>{section.section_name}</SectionTitle>
-            <ChevronIcon size={20} isOpen={open[section.id]} />
-          </SectionHeader>
-          <SectionContent isOpen={open[section.id]}>
-            <LectureListComponent
-              section={section}
-              handlePreviewClick={handlePreviewClick}
-              handlePDFClick={handlePDFClick}
-              loadingStates={loadingStates}
-            />
-          </SectionContent>
-        </CourseSection>
-      ))} */}
+     
       {courseData?.section_response?.length > 0 ? (
         courseData.section_response.map((section) => (
           <CourseSection key={section.id}>
