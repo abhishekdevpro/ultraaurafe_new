@@ -209,7 +209,9 @@ const DynamicCourseList = () => {
       <div className="page-content">
         <div className="container">
           <div className="row">
-            <StudentSidebar />
+            <div className="col-xl-3 col-lg-3">
+              <StudentSidebar />
+            </div>
             <div className="col-xl-9 col-lg-9">
               <div className="settings-widget card-info">
                 <div className="settings-menu p-0">

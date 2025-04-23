@@ -301,7 +301,9 @@ const StudentWishlist = () => {
         <div className="container">
           <div className="row">
             {/* sidebar */}
-            <StudentSidebar />
+            <div className="col-xl-3 col-lg-3">
+              <StudentSidebar />
+            </div>
             {/* /Sidebar */}
             {/* Student Wishlist */}
             <div className="col-xl-9 col-lg-9">

@@ -129,7 +129,9 @@ const JoinLiveClass = () => {
         <div className="container">
           <div className="row">
             {/* Sidebar */}
-            {showAdminComponents ? <AdminSidebar /> : <StudentSidebar />}
+            <div className="col-xl-3 col-lg-3">
+              {showAdminComponents ? <AdminSidebar /> : <StudentSidebar />}
+            </div>
             {/* /Sidebar */}
 
             {/* Main Content */}
