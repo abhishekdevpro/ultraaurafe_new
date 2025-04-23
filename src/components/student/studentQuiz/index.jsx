@@ -63,7 +63,9 @@ const StudentQuiz = () => {
         <div className="container">
           <div className="row">
             {/* Sidebar */}
-            <StudentSidebar />
+            <div className="col-xl-3 col-lg-3">
+              <StudentSidebar />
+            </div>
             {/* /Sidebar */}
             {/* Student Quiz */}
             <div className="col-xl-9 col-lg-9">

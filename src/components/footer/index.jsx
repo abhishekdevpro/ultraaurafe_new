@@ -5,6 +5,7 @@ import { Icon19, Icon20 } from "../imagepath";
 import logo5 from "../../assets/Ultra_Aura.png";
 import axios from "axios";
 import { toast } from "react-toastify";
+import SupportPopup from "./SupportPopup";
 
 // Styled Components
 const FooterWrapper = styled.footer`
@@ -241,6 +242,7 @@ const CopyrightText = styled.p`
 
 const Footer = () => {
   const [email, setEmail] = useState("");
+  const [isSupportOpen, setIsSupportOpen] = useState(false);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -325,6 +327,9 @@ const Footer = () => {
                     <Link to="/verify-certificate">Verify Certificate</Link>
                   </li>
                   <li>
+                    <Link to="#" onClick={e => { e.preventDefault(); setIsSupportOpen(true); }}>Support</Link>
+                  </li>
+                  <li>
                     <Link to="/careers">Careers</Link>
                   </li>
                   <li>
@@ -397,6 +402,7 @@ const Footer = () => {
           </Copyright>
         </Container>
       </FooterBottom>
+      <SupportPopup isOpen={isSupportOpen} onClose={() => setIsSupportOpen(false)} />
     </FooterWrapper>
   );
 };
