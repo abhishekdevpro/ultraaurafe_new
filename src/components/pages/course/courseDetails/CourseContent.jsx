@@ -546,6 +546,7 @@ const CourseContent = ({ courseData }) => {
                   handlePreviewClick={handlePreviewClick}
                   handlePDFClick={handlePDFClick}
                   loadingStates={loadingStates}
+                  courseData={courseData}
                 />
               ) : (
                 <p className="text-muted text-center m-2">

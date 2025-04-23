@@ -1,4 +1,3 @@
-
 // // import React, { useState, useEffect } from "react";
 // // import { Link, useParams, useNavigate } from "react-router-dom";
 // // import axios from "axios";
@@ -6,8 +5,6 @@
 // // import StudentHeader from "../header";
 // // import Footer from "../../footer";
 // // import StudentSidebar from "../sidebar";
-
-
 
 // // const PageWrapper = styled.div`
 // //   .breadcrumb-bar {
@@ -334,8 +331,8 @@
 // //                 ) : skillData ? (
 // //                   <form onSubmit={handleSubmit}>
 // //                     <div className="progress-bar">
-// //                       <div 
-// //                         className="progress-fill" 
+// //                       <div
+// //                         className="progress-fill"
 // //                         style={{ width: `${((currentQuestionIndex + 1) / skillData.questions.length) * 100}%` }}
 // //                       />
 // //                     </div>
@@ -353,9 +350,9 @@
 // //                       ))}
 // //                     </div>
 // //                     <div className="navigation-buttons">
-// //                       <button 
-// //                         type="button" 
-// //                         className="nav-button" 
+// //                       <button
+// //                         type="button"
+// //                         className="nav-button"
 // //                         onClick={handlePrevious}
 // //                         disabled={currentQuestionIndex === 0}
 // //                       >
@@ -366,9 +363,9 @@
 // //                           Submit Test
 // //                         </button>
 // //                       ) : (
-// //                         <button 
-// //                           type="button" 
-// //                           className="nav-button" 
+// //                         <button
+// //                           type="button"
+// //                           className="nav-button"
 // //                           onClick={handleNext}
 // //                           disabled={currentQuestionIndex === skillData.questions.length - 1}
 // //                         >
@@ -423,7 +420,6 @@
 // // };
 
 // // export default SkillTest;
-
 
 // import React, { useState, useEffect } from 'react';
 // import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -504,7 +500,7 @@
 // const PercentageFill = styled.div`
 //   width: ${props => props.percentage}%;
 //   height: 100%;
-//   background-color: ${props => 
+//   background-color: ${props =>
 //     props.percentage >= 70 ? '#28a745' :
 //     props.percentage >= 40 ? '#ffc107' :
 //     '#dc3545'
@@ -527,20 +523,20 @@
 // const InstructionModal = styled(Modal)`
 //   .modal-content {
 //     border-radius: 10px;
-    
+
 //     .modal-header {
 //       border-bottom: 1px solid #e5e5e5;
 //       padding: 20px;
-      
+
 //       h5 {
 //         font-weight: 600;
 //         margin-bottom: 0;
 //       }
 //     }
-    
+
 //     .modal-body {
 //       padding: 20px;
-      
+
 //       ol {
 //         margin-left: 20px;
 //         li {
@@ -548,11 +544,11 @@
 //         }
 //       }
 //     }
-    
+
 //     .modal-footer {
 //       border-top: 1px solid #e5e5e5;
 //       padding: 15px 20px;
-      
+
 //       button {
 //         min-width: 100px;
 //       }
@@ -762,7 +758,7 @@
 //                     ) : skillData ? (
 //                       <form onSubmit={handleSubmit}>
 //                         <div className="progress mb-4">
-//                           <div 
+//                           <div
 //                             className="progress-bar"
 //                             role="progressbar"
 //                             style={{ width: `${((currentQuestionIndex + 1) / skillData.questions.length) * 100}%` }}
@@ -789,8 +785,8 @@
 //                           </div>
 //                         </div>
 //                         <div className="d-flex justify-content-between mt-4">
-//                           <button 
-//                             type="button" 
+//                           <button
+//                             type="button"
 //                             className="btn btn-secondary"
 //                             onClick={handlePrevious}
 //                             disabled={currentQuestionIndex === 0}
@@ -802,8 +798,8 @@
 //                               Submit Test
 //                             </button>
 //                           ) : (
-//                             <button 
-//                               type="button" 
+//                             <button
+//                               type="button"
 //                               className="btn btn-primary"
 //                               onClick={handleNext}
 //                             >
@@ -860,25 +856,25 @@
 
 // export default SkillTest;
 
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
-import styled from 'styled-components';
-import { Modal, Button, ProgressBar } from 'react-bootstrap';
-import StudentHeader from '../header';
-import StudentSidebar from '../sidebar';
-import Footer from '../../footer';
+import React, { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import styled from "styled-components";
+import { Modal, Button, ProgressBar } from "react-bootstrap";
+import StudentHeader from "../header";
+import StudentSidebar from "../sidebar";
+import Footer from "../../footer";
 
 const PageWrapper = styled.div`
   .timer {
     font-size: 18px;
     font-weight: bold;
-    color: ${props => props.timeLeft < 60 ? '#dc3545' : '#333'};
+    color: ${(props) => (props.timeLeft < 60 ? "#dc3545" : "#333")};
   }
 `;
 
 const StyledCard = styled.div`
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   overflow: hidden;
   margin-bottom: 20px;
@@ -901,12 +897,12 @@ const OptionButton = styled.button`
   margin-bottom: 10px;
   border: 1px solid #ced4da;
   border-radius: 4px;
-  background-color: ${props => props.selected ? '#007bff' : '#fff'};
-  color: ${props => props.selected ? '#fff' : '#333'};
+  background-color: ${(props) => (props.selected ? "#007bff" : "#fff")};
+  color: ${(props) => (props.selected ? "#fff" : "#333")};
   transition: all 0.3s ease;
 
   &:hover {
-    background-color: ${props => props.selected ? '#0056b3' : '#f8f9fa'};
+    background-color: ${(props) => (props.selected ? "#0056b3" : "#f8f9fa")};
   }
 `;
 
@@ -924,8 +920,9 @@ const ResultItem = styled.div`
   margin: 10px 0;
   padding: 15px;
   border-radius: 5px;
-  background-color: ${props => props.type === 'right' ? '#d4edda' : '#f8d7da'};
-  color: ${props => props.type === 'right' ? '#155724' : '#721c24'};
+  background-color: ${(props) =>
+    props.type === "right" ? "#d4edda" : "#f8d7da"};
+  color: ${(props) => (props.type === "right" ? "#155724" : "#721c24")};
 `;
 
 const PercentageBar = styled(ProgressBar)`
@@ -941,7 +938,7 @@ const Toast = styled.div`
   color: white;
   padding: 15px 20px;
   border-radius: 5px;
-  display: ${props => props.show ? 'block' : 'none'};
+  display: ${(props) => (props.show ? "block" : "none")};
   z-index: 1000;
 `;
 
@@ -959,6 +956,10 @@ const SkillTest = () => {
   const navigate = useNavigate();
 
   const { courseid, coursetitle } = useParams();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  // const section = queryParams.get("section");
+  const section = parseInt(queryParams.get("section"), 10); // ✅ returns a number
 
   const handleStartTest = () => {
     setShowInstructions(false);
@@ -967,9 +968,11 @@ const SkillTest = () => {
   useEffect(() => {
     const fetchSkillData = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         const response = await axios.get(
-          `https://api.novajobs.us/api/students/skill-assessment?skill_id=${courseid}&skill_name=${encodeURIComponent(coursetitle)}`,
+          `https://api.novajobs.us/api/students/skill-assessment?skill_id=${courseid}&skill_name=${encodeURIComponent(
+            coursetitle
+          )}`,
           {
             headers: {
               Authorization: `${token}`,
@@ -1025,7 +1028,7 @@ const SkillTest = () => {
 
   const handleSubmit = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const updatedQuestions = skillData.questions.map((question, index) => ({
         ...question,
         user_answer: selectedAnswers[index] || "",
@@ -1037,8 +1040,11 @@ const SkillTest = () => {
       };
 
       const response = await axios.put(
-        `https://api.novajobs.us/api/students/skill-assessment/${skillData.skill_assessment_id}`,
-        submissionData,
+        `https://api.novajobs.us/api/students/skill-assessment/${skillData.skill_assessment_id}?course_id=${courseid}`,
+        {
+          ...submissionData,
+          section_id: section,
+        },
         {
           headers: {
             Authorization: `${token}`,
@@ -1057,13 +1063,13 @@ const SkillTest = () => {
 
   const closeModal = () => {
     setShowModal(false);
-    navigate('/student/student-dashboard');
+    navigate("/student/student-dashboard");
   };
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+    return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
   };
 
   return (
@@ -1075,7 +1081,9 @@ const SkillTest = () => {
         centered
       >
         <Modal.Header>
-          <Modal.Title>Test Instructions for {skillData?.skill_name || 'Skill Assessment'}</Modal.Title>
+          <Modal.Title>
+            Test Instructions for {skillData?.skill_name || "Skill Assessment"}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <p>Following instructions are common for all job seekers.</p>
@@ -1084,15 +1092,26 @@ const SkillTest = () => {
             <li>This test consists of 15* multiple-choice questions.</li>
             <li>You may attempt the questions in any order.</li>
             <li>Please select the correct answer for each question.</li>
-            <li>You may come back and change your answers before submitting.</li>
-            <li>Please click on the Submit Test button after answering all the questions.</li>
+            <li>
+              You may come back and change your answers before submitting.
+            </li>
+            <li>
+              Please click on the Submit Test button after answering all the
+              questions.
+            </li>
             <li>Do not close the window before submitting the test.</li>
-            <li>The test will be automatically submitted after the given time limit.</li>
+            <li>
+              The test will be automatically submitted after the given time
+              limit.
+            </li>
           </ol>
           <p>*Your answers will be automatically submitted after 10 minutes.</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => navigate('/student/student-dashboard')}>
+          <Button
+            variant="secondary"
+            onClick={() => navigate("/student/student-dashboard")}
+          >
             Cancel
           </Button>
           <Button variant="primary" onClick={handleStartTest}>
@@ -1108,13 +1127,18 @@ const SkillTest = () => {
             <div className="row">
               <div className="col-md-12 col-12">
                 <div className="breadcrumb-list">
-                  <h2 className="breadcrumb-title">Skill Test: {skillData?.skill_name || 'Loading...'}</h2>
+                  <h2 className="breadcrumb-title">
+                    Skill Test: {skillData?.skill_name || "Loading..."}
+                  </h2>
                   <nav aria-label="breadcrumb" className="page-breadcrumb">
                     <ol className="breadcrumb">
                       <li className="breadcrumb-item">
                         <Link to="/home">Home</Link>
                       </li>
-                      <li className="breadcrumb-item active" aria-current="page">
+                      <li
+                        className="breadcrumb-item active"
+                        aria-current="page"
+                      >
                         Skill Test
                       </li>
                     </ol>
@@ -1132,13 +1156,20 @@ const SkillTest = () => {
               <div className="col-xl-9 col-md-8">
                 <StyledCard>
                   <CardHeader className="d-flex justify-content-between align-items-center">
-                    <h3 className="mb-0">Skill Test: {skillData?.skill_name || 'Loading...'}</h3>
-                    <div className="timer">Time Left: {formatTime(timeLeft)}</div>
+                    <h3 className="mb-0">
+                      Skill Test: {skillData?.skill_name || "Loading..."}
+                    </h3>
+                    <div className="timer">
+                      Time Left: {formatTime(timeLeft)}
+                    </div>
                   </CardHeader>
                   <CardBody>
                     {loading ? (
                       <div className="text-center">
-                        <div className="spinner-border text-primary" role="status">
+                        <div
+                          className="spinner-border text-primary"
+                          role="status"
+                        >
                           <span className="sr-only">Loading...</span>
                         </div>
                       </div>
@@ -1146,37 +1177,53 @@ const SkillTest = () => {
                       <div className="alert alert-danger">{error}</div>
                     ) : skillData ? (
                       <>
-                        <ProgressBar 
-                          now={((currentQuestionIndex + 1) / skillData.questions.length) * 100} 
+                        <ProgressBar
+                          now={
+                            ((currentQuestionIndex + 1) /
+                              skillData.questions.length) *
+                            100
+                          }
                           className="mb-4"
                         />
-                        <h5>{`${currentQuestionIndex + 1}. ${skillData.questions[currentQuestionIndex].question}`}</h5>
+                        <h5>{`${currentQuestionIndex + 1}. ${
+                          skillData.questions[currentQuestionIndex].question
+                        }`}</h5>
                         <div className="mt-3">
-                          {skillData.questions[currentQuestionIndex].options.map((option, optionIndex) => (
+                          {skillData.questions[
+                            currentQuestionIndex
+                          ].options.map((option, optionIndex) => (
                             <OptionButton
                               key={optionIndex}
                               type="button"
-                              selected={selectedAnswers[currentQuestionIndex] === option}
-                              onClick={() => handleOptionSelect(currentQuestionIndex, option)}
+                              selected={
+                                selectedAnswers[currentQuestionIndex] === option
+                              }
+                              onClick={() =>
+                                handleOptionSelect(currentQuestionIndex, option)
+                              }
                             >
                               {option}
                             </OptionButton>
                           ))}
                         </div>
                         <div className="d-flex justify-content-between mt-4">
-                          <NavigationButton 
+                          <NavigationButton
                             variant="secondary"
                             onClick={handlePrevious}
                             disabled={currentQuestionIndex === 0}
                           >
                             Previous
                           </NavigationButton>
-                          {currentQuestionIndex === skillData.questions.length - 1 ? (
-                            <NavigationButton variant="primary" onClick={handleSubmit}>
+                          {currentQuestionIndex ===
+                          skillData.questions.length - 1 ? (
+                            <NavigationButton
+                              variant="primary"
+                              onClick={handleSubmit}
+                            >
                               Submit Test
                             </NavigationButton>
                           ) : (
-                            <NavigationButton 
+                            <NavigationButton
                               variant="primary"
                               onClick={handleNext}
                             >
@@ -1186,7 +1233,9 @@ const SkillTest = () => {
                         </div>
                       </>
                     ) : (
-                      <div className="alert alert-info">No skill data available</div>
+                      <div className="alert alert-info">
+                        No skill data available
+                      </div>
                     )}
                   </CardBody>
                 </StyledCard>
@@ -1197,9 +1246,7 @@ const SkillTest = () => {
         <Footer />
       </div>
 
-      <Toast show={showToast}>
-        Test submitted successfully!
-      </Toast>
+      <Toast show={showToast}>Test submitted successfully!</Toast>
 
       <ResultModal show={showModal} onHide={closeModal} centered>
         <Modal.Header closeButton>
@@ -1215,15 +1262,24 @@ const SkillTest = () => {
                 <h5>Incorrect Answers: {testResults.wrong_answer}</h5>
               </ResultItem>
               <p>Total Questions: {testResults.total_question}</p>
-              <p>Percentage: {parseFloat(testResults.Percentage).toFixed(2)}%</p>
-              <PercentageBar 
-                now={parseFloat(testResults.Percentage)} 
+              <p>
+                Percentage: {parseFloat(testResults.Percentage).toFixed(2)}%
+              </p>
+              <PercentageBar
+                now={parseFloat(testResults.Percentage)}
                 label={`${parseFloat(testResults.Percentage).toFixed(2)}%`}
-                variant={parseFloat(testResults.Percentage) >= 70 ? "success" : parseFloat(testResults.Percentage) >= 40 ? "warning" : "danger"}
+                variant={
+                  parseFloat(testResults.Percentage) >= 70
+                    ? "success"
+                    : parseFloat(testResults.Percentage) >= 40
+                    ? "warning"
+                    : "danger"
+                }
               />
               {!skillData.is_verified && (
                 <div className="alert alert-warning mt-3">
-                  Your skill is not yet verified. Please complete the verification process.
+                  Your skill is not yet verified. Please complete the
+                  verification process.
                 </div>
               )}
             </>
