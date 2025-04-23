@@ -18,6 +18,25 @@ const CourseDetails = () => {
   const [error, setError] = useState(null);
   const { courseid } = useParams();
 
+  // Record first visit progress when user lands on this page
+  useEffect(() => {
+    const recordFirstVisit = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (token && courseid) {
+          await axios.put(
+            `https://api.novajobs.us/api/trainers/first-visit-progress/${courseid}`,
+            {},
+            { headers: { Authorization: token } }
+          );
+        }
+      } catch (err) {
+        console.error("Error recording first-visit-progress:", err);
+      }
+    };
+    recordFirstVisit();
+  }, [courseid]);
+
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
