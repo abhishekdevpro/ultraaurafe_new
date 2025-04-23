@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { Button, Modal, Spinner } from 'react-bootstrap';
 
 const LectureList = styled.ul`
   list-style-type: none;
@@ -218,30 +219,17 @@ const ExpandableContent = styled.div`
 
 const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loadingStates }) => {
   const [expandedLectures, setExpandedLectures] = useState({});
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const timersRef = useRef({});
-  const navigate = useNavigate();
   const { courseid } = useParams();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+  const [showTestModal, setShowTestModal] = useState(false);
+  const [loadingTest, setLoadingTest] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     setIsLoggedIn(!!token);
   }, []);
-
-  const recordTextProgress = async (lectureId) => {
-    try {
-      const token = localStorage.getItem('token');
-      if (token && courseid && section.id && lectureId) {
-        await axios.put(
-          `https://api.novajobs.us/api/trainers/text-progress/${courseid}/${section.id}/${lectureId}`,
-          {},
-          { headers: { Authorization: token } }
-        );
-      }
-    } catch (err) {
-      console.error('Error recording text progress:', err);
-    }
-  };
 
   const toggleLecture = (lectureId) => {
     if (!isLoggedIn) {
@@ -249,24 +237,49 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
       navigate('/login');
       return;
     }
-    const willExpand = !expandedLectures[lectureId];
+    const isExpandedBefore = !!expandedLectures[lectureId];
+    const isNowExpanded = !isExpandedBefore;
     setExpandedLectures((prev) => ({
       ...prev,
-      [lectureId]: willExpand,
+      [lectureId]: isNowExpanded,
     }));
-    if (willExpand) {
-      const timerId = setTimeout(() => {
-        recordTextProgress(lectureId);
-        delete timersRef.current[lectureId];
+    if (isNowExpanded) {
+      // schedule text-progress update after 2 minutes
+      const token = localStorage.getItem("token");
+      timersRef.current[lectureId] = setTimeout(async () => {
+        try {
+          await axios.put(
+            `https://api.novajobs.us/api/trainers/text-progress/${courseid}/${section.id}/${lectureId}`,
+            {},
+            { headers: { Authorization: token } }
+          );
+        } catch (err) {
+          console.error("Error updating text-progress:", err);
+        } finally {
+          delete timersRef.current[lectureId];
+        }
       }, 12000);
-      timersRef.current[lectureId] = timerId;
     } else {
-      const timerId = timersRef.current[lectureId];
-      if (timerId) {
-        clearTimeout(timerId);
+      // cancel scheduled update if user collapsed before timeout
+      if (timersRef.current[lectureId]) {
+        clearTimeout(timersRef.current[lectureId]);
         delete timersRef.current[lectureId];
       }
     }
+  };
+
+  const handleTakeTest = () => {
+    if (!isLoggedIn) {
+      toast.error("Please log in to take the test");
+      navigate('/login');
+      return;
+    }
+    setShowTestModal(false);
+    setLoadingTest(true);
+    setTimeout(() => {
+      setLoadingTest(false);
+      window.location.href = `/student/student-skilltest/${courseid}/${section.section_name}?section=${section.id}`;
+    }, 2000);
   };
 
   const renderLectureContent = (content) => {
@@ -276,62 +289,83 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
   return (
     <LectureList>
       {section.lectures && section.lectures.length > 0 ? (
-        section.lectures.map((lecture) => (
-          <LectureItem key={lecture.id}>
-            <LectureHeader onClick={() => toggleLecture(lecture.id)}>
-              <LectureName>
-                <StyledPlay size={20} />
-                {lecture.lecture_name}
-              </LectureName>
-              <div>
-                <PreviewButton
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (isLoggedIn) {
-                      handlePreviewClick(lecture, section.id);
-                    } else {
-                      toast.error("Please log in to preview this lecture.");
-                      navigate('/login');
-                    }
-                  }}
-                  disabled={!lecture.lecture_videos || loadingStates[lecture.id] || !isLoggedIn}
-                >
-                  {loadingStates[lecture.id] ? 'Loading...' : 'Preview'}
-                </PreviewButton>
-                <ExpandButton>
-                  {expandedLectures[lecture.id] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                </ExpandButton>
-              </div>
-            </LectureHeader>
-            <ExpandableContent expanded={expandedLectures[lecture.id]}>
-              {lecture.lecture_content && (
-                <LectureContent dangerouslySetInnerHTML={renderLectureContent(lecture.lecture_content)} />
-              )}
-              {(lecture.lecture_resources_pdf || lecture.lecture_resources_link) && (
-                <ResourceList>
-                  {lecture.lecture_resources_pdf &&
-                    lecture.lecture_resources_pdf.map((pdf, index) => (
-                      <ResourceItem key={`pdf-${index}`}>
-                        <ResourceLink onClick={() => handlePDFClick(`https://api.novajobs.us/${pdf}`)}>
-                          <FileText size={16} />
-                          PDF Resource {index + 1}
-                        </ResourceLink>
-                      </ResourceItem>
-                    ))}
-                  {lecture.lecture_resources_link &&
-                    lecture.lecture_resources_link.map((link, index) => (
-                      <ResourceItem key={`link-${index}`}>
-                        <ResourceLink href={link} target="_blank" rel="noopener noreferrer">
-                          <LinkIcon size={16} />
-                          External Resource {index + 1}
-                        </ResourceLink>
-                      </ResourceItem>
-                    ))}
-                </ResourceList>
-              )}
-            </ExpandableContent>
-          </LectureItem>
-        ))
+        <>
+          {section.lectures.map((lecture) => (
+            <LectureItem key={lecture.id}>
+              <LectureHeader onClick={() => toggleLecture(lecture.id)}>
+                <LectureName>
+                  <StyledPlay size={20} />
+                  {lecture.lecture_name}
+                </LectureName>
+                <div>
+                  <PreviewButton
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (isLoggedIn) {
+                        handlePreviewClick(lecture, section.id);
+                      } else {
+                        toast.error("Please log in to preview this lecture.");
+                        navigate('/login');
+                      }
+                    }}
+                    disabled={!lecture.lecture_videos || loadingStates[lecture.id] || !isLoggedIn}
+                  >
+                    {loadingStates[lecture.id] ? 'Loading...' : 'Preview'}
+                  </PreviewButton>
+                  <ExpandButton>
+                    {expandedLectures[lecture.id] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  </ExpandButton>
+                </div>
+              </LectureHeader>
+              <ExpandableContent expanded={expandedLectures[lecture.id]}>
+                {lecture.lecture_content && (
+                  <LectureContent dangerouslySetInnerHTML={renderLectureContent(lecture.lecture_content)} />
+                )}
+                {(lecture.lecture_resources_pdf || lecture.lecture_resources_link) && (
+                  <ResourceList>
+                    {lecture.lecture_resources_pdf &&
+                      lecture.lecture_resources_pdf.map((pdf, index) => (
+                        <ResourceItem key={`pdf-${index}`}>
+                          <ResourceLink onClick={() => handlePDFClick(`https://api.novajobs.us/${pdf}`)}>
+                            <FileText size={16} />
+                            PDF Resource {index + 1}
+                          </ResourceLink>
+                        </ResourceItem>
+                      ))}
+                    {lecture.lecture_resources_link &&
+                      lecture.lecture_resources_link.map((link, index) => (
+                        <ResourceItem key={`link-${index}`}>
+                          <ResourceLink href={link} target="_blank" rel="noopener noreferrer">
+                            <LinkIcon size={16} />
+                            External Resource {index + 1}
+                          </ResourceLink>
+                        </ResourceItem>
+                      ))}
+                  </ResourceList>
+                )}
+              </ExpandableContent>
+            </LectureItem>
+          ))}
+          <button className="btn-enroll w-100 mt-3" onClick={() => setShowTestModal(true)}>
+            Take Test
+          </button>
+          <Modal show={showTestModal} onHide={() => setShowTestModal(false)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Confirm Action</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <p>Are you sure you want to take the test for this section?</p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => setShowTestModal(false)}>
+                Cancel
+              </Button>
+              <Button variant="primary" onClick={handleTakeTest}>
+                {loadingTest ? <Spinner as="span" animation="border" size="sm" /> : 'Confirm and Take Test'}
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </>
       ) : (
         <LectureItem>
           <LectureHeader>No lectures available for this section.</LectureHeader>
@@ -344,6 +378,7 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
 LectureListComponent.propTypes = {
   section: PropTypes.shape({
     id: PropTypes.number.isRequired,
+    section_name: PropTypes.string.isRequired,
     lectures: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
