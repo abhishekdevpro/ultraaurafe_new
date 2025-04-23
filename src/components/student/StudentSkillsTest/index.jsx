@@ -1151,8 +1151,10 @@ const SkillTest = () => {
 
         <div className="page-content">
           <div className="container">
-            <div className="row">
-              <StudentSidebar />
+            <div className="row">  
+              <div className="col-xl-3 col-md-4">
+                <StudentSidebar />  
+              </div>
               <div className="col-xl-9 col-md-8">
                 <StyledCard>
                   <CardHeader className="d-flex justify-content-between align-items-center">
