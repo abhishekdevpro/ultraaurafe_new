@@ -280,6 +280,9 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   const [userInfo, setUserInfo] = useState("");
   const [isYoutubeVideo, setIsYoutubeVideo] = useState(false);
   const [isEnrolled, setIsEnrolled] = useState(false);
+  const [certUrl, setCertUrl] = useState(null);
+  const [showCertModal, setShowCertModal] = useState(false);
+
   useEffect(() => {
     // When videoUrl changes, check if we should use YouTube or regular video
     if (videoUrl) {
@@ -325,35 +328,18 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
       const response = await axios.get(
         `https://api.novajobs.us/api/students/certificate/${courseId}`,
         {
-          headers: {
-            Authorization: `${token}`,
-          },
-          responseType: "blob", // Important for handling file downloads
+          headers: { Authorization: `${token}` },
+          responseType: "blob",
         }
       );
-
-      // Create a blob from the response data
-      const blob = new Blob([response.data], {
-        type: response.headers["content-type"],
-      });
-
-      // Create a link element and trigger the download
+      const blob = new Blob([response.data], { type: response.headers["content-type"] });
       const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", `certificate_${courseId}.pdf`); // Assuming it's a PDF, adjust if needed
-      document.body.appendChild(link);
-      link.click();
-
-      // Clean up
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(link);
-
-      // Show success toast
-      toast.success("Certificate downloaded successfully!");
+      setCertUrl(url);
+      toast.success("Certificate loaded successfully!");
+      setShowCertModal(true);
     } catch (error) {
-      console.error("Error downloading certificate:", error);
-      toast.error("Failed to download certificate. Please try again.");
+      console.error("Error loading certificate:", error);
+      toast.error("Failed to load certificate. Please try again.");
     }
   };
 
@@ -689,16 +675,26 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                           onClick={handleBuyNow}
                           disabled={isEnrolled} // Disable button after enrollment
                         >
-                          {isEnrolled ? "Enrolled" : "Buy Now"}
+                          {isEnrolled ? "Enrolled" : "Enroll Now"}
                         </button>
                       }
+                       {token && courseData.is_student_enroll && (
+                        <button
+                          className="btn-enroll w-100 "
+                          // onClick={() => setShowTestModal(true)}
+                          disabled={true}
+                        >
+                          Connect to Trainer
+                        </button>
+                      )}
 
                       {token && courseData.is_student_enroll && (
                         <button
                           className="btn-enroll w-100"
                           onClick={() => setShowTestModal(true)}
+                          disabled={true}
                         >
-                          Take Test
+                          Take Final Test
                         </button>
                       )}
                       {
@@ -709,7 +705,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                             onClick={handleDownload}
                             className="btn-enroll w-100"
                           >
-                            Download Certificate
+                            View Certificate
                           </button>
                         )
                         // )}
@@ -763,6 +759,30 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                 ) : (
                   "Confirm and Take Test"
                 )}
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
+          {/* Certificate Preview Modal */}
+          <Modal
+            show={showCertModal}
+            onHide={() => setShowCertModal(false)}
+            size="lg"
+            centered
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Certificate Preview</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {certUrl ? (
+                <iframe src={certUrl} width="100%" height="600px" frameBorder="0" />
+              ) : (
+                <div>Loading certificate...</div>
+              )}
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => setShowCertModal(false)}>
+                Close
               </Button>
             </Modal.Footer>
           </Modal>
