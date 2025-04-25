@@ -14,7 +14,7 @@ import {
   Users,
   // Video2,
 } from "../../../imagepath";
-import { Modal, Button, Spinner } from "react-bootstrap";
+import { Modal, Button, Spinner, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import the CSS for toast notifications
 import styled from "styled-components";
@@ -22,6 +22,8 @@ import ShareButton from "./Sharebutton";
 // import { Loader } from "lucide-react";
 import ReactPlayer from "react-player";
 // import Joyride from "react-joyride";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -243,8 +245,6 @@ const LoaderContainer = styled.div`
   font-size: 1.2rem;
 `;
 
-
-
 const ThumbnailLoaderOverlay = styled.div`
   position: absolute;
   top: 0;
@@ -268,6 +268,45 @@ const LoaderText = styled.div`
   text-align: center;
 `;
 
+const ScheduleForm = styled(Form)`
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  
+  .react-datepicker-wrapper {
+    width: 100%;
+  }
+  
+  .react-datepicker__input-container {
+    width: 100%;
+  }
+  
+  input, textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+`;
+
+const CourseIdDisplay = styled.div`
+  background-color: #f8f9fa;
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-weight: 500;
+`;
+
 const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -282,6 +321,11 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [certUrl, setCertUrl] = useState(null);
   const [showCertModal, setShowCertModal] = useState(false);
+  const [showScheduleModal, setShowScheduleModal] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedTime, setSelectedTime] = useState(new Date());
+  const [sessionNotes, setSessionNotes] = useState("");
+  const [schedulingLoading, setSchedulingLoading] = useState(false);
 
   useEffect(() => {
     // When videoUrl changes, check if we should use YouTube or regular video
@@ -314,14 +358,6 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
 
   // Check if content needs to be truncated
   const isTruncated = fullContent.length > truncateLength;
-
-  // const handleEnrollClick = () => {
-  //   if (token) {
-  //     setShowPopup(true);
-  //   } else {
-  //     navigate("/login");
-  //   }
-  // };
 
   const handleDownload = async () => {
     try {
@@ -525,6 +561,35 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
 
   const isFavorite = isClassAdded[courseData.course_id];
   console.log(courseFeatureData.youtube_url, "jjjj");
+
+  const handleScheduleSession = async () => {
+    setSchedulingLoading(true);
+    try {
+      await axios.post(
+        "https://api.novajobs.us/api/students/schedule-session",
+        {
+          course_id: courseId,
+          date: selectedDate.toISOString().split('T')[0],
+          time: selectedTime.toTimeString().split(' ')[0],
+          notes: sessionNotes
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      
+      toast.success("Session scheduled successfully!");
+      setShowScheduleModal(false);
+    } catch (error) {
+      console.error("Error scheduling session:", error);
+      toast.error("Failed to schedule session. Please try again.");
+    } finally {
+      setSchedulingLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="col-lg-4">
@@ -656,19 +721,6 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                       </div>
                     </div>
                     <ButtonWrapper>
-                      {/* {token && courseData.is_student_enroll ? (
-                        <button className="btn-enroll w-100" disabled>
-                          Enrolled
-                        </button>
-                      ) : (
-                        <button
-                          onClick={handleEnrollClick}
-                          className="btn-enroll w-100"
-                        >
-                          Enroll Now
-                        </button>
-                      )} */}
-
                       {
                         <button
                           className="btn-enroll w-100 buynow"
@@ -680,9 +732,8 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                       }
                        {token && courseData.is_student_enroll && (
                         <button
-                          className="btn-enroll w-100 "
-                          // onClick={() => setShowTestModal(true)}
-                          disabled={true}
+                          className="btn-enroll w-100"
+                          onClick={() => setShowScheduleModal(true)}
                         >
                           Connect to Trainer
                         </button>
@@ -692,15 +743,13 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                         <button
                           className="btn-enroll w-100"
                           onClick={() => setShowTestModal(true)}
-                          disabled={true}
+                          disabled={!courseData.progress_percent || courseData.progress_percent < 70}
                         >
                           Take Final Test
                         </button>
                       )}
                       {
                         token && (
-                          // courseData.is_student_enroll &&
-                          // courseData.is_certificate && (
                           <button
                             onClick={handleDownload}
                             className="btn-enroll w-100"
@@ -708,7 +757,6 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                             View Certificate
                           </button>
                         )
-                        // )}
                       }
                     </ButtonWrapper>
                   </div>
@@ -783,6 +831,71 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
             <Modal.Footer>
               <Button variant="secondary" onClick={() => setShowCertModal(false)}>
                 Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
+          {/* Schedule Session Modal */}
+          <Modal show={showScheduleModal} onHide={() => setShowScheduleModal(false)} size="lg">
+            <Modal.Header closeButton>
+              <Modal.Title>Schedule Training Session</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <ScheduleForm>
+                <CourseIdDisplay>
+                  Course ID: {courseId}
+                </CourseIdDisplay>
+                
+                <Form.Group className="mb-3">
+                  <Form.Label>Select Date</Form.Label>
+                  <DatePicker
+                    selected={selectedDate}
+                    onChange={date => setSelectedDate(date)}
+                    minDate={new Date()}
+                    className="form-control"
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Select Time</Form.Label>
+                  <DatePicker
+                    selected={selectedTime}
+                    onChange={time => setSelectedTime(time)}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={30}
+                    timeCaption="Time"
+                    dateFormat="h:mm aa"
+                    className="form-control"
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Session Notes</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    value={sessionNotes}
+                    onChange={(e) => setSessionNotes(e.target.value)}
+                    placeholder="Add any specific topics or questions you'd like to discuss..."
+                  />
+                </Form.Group>
+              </ScheduleForm>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => setShowScheduleModal(false)}>
+                Cancel
+              </Button>
+              <Button 
+                variant="primary" 
+                onClick={handleScheduleSession}
+                disabled={schedulingLoading}
+              >
+                {schedulingLoading ? (
+                  <Spinner as="span" animation="border" size="sm" />
+                ) : (
+                  "Schedule Session"
+                )}
               </Button>
             </Modal.Footer>
           </Modal>
@@ -891,6 +1004,7 @@ SidebarSection.propTypes = {
     course_title: PropTypes.string.isRequired,
     is_student_enroll: PropTypes.bool.isRequired,
     is_certificate: PropTypes.bool.isRequired,
+    progress_percent: PropTypes.number,
   }).isRequired,
 };
 
