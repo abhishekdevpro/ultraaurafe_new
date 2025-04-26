@@ -60,17 +60,10 @@ const LectureHeader = styled.div`
   }
 `;
 
-const LectureName = styled.p`
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin: 0;
+const LectureName = styled.div`
   display: flex;
   align-items: center;
-  color: #333;
-
-  @media (max-width: 768px) {
-    font-size: 1rem;
-  }
+  gap: 8px;
 `;
 
 const StyledPlay = styled(Play)`
@@ -249,7 +242,7 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
       timersRef.current[lectureId] = setTimeout(async () => {
         try {
           await axios.put(
-            `https://api.novajobs.us/api/trainers/text-progress/${courseid}/${section.id}/${lectureId}`,
+            `https://api.novajobs.us/api/students/text-progress/${courseid}/${section.id}/${lectureId}`,
             {},
             { headers: { Authorization: token } }
           );
@@ -296,7 +289,12 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
                 <LectureName>
                   <StyledPlay size={20} />
                   {lecture.lecture_name}
+                  {lecture.content_viewed && (
+                    <i className="fas fa-check-circle text-success" style={{ fontSize: '1rem' }}></i>
+                  )}
                 </LectureName>
+
+                
                 <div>
                   <PreviewButton
                     onClick={(e) => {

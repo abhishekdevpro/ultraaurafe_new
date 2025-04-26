@@ -182,6 +182,7 @@ import PartnerList from "./components/Admin/PartnerList.jsx";
 import Certificate from "./components/pages/course/courseDetails/certificationDetails.jsx";
 import VerifyCertificate from "./components/footer/VerifyCertificate.jsx";
 import TestLogin from "./components/pages/login/testlogin.jsx";
+import ConnectTrainer from "./components/Admin/ConnectTrainer.jsx";
 
 const Approuter = () => {
   return (
@@ -643,6 +644,7 @@ const Approuter = () => {
           <Route path="/admin/partner-list" element={<PartnerList />} />
           <Route path="/admin/student-list" element={<StudentList />} />
           <Route path="/admin/course-list" element={<AdminCourseList />} />
+          <Route path="/admin/connect-trainer" element={<ConnectTrainer />} />
           <Route path="/admin/add-student" element={<AddStudentForm />} />
           <Route path="/admin/add-trainer" element={<AddTrainerForm />} />
           <Route path="/admin/add-course" element={<AddCourse />} />

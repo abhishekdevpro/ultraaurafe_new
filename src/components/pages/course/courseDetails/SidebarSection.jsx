@@ -22,8 +22,6 @@ import ShareButton from "./Sharebutton";
 // import { Loader } from "lucide-react";
 import ReactPlayer from "react-player";
 // import Joyride from "react-joyride";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -278,15 +276,11 @@ const ScheduleForm = styled(Form)`
     margin-bottom: 0.5rem;
   }
   
-  .react-datepicker-wrapper {
-    width: 100%;
+  input[type="checkbox"] {
+    margin-right: 0.5rem;
   }
   
-  .react-datepicker__input-container {
-    width: 100%;
-  }
-  
-  input, textarea {
+  select, input, textarea {
     width: 100%;
     padding: 0.5rem;
     border: 1px solid #ddd;
@@ -296,6 +290,19 @@ const ScheduleForm = styled(Form)`
   textarea {
     min-height: 100px;
     resize: vertical;
+  }
+
+  .days-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .day-checkbox {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
   }
 `;
 
@@ -322,9 +329,11 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   const [certUrl, setCertUrl] = useState(null);
   const [showCertModal, setShowCertModal] = useState(false);
   const [showScheduleModal, setShowScheduleModal] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedTime, setSelectedTime] = useState(new Date());
-  const [sessionNotes, setSessionNotes] = useState("");
+  const [selectedDays, setSelectedDays] = useState([]);
+  const [timeSlot, setTimeSlot] = useState('');
+  
+  const [phone, setPhone] = useState('');
+  const [sessionNotes, setSessionNotes] = useState('');
   const [schedulingLoading, setSchedulingLoading] = useState(false);
 
   useEffect(() => {
@@ -562,16 +571,26 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   const isFavorite = isClassAdded[courseData.course_id];
   console.log(courseFeatureData.youtube_url, "jjjj");
 
-  const handleScheduleSession = async () => {
+  const handleDayChange = (day) => {
+    setSelectedDays(prev => 
+      prev.includes(day) 
+        ? prev.filter(d => d !== day)
+        : [...prev, day]
+    );
+  };
+
+  const handleScheduleSession = async (e) => {
+    e.preventDefault();
     setSchedulingLoading(true);
     try {
       await axios.post(
-        "https://api.novajobs.us/api/students/schedule-session",
+        "https://api.novajobs.us/api/students/connect-to-trainer",
         {
-          course_id: courseId,
-          date: selectedDate.toISOString().split('T')[0],
-          time: selectedTime.toTimeString().split(' ')[0],
-          notes: sessionNotes
+          course_id: Number(courseId),
+          day: selectedDays, // Send as array directly
+          time: timeSlot,
+          phone: phone,
+          details: sessionNotes
         },
         {
           headers: {
@@ -580,11 +599,11 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
         }
       );
       
-      toast.success("Session scheduled successfully!");
+      toast.success("Request to connect with trainer submitted successfully!");
       setShowScheduleModal(false);
     } catch (error) {
-      console.error("Error scheduling session:", error);
-      toast.error("Failed to schedule session. Please try again.");
+      console.error("Error connecting to trainer:", error);
+      toast.error("Failed to submit request. Please try again.");
     } finally {
       setSchedulingLoading(false);
     }
@@ -841,63 +860,78 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
               <Modal.Title>Schedule Training Session</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <ScheduleForm>
+              <ScheduleForm onSubmit={handleScheduleSession}>
                 <CourseIdDisplay>
                   Course ID: {courseId}
                 </CourseIdDisplay>
                 
                 <Form.Group className="mb-3">
-                  <Form.Label>Select Date</Form.Label>
-                  <DatePicker
-                    selected={selectedDate}
-                    onChange={date => setSelectedDate(date)}
-                    minDate={new Date()}
-                    className="form-control"
+                  <Form.Label>Preferred Days:</Form.Label>
+                  <div className="days-container">
+                    {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
+                      <div key={day} className="day-checkbox">
+                        <input
+                          type="checkbox"
+                          id={day}
+                          checked={selectedDays.includes(day)}
+                          onChange={() => handleDayChange(day)}
+                        />
+                        <label htmlFor={day}>{day}</label>
+                      </div>
+                    ))}
+                  </div>
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Preferred Time Slot:</Form.Label>
+                  <Form.Select
+                    value={timeSlot}
+                    onChange={(e) => setTimeSlot(e.target.value)}
+                    required
+                  >
+                    <option value="">Select Slot</option>
+                    <option value="morning">Morning (8AM–12PM)</option>
+                    <option value="afternoon">Afternoon (12PM–4PM)</option>
+                    <option value="evening">Evening (4PM–8PM)</option>
+                  </Form.Select>
+                </Form.Group>
+
+              
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Phone Number (optional):</Form.Label>
+                  <Form.Control
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="Enter your Phone Number"
                   />
                 </Form.Group>
 
                 <Form.Group className="mb-3">
-                  <Form.Label>Select Time</Form.Label>
-                  <DatePicker
-                    selected={selectedTime}
-                    onChange={time => setSelectedTime(time)}
-                    showTimeSelect
-                    showTimeSelectOnly
-                    timeIntervals={30}
-                    timeCaption="Time"
-                    dateFormat="h:mm aa"
-                    className="form-control"
-                  />
-                </Form.Group>
-
-                <Form.Group className="mb-3">
-                  <Form.Label>Session Notes</Form.Label>
+                  <Form.Label>Session Notes (optional):</Form.Label>
                   <Form.Control
                     as="textarea"
                     rows={3}
                     value={sessionNotes}
                     onChange={(e) => setSessionNotes(e.target.value)}
-                    placeholder="Add any specific topics or questions you'd like to discuss..."
+                    placeholder="Any specific topics or questions..."
                   />
                 </Form.Group>
+
+                <Button 
+                  variant="primary" 
+                  type="submit"
+                  disabled={schedulingLoading}
+                >
+                  {schedulingLoading ? (
+                    <Spinner as="span" animation="border" size="sm" />
+                  ) : (
+                    "Submit Request"
+                  )}
+                </Button>
               </ScheduleForm>
             </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={() => setShowScheduleModal(false)}>
-                Cancel
-              </Button>
-              <Button 
-                variant="primary" 
-                onClick={handleScheduleSession}
-                disabled={schedulingLoading}
-              >
-                {schedulingLoading ? (
-                  <Spinner as="span" animation="border" size="sm" />
-                ) : (
-                  "Schedule Session"
-                )}
-              </Button>
-            </Modal.Footer>
           </Modal>
 
           {/* Include Section */}

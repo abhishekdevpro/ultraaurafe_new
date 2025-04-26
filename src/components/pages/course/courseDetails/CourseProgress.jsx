@@ -82,7 +82,7 @@ const CourseProgressBar = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     axios
-      .get(`https://api.novajobs.us/api/trainers/get-progrese-bar/${courseid}`, {
+      .get(`https://api.novajobs.us/api/students/progrese-bar/${courseid}`, {
         headers: { Authorization: token },
       })
       .then((res) => {

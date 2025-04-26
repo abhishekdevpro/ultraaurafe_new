@@ -179,6 +179,12 @@ export default function AdminSidebar() {
                       Students
                     </Link>
                   </li>
+                  <li className={`nav-item ${isPathActive('/admin/connect-trainer') ? 'active' : ''}`}>
+                    <Link to="/admin/connect-trainer" className="nav-link">
+                      <i className="bx bxs-group" />
+                      Connect to Trainer
+                    </Link>
+                  </li>
                   <li className={`nav-item ${isPathActive('/admin/add-student') ? 'active' : ''}`}>
                     <Link to="/admin/add-student" className="nav-link">
                       <i className="bx bxs-user-plus" />
