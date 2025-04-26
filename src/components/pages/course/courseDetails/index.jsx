@@ -25,7 +25,7 @@ const CourseDetails = () => {
         const token = localStorage.getItem("token");
         if (token && courseid) {
           await axios.put(
-            `https://api.novajobs.us/api/trainers/first-visit-progress/${courseid}`,
+            `https://api.novajobs.us/api/students/first-visit-progress/${courseid}`,
             {},
             { headers: { Authorization: token } }
           );
