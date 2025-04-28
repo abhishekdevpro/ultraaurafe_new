@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 // import Joyride from "react-joyride";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
 import logo5 from "../../assets/Ultra_Aura.png";
 import { jwtDecode } from "jwt-decode";
+
 
 const StyledHeader = styled.header`
   position: sticky;
@@ -184,6 +185,30 @@ const StyledHeader = styled.header`
     backdrop-filter: blur(3px);
   }
 `;
+
+const ProfileImage = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-right: 10px;
+  background-color: #f0f0f0;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .fallback-icon {
+    font-size: 35px;
+    color: #666;
+  }
+`;
+
 const Header = () => {
   const [navbar, setNavbar] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -269,18 +294,20 @@ const Header = () => {
             className="header__nav-link header__sign-button"
             to={dashboardLink}
           >
-            {profilePhoto ? (
-              <img
-                src={profilePhoto}
-                alt="Profile"
-                className="header__profile-photo"
-              />
-            ) : (
-              <i
-                className="fas fa-user-circle"
-                style={{ marginRight: "10px" }}
-              />
-            )}
+            <ProfileImage>
+              {profilePhoto ? (
+                <img 
+                  src={profilePhoto} 
+                  alt="Profile" 
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.parentElement.querySelector('.fallback-icon').style.display = 'block';
+                  }}
+                />
+              ) : (
+                <FaUserCircle className="fallback-icon" />
+              )}
+            </ProfileImage>
             Dashboard
           </Link>
           <button

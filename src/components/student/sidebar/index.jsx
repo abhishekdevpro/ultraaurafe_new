@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import styled from 'styled-components';
+import fallbackProfile from "../../../assets/default-profile.png";
 // import Joyride from 'react-joyride';
 // eslint-disable-next-line react/prop-types
 
@@ -175,7 +176,10 @@ export default function StudentSidebar() {
                 <div className="profile-bg">
                   <div className="profile-img">
                     <Link to="/student/student-profile">
-                      <img  src={profileData.photo ? `${profileData.photo}` : User16} alt="Img" />
+                      <img  src={profileData.photo ? `${profileData.photo}` : User16} alt="Img" onError={(e) => {
+                  e.target.src = fallbackProfile;
+                }}
+                    />
                     </Link>
                   </div>
                 </div>
