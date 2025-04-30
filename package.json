@@ -24,6 +24,7 @@
     "lodash": "^4.17.21",
     "lucide-react": "^0.438.0",
     "node-modules": "^1.0.1",
+    "pdfjs-dist": "^5.2.133",
     "postcss": "^8.5.3",
     "prop-type": "^0.0.1",
     "prop-types": "^15.8.1",

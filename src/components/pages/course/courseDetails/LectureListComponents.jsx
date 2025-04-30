@@ -210,7 +210,7 @@ const ExpandableContent = styled.div`
   transition: max-height 1s cubic-bezier(0.4, 0, 0.2, 1);
 `;
 
-const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loadingStates }) => {
+const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loadingStates, is_active_take_test }) => {
   const [expandedLectures, setExpandedLectures] = useState({});
   const timersRef = useRef({});
   const { courseid } = useParams();
@@ -237,7 +237,6 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
       [lectureId]: isNowExpanded,
     }));
     if (isNowExpanded) {
-      // schedule text-progress update after 2 minutes
       const token = localStorage.getItem("token");
       timersRef.current[lectureId] = setTimeout(async () => {
         try {
@@ -253,7 +252,6 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
         }
       }, 12000);
     } else {
-      // cancel scheduled update if user collapsed before timeout
       if (timersRef.current[lectureId]) {
         clearTimeout(timersRef.current[lectureId]);
         delete timersRef.current[lectureId];
@@ -294,7 +292,6 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
                   )}
                 </LectureName>
 
-                
                 <div>
                   <PreviewButton
                     onClick={(e) => {
@@ -344,7 +341,11 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
               </ExpandableContent>
             </LectureItem>
           ))}
-          <button className="btn-enroll w-100 mt-3" onClick={() => setShowTestModal(true)}>
+          <button
+            className="btn-enroll w-100 mt-3"
+            onClick={() => setShowTestModal(true)}
+            disabled={!is_active_take_test}
+          >
             Take Test
           </button>
           <Modal show={showTestModal} onHide={() => setShowTestModal(false)}>
@@ -389,6 +390,7 @@ LectureListComponent.propTypes = {
   handlePreviewClick: PropTypes.func.isRequired,
   handlePDFClick: PropTypes.func.isRequired,
   loadingStates: PropTypes.objectOf(PropTypes.bool).isRequired,
+  is_active_take_test: PropTypes.bool.isRequired, // Added prop type
 };
 
 export default LectureListComponent;

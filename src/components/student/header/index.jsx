@@ -5,7 +5,7 @@ import logo5 from "../../../assets/Ultra_Aura.png";
 // import DarkMode from "../../common/darkMode";
 import axios from "axios";
 import styled from 'styled-components';
-
+import fallbackProfile from "../../../assets/default-profile.png";
 const HeaderWrapper = styled.header`
   position: fixed;
   top: 0;
@@ -335,6 +335,9 @@ console.log(profileData,"profile");
                 src={`https://api.novajobs.us${profileData.photo}`}
                 alt="User"
                 onClick={profileClick}
+                onError={(e) => {
+                  e.target.src = fallbackProfile;
+                }}
               />
               <ProfileMenu show={showProfile || mobileMenu}>
                 <ProfileInfo>
@@ -342,6 +345,9 @@ console.log(profileData,"profile");
                 src={`https://api.novajobs.us${profileData.photo}`}
                 alt="User"
                 onClick={profileClick}
+                onError={(e) => {
+                  e.target.src = fallbackProfile;
+                }}
               />
                   <div>
                   <h6>{profileData.first_name} {profileData.last_name}</h6>
@@ -352,7 +358,7 @@ console.log(profileData,"profile");
                   <Home size={20} /> Dashboard
                 </NavItem>
                 <NavItem to="/student/student-setting">
-                  <User size={20} /> Profile
+                  <User size={10} /> Profile
                 </NavItem>
                 <NavItem  onClick={handleLogout}>
                   <LogOut size={20} /> Logout
