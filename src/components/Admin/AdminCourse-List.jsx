@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -9,6 +8,13 @@ import AdminSidebar from "./AdminSidebar";
 import Footer from "../footer";
 import FullPageLoader from "../home/FullPageLoader";
 
+import { Trash } from "react-feather";
+
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+  rel="stylesheet"
+/>
+
 const AdminCourseList = () => {
   const [allCourses, setAllCourses] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,6 +22,12 @@ const AdminCourseList = () => {
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [loading, setLoading] = useState(false);
   const [sortOrder, setSortOrder] = useState("desc"); // Default sort order
+  const [showCourseModal, setShowCourseModal] = useState(false);
+  const [selectedCourseDetails, setSelectedCourseDetails] = useState(null);
+  const [loadingCourseDetails, setLoadingCourseDetails] = useState(false);
+  const [expandedSections, setExpandedSections] = useState({});
+  const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState(null); // Stores the target (section or lecture) to delete
   const token = localStorage.getItem("adminToken");
   const coursesPerPage = 15;
   const navigate = useNavigate();
@@ -23,14 +35,6 @@ const AdminCourseList = () => {
   useEffect(() => {
     fetchCourses(sortOrder);
   }, [token, sortOrder]);
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     fetchCourses(sortOrder);
-  //   }, 300); // 300ms delay
-
-  //   return () => clearTimeout(timer);
-  // }, [token, sortOrder]);
 
   const fetchCourses = async (order) => {
     setLoading(true);
@@ -50,6 +54,93 @@ const AdminCourseList = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const fetchCourseDetails = async (courseId) => {
+    setLoadingCourseDetails(true);
+    try {
+      const response = await axios.get(
+        `https://api.novajobs.us/api/students/pro/course-details/${courseId}`,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+      setSelectedCourseDetails(response.data.data); // Set course details including sections
+      setShowCourseModal(true);
+    } catch (error) {
+      console.error("Error fetching course details:", error);
+      toast.error("Error fetching course details. Please try again.");
+    } finally {
+      setLoadingCourseDetails(false);
+    }
+  };
+
+  const deleteSection = async (courseId, sectionId) => {
+    try {
+      await axios.delete(
+        `https://api.novajobs.us/api/trainers/section/${courseId}/${sectionId}`,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+      toast.success("Section deleted successfully.");
+      // Refresh course details after deletion
+      fetchCourseDetails(courseId);
+    } catch (error) {
+      console.error("Error deleting section:", error);
+      toast.error("Failed to delete section. Please try again.");
+    }
+  };
+
+  const deleteLecture = async (courseId, sectionId, lectureId) => {
+    try {
+      await axios.delete(
+        `https://api.novajobs.us/api/trainers/lecture/${courseId}/${sectionId}/${lectureId}`,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+      toast.success("Lecture deleted successfully.");
+      // Refresh course details after deletion
+      fetchCourseDetails(courseId);
+    } catch (error) {
+      console.error("Error deleting lecture:", error);
+      toast.error("Failed to delete lecture. Please try again.");
+    }
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!deleteTarget) return;
+
+    const { type, courseId, sectionId, lectureId } = deleteTarget;
+
+    try {
+      if (type === "section") {
+        await deleteSection(courseId, sectionId); // Use deleteSection here
+      } else if (type === "lecture") {
+        await deleteLecture(courseId, sectionId, lectureId); // Use deleteLecture here
+      }
+
+      // Refresh course details after deletion
+      fetchCourseDetails(courseId);
+    } catch (error) {
+      console.error("Error deleting item:", error);
+      toast.error("Failed to delete item. Please try again.");
+    } finally {
+      setShowDeleteConfirmModal(false);
+      setDeleteTarget(null);
+    }
+  };
+
+  const closeCourseModal = () => {
+    setShowCourseModal(false);
+    setSelectedCourseDetails(null);
   };
 
   const handleSortChange = (e) => {
@@ -140,10 +231,6 @@ const AdminCourseList = () => {
   };
 
   const handleDelete = async (courseId) => {
-    // if(courseId){
-    //   return
-    // }
-
     try {
       const response = await axios.delete(
         `https://api.novajobs.us/api/uaadmin/delete-course/${courseId}`,
@@ -163,7 +250,6 @@ const AdminCourseList = () => {
       console.log(error);
     }
   };
-  // console.log(currentCourses,"currentCourses");
 
   const [showModal, setShowModal] = useState(false);
   const [allTrainers, setAllTrainers] = useState([]);
@@ -272,6 +358,18 @@ const AdminCourseList = () => {
     }
   };
 
+  const toggleSection = (sectionId) => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [sectionId]: !prev[sectionId],
+    }));
+  };
+
+  const openDeleteConfirmModal = (type, courseId, sectionId, lectureId = null) => {
+    setDeleteTarget({ type, courseId, sectionId, lectureId });
+    setShowDeleteConfirmModal(true);
+  };
+
   return (
     <div className="main-wrapper">
       <AdminHeader />
@@ -331,9 +429,17 @@ const AdminCourseList = () => {
                           {currentCourses.map((course) => (
                             <tr key={course.id}>
                               <td className="border" style={{ position: 'sticky', left: 0, background: '#fff', zIndex: 99 }}>
-                                <Link to={`/course-info/${course.id}`}>
-                                  {course.course_title}
-                                </Link>
+                                <div className="d-flex align-items-center justify-content-between">
+                                  <Link to={`/course-info/${course.id}`}>
+                                    {course.course_title}
+                                  </Link>
+                                  <button
+                                    className="btn btn-sm btn-info ms-2"
+                                    onClick={() => fetchCourseDetails(course.id)}
+                                  >
+                                    View
+                                  </button>
+                                </div>
                               </td>
                               <td>
                                 <Link
@@ -640,6 +746,132 @@ const AdminCourseList = () => {
             className="btn btn-primary"
             onClick={confirmActivateDeactivate}
           >
+            Confirm
+          </button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal for Viewing Course Details */}
+      <Modal show={showCourseModal} onHide={closeCourseModal} centered>
+        <Modal.Header closeButton>
+          <Modal.Title className="text-primary">Course Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {loadingCourseDetails ? (
+            <div className="text-center">
+              <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+              <p className="mt-2">Loading course details...</p>
+            </div>
+          ) : selectedCourseDetails ? (
+            <div>
+              <h5 className="text-dark">{selectedCourseDetails.course_title}</h5>
+            
+              <h6 className="text-primary mt-4">Sections</h6>
+              {selectedCourseDetails.section_response &&
+              selectedCourseDetails.section_response.length > 0 ? (
+                <div className="accordion" id="sectionsAccordion">
+                  {selectedCourseDetails.section_response.map((section) => (
+                    <div className="accordion-item" key={section.id}>
+                      <h2 className="accordion-header d-flex justify-content-between align-items-center" id={`heading-${section.id}`}>
+                        <button
+                          className={`accordion-button ${expandedSections[section.id] ? "" : "collapsed"}`}
+                          type="button"
+                          onClick={() => toggleSection(section.id)}
+                        >
+                          {section.section_name}
+                        </button>
+                        <button
+                          className="btn btn-sm btn-danger mx-2"
+                          onClick={() =>
+                            openDeleteConfirmModal(
+                              "section",
+                              selectedCourseDetails.course_id,
+                              section.id
+                            )
+                          }
+                        >
+                          <Trash size={16} /> 
+                        </button>
+                      </h2>
+                      <div
+                        id={`collapse-${section.id}`}
+                        className={`accordion-collapse collapse ${expandedSections[section.id] ? "show" : ""}`}
+                        data-bs-parent="#sectionsAccordion"
+                      >
+                        <div className="accordion-body">
+                          <p
+                            dangerouslySetInnerHTML={{
+                              __html: section.section_objective,
+                            }}
+                            className="text-muted"
+                          ></p>
+                          <h6 className="text-secondary">Lectures</h6>
+                          <ul className="list-group">
+                            {section.lectures.map((lecture) => (
+                              <li
+                                key={lecture.id}
+                                className="list-group-item d-flex justify-content-between align-items-center"
+                              >
+                                <span>{lecture.lecture_name}</span>
+                                <button
+                                  className="btn btn-sm btn-outline-danger ms-2"
+                                  onClick={() =>
+                                    openDeleteConfirmModal(
+                                      "lecture",
+                                      selectedCourseDetails.course_id,
+                                      section.id,
+                                      lecture.id
+                                    )
+                                  }
+                                >
+                                 <Trash/>
+                                </button>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-muted">No sections available for this course.</p>
+              )}
+            </div>
+          ) : (
+            <p className="text-muted">No course details available.</p>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <button className="btn btn-secondary" onClick={closeCourseModal}>
+            Close
+          </button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal for Confirming Deletion */}
+      <Modal
+        show={showDeleteConfirmModal}
+        onHide={() => setShowDeleteConfirmModal(false)}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Deletion</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to delete this{" "}
+          {deleteTarget?.type === "section" ? "section" : "lecture"}?
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className="btn btn-secondary"
+            onClick={() => setShowDeleteConfirmModal(false)}
+          >
+            Cancel
+          </button>
+          <button className="btn btn-danger" onClick={handleDeleteConfirm}>
             Confirm
           </button>
         </Modal.Footer>
