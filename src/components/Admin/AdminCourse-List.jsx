@@ -22,6 +22,7 @@ const AdminCourseList = () => {
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [loading, setLoading] = useState(false);
   const [sortOrder, setSortOrder] = useState("desc"); // Default sort order
+  const [statusFilter, setStatusFilter] = useState("all"); // Add this line for status filter
   const [showCourseModal, setShowCourseModal] = useState(false);
   const [selectedCourseDetails, setSelectedCourseDetails] = useState(null);
   const [loadingCourseDetails, setLoadingCourseDetails] = useState(false);
@@ -34,19 +35,23 @@ const AdminCourseList = () => {
 
   useEffect(() => {
     fetchCourses(sortOrder);
-  }, [token, sortOrder]);
+  }, [token, sortOrder, statusFilter]);
 
   const fetchCourses = async (order) => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        `https://api.novajobs.us/api/trainers/courses-info?order_by=${order}`,
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      );
+      let url = `https://api.novajobs.us/api/trainers/courses-info?order_by=${order}`;
+      
+      // Add status filter parameter if not "all"
+      if (statusFilter !== "all") {
+        url += `&is_active=${statusFilter === "active" ? 1 : 0}`;
+      }
+      
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
       setAllCourses(response.data.data);
     } catch (error) {
       console.error("Error fetching courses:", error);
@@ -145,6 +150,10 @@ const AdminCourseList = () => {
 
   const handleSortChange = (e) => {
     setSortOrder(e.target.value);
+  };
+
+  const handleStatusFilterChange = (e) => {
+    setStatusFilter(e.target.value);
   };
 
   const handleActivateDeactivate = (course) => {
@@ -395,8 +404,20 @@ const AdminCourseList = () => {
               <div className="card">
                 <div className="card-header d-flex justify-content-between align-items-center">
                   <h5 className="card-title mb-0">Course List</h5>
-                  <div className="sort-filter">
-                    <div className="form-group mb-0 d-flex align-items-center">
+                  <div className="sort-filter d-flex gap-2">
+                    <div className="form-group mb-0">
+                      <select
+                        id="statusFilter"
+                        className="form-select form-select-sm"
+                        value={statusFilter}
+                        onChange={handleStatusFilterChange}
+                      >
+                        <option value="all">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                      </select>
+                    </div>
+                    <div className="form-group mb-0">
                       <select
                         id="sortOrder"
                         className="form-select form-select-sm"
