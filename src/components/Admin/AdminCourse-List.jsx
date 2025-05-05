@@ -29,9 +29,10 @@ const AdminCourseList = () => {
   const [expandedSections, setExpandedSections] = useState({});
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null); // Stores the target (section or lecture) to delete
-  const token = localStorage.getItem("adminToken");
+  const [token] = useState(localStorage.getItem("adminToken"));
   const coursesPerPage = 15;
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     fetchCourses(sortOrder);
@@ -45,6 +46,11 @@ const AdminCourseList = () => {
       // Add status filter parameter if not "all"
       if (statusFilter !== "all") {
         url += `&is_active=${statusFilter === "active" ? 1 : 0}`;
+      }
+      
+      // Add search query if it exists
+      if (searchQuery.trim() !== "") {
+        url += `&title_keywords=${encodeURIComponent(searchQuery.trim())}`;
       }
       
       const response = await axios.get(url, {
@@ -379,6 +385,11 @@ const AdminCourseList = () => {
     setShowDeleteConfirmModal(true);
   };
 
+  const handleSearch = () => {
+    setCurrentPage(1); // Reset to first page when searching
+    fetchCourses(sortOrder);
+  };
+
   return (
     <div className="main-wrapper">
       <AdminHeader />
@@ -404,29 +415,52 @@ const AdminCourseList = () => {
               <div className="card">
                 <div className="card-header d-flex justify-content-between align-items-center">
                   <h5 className="card-title mb-0">Course List</h5>
-                  <div className="sort-filter d-flex gap-2">
-                    <div className="form-group mb-0">
-                      <select
-                        id="statusFilter"
-                        className="form-select form-select-sm"
-                        value={statusFilter}
-                        onChange={handleStatusFilterChange}
-                      >
-                        <option value="all">All Status</option>
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
-                      </select>
+                  <div className="d-flex align-items-center gap-2">
+                    <div className="sort-filter d-flex align-items-center gap-2">
+                      <div className="form-group mb-0">
+                        <select
+                          id="statusFilter"
+                          className="form-select form-select-sm"
+                          value={statusFilter}
+                          onChange={handleStatusFilterChange}
+                        >
+                          <option value="all">All Status</option>
+                          <option value="active">Active</option>
+                          <option value="inactive">Inactive</option>
+                        </select>
+                      </div>
+                      <div className="form-group mb-0">
+                        <select
+                          id="sortOrder"
+                          className="form-select form-select-sm"
+                          value={sortOrder}
+                          onChange={handleSortChange}
+                        >
+                          <option value="desc">Newest First</option>
+                          <option value="asc">Oldest First</option>
+                        </select>
+                      </div>
                     </div>
-                    <div className="form-group mb-0">
-                      <select
-                        id="sortOrder"
-                        className="form-select form-select-sm"
-                        value={sortOrder}
-                        onChange={handleSortChange}
+                    <div className="input-group" style={{ width: '300px' }}>
+                      <input
+                        type="text"
+                        className="form-control form-control-sm"
+                        placeholder="Search courses..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter') {
+                            handleSearch();
+                          }
+                        }}
+                      />
+                      <button
+                        className="btn btn-primary btn-sm"
+                        onClick={handleSearch}
+                        disabled={loading}
                       >
-                        <option value="desc">Newest First</option>
-                        <option value="asc">Oldest First</option>
-                      </select>
+                        Search
+                      </button>
                     </div>
                   </div>
                 </div>
