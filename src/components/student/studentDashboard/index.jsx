@@ -329,7 +329,7 @@ const StudentDashboard = () => {
       <i className="fas fa-cog fa-2x"></i>
       <h3>Settings</h3>
       <p>Customize your account settings</p>
-      <CardButton onClick={() => navigate("/settings")}>
+      <CardButton onClick={() => navigate("/student/student-setting")}>
         Update Settings
       </CardButton>
     </DashboardCard>
