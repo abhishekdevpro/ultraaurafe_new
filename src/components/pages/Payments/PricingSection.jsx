@@ -183,14 +183,14 @@ const PopularBadge = styled.div`
 const PricingSection = () => {
   const navigate = useNavigate();
  
-  const token = localStorage.getItem("jobSeekerLoginToken");
+  const token = localStorage.getItem("token");
   
   const handleClick = () => {
     if (!token) {
       toast.error("Please Login First");
-      navigate('/user/login');
+      navigate('/login');
     } else {
-      navigate('/user/subscription');
+      navigate('/subscription');
       // window.location.href  = (`https://airesume.novajobs.us/settings/subscription/?tokenbyurl=${token}`)
       // window.location.href = (`http://localhost:3001/settings/subscription/?tokenbyurl=${token}`)
     }

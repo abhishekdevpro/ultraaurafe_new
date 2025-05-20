@@ -213,7 +213,7 @@ export default function PaymentPage() {
     const token = localStorage.getItem("token");
     if (!token) {
       toast.error("Authentication required. Please log in.");
-      navigate("/login2"); // Redirect to login page if token is missing
+      navigate("/login"); // Redirect to login page if token is missing
       return;
     }
     

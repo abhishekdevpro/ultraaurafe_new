@@ -6,6 +6,7 @@ import { Icon01, Icon02 } from "../../../imagepath";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Pagination from "./Pagination";
 
 const Wrapper = styled.div`
   background-color: #f8f9fa;
@@ -459,10 +460,10 @@ const InnerPage = ({ courses = [] }) => {
             </PaginationButton>
           </PaginationContainer>
         )} */}
-        <div className="card-footer">
+        {/* <div className="card-footer">
           <nav aria-label="Page navigation">
             <ul className="pagination justify-content-center">
-              {/* Previous Button */}
+              {/* Previous Button 
               <li
                 className={`page-item ${currentPage === 1 ? "disabled" : ""}`}
               >
@@ -474,7 +475,7 @@ const InnerPage = ({ courses = [] }) => {
                 </button>
               </li>
 
-              {/* First Page */}
+              {/* First Page 
               <li className={`page-item ${currentPage === 1 ? "active" : ""}`}>
                 <button
                   className="page-link"
@@ -484,7 +485,7 @@ const InnerPage = ({ courses = [] }) => {
                 </button>
               </li>
 
-              {/* Show second page if necessary */}
+              {/* Show second page if necessary
               {currentPage > 3 && totalPages > 4 && (
                 <li className="page-item">
                   <button
@@ -496,14 +497,14 @@ const InnerPage = ({ courses = [] }) => {
                 </li>
               )}
 
-              {/* Dots if needed */}
+              {/* Dots if needed 
               {currentPage > 4 && totalPages > 5 && (
                 <li className="page-item disabled">
                   <span className="page-link">...</span>
                 </li>
               )}
 
-              {/* Middle Pages */}
+              {/* Middle Pages 
               {Array.from({ length: 3 }, (_, i) => currentPage - 1 + i)
                 .filter((page) => page > 2 && page < totalPages - 1)
                 .map((page) => (
@@ -522,14 +523,14 @@ const InnerPage = ({ courses = [] }) => {
                   </li>
                 ))}
 
-              {/* Dots before last pages if necessary */}
+              {/* Dots before last pages if necessary 
               {currentPage < totalPages - 3 && totalPages > 5 && (
                 <li className="page-item disabled">
                   <span className="page-link">...</span>
                 </li>
               )}
 
-              {/* Show last two pages */}
+              {/* Show last two pages
               {totalPages > 1 && (
                 <>
                   {totalPages > 3 && (
@@ -561,7 +562,7 @@ const InnerPage = ({ courses = [] }) => {
                 </>
               )}
 
-              {/* Next Button */}
+              {/* Next Button
               <li
                 className={`page-item ${
                   currentPage === totalPages ? "disabled" : ""
@@ -576,7 +577,13 @@ const InnerPage = ({ courses = [] }) => {
               </li>
             </ul>
           </nav>
-        </div>
+        </div> */}
+
+        <Pagination 
+  currentPage={currentPage} 
+  totalPages={totalPages} 
+  onPageChange={handlePageChange} 
+/>
       </Container>
     </Wrapper>
   );
