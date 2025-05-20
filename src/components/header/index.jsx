@@ -6,7 +6,6 @@ import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
 import logo5 from "../../assets/Ultra_Aura.png";
 import { jwtDecode } from "jwt-decode";
 
-
 const StyledHeader = styled.header`
   position: sticky;
   top: 0;
@@ -83,7 +82,7 @@ const StyledHeader = styled.header`
   .header__sign-button,
   .header__login-button {
     padding: 0.5rem 1rem;
-     border: 0px solid #ed8936;
+    border: 0px solid #ed8936;
     border-radius: 9999px;
     font-size: 0.9rem;
     transition: all 0.3s ease;
@@ -196,6 +195,7 @@ const ProfileImage = styled.div`
   margin-right: 10px;
   background-color: #f0f0f0;
   overflow: hidden;
+  position: relative;
 
   img {
     width: 100%;
@@ -204,10 +204,13 @@ const ProfileImage = styled.div`
   }
 
   .fallback-icon {
-    font-size: 35px;
+    position: absolute;
+    font-size: 30px;
     color: #666;
+    display: none;
   }
 `;
+
 
 const Header = () => {
   const [navbar, setNavbar] = useState(false);
@@ -290,7 +293,9 @@ const Header = () => {
     <>
       {isLoggedIn ? (
         <>
-          <Link
+          {/* <div className="d-flex gap-2 justify-content-center items-align-center">
+
+            <Link
             className="header__nav-link header__sign-button"
             to={dashboardLink}
           >
@@ -310,6 +315,34 @@ const Header = () => {
             </ProfileImage>
             Dashboard
           </Link>
+          </div> */}
+          <div className="d-flex gap-2 justify-content-center align-items-center">
+            <Link
+              className="header__nav-link header__sign-button d-flex align-items-center"
+              to={dashboardLink}
+            >
+              <ProfileImage>
+                {profilePhoto ? (
+                  <img
+                    src={profilePhoto}
+                    alt="Profile"
+                    onError={(e) => {
+                      e.target.style.display = "none";
+                      const fallback =
+                        e.target.parentElement.querySelector(".fallback-icon");
+                      if (fallback) fallback.style.display = "block";
+                    }}
+                  />
+                ) : null}
+                <FaUserCircle
+                  className="fallback-icon"
+                  style={{ display: profilePhoto ? "none" : "block" }}
+                />
+              </ProfileImage>
+              Dashboard
+            </Link>
+          </div>
+
           <button
             className="header__nav-link header__login-button"
             onClick={handleLogout}

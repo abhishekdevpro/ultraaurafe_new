@@ -46,6 +46,7 @@ import ultraaura from "../../assests/ultraaura-logo.png";
 import novajobs from "../../assests/novajobs-logo.png";
 import homecare from "../../assests/novahomecare-logo.png";
 import paradigmshift from "../../assests/paradigmshift-logo.png";
+import PricingSection from "../pages/Payments/PricingSection.jsx"
 const Container = styled.div`
   margin-bottom: 1rem;
   display: flex;
@@ -990,6 +991,8 @@ export const Home = () => {
 
         {/* Partner Companies Section */}
         <PartnerList />
+          <PricingSection />
+
         <section className="section lead-companies">
           <div className="container">
             <div className="section-header aos" data-aos="fade-up">
@@ -1035,7 +1038,6 @@ export const Home = () => {
     </div>
   </div>
 </div>
-
 
             <div className="lead-group aos" data-aos="fade-up">
               <Companies />
