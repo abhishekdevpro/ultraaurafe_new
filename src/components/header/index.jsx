@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 // import Joyride from "react-joyride";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
 import logo5 from "../../assets/Ultra_Aura.png";
 import { jwtDecode } from "jwt-decode";
 
@@ -28,6 +28,7 @@ const StyledHeader = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 
     @media (min-width: 768px) {
       padding: 1rem;
@@ -81,6 +82,7 @@ const StyledHeader = styled.header`
   .header__sign-button,
   .header__login-button {
     padding: 0.5rem 1rem;
+    border: 0px solid #ed8936;
     border-radius: 9999px;
     font-size: 0.9rem;
     transition: all 0.3s ease;
@@ -182,6 +184,34 @@ const StyledHeader = styled.header`
     backdrop-filter: blur(3px);
   }
 `;
+
+const ProfileImage = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-right: 10px;
+  background-color: #f0f0f0;
+  overflow: hidden;
+  position: relative;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .fallback-icon {
+    position: absolute;
+    font-size: 30px;
+    color: #666;
+    display: none;
+  }
+`;
+
+
 const Header = () => {
   const [navbar, setNavbar] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -263,24 +293,56 @@ const Header = () => {
     <>
       {isLoggedIn ? (
         <>
-          <Link
+          {/* <div className="d-flex gap-2 justify-content-center items-align-center">
+
+            <Link
             className="header__nav-link header__sign-button"
             to={dashboardLink}
           >
-            {profilePhoto ? (
-              <img
-                src={profilePhoto}
-                alt="Profile"
-                className="header__profile-photo"
-              />
-            ) : (
-              <i
-                className="fas fa-user-circle"
-                style={{ marginRight: "10px" }}
-              />
-            )}
+            <ProfileImage>
+              {profilePhoto ? (
+                <img 
+                  src={profilePhoto} 
+                  alt="Profile" 
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.parentElement.querySelector('.fallback-icon').style.display = 'block';
+                  }}
+                />
+              ) : (
+                <FaUserCircle className="fallback-icon" />
+              )}
+            </ProfileImage>
             Dashboard
           </Link>
+          </div> */}
+          <div className="d-flex gap-2 justify-content-center align-items-center">
+            <Link
+              className="header__nav-link header__sign-button d-flex align-items-center"
+              to={dashboardLink}
+            >
+              <ProfileImage>
+                {profilePhoto ? (
+                  <img
+                    src={profilePhoto}
+                    alt="Profile"
+                    onError={(e) => {
+                      e.target.style.display = "none";
+                      const fallback =
+                        e.target.parentElement.querySelector(".fallback-icon");
+                      if (fallback) fallback.style.display = "block";
+                    }}
+                  />
+                ) : null}
+                <FaUserCircle
+                  className="fallback-icon"
+                  style={{ display: profilePhoto ? "none" : "block" }}
+                />
+              </ProfileImage>
+              Dashboard
+            </Link>
+          </div>
+
           <button
             className="header__nav-link header__login-button"
             onClick={handleLogout}

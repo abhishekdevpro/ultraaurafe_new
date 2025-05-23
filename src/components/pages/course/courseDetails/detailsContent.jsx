@@ -21,6 +21,8 @@ const DetailsContent = ({ courseFeatureData }) => {
   const [showRatingModal, setShowRatingModal] = useState(false);
   const [rating, setRating] = useState(0);
   const [content, setContent] = useState(""); // New state for comment
+  const [refreshComments, setRefreshComments] = useState(0);
+  const handleCommentSubmit = () => setRefreshComments(prev => prev + 1);
   const { courseid } = useParams();
 
   useEffect(() => {
@@ -150,8 +152,8 @@ const DetailsContent = ({ courseFeatureData }) => {
               <InstructorCard trainerID={courseData.trainer_id} />
 
               {/* Comment */}
-              <CommentForm courseId={courseid} />
-              <CommentsList courseId={courseid} />
+              <CommentForm courseId={courseid} onCommentSubmit={handleCommentSubmit} />
+              <CommentsList courseId={courseid} refreshTrigger={refreshComments} />
               {/* /Comment */}
             </div>
 

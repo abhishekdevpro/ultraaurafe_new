@@ -28,13 +28,13 @@ const EmptyCartMessage = styled.div`
 // `;
 
 const TruncatedText = styled.p`
-  max-width: 60%; /* Ensures it doesn’t overflow */
+  max-width: 60%; /* Ensures it doesn't overflow */
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-  word-break: break-word; /* Ensures long words don’t overflow */
+  word-break: break-word; /* Ensures long words don't overflow */
 
   @media (max-width: 768px) {
     -webkit-line-clamp: 2; /* Show fewer lines on smaller screens */
@@ -101,6 +101,30 @@ const Cart = () => {
   const [couponCode, setCouponCode] = useState("");
   const Token = localStorage.getItem("token");
   const [checkoutLoading, setCheckoutLoading] = useState(false);
+  // Handlers to update cart item quantity
+  const handleUpdateQuantity = async (course_id, quantity) => {
+    setLoading(true);
+    try {
+      await axios.patch(
+        `https://api.novajobs.us/api/students/cart/${course_id}`,
+        { quantity },
+        { headers: { Authorization: `${Token}` } }
+      );
+      toast.success("Quantity updated successfully");
+      await fetchCartData();
+    } catch (error) {
+      console.error("Error updating quantity:", error);
+      toast.error("Failed to update quantity. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handleDecrease = (course_id, quantity) => {
+    if (quantity > 1) handleUpdateQuantity(course_id, quantity - 1);
+  };
+  const handleIncrease = (course_id, quantity) => {
+    handleUpdateQuantity(course_id, quantity + 1);
+  };
   // const navigate = useNavigate();
   const fetchCartData = async () => {
     setLoading(true);
@@ -302,7 +326,7 @@ const Cart = () => {
                       <div className="course-box course-design list-course d-flex">
                         <div className="product">
                           <div className="product-img">
-                            <Link to={`/course-details/${item.course_id}`}>
+                            <Link to={``}>
                               <img
                                 className="img-fluid"
                                 alt={item.course_name}
@@ -353,11 +377,23 @@ const Cart = () => {
                             </div>
                             <div
                               className="container"
-                              style={{ display: "flex" }}
+                              style={{ display: "flex", alignItems: "center" }}
                             >
-                              <div className="" style={{ marginRight: "8px" }}>
-                                <button className="btn btn-primary">
-                                  Quantity: {item.quantity}
+                              <div>
+                                <button
+                                  className="btn btn-secondary btn-sm"
+                                  onClick={() => handleDecrease(item.course_id, item.quantity)}
+                                  disabled={loading || item.quantity <= 1}
+                                >
+                                  -
+                                </button>
+                                <span className="mx-2">{item.quantity}</span>
+                                <button
+                                  className="btn btn-secondary btn-sm"
+                                  onClick={() => handleIncrease(item.course_id, item.quantity)}
+                                  disabled={loading}
+                                >
+                                  +
                                 </button>
                               </div>
                               <div className="">

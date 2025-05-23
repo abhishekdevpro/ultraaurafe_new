@@ -46,6 +46,7 @@ import ultraaura from "../../assests/ultraaura-logo.png";
 import novajobs from "../../assests/novajobs-logo.png";
 import homecare from "../../assests/novahomecare-logo.png";
 import paradigmshift from "../../assests/paradigmshift-logo.png";
+import PricingSection from "../pages/Payments/PricingSection.jsx"
 const Container = styled.div`
   margin-bottom: 1rem;
   display: flex;
@@ -110,6 +111,7 @@ const SearchButton = styled.button`
   @media (max-width: 768px) {
     width: 100%;
     margin-top: 0.5rem;
+    margin-left: 0;
   }
 `;
 
@@ -140,6 +142,12 @@ const InputField = styled.input`
 
   &::placeholder {
     color: #a2a2a2;
+  }
+
+  @media (max-width: 768px) {
+    margin-right: 0;
+    width: 100%;
+    margin-bottom: 0.5rem;
   }
 `;
 
@@ -180,6 +188,15 @@ const customSelectStyles = {
     color: "#a2a2a2",
   }),
 };
+
+const SelectWrapper = styled.div`
+  width: 200px;
+  margin: 0 0.5rem;
+  @media (max-width: 768px) {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+`;
 
 export const Home = () => {
   const [searchKeyword, setSearchKeyword] = useState(""); // State for the search input
@@ -460,14 +477,14 @@ export const Home = () => {
     //               <div className="col-lg-7 col-md-12">
     //                 <div className="section-header aos" data-aos="fade-up">
     //                   <div className="section-sub-head">
-    //                     <span>What’s New</span>
+    //                     <span>What's New</span>
     //                     <h2>Master the skills to drive your career</h2>
     //                   </div>
     //                 </div>
     //                 <div className="section-text aos" data-aos="fade-up">
     //                   <p>
     //                     Get certified, master modern tech skills, and level up your
-    //                     career — whether you’re starting out or a seasoned pro. 95%
+    //                     career — whether you're starting out or a seasoned pro. 95%
     //                     of eLearning learners report our hands-on content directly
     //                     helped their careers.
     //                   </p>
@@ -681,20 +698,24 @@ export const Home = () => {
                               value={searchKeyword}
                               onChange={(e) => setSearchKeyword(e.target.value)}
                             />
-                            <Select
-                              options={categoryOptions}
-                              value={selectedCategory}
-                              placeholder="Category"
-                              onChange={setSelectedCategory}
-                              styles={customSelectStyles}
-                            />
-                            <Select
-                              options={levelOptions}
-                              value={selectedLevel}
-                              placeholder="Levels"
-                              onChange={setSelectedLevel}
-                              styles={customSelectStyles}
-                            />
+                            <SelectWrapper>
+                              <Select
+                                options={categoryOptions}
+                                value={selectedCategory}
+                                placeholder="Category"
+                                onChange={setSelectedCategory}
+                                styles={customSelectStyles}
+                              />
+                            </SelectWrapper>
+                            <SelectWrapper>
+                              <Select
+                                options={levelOptions}
+                                value={selectedLevel}
+                                placeholder="Levels"
+                                onChange={setSelectedLevel}
+                                styles={customSelectStyles}
+                              />
+                            </SelectWrapper>
                             <SearchButton type="button" onClick={handleSearch}>
                               <i className="fas fa-arrow-right form-container" />
                             </SearchButton>
@@ -859,7 +880,7 @@ export const Home = () => {
                 <div className="section-text aos" data-aos="fade-up">
                   <p>
                     Get certified, master modern tech skills, and level up your
-                    career — whether you’re starting out or a seasoned pro. 95%
+                    career — whether you&apos;re starting out or a seasoned pro. 95%
                     of eLearning learners report our hands-on content directly
                     helped their careers.
                   </p>
@@ -970,61 +991,53 @@ export const Home = () => {
 
         {/* Partner Companies Section */}
         <PartnerList />
+          <PricingSection />
+
         <section className="section lead-companies">
           <div className="container">
             <div className="section-header aos" data-aos="fade-up">
               <div className="section-sub-head feature-head text-center">
                 <span>Trusted By</span>
-                <h2>“We work with some of the best brands, Globally</h2>
+                <h2>&quot;We work with some of the best brands, Globally</h2>
               </div>
             </div>
 
-            <div className="d-flex justify-content-between align-items-center ">
-              <div>
-                <img
-                  src={ultraaura}
-                  alt="Ultraaura"
-                  style={{
-                    width: "300px",
-                    // height: "300px",
-                    objectFit: "contain",
-                  }}
-                />
-              </div>
-              <div>
-                <img
-                  src={novajobs}
-                  alt="Novajobs"
-                  style={{
-                    width: "300px",
-                    // height: "300px",
-                    objectFit: "contain",
-                  }}
-                />
-              </div>
-              <div>
-                <img
-                  src={homecare}
-                  alt="Homecare"
-                  style={{
-                    width: "300px",
-                    // height: "300px",
-                    objectFit: "contain",
-                  }}
-                />
-              </div>
-              <div>
-                <img
-                  src={paradigmshift}
-                  alt="Paradigmshift"
-                  style={{
-                    width: "300px",
-                    // height: "300px",
-                    objectFit: "contain",
-                  }}
-                />
-              </div>
-            </div>
+            <div className="container">
+  <div className="row justify-content-center align-items-center text-center">
+    <div className="col-6 col-sm-4 col-md-3 mb-4">
+      <img
+        src={ultraaura}
+        alt="Ultraaura"
+        className="img-fluid"
+        style={{ objectFit: "contain" }}
+      />
+    </div>
+    <div className="col-6 col-sm-4 col-md-3 mb-4">
+      <img
+        src={novajobs}
+        alt="Novajobs"
+        className="img-fluid"
+        style={{ objectFit: "contain" }}
+      />
+    </div>
+    <div className="col-6 col-sm-4 col-md-3 mb-4">
+      <img
+        src={homecare}
+        alt="Homecare"
+        className="img-fluid"
+        style={{ objectFit: "contain" }}
+      />
+    </div>
+    <div className="col-6 col-sm-4 col-md-3 mb-4">
+      <img
+        src={paradigmshift}
+        alt="Paradigmshift"
+        className="img-fluid"
+        style={{ objectFit: "contain" }}
+      />
+    </div>
+  </div>
+</div>
 
             <div className="lead-group aos" data-aos="fade-up">
               <Companies />

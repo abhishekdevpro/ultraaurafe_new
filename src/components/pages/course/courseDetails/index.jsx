@@ -18,6 +18,25 @@ const CourseDetails = () => {
   const [error, setError] = useState(null);
   const { courseid } = useParams();
 
+  // Record first visit progress when user lands on this page
+  useEffect(() => {
+    const recordFirstVisit = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (token && courseid) {
+          await axios.put(
+            `https://api.novajobs.us/api/students/first-visit-progress/${courseid}`,
+            {},
+            { headers: { Authorization: token } }
+          );
+        }
+      } catch (err) {
+        console.error("Error recording first-visit-progress:", err);
+      }
+    };
+    recordFirstVisit();
+  }, [courseid]);
+
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
@@ -70,21 +89,7 @@ const CourseDetails = () => {
         ) : (
           <Header />
         )}
-        {/* <section className="page-content course-sec"> */}
-        {/* 
-      <div className="breadcrumb-bar">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12 col-12">
-              <div className="breadcrumb-list">
-                <nav aria-label="breadcrumb" className="page-breadcrumb">
-                  <ol className="breadcrumb"></ol>
-                </nav>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
+      
 
         <div className="inner-banner">
           <div className="container">
@@ -128,16 +133,7 @@ const CourseDetails = () => {
                           "Instructor Title"}
                       </p>
                     </div>
-                    {/* <div className="rating mb-0">
-                    <i className="fas fa-star filled me-1" />
-                    <i className="fas fa-star filled me-1" />
-                    <i className="fas fa-star filled me-1" />
-                    <i className="fas fa-star filled me-1" />
-                    <i className="fas fa-star me-1" />
-                    <span className="d-inline-block average-rating">
-                      <span className="rating text-white">({courseData.data.rating})</span> 
-                    </span>
-                  </div> */}
+                   
                     <div className="rating mb-0">
                       {Array.from({ length: 5 }).map((_, index) => (
                         <i

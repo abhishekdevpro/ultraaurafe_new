@@ -1,637 +1,3 @@
-// // const Wrapper = styled.div`
-// //   padding: 1rem;
-// //   @media (min-width: 768px) {
-// //     padding: 1.5rem;
-// //   }
-// //   @media (min-width: 1024px) {
-// //     padding: 0 2rem;
-// //   }
-// // `;
-
-// // const Card = styled.div`
-// //   background: white;
-// //   border-radius: 8px;
-// //   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-// //   overflow: hidden;
-// // `;
-
-// // const CardHeader = styled.div`
-// //   padding: 1rem;
-// //   border-bottom: 1px solid #e0e0e0;
-// // `;
-
-// // const CardTitle = styled.h3`
-// //   font-size: 1.5rem;
-// //   font-weight: bold;
-// //   margin: 0;
-// // `;
-
-// // const CardContent = styled.div`
-// //   padding: 1rem;
-// // `;
-
-// // const TableWrapper = styled.div`
-// //   overflow-x: auto;
-// // `;
-
-// // const Table = styled.table`
-// //   width: 100%;
-// //   border-collapse: collapse;
-// // `;
-
-// // const Th = styled.th`
-// //   background-color: #f2f2f2;
-// //   padding: 12px;
-// //   text-align: left;
-// //   border-bottom: 2px solid #ddd;
-// // `;
-
-// // const Td = styled.td`
-// //   padding: 12px;
-// //   border-bottom: 1px solid #ddd;
-// // `;
-
-// // const PaginationWrapper = styled.div`
-// //   display: flex;
-// //   justify-content: center;
-// //   align-items: center;
-// //   margin-top: 1rem;
-// // `;
-
-// // const PageButton = styled.button`
-// //   background-color: ${(props) => (props.active ? "#4CAF50" : "#f1f1f1")};
-// //   color: ${(props) => (props.active ? "white" : "black")};
-// //   border: 1px solid #ddd;
-// //   padding: 8px 16px;
-// //   text-align: center;
-// //   text-decoration: none;
-// //   display: inline-block;
-// //   font-size: 14px;
-// //   margin: 0 4px;
-// //   cursor: pointer;
-// //   border-radius: 4px;
-
-// //   &:hover {
-// //     background-color: ${(props) => (props.active ? "#45a049" : "#ddd")};
-// //   }
-
-// //   &:disabled {
-// //     cursor: not-allowed;
-// //     opacity: 0.5;
-// //   }
-// // `;
-
-// // import React, { useState, useEffect } from "react";
-// // import styled from "styled-components";
-// // import axios from "axios";
-// // import Footer from "../footer";
-// // import { AdminHeader } from "./AdminHeader";
-// // import AdminSidebar from "./AdminSidebar";
-// // import { Link, useNavigate } from "react-router-dom";
-// // import { toast } from "react-toastify";
-
-// // // ... (previous styled components remain the same)
-// // const EditButton = styled.button`
-// //   display: flex;
-// //   align-items: center;
-// //   justify-content: center;
-// //   padding: 10px 16px;
-// //   font-size: 14px;
-// //   font-weight: bold;
-// //   border: none;
-// //   border-radius: 5px;
-// //   background-color: #3182ce; /* Blue */
-// //   color: #fff;
-// //   cursor: pointer;
-// //   transition: background-color 0.3s ease, transform 0.2s ease;
-
-// //   &:hover {
-// //     background-color: #2b6cb0; /* Darker Blue */
-// //     transform: scale(1.05); /* Slightly enlarge on hover */
-// //   }
-
-// //   i {
-// //     margin-right: 8px; /* Space between icon and text */
-// //   }
-// // `;
-// // const ActionButton = styled.button`
-// //   padding: 6px 12px;
-// //   border: none;
-// //   border-radius: 4px;
-// //   cursor: pointer;
-// //   font-size: 14px;
-// //   transition: background-color 0.3s;
-
-// //   &.activate {
-// //     background-color: #4caf50;
-// //     color: white;
-
-// //     &:hover {
-// //       background-color: #45a049;
-// //     }
-// //   }
-
-// //   &.deactivate {
-// //     background-color: #f44336;
-// //     color: white;
-
-// //     &:hover {
-// //       background-color: #da190b;
-// //     }
-// //   }
-// // `;
-// // const Buttons = styled.div`
-// //   display: flex;
-// //   gap: 1rem;
-// // `;
-
-// // const AdminCourseList = () => {
-// //   const [allCourses, setAllCourses] = useState([]);
-// //   const [currentPage, setCurrentPage] = useState(1);
-// //   const token = localStorage.getItem("adminToken");
-// //   const coursesPerPage = 15;
-
-// //   useEffect(() => {
-// //     fetchCourses();
-// //   }, [token]);
-
-// //   const fetchCourses = async () => {
-// //     try {
-// //       const response = await axios.get(
-// //         "https://api.novajobs.us/api/trainers/all-courses",
-// //         {
-// //           headers: {
-// //             Authorization: `${token}`,
-// //           },
-// //         }
-// //       );
-// //       setAllCourses(response.data.data);
-// //       console.log(response.data.data, "ressssss");
-// //     } catch (error) {
-// //       console.error("Error fetching courses:", error);
-// //     }
-// //   };
-
-// //   const handleActivateDeactivate = async (courseId, currentStatus) => {
-// //     console.log(currentStatus, "Sccc");
-// //     const url = currentStatus
-// //       ? `https://api.novajobs.us/api/uaadmin/course-deactive/${courseId}`
-// //       : `https://api.novajobs.us/api/uaadmin/course-active/${courseId}`;
-// //     console.log(url, "FFFfff");
-// //     try {
-// //       await axios.get(url, {
-// //         headers: {
-// //           Authorization: `${token}`,
-// //         },
-// //       });
-// //       // Refresh the course list after activation/deactivation
-// //       toast.success(
-// //         `Course ${
-// //           currentStatus === "active" ? "deactivated" : "activated"
-// //         } successfully!`
-// //       );
-// //       fetchCourses();
-// //     } catch (error) {
-// //       console.error("Error activating/deactivating course:", error);
-// //       toast.error("Error activating/deactivating course. Please try again.");
-// //     }
-// //   };
-
-// //   const indexOfLastCourse = currentPage * coursesPerPage;
-// //   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
-// //   const currentCourses = allCourses.slice(
-// //     indexOfFirstCourse,
-// //     indexOfLastCourse
-// //   );
-// //   const totalPages = Math.ceil(allCourses.length / coursesPerPage);
-
-// //   const handlePageChange = (newPage) => {
-// //     setCurrentPage(newPage);
-// //   };
-// //   const navigate = useNavigate();
-// //   const handleClick = (courseId) => {
-// //     navigate(`/edit-course/${courseId}`);
-// //   };
-// //   return (
-// //     <div className="main-wrapper">
-// //       <AdminHeader />
-// //       <div className="breadcrumb-bar breadcrumb-bar-info">
-// //         <div className="container">
-// //           <div className="row">
-// //             <div className="col-md-12 col-12">
-// //               <div className="breadcrumb-list">
-// //                 <h2 className="breadcrumb-title">Admin Dashboard</h2>
-// //                 <nav aria-label="breadcrumb" className="page-breadcrumb"></nav>
-// //               </div>
-// //             </div>
-// //           </div>
-// //         </div>
-// //       </div>
-// //       <div className="page-content">
-// //         <div className="container">
-// //           <div className="row">
-// //             <AdminSidebar />
-// //             <div className="col-xl-9 col-lg-9">
-// //               <Wrapper>
-// //                 <Card>
-// //                   <CardHeader>
-// //                     <CardTitle>Course List</CardTitle>
-// //                   </CardHeader>
-// //                   <CardContent>
-// //                     <TableWrapper>
-// //                       <Table>
-// //                         <thead>
-// //                           <tr>
-// //                             <Th>Course Title</Th>
-// //                             <Th>Trainer Name</Th>
-// //                             <Th>Price</Th>
-// //                             <Th>Enrolled Students</Th>
-// //                             <Th>Created At</Th>
-// //                             <Th>Status</Th>
-// //                             <Th>Action</Th>
-// //                           </tr>
-// //                         </thead>
-// //                         <tbody>
-// //                           {currentCourses.map((course) => (
-// //                             <tr key={course.id}>
-// //                               <Td>
-// //                                 <Link to={`/course-info/${course.id}`}>
-// //                                   {course.course_title}
-// //                                 </Link>
-// //                               </Td>
-// //                               <Td>
-// //                                 <Link
-// //                                   to={`/instructor/instructor-profile/${course.trainer_id}`}
-// //                                 >
-// //                                   {`${course.trainer_first_name} ${course.trainer_last_name}`}
-// //                                 </Link>
-// //                               </Td>
-// //                               <Td>${course.course_price}</Td>
-// //                               <Td>{course.enrolled_student_count}</Td>
-// //                               <Td>
-// //                                 {new Date(
-// //                                   course.created_at
-// //                                 ).toLocaleDateString()}
-// //                               </Td>
-// //                               <Td>
-// //                                 {course.is_active === 1 ? "Active" : "InActive"}
-// //                               </Td>
-// //                               <Td>
-// //                                 {console.log(course.is_active, "jhcbjh")}
-// //                                 <Buttons>
-// //                                   <ActionButton
-// //                                     className={
-// //                                       course.is_active === 1
-// //                                         ? "deactivate"
-// //                                         : "activate"
-// //                                     }
-// //                                     onClick={() =>
-// //                                       handleActivateDeactivate(
-// //                                         course.id,
-// //                                         course.is_active
-// //                                       )
-// //                                     }
-// //                                   >
-// //                                     {course.is_active === 1
-// //                                       ? "Deactivate"
-// //                                       : "Activate"}
-// //                                   </ActionButton>
-// //                                   <EditButton
-// //                                     onClick={() => handleClick(course.id)}
-// //                                   >
-// //                                     Edit
-// //                                   </EditButton>
-// //                                 </Buttons>
-// //                               </Td>
-// //                             </tr>
-// //                           ))}
-// //                         </tbody>
-// //                       </Table>
-// //                     </TableWrapper>
-// //                     <PaginationWrapper>
-// //                       <PageButton
-// //                         onClick={() => handlePageChange(currentPage - 1)}
-// //                         disabled={currentPage === 1}
-// //                       >
-// //                         Previous
-// //                       </PageButton>
-// //                       {[...Array(totalPages).keys()].map((page) => (
-// //                         <PageButton
-// //                           key={page + 1}
-// //                           onClick={() => handlePageChange(page + 1)}
-// //                           active={currentPage === page + 1}
-// //                         >
-// //                           {page + 1}
-// //                         </PageButton>
-// //                       ))}
-// //                       <PageButton
-// //                         onClick={() => handlePageChange(currentPage + 1)}
-// //                         disabled={currentPage === totalPages}
-// //                       >
-// //                         Next
-// //                       </PageButton>
-// //                     </PaginationWrapper>
-// //                   </CardContent>
-// //                 </Card>
-// //               </Wrapper>
-// //             </div>
-// //           </div>
-// //         </div>
-// //       </div>
-// //       <Footer />
-// //     </div>
-// //   );
-// // };
-
-// // export default AdminCourseList;
-// import React, { useState, useEffect } from 'react';
-// import styled from 'styled-components';
-// import axios from 'axios';
-// import { toast } from 'react-toastify';
-// import { Modal } from 'react-bootstrap';
-
-// const Wrapper = styled.div`
-//   padding: 1rem;
-//   @media (min-width: 768px) {
-//     padding: 1.5rem;
-//   }
-//   @media (min-width: 1024px) {
-//     padding: 0 2rem;
-//   }
-// `;
-
-// const Card = styled.div`
-//   background: white;
-//   border-radius: 8px;
-//   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-//   overflow: hidden;
-// `;
-
-// const CardHeader = styled.div`
-//   padding: 1rem;
-//   border-bottom: 1px solid #e0e0e0;
-// `;
-
-// const CardTitle = styled.h3`
-//   font-size: 1.5rem;
-//   font-weight: bold;
-//   margin: 0;
-// `;
-
-// const CardContent = styled.div`
-//   padding: 1rem;
-// `;
-
-// const TableWrapper = styled.div`
-//   overflow-x: auto;
-// `;
-
-// const Table = styled.table`
-//   width: 100%;
-//   border-collapse: collapse;
-// `;
-
-// const Th = styled.th`
-//   background-color: #f2f2f2;
-//   padding: 12px;
-//   text-align: left;
-//   border-bottom: 2px solid #ddd;
-// `;
-
-// const Td = styled.td`
-//   padding: 12px;
-//   border-bottom: 1px solid #ddd;
-// `;
-
-// const Button = styled.button`
-//   background-color: ${props => props.active ? '#f44336' : '#4CAF50'};
-//   color: white;
-//   border: none;
-//   padding: 8px 16px;
-//   text-align: center;
-//   text-decoration: none;
-//   display: inline-block;
-//   font-size: 14px;
-//   margin: 4px 2px;
-//   cursor: pointer;
-//   border-radius: 4px;
-//   transition: background-color 0.3s;
-
-//   &:hover {
-//     background-color: ${props => props.active ? '#d32f2f' : '#45a049'};
-//   }
-// `;
-
-// const PaginationWrapper = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   margin-top: 1rem;
-// `;
-
-// const PageButton = styled.button`
-//   background-color: ${props => props.active ? '#4CAF50' : '#f1f1f1'};
-//   color: ${props => props.active ? 'white' : 'black'};
-//   border: 1px solid #ddd;
-//   padding: 8px 16px;
-//   text-align: center;
-//   text-decoration: none;
-//   display: inline-block;
-//   font-size: 14px;
-//   margin: 0 4px;
-//   cursor: pointer;
-//   border-radius: 4px;
-
-//   &:hover {
-//     background-color: ${props => props.active ? '#45a049' : '#ddd'};
-//   }
-
-//   &:disabled {
-//     cursor: not-allowed;
-//     opacity: 0.5;
-//   }
-// `;
-
-// const ModalButton = styled.button`
-//   padding: 8px 16px;
-//   margin: 0 8px;
-//   border: none;
-//   border-radius: 4px;
-//   cursor: pointer;
-// `;
-
-// const ConfirmButton = styled(ModalButton)`
-//   background-color: #4CAF50;
-//   color: white;
-//   &:hover {
-//     background-color: #45a049;
-//   }
-// `;
-
-// const CancelButton = styled(ModalButton)`
-//   background-color: #f44336;
-//   color: white;
-//   &:hover {
-//     background-color: #d32f2f;
-//   }
-// `;
-
-// const CourseList = () => {
-//   const [allCourses, setAllCourses] = useState([]);
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const [showConfirmModal, setShowConfirmModal] = useState(false);
-//   const [selectedCourse, setSelectedCourse] = useState(null);
-//   const token = localStorage.getItem('adminToken');
-//   const coursesPerPage = 10;
-
-//   useEffect(() => {
-//     fetchCourses();
-//   }, []);
-
-//   const fetchCourses = async () => {
-//     try {
-//       const response = await axios.get('https://api.novajobs.us/api/trainers/all-courses', {
-//         headers: {
-//           Authorization: `${token}`
-//         }
-//       });
-//       setAllCourses(response.data.data);
-//     } catch (error) {
-//       console.error('Error fetching courses:', error);
-//       toast.error('Error fetching courses. Please try again.');
-//     }
-//   };
-
-//   const handleActivateDeactivate = (course) => {
-//     setSelectedCourse(course);
-//     setShowConfirmModal(true);
-//   };
-
-//   const confirmActivateDeactivate = async () => {
-//     if (!selectedCourse) return;
-
-//     const url = selectedCourse.is_active
-//       ? `https://api.novajobs.us/api/uaadmin/course-deactive/${selectedCourse.id}`
-//       : `https://api.novajobs.us/api/uaadmin/course-active/${selectedCourse.id}`;
-
-//     try {
-//       await axios.get(url, {
-//         headers: {
-//           Authorization: `${token}`
-//         }
-//       });
-//       toast.success(`Course ${selectedCourse.is_active ? 'deactivated' : 'activated'} successfully!`);
-
-//       // Update the course status in the local state
-//       setAllCourses(prevCourses =>
-//         prevCourses.map(course =>
-//           course.id === selectedCourse.id
-//             ? { ...course, is_active: !course.is_active }
-//             : course
-//         )
-//       );
-//     } catch (error) {
-//       console.error('Error activating/deactivating course:', error);
-//       toast.error('Error activating/deactivating course. Please try again.');
-//     }
-//     setShowConfirmModal(false);
-//   };
-
-//   const indexOfLastCourse = currentPage * coursesPerPage;
-//   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
-//   const currentCourses = allCourses.slice(indexOfFirstCourse, indexOfLastCourse);
-//   const totalPages = Math.ceil(allCourses.length / coursesPerPage);
-
-//   const handlePageChange = (newPage) => {
-//     setCurrentPage(newPage);
-//   };
-
-//   return (
-//     <Wrapper>
-//       <Card>
-//         <CardHeader>
-//           <CardTitle>Course List</CardTitle>
-//         </CardHeader>
-//         <CardContent>
-//           <TableWrapper>
-//             <Table>
-//               <thead>
-//                 <tr>
-//                   <Th>Title</Th>
-//                   <Th>Trainers</Th>
-//                   <Th>Created At</Th>
-//                   <Th>Status</Th>
-//                   <Th>Actions</Th>
-//                 </tr>
-//               </thead>
-//               <tbody>
-//                 {currentCourses.map((course) => (
-//                   <tr key={course.id}>
-//                     <Td>{course.course_title}</Td>
-//                     <Td>{course.trainer_first_name} {course.trainer_last_name}</Td>
-//                     <Td>{new Date(course.created_at).toLocaleDateString()}</Td>
-//                     <Td>{course.is_active ? "Active" : "Inactive"}</Td>
-//                     <Td>
-//                       <Button
-//                         active={course.is_active}
-//                         onClick={() => handleActivateDeactivate(course)}
-//                       >
-//                         {course.is_active ? 'Deactivate' : 'Activate'}
-//                       </Button>
-//                     </Td>
-//                   </tr>
-//                 ))}
-//               </tbody>
-//             </Table>
-//           </TableWrapper>
-//           <PaginationWrapper>
-//             <PageButton
-//               onClick={() => handlePageChange(currentPage - 1)}
-//               disabled={currentPage === 1}
-//             >
-//               Previous
-//             </PageButton>
-//             {[...Array(totalPages).keys()].map((page) => (
-//               <PageButton
-//                 key={page + 1}
-//                 onClick={() => handlePageChange(page + 1)}
-//                 active={currentPage === page + 1}
-//               >
-//                 {page + 1}
-//               </PageButton>
-//             ))}
-//             <PageButton
-//               onClick={() => handlePageChange(currentPage + 1)}
-//               disabled={currentPage === totalPages}
-//             >
-//               Next
-//             </PageButton>
-//           </PaginationWrapper>
-//         </CardContent>
-//       </Card>
-
-//       <Modal show={showConfirmModal} onHide={() => setShowConfirmModal(false)}>
-//         <Modal.Header closeButton>
-//           <Modal.Title>Confirm Action</Modal.Title>
-//         </Modal.Header>
-//         <Modal.Body>
-//           Are you sure you want to {selectedCourse?.is_active ? 'deactivate' : 'activate'} this course?
-//         </Modal.Body>
-//         <Modal.Footer>
-//           <CancelButton onClick={() => setShowConfirmModal(false)}>
-//             Cancel
-//           </CancelButton>
-//           <ConfirmButton onClick={confirmActivateDeactivate}>
-//             Confirm
-//           </ConfirmButton>
-//         </Modal.Footer>
-//       </Modal>
-//     </Wrapper>
-//   );
-// };
-
-// export default CourseList;
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -642,6 +8,13 @@ import AdminSidebar from "./AdminSidebar";
 import Footer from "../footer";
 import FullPageLoader from "../home/FullPageLoader";
 
+import { Trash } from "react-feather";
+
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+  rel="stylesheet"
+/>
+
 const AdminCourseList = () => {
   const [allCourses, setAllCourses] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -649,34 +22,37 @@ const AdminCourseList = () => {
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [loading, setLoading] = useState(false);
   const [sortOrder, setSortOrder] = useState("desc"); // Default sort order
+  const [statusFilter, setStatusFilter] = useState("all"); // Add this line for status filter
+  const [showCourseModal, setShowCourseModal] = useState(false);
+  const [selectedCourseDetails, setSelectedCourseDetails] = useState(null);
+  const [loadingCourseDetails, setLoadingCourseDetails] = useState(false);
+  const [expandedSections, setExpandedSections] = useState({});
+  const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState(null); // Stores the target (section or lecture) to delete
   const token = localStorage.getItem("adminToken");
   const coursesPerPage = 15;
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchCourses(sortOrder);
-  }, [token, sortOrder]);
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     fetchCourses(sortOrder);
-  //   }, 300); // 300ms delay
-
-  //   return () => clearTimeout(timer);
-  // }, [token, sortOrder]);
+  }, [token, sortOrder, statusFilter]);
 
   const fetchCourses = async (order) => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        `https://api.novajobs.us/api/trainers/courses-info?order_by=${order}`,
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      );
+      let url = `https://api.novajobs.us/api/trainers/courses-info?order_by=${order}`;
+      
+      // Add status filter parameter if not "all"
+      if (statusFilter !== "all") {
+        url += `&is_active=${statusFilter === "active" ? 1 : 0}`;
+      }
+      
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
       setAllCourses(response.data.data);
-      // setLoading(false)
     } catch (error) {
       console.error("Error fetching courses:", error);
       toast.error("Error fetching courses. Please try again.");
@@ -685,8 +61,99 @@ const AdminCourseList = () => {
     }
   };
 
+  const fetchCourseDetails = async (courseId) => {
+    setLoadingCourseDetails(true);
+    try {
+      const response = await axios.get(
+        `https://api.novajobs.us/api/students/pro/course-details/${courseId}`,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+      setSelectedCourseDetails(response.data.data); // Set course details including sections
+      setShowCourseModal(true);
+    } catch (error) {
+      console.error("Error fetching course details:", error);
+      toast.error("Error fetching course details. Please try again.");
+    } finally {
+      setLoadingCourseDetails(false);
+    }
+  };
+
+  const deleteSection = async (courseId, sectionId) => {
+    try {
+      await axios.delete(
+        `https://api.novajobs.us/api/trainers/section/${courseId}/${sectionId}`,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+      toast.success("Section deleted successfully.");
+      // Refresh course details after deletion
+      fetchCourseDetails(courseId);
+    } catch (error) {
+      console.error("Error deleting section:", error);
+      toast.error("Failed to delete section. Please try again.");
+    }
+  };
+
+  const deleteLecture = async (courseId, sectionId, lectureId) => {
+    try {
+      await axios.delete(
+        `https://api.novajobs.us/api/trainers/lecture/${courseId}/${sectionId}/${lectureId}`,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+      toast.success("Lecture deleted successfully.");
+      // Refresh course details after deletion
+      fetchCourseDetails(courseId);
+    } catch (error) {
+      console.error("Error deleting lecture:", error);
+      toast.error("Failed to delete lecture. Please try again.");
+    }
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!deleteTarget) return;
+
+    const { type, courseId, sectionId, lectureId } = deleteTarget;
+
+    try {
+      if (type === "section") {
+        await deleteSection(courseId, sectionId); // Use deleteSection here
+      } else if (type === "lecture") {
+        await deleteLecture(courseId, sectionId, lectureId); // Use deleteLecture here
+      }
+
+      // Refresh course details after deletion
+      fetchCourseDetails(courseId);
+    } catch (error) {
+      console.error("Error deleting item:", error);
+      toast.error("Failed to delete item. Please try again.");
+    } finally {
+      setShowDeleteConfirmModal(false);
+      setDeleteTarget(null);
+    }
+  };
+
+  const closeCourseModal = () => {
+    setShowCourseModal(false);
+    setSelectedCourseDetails(null);
+  };
+
   const handleSortChange = (e) => {
     setSortOrder(e.target.value);
+  };
+
+  const handleStatusFilterChange = (e) => {
+    setStatusFilter(e.target.value);
   };
 
   const handleActivateDeactivate = (course) => {
@@ -773,9 +240,6 @@ const AdminCourseList = () => {
   };
 
   const handleDelete = async (courseId) => {
-    // if(courseId){
-    //   return
-    // }
     try {
       const response = await axios.delete(
         `https://api.novajobs.us/api/uaadmin/delete-course/${courseId}`,
@@ -795,7 +259,6 @@ const AdminCourseList = () => {
       console.log(error);
     }
   };
-  // console.log(currentCourses,"currentCourses");
 
   const [showModal, setShowModal] = useState(false);
   const [allTrainers, setAllTrainers] = useState([]);
@@ -904,6 +367,18 @@ const AdminCourseList = () => {
     }
   };
 
+  const toggleSection = (sectionId) => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [sectionId]: !prev[sectionId],
+    }));
+  };
+
+  const openDeleteConfirmModal = (type, courseId, sectionId, lectureId = null) => {
+    setDeleteTarget({ type, courseId, sectionId, lectureId });
+    setShowDeleteConfirmModal(true);
+  };
+
   return (
     <div className="main-wrapper">
       <AdminHeader />
@@ -921,15 +396,28 @@ const AdminCourseList = () => {
       </div>
       <div className="page-content">
         <div className="container">
-          <div className="row">
+        <div className="row">
+            <div className="col-xl-3 col-lg-3">
             <AdminSidebar />
+            </div>
             <div className="col-xl-9 col-lg-9">
               <div className="card">
                 <div className="card-header d-flex justify-content-between align-items-center">
                   <h5 className="card-title mb-0">Course List</h5>
-                  <div className="sort-filter">
-                    <div className="form-group mb-0 d-flex align-items-center">
-                      {/* <label htmlFor="sortOrder" className="me-2 mb-0"></label> */}
+                  <div className="sort-filter d-flex gap-2">
+                    <div className="form-group mb-0">
+                      <select
+                        id="statusFilter"
+                        className="form-select form-select-sm"
+                        value={statusFilter}
+                        onChange={handleStatusFilterChange}
+                      >
+                        <option value="all">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                      </select>
+                    </div>
+                    <div className="form-group mb-0">
                       <select
                         id="sortOrder"
                         className="form-select form-select-sm"
@@ -946,11 +434,11 @@ const AdminCourseList = () => {
                   <FullPageLoader />
                 ) : (
                   <div className="card-body">
-                    <div className="table-responsive">
+                    <div className="table-responsive" style={{ position: 'relative', overflowX: 'auto' }}>
                       <table className="table table-hover table-center mb-0">
                         <thead>
                           <tr>
-                            <th>Course Title</th>
+                            <th style={{ position: 'sticky', left: 0, background: '#fff', zIndex: 100 }}>Course Title</th>
                             <th>Trainer Name</th>
                             <th>Price</th>
                             <th>Created At</th>
@@ -961,10 +449,18 @@ const AdminCourseList = () => {
                         <tbody>
                           {currentCourses.map((course) => (
                             <tr key={course.id}>
-                              <td>
-                                <Link to={`/course-info/${course.id}`}>
-                                  {course.course_title}
-                                </Link>
+                              <td className="border" style={{ position: 'sticky', left: 0, background: '#fff', zIndex: 99 }}>
+                                <div className="d-flex align-items-center justify-content-between">
+                                  <Link to={`/course-info/${course.id}`}>
+                                    {course.course_title}
+                                  </Link>
+                                  <button
+                                    className="btn btn-sm btn-info ms-2"
+                                    onClick={() => fetchCourseDetails(course.id)}
+                                  >
+                                    View
+                                  </button>
+                                </div>
                               </td>
                               <td>
                                 <Link
@@ -1281,6 +777,132 @@ const AdminCourseList = () => {
             className="btn btn-primary"
             onClick={confirmActivateDeactivate}
           >
+            Confirm
+          </button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal for Viewing Course Details */}
+      <Modal show={showCourseModal} onHide={closeCourseModal} centered>
+        <Modal.Header closeButton>
+          <Modal.Title className="text-primary">Course Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {loadingCourseDetails ? (
+            <div className="text-center">
+              <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+              <p className="mt-2">Loading course details...</p>
+            </div>
+          ) : selectedCourseDetails ? (
+            <div>
+              <h5 className="text-dark">{selectedCourseDetails.course_title}</h5>
+            
+              <h6 className="text-primary mt-4">Sections</h6>
+              {selectedCourseDetails.section_response &&
+              selectedCourseDetails.section_response.length > 0 ? (
+                <div className="accordion" id="sectionsAccordion">
+                  {selectedCourseDetails.section_response.map((section) => (
+                    <div className="accordion-item" key={section.id}>
+                      <h2 className="accordion-header d-flex justify-content-between align-items-center" id={`heading-${section.id}`}>
+                        <button
+                          className={`accordion-button ${expandedSections[section.id] ? "" : "collapsed"}`}
+                          type="button"
+                          onClick={() => toggleSection(section.id)}
+                        >
+                          {section.section_name}
+                        </button>
+                        <button
+                          className="btn btn-sm btn-danger mx-2"
+                          onClick={() =>
+                            openDeleteConfirmModal(
+                              "section",
+                              selectedCourseDetails.course_id,
+                              section.id
+                            )
+                          }
+                        >
+                          <Trash size={16} /> 
+                        </button>
+                      </h2>
+                      <div
+                        id={`collapse-${section.id}`}
+                        className={`accordion-collapse collapse ${expandedSections[section.id] ? "show" : ""}`}
+                        data-bs-parent="#sectionsAccordion"
+                      >
+                        <div className="accordion-body">
+                          <p
+                            dangerouslySetInnerHTML={{
+                              __html: section.section_objective,
+                            }}
+                            className="text-muted"
+                          ></p>
+                          <h6 className="text-secondary">Lectures</h6>
+                          <ul className="list-group">
+                            {section.lectures.map((lecture) => (
+                              <li
+                                key={lecture.id}
+                                className="list-group-item d-flex justify-content-between align-items-center"
+                              >
+                                <span>{lecture.lecture_name}</span>
+                                <button
+                                  className="btn btn-sm btn-outline-danger ms-2"
+                                  onClick={() =>
+                                    openDeleteConfirmModal(
+                                      "lecture",
+                                      selectedCourseDetails.course_id,
+                                      section.id,
+                                      lecture.id
+                                    )
+                                  }
+                                >
+                                 <Trash/>
+                                </button>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-muted">No sections available for this course.</p>
+              )}
+            </div>
+          ) : (
+            <p className="text-muted">No course details available.</p>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <button className="btn btn-secondary" onClick={closeCourseModal}>
+            Close
+          </button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal for Confirming Deletion */}
+      <Modal
+        show={showDeleteConfirmModal}
+        onHide={() => setShowDeleteConfirmModal(false)}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Deletion</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to delete this{" "}
+          {deleteTarget?.type === "section" ? "section" : "lecture"}?
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className="btn btn-secondary"
+            onClick={() => setShowDeleteConfirmModal(false)}
+          >
+            Cancel
+          </button>
+          <button className="btn btn-danger" onClick={handleDeleteConfirm}>
             Confirm
           </button>
         </Modal.Footer>

@@ -11,6 +11,7 @@
     "@reduxjs/toolkit": "^2.2.7",
     "@stripe/react-stripe-js": "^2.9.0",
     "@stripe/stripe-js": "^4.10.0",
+    "@tailwindcss/postcss": "^4.1.3",
     "@types/react-redux": "^7.1.33",
     "aos": "^2.3.4",
     "axios": "^1.7.4",
@@ -23,6 +24,8 @@
     "lodash": "^4.17.21",
     "lucide-react": "^0.438.0",
     "node-modules": "^1.0.1",
+    "pdfjs-dist": "^5.2.133",
+    "postcss": "^8.5.3",
     "prop-type": "^0.0.1",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
@@ -56,7 +59,8 @@
     "react-type-animation": "^3.2.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.12",
-    "swiper": "^11.1.9"
+    "swiper": "^11.1.9",
+    "tailwindcss": "^4.1.3"
   },
   "overrides": {
     "semver": "~7.5.2"

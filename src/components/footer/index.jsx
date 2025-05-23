@@ -5,6 +5,7 @@ import { Icon19, Icon20 } from "../imagepath";
 import logo5 from "../../assets/Ultra_Aura.png";
 import axios from "axios";
 import { toast } from "react-toastify";
+import SupportPopup from "./SupportPopup";
 
 // Styled Components
 const FooterWrapper = styled.footer`
@@ -13,7 +14,7 @@ const FooterWrapper = styled.footer`
 `;
 
 const FooterTop = styled.div`
-  padding: 60px 0;
+  padding: 0px 0;
 `;
 
 const Container = styled.div`
@@ -119,35 +120,6 @@ const FooterMenuList = styled.ul`
   }
 `;
 
-// const NewsletterForm = styled.form`
-//   display: flex;
-//   align-items: center;
-//   border:2px solid red;
-
-//   input {
-//     flex: 1;
-//     padding: 10px;
-//     font-size: 14px;
-//     border: 1px solid #ddd;
-//     border-radius: 4px 0 0 4px;
-//     margin-right: -1px;
-//   }
-
-//   button {
-//     padding: 10px 15px;
-//     font-size: 14px;
-//     background-color: #007bff;
-//     color: white;
-//     border: 1px solid #007bff;
-//     border-radius: 0 4px 4px 0;
-//     cursor: pointer;
-//     transition: background-color 0.3s ease;
-
-//     &:hover {
-//       background-color: #0056b3;
-//     }
-//   }
-// `;
 const NewsletterForm = styled.form`
   display: flex;
   align-items: center;
@@ -270,6 +242,7 @@ const CopyrightText = styled.p`
 
 const Footer = () => {
   const [email, setEmail] = useState("");
+  const [isSupportOpen, setIsSupportOpen] = useState(false);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -354,6 +327,9 @@ const Footer = () => {
                     <Link to="/verify-certificate">Verify Certificate</Link>
                   </li>
                   <li>
+                    <Link to="#" onClick={e => { e.preventDefault(); setIsSupportOpen(true); }}>Support</Link>
+                  </li>
+                  <li>
                     <Link to="/careers">Careers</Link>
                   </li>
                   <li>
@@ -426,6 +402,7 @@ const Footer = () => {
           </Copyright>
         </Container>
       </FooterBottom>
+      <SupportPopup isOpen={isSupportOpen} onClose={() => setIsSupportOpen(false)} />
     </FooterWrapper>
   );
 };

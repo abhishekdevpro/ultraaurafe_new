@@ -14,12 +14,12 @@ import {
   Users,
   // Video2,
 } from "../../../imagepath";
-import { Modal, Button, Spinner } from "react-bootstrap";
+import { Modal, Button, Spinner, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import the CSS for toast notifications
 import styled from "styled-components";
 import ShareButton from "./Sharebutton";
-import { Loader } from "lucide-react";
+// import { Loader } from "lucide-react";
 import ReactPlayer from "react-player";
 // import Joyride from "react-joyride";
 
@@ -219,6 +219,101 @@ const VideoSection = styled.div`
   }
 `;
 
+const LoadingOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(30, 30, 30, 0.4);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+`;
+
+const LoaderContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.2rem;
+`;
+
+const ThumbnailLoaderOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  z-index: 2;
+`;
+
+const LoaderText = styled.div`
+  color: #fff;
+  margin-top: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+`;
+
+const ScheduleForm = styled(Form)`
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  
+  input[type="checkbox"] {
+    margin-right: 0.5rem;
+  }
+  
+  select, input, textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+
+  .days-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .day-checkbox {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+  }
+`;
+
+const CourseIdDisplay = styled.div`
+  background-color: #f8f9fa;
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-weight: 500;
+`;
+
 const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -231,6 +326,16 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   const [userInfo, setUserInfo] = useState("");
   const [isYoutubeVideo, setIsYoutubeVideo] = useState(false);
   const [isEnrolled, setIsEnrolled] = useState(false);
+  const [certUrl, setCertUrl] = useState(null);
+  const [showCertModal, setShowCertModal] = useState(false);
+  const [showScheduleModal, setShowScheduleModal] = useState(false);
+  const [selectedDays, setSelectedDays] = useState([]);
+  const [timeSlot, setTimeSlot] = useState('');
+  
+  const [phone, setPhone] = useState('');
+  const [sessionNotes, setSessionNotes] = useState('');
+  const [schedulingLoading, setSchedulingLoading] = useState(false);
+
   useEffect(() => {
     // When videoUrl changes, check if we should use YouTube or regular video
     if (videoUrl) {
@@ -263,48 +368,23 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
   // Check if content needs to be truncated
   const isTruncated = fullContent.length > truncateLength;
 
-  // const handleEnrollClick = () => {
-  //   if (token) {
-  //     setShowPopup(true);
-  //   } else {
-  //     navigate("/login");
-  //   }
-  // };
-
   const handleDownload = async () => {
     try {
       const response = await axios.get(
         `https://api.novajobs.us/api/students/certificate/${courseId}`,
         {
-          headers: {
-            Authorization: `${token}`,
-          },
-          responseType: "blob", // Important for handling file downloads
+          headers: { Authorization: `${token}` },
+          responseType: "blob",
         }
       );
-
-      // Create a blob from the response data
-      const blob = new Blob([response.data], {
-        type: response.headers["content-type"],
-      });
-
-      // Create a link element and trigger the download
+      const blob = new Blob([response.data], { type: response.headers["content-type"] });
       const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", `certificate_${courseId}.pdf`); // Assuming it's a PDF, adjust if needed
-      document.body.appendChild(link);
-      link.click();
-
-      // Clean up
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(link);
-
-      // Show success toast
-      toast.success("Certificate downloaded successfully!");
+      setCertUrl(url);
+      toast.success("Certificate loaded successfully!");
+      setShowCertModal(true);
     } catch (error) {
-      console.error("Error downloading certificate:", error);
-      toast.error("Failed to download certificate. Please try again.");
+      console.error("Error loading certificate:", error);
+      toast.error("Failed to load certificate. Please try again.");
     }
   };
 
@@ -490,6 +570,45 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
 
   const isFavorite = isClassAdded[courseData.course_id];
   console.log(courseFeatureData.youtube_url, "jjjj");
+
+  const handleDayChange = (day) => {
+    setSelectedDays(prev => 
+      prev.includes(day) 
+        ? prev.filter(d => d !== day)
+        : [...prev, day]
+    );
+  };
+
+  const handleScheduleSession = async (e) => {
+    e.preventDefault();
+    setSchedulingLoading(true);
+    try {
+      await axios.post(
+        "https://api.novajobs.us/api/students/connect-to-trainer",
+        {
+          course_id: Number(courseId),
+          day: selectedDays, // Send as array directly
+          time: timeSlot,
+          phone: phone,
+          details: sessionNotes
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      
+      toast.success("Request to connect with trainer submitted successfully!");
+      setShowScheduleModal(false);
+    } catch (error) {
+      console.error("Error connecting to trainer:", error);
+      toast.error("Failed to submit request. Please try again.");
+    } finally {
+      setSchedulingLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="col-lg-4">
@@ -523,18 +642,16 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                             },
                           }}
                         />
-                        {loading && (
-                          <div className="d-flex justify-content-center align-items-center">
-                            <div
-                              className="spinner-border text-primary"
-                              role="status"
-                            >
-                              <span className="visually-hidden">
-                                Loading...
-                              </span>
-                            </div>
-                          </div>
-                        )}
+                 {loading && (
+  <LoadingOverlay>
+    <LoaderContainer>
+      <div className="spinner-border text-light" role="status" />
+      <div>Saving your lecture, please wait...</div>
+    </LoaderContainer>
+  </LoadingOverlay>
+)}
+
+
                       </div>
                     ) : (
                       // Regular video player for streamed content
@@ -549,40 +666,36 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                     )
                   ) : (
                     // Video thumbnail with play button
-                    <div className="video-thumbnail-container">
-                      <button
-                        onClick={handleVideoPlay}
-                        className="video-thumbnail"
-                      >
-                        {loading ? (
-                          <img
-                            src={Loader}
-                            alt="Loading..."
-                            className="loader"
-                          />
-                        ) : (
-                          <div className="default-thumbnail">
-                            <img
-                              src={
-                                courseFeatureData?.course_banner_image?.startsWith(
-                                  "http"
-                                )
-                                  ? courseFeatureData.course_banner_image
-                                  : `https://api.novajobs.us${
-                                      courseFeatureData?.course_banner_image ||
-                                      ""
-                                    }`
-                              }
-                              alt="Course Banner"
-                              className="default-image"
-                            />
-                            <div className="play-icon">
-                              <i className="fa-solid fa-play" />
-                            </div>
+                    <div className="video-thumbnail-container" style={{ position: "relative" }}>
+                    <button onClick={handleVideoPlay} className="video-thumbnail">
+                      <div className="default-thumbnail">
+                        <img
+                          src={
+                            courseFeatureData?.course_banner_image?.startsWith("http")
+                              ? courseFeatureData.course_banner_image
+                              : `https://api.novajobs.us${
+                                  courseFeatureData?.course_banner_image || ""
+                                }`
+                          }
+                          alt="Course Banner"
+                          className="default-image"
+                        />
+                        <div className="play-icon">
+                          <i className="fa-solid fa-play" />
+                        </div>
+                      </div>
+                  
+                      {loading && (
+                        <ThumbnailLoaderOverlay>
+                          <div className="text-center">
+                            <div className="spinner-border text-light" role="status" />
+                            <LoaderText>Preparing video preview...</LoaderText>
                           </div>
-                        )}
-                      </button>
-                    </div>
+                        </ThumbnailLoaderOverlay>
+                      )}
+                    </button>
+                  </div>
+                  
                   )}
 
                   <div className="video-details">
@@ -627,49 +740,42 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                       </div>
                     </div>
                     <ButtonWrapper>
-                      {/* {token && courseData.is_student_enroll ? (
-                        <button className="btn-enroll w-100" disabled>
-                          Enrolled
-                        </button>
-                      ) : (
-                        <button
-                          onClick={handleEnrollClick}
-                          className="btn-enroll w-100"
-                        >
-                          Enroll Now
-                        </button>
-                      )} */}
-
                       {
                         <button
                           className="btn-enroll w-100 buynow"
                           onClick={handleBuyNow}
                           disabled={isEnrolled} // Disable button after enrollment
                         >
-                          {isEnrolled ? "Enrolled" : "Buy Now"}
+                          {isEnrolled ? "Enrolled" : "Enroll Now"}
                         </button>
                       }
+                       {token && courseData.is_student_enroll && (
+                        <button
+                          className="btn-enroll w-100"
+                          onClick={() => setShowScheduleModal(true)}
+                        >
+                          Connect to Trainer
+                        </button>
+                      )}
 
                       {token && courseData.is_student_enroll && (
                         <button
                           className="btn-enroll w-100"
                           onClick={() => setShowTestModal(true)}
+                          disabled={!courseData.progress_percent || courseData.progress_percent < 70}
                         >
-                          Take Test
+                          Take Final Test
                         </button>
                       )}
                       {
                         token && (
-                          // courseData.is_student_enroll &&
-                          // courseData.is_certificate && (
                           <button
                             onClick={handleDownload}
                             className="btn-enroll w-100"
                           >
-                            Download Certificate
+                            View Certificate
                           </button>
                         )
-                        // )}
                       }
                     </ButtonWrapper>
                   </div>
@@ -722,6 +828,110 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                 )}
               </Button>
             </Modal.Footer>
+          </Modal>
+
+          {/* Certificate Preview Modal */}
+          <Modal
+            show={showCertModal}
+            onHide={() => setShowCertModal(false)}
+            size="lg"
+            centered
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Certificate Preview</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {certUrl ? (
+                <iframe src={certUrl} width="100%" height="600px" frameBorder="0" />
+              ) : (
+                <div>Loading certificate...</div>
+              )}
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => setShowCertModal(false)}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
+          {/* Schedule Session Modal */}
+          <Modal show={showScheduleModal} onHide={() => setShowScheduleModal(false)} size="lg">
+            <Modal.Header closeButton>
+              <Modal.Title>Schedule Training Session</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <ScheduleForm onSubmit={handleScheduleSession}>
+                <CourseIdDisplay>
+                  Course ID: {courseId}
+                </CourseIdDisplay>
+                
+                <Form.Group className="mb-3">
+                  <Form.Label>Preferred Days:</Form.Label>
+                  <div className="days-container">
+                    {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
+                      <div key={day} className="day-checkbox">
+                        <input
+                          type="checkbox"
+                          id={day}
+                          checked={selectedDays.includes(day)}
+                          onChange={() => handleDayChange(day)}
+                        />
+                        <label htmlFor={day}>{day}</label>
+                      </div>
+                    ))}
+                  </div>
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Preferred Time Slot:</Form.Label>
+                  <Form.Select
+                    value={timeSlot}
+                    onChange={(e) => setTimeSlot(e.target.value)}
+                    required
+                  >
+                    <option value="">Select Slot</option>
+                    <option value="morning">Morning (8AM–12PM)</option>
+                    <option value="afternoon">Afternoon (12PM–4PM)</option>
+                    <option value="evening">Evening (4PM–8PM)</option>
+                  </Form.Select>
+                </Form.Group>
+
+              
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Phone Number (optional):</Form.Label>
+                  <Form.Control
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="Enter your Phone Number"
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Session Notes (optional):</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    value={sessionNotes}
+                    onChange={(e) => setSessionNotes(e.target.value)}
+                    placeholder="Any specific topics or questions..."
+                  />
+                </Form.Group>
+
+                <Button 
+                  variant="primary" 
+                  type="submit"
+                  disabled={schedulingLoading}
+                >
+                  {schedulingLoading ? (
+                    <Spinner as="span" animation="border" size="sm" />
+                  ) : (
+                    "Submit Request"
+                  )}
+                </Button>
+              </ScheduleForm>
+            </Modal.Body>
           </Modal>
 
           {/* Include Section */}
@@ -828,6 +1038,7 @@ SidebarSection.propTypes = {
     course_title: PropTypes.string.isRequired,
     is_student_enroll: PropTypes.bool.isRequired,
     is_certificate: PropTypes.bool.isRequired,
+    progress_percent: PropTypes.number,
   }).isRequired,
 };
 

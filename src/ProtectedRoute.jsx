@@ -1,32 +1,19 @@
-// import React from 'react';
-// import { Navigate, Outlet } from 'react-router-dom';
-
-// // This checks if the user is authenticated
-// const ProtectedRoute = () => {
-//   const isAuthenticated = !!localStorage.getItem('token') || localStorage.getItem('adminToken') || localStorage.getItem('vendorToken') || localStorage.getItem('trainerToken'); // Check for token
-
-//   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
-// };
-
-// export default ProtectedRoute;
 import React, { useEffect } from 'react';
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const ProtectedRoute = () => {
   const navigate = useNavigate();
-
-  // Function to check authentication and handle token validity
-  const checkAuthentication = () => {
-    const tokens = [
-      'token',
-      'adminToken',
-      'vendorToken',
-      'trainerToken'
-    ];
-
-    return tokens.some(tokenKey => !!localStorage.getItem(tokenKey));
+  // Define supported token keys and their login routes
+  const tokens = ['token', 'adminToken', 'vendorToken', 'trainerToken'];
+  const loginRoutesMap = {
+    token: '/login',
+    adminToken: '/admin/login',
+    vendorToken: '/partner-signin',
+    trainerToken: '/trainer/login',
   };
+  // Determine which token is currently present
+  const tokenKey = tokens.find(key => !!localStorage.getItem(key));
 
   // Interceptor to handle 401 errors globally
   useEffect(() => {
@@ -34,14 +21,13 @@ const ProtectedRoute = () => {
       (response) => response,
       (error) => {
         if (error.response && error.response.status === 401) {
+          // Capture which token expired
+          const expiredKey = tokens.find(k => !!localStorage.getItem(k)) || 'token';
           // Clear all authentication tokens
-          ['token', 'adminToken', 'vendorToken', 'trainerToken'].forEach(tokenKey => {
-            localStorage.removeItem(tokenKey);
-          });
-
-          // Redirect to login page
-          navigate('/login', { 
-            state: { 
+          tokens.forEach(k => localStorage.removeItem(k));
+          // Redirect to the appropriate login route
+          navigate(loginRoutesMap[expiredKey] || '/login', {
+            state: {
               message: 'Your session has expired. Please log in again.',
               reason: error.response.data?.message || 'Unauthorized access'
             }
@@ -57,10 +43,12 @@ const ProtectedRoute = () => {
     };
   }, [navigate]);
 
-  // Check authentication status
-  const isAuthenticated = checkAuthentication();
+  // Check authentication status based on existing token
+  const isAuthenticated = Boolean(tokenKey);
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+  // Redirect unauthenticated users to their custom login route
+  const loginRoute = loginRoutesMap[tokenKey] || '/login';
+  return isAuthenticated ? <Outlet /> : <Navigate to={loginRoute} replace />;
 };
 
 export default ProtectedRoute;
