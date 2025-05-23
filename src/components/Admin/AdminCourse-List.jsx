@@ -519,11 +519,21 @@ const AdminCourseList = () => {
                                   </button>
                                   <button
                                     className="btn btn-sm btn-secondary"
-                                    style={{ minWidth: "60px" }}
-                                    onClick={() => openModal(course.id)}
+                                    style={{
+                                      minWidth: "60px",
+                                      cursor: course.is_active
+                                        ? "pointer"
+                                        : "not-allowed",
+                                      opacity: course.is_active ? 1 : 0.6,
+                                    }}
+                                    onClick={() =>
+                                      course.is_active && openModal(course.id)
+                                    }
+                                    disabled={!course.is_active}
                                   >
                                     Allot
                                   </button>
+
                                   {/* Modal */}
                                   <Modal
                                     show={showModal}
@@ -593,7 +603,7 @@ const AdminCourseList = () => {
                                             >
                                               {`${trainer.first_name} ${trainer.last_name} (${trainer.email})`}
                                               <button
-                                                className="btn btn-sm btn-danger"
+                                                className="btn btn-sm btn-white"
                                                 onClick={() =>
                                                   handleDeleteTrainer(
                                                     trainer.id

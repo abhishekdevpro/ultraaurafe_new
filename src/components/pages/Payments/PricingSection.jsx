@@ -8,7 +8,7 @@ import styled from "styled-components";
 const Section = styled.section`
   padding: 80px 0;
   background-color: #fff;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 `;
 
 const Container = styled.div`
@@ -69,14 +69,15 @@ const PricingCard = styled.div`
   width: 100%;
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 8px 24px ${props => props.isDark ? 'rgba(0,0,0,0.2)' : 'rgba(9,33,60,0.12)'};
+  box-shadow: 0 8px 24px
+    ${(props) => (props.isDark ? "rgba(0,0,0,0.2)" : "rgba(9,33,60,0.12)")};
   transition: all 0.3s ease;
-  transform: ${props => props.isPopular ? 'translateY(-10px)' : 'none'};
-  border: ${props => {
-    if (props.isPopular) return '2px solid #ED8936';
-    return props.isDark ? 'none' : '1px solid rgba(9,33,60,0.08)';
+  transform: ${(props) => (props.isPopular ? "translateY(-10px)" : "none")};
+  border: ${(props) => {
+    if (props.isPopular) return "2px solid #ED8936";
+    return props.isDark ? "none" : "1px solid rgba(9,33,60,0.08)";
   }};
-  background-color: ${props => props.isDark ? '#0064e4' : '#fff'};
+  background-color: ${(props) => (props.isDark ? "#0064e4" : "#fff")};
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -86,11 +87,11 @@ const PricingCard = styled.div`
 const CardHeader = styled.div`
   padding: 30px 25px 20px;
   text-align: center;
-  border-bottom: 1px solid rgba(9,33,60,0.08);
+  border-bottom: 1px solid rgba(9, 33, 60, 0.08);
 `;
 
 const CardTitle = styled.h3`
-  color: ${props => props.isDark ? '#fff' : '#0064e4'};
+  color: ${(props) => (props.isDark ? "#fff" : "#0064e4")};
   font-weight: 600;
   font-size: 22px;
   margin-bottom: 15px;
@@ -101,14 +102,14 @@ const PriceWrap = styled.div`
   align-items: center;
   justify-content: center;
   gap: 5px;
-  color: ${props => props.isDark ? '#fff' : '#0064e4'};
+  color: ${(props) => (props.isDark ? "#fff" : "#0064e4")};
 `;
 
 const PriceAmount = styled.div`
   font-size: 40px;
   font-weight: 700;
   line-height: 1;
-  color: ${props => props.isDark ? '#fff' : '#0064e4'};
+  color: ${(props) => (props.isDark ? "#fff" : "#0064e4")};
 `;
 
 const PricePeriod = styled.div`
@@ -116,7 +117,7 @@ const PricePeriod = styled.div`
   opacity: 0.7;
   align-self: flex-end;
   padding-bottom: 8px;
-  color: ${props => props.isDark ? '#fff' : '#0064e4'};
+  color: ${(props) => (props.isDark ? "#fff" : "#0064e4")};
 `;
 
 const CardBody = styled.div`
@@ -128,12 +129,15 @@ const FeatureList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
-  color: ${props => props.isDark ? '#fff' : '#0064e4'};
+  color: ${(props) => (props.isDark ? "#fff" : "#0064e4")};
 `;
 
 const FeatureItem = styled.li`
   padding: 12px 0;
-  border-bottom: ${props => props.isDark ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(9,33,60,0.06)'};
+  border-bottom: ${(props) =>
+    props.isDark
+      ? "1px solid rgba(255,255,255,0.1)"
+      : "1px solid rgba(9,33,60,0.06)"};
   display: flex;
   align-items: center;
   font-size: 15px;
@@ -141,7 +145,7 @@ const FeatureItem = styled.li`
 
 const CheckIcon = styled.i`
   margin-right: 10px;
-  color: ${props => props.isDark ? '#5dd3f8' : '#0064e4'};
+  color: ${(props) => (props.isDark ? "#5dd3f8" : "#0064e4")};
   font-weight: bold;
 `;
 
@@ -155,7 +159,8 @@ const Button = styled.button`
   width: 100%;
   padding: 14px 20px;
   border-radius: 8px;
-  background-color: ${props => props.isDark ? '#ED8936' : props.isPopular ? '#ED8936' : '#ED8936'};
+  background-color: ${(props) =>
+    props.isDark ? "#ED8936" : props.isPopular ? "#ED8936" : "#ED8936"};
   color: #fff;
   text-decoration: none;
   font-weight: 600;
@@ -164,7 +169,10 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: ${props => props.isDark ? '0 4px 15px rgba(10, 26, 54, 0.4)' : '0 4px 15px rgba(9, 33, 60, 0.15)'};
+  box-shadow: ${(props) =>
+    props.isDark
+      ? "0 4px 15px rgba(10, 26, 54, 0.4)"
+      : "0 4px 15px rgba(9, 33, 60, 0.15)"};
 `;
 
 const PopularBadge = styled.div`
@@ -177,20 +185,20 @@ const PopularBadge = styled.div`
   border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
-  box-shadow: 0 2px 8px rgba(9,33,60,0.2);
+  box-shadow: 0 2px 8px rgba(9, 33, 60, 0.2);
 `;
 
 const PricingSection = () => {
   const navigate = useNavigate();
- 
+
   const token = localStorage.getItem("jobSeekerLoginToken");
-  
+
   const handleClick = () => {
     if (!token) {
       toast.error("Please Login First");
-      navigate('/user/login');
+      navigate("/user/login");
     } else {
-      navigate('/user/subscription');
+      navigate("/user/subscription");
       // window.location.href  = (`https://airesume.novajobs.us/settings/subscription/?tokenbyurl=${token}`)
       // window.location.href = (`http://localhost:3001/settings/subscription/?tokenbyurl=${token}`)
     }
@@ -205,9 +213,7 @@ const PricingSection = () => {
             Choose Your Perfect Plan
             <TitleLine />
           </Title>
-          <Subtitle>
-            Select the plan that best fits your needs
-          </Subtitle>
+          <Subtitle>Select the plan that best fits your needs</Subtitle>
         </SectionHead>
 
         {/* Pricing Cards Row */}
@@ -217,9 +223,7 @@ const PricingSection = () => {
             <PricingCol key={plan.id}>
               <PricingCard isDark={plan.isDark} isPopular={plan.isPopular}>
                 {/* Popular Badge (if applicable) */}
-                {plan.isPopular && (
-                  <PopularBadge>Most Popular</PopularBadge>
-                )}
+                {plan.isPopular && <PopularBadge>Most Popular</PopularBadge>}
 
                 {/* Plan Header */}
                 <CardHeader>
@@ -236,11 +240,8 @@ const PricingSection = () => {
                 <CardBody>
                   <FeatureList isDark={plan.isDark}>
                     {plan.features.map((feature, index) => (
-                      <FeatureItem
-                        key={index}
-                        isDark={plan.isDark}
-                      >
-                        <CheckIcon 
+                      <FeatureItem key={index} isDark={plan.isDark}>
+                        <CheckIcon
                           className="fa fa-check"
                           isDark={plan.isDark}
                         />
