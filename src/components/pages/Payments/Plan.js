@@ -1,86 +1,33 @@
-// export const plans = [
-// {
-//   id: "freemium",
-//   name: "Freemium",
-//   price: "0",
-//   isPopular: false,
-//   isDark: false,
-//   features: [
-//     "Job Search",
-//     "Job Apply",
-//     "AI Dashboard",
-//     "Limited AI Resume Builder",
-//     "Access to Free Courses",
-//     "Profile Listing",
-//   ],
-// },
-//     {
-//       id: "elevate",
-//       name: "Elevate",
-//       price: "18.95",
-//       isPopular: true,
-//       isDark: false,
-//       features: [
-//         "Everything in Freemium",
-//         "Advanced Job Search",
-//         "Advanced AI Resume Builder",
-//         "Access to Advanced Courses",
-//         "AI Skill Test",
-//         "Access to Nova Jobs"
-//       ],
-//     },
-//     {
-//       id: "promax",
-//       name: "Pro Max",
-//       price: "48.95",
-//       isPopular: false,
-//       isDark: false,
-//       features: [
-//         "Everything in Elevate",
-//         "Career coach interactions",
-//         "Certification included",
-//         "Access to Nova Jobs"
-//       ],
-//     },
-//     {
-//       id: "ultraelite",
-//       name: "Ultra Elite",
-//       price: "98.95",
-//       isPopular: false,
-//       isDark: true,
-//       features: [
-//         "Everything in Pro Max",
-//         "Trainer access (as needed)",
-//         "Certification included (after course request & eligibility)",
-//         "Access to Nova Jobs"
-//       ],
-//     },
-//   ];
-
 export const plans = [
   {
     id: "freemium",
-    name: "Freemium",
-    price: "0",
+    name: "Launch Plan",
+    price: "18.95",
     isPopular: false,
     isDark: false,
     features: [
-      "Job Search",
-      "Job Apply",
-      "AI Dashboard",
-      "Limited AI Resume Builder",
+      "Create & Update Profile",
+      "1-Click Apply to Jobs",
+      "AI Resume + Cover Letter Builder",
+      "AI Skill Tests & Career Suggestions",
+      "Save Multiple Resumes",
 
-      "Profile Listing",
+      "Real-Time Application Tracking",
+
+      "Chat with Recruiters",
+
+      "Earn Rewards via Referrals",
+      // "Access to Free C "Profile Listing",
       <span className="flex items-center gap-1" key="novajobs">
-        Access to{" "}
+        Access to Edtech{" "}
         <a
-          href="https://novajobs.us/"
+          href="https://ultraaura.education/"
           target="_blank"
           rel="noopener noreferrer"
         >
           <img
             src="https://apiwl.novajobs.us/novaJobs/226/logo/NovaUS.649f79957e5090a75022.png"
-            alt="Nova Jobs"
+            alt="UltraAura"
             className="h-2 w-5 inline-block"
             style={{
               height: "2rem",
@@ -95,26 +42,33 @@ export const plans = [
   },
   {
     id: "elevate",
-    name: "Elevate",
-    price: "18.95",
+    name: "Lift Plan",
+    price: "38.95",
     isPopular: true,
     isDark: false,
     features: [
-      "Everything in Freemium",
-      "Advanced Job Search",
-      "Advanced AI Resume Builder",
+      "Everything in Launch, plus:",
+      "AI Interview Prep (Basic Q&A)",
+      "Job Fit Score & Smart Recommendations",
       // "Access to Advanced Courses",
-      "AI Skill Test",
+      "Auto-Fill Applications",
+      "Skill Match & Goal Path",
+
+      "AI Application Tracker",
+
+      "Resume Feedback (AI)",
+
+      "Enhanced Notifications & Alerts",
       <span className="flex items-center gap-1" key="novajobs">
-        Access to{" "}
+        Access to Edtech{" "}
         <a
-          href="https://novajobs.us/"
+          href="https://ultraaura.education/"
           target="_blank"
           rel="noopener noreferrer"
         >
           <img
             src="https://apiwl.novajobs.us/novaJobs/226/logo/NovaUS.649f79957e5090a75022.png"
-            alt="Nova Jobs"
+            alt="UltraAura"
             className="h-2 w-5 inline-block"
             style={{
               height: "2rem",
@@ -129,24 +83,30 @@ export const plans = [
   },
   {
     id: "promax",
-    name: "Pro Max",
-    price: "48.95",
+    name: "Thrive Plan",
+    price: "78.95",
     isPopular: false,
     isDark: false,
     features: [
-      "Everything in Elevate",
-      "Limited Career coach interaction",
-      "Certification included",
+      "Everything in Lift, plus:",
+      "Monthly Career Coach Interactions / Monitoring",
+      "Resume Review (Human-verified)",
+      "Job Strategy & LinkedIn Branding Toolkit",
+
+      "Certification Access via UltraAura",
+      "Career Progress Tracker",
+      "Shareable Digital Badges",
+
       <span className="flex items-center gap-1" key="novajobs">
-        Access to{" "}
+        Access to Edtech{" "}
         <a
-          href="https://novajobs.us/"
+          href="https://ultraaura.education/"
           target="_blank"
           rel="noopener noreferrer"
         >
           <img
             src="https://apiwl.novajobs.us/novaJobs/226/logo/NovaUS.649f79957e5090a75022.png"
-            alt="Nova Jobs"
+            alt="UltraAura"
             className="h-2 w-5 inline-block"
             style={{
               height: "2rem",
@@ -160,24 +120,30 @@ export const plans = [
   },
   {
     id: "ultraelite",
-    name: "Ultra Elite",
-    price: "98.95",
+    name: "Ascend Plan ",
+    price: "148.95",
     isPopular: false,
     isDark: true,
     features: [
-      "Everything in Pro Max",
-      "One on One Trainer Access",
-      "Verified Certifications",
+      "Everything in Thrive, plus:",
+      "Career Coaching & Trainer Monitoring",
+      "Dedicated Personal Career Mentor",
+      "AI Branding & Executive Resume Enhancement",
+      "Unlimited Access UltraAura",
+      "Verified & physical Certifications",
+      "Priority Job Matching + Employer Alerts",
+      "Beta Access to Exclusive Tools & Pilots",
+      "Enterprise-Grade Career Dashboard",
       <span className="flex items-center gap-1" key="novajobs">
-        Access to{" "}
+        Access to Edtech{" "}
         <a
-          href="https://novajobs.us/"
+          href="https://ultraaura.education/"
           target="_blank"
           rel="noopener noreferrer"
         >
           <img
             src="https://apiwl.novajobs.us/novaJobs/226/logo/NovaUS.649f79957e5090a75022.png"
-            alt="Nova Jobs"
+            alt="UltraAura"
             className="h-2 w-5 inline-block"
             style={{
               height: "2rem",
