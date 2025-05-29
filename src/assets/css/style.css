@@ -2260,7 +2260,7 @@ html.menu-opened body {
   -webkit-backdrop-filter: blur(17px);
 }
 .product:hover {
-  background: #a6a6a6 ;
+  background: #a6a6a6;
   color: #fff;
   transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
@@ -30455,4 +30455,47 @@ a.ck.ck-button:not(.ck-disabled):hover {
 
 .header-nav .submenu {
   opacity: 0;
+}
+
+/* Hide default Google Translate banner */
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+body {
+  top: 0px !important;
+}
+
+/* Customize the translate widget */
+#google_translate_element .goog-te-gadget {
+  color: transparent !important;
+  font-size: 0 !important;
+}
+
+/* Hide internal texts/icons */
+.goog-te-gadget span,
+.goog-te-gadget img {
+  display: none !important;
+}
+
+/* Minimal globe style */
+#google_translate_element .goog-te-gadget-simple {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+#google_translate_element .goog-te-gadget-simple::before {
+  content: "🌐";
+  font-size: 20px;
+  color: #333;
 }
