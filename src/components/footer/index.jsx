@@ -6,6 +6,7 @@ import logo5 from "../../assets/Ultra_Aura.png";
 import axios from "axios";
 import { toast } from "react-toastify";
 import SupportPopup from "./SupportPopup";
+import { Button } from "react-bootstrap";
 
 // Styled Components
 const FooterWrapper = styled.footer`
@@ -327,13 +328,29 @@ const Footer = () => {
                     <Link to="/verify-certificate">Verify Certificate</Link>
                   </li>
                   <li>
-                    <Link to="#" onClick={e => { e.preventDefault(); setIsSupportOpen(true); }}>Support</Link>
+                    <Link
+                      to="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsSupportOpen(true);
+                      }}
+                    >
+                      Support
+                    </Link>
                   </li>
                   <li>
                     <Link to="/careers">Careers</Link>
                   </li>
                   <li>
                     <Link to="/trainers">Trainers</Link>
+                  </li>
+                  <li>
+                    <Link to="https://novajobs.us/user/community">
+                      Community
+                    </Link>
+                  </li>
+                  <li>
+                    <Button>Book free Consultation</Button>
                   </li>
                 </FooterMenuList>
               </FooterWidget>
@@ -402,7 +419,10 @@ const Footer = () => {
           </Copyright>
         </Container>
       </FooterBottom>
-      <SupportPopup isOpen={isSupportOpen} onClose={() => setIsSupportOpen(false)} />
+      <SupportPopup
+        isOpen={isSupportOpen}
+        onClose={() => setIsSupportOpen(false)}
+      />
     </FooterWrapper>
   );
 };

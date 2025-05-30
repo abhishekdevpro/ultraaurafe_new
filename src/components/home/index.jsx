@@ -19,7 +19,7 @@ import {
 import { useSelector } from "react-redux";
 // import Loginbg from "../../assets/img/banner.png";
 // import TrendingCourse from "./slider/trendingCourse";
-import Companies from "./slider/companies";
+
 // import BgBanner1 from "../../assets/img/bg-banner-01.png";
 // import BgBanner2 from "../../assets/img/bg-banner-02.png";
 // import Loginbg from "../../assets/img/banner.png";
@@ -42,11 +42,9 @@ import SubHeader from "../header/Sub-header";
 import home from "./home-bg2.png";
 // import HomePage from "./HeroSection.jsx";
 // Container for the search bar
-import ultraaura from "../../assests/ultraaura-logo.png";
-import novajobs from "../../assests/novajobs-logo.png";
-import homecare from "../../assests/novahomecare-logo.png";
-import paradigmshift from "../../assests/paradigmshift-logo.png";
-import PricingSection from "../pages/Payments/PricingSection.jsx"
+
+import PricingSection from "../pages/Payments/PricingSection.jsx";
+import TrustedLogo from "./trustedby.jsx";
 const Container = styled.div`
   margin-bottom: 1rem;
   display: flex;
@@ -880,9 +878,9 @@ export const Home = () => {
                 <div className="section-text aos" data-aos="fade-up">
                   <p>
                     Get certified, master modern tech skills, and level up your
-                    career — whether you&apos;re starting out or a seasoned pro. 95%
-                    of eLearning learners report our hands-on content directly
-                    helped their careers.
+                    career — whether you&apos;re starting out or a seasoned pro.
+                    95% of eLearning learners report our hands-on content
+                    directly helped their careers.
                   </p>
                 </div>
                 <div className="career-group aos" data-aos="fade-up">
@@ -991,59 +989,9 @@ export const Home = () => {
 
         {/* Partner Companies Section */}
         <PartnerList />
-          <PricingSection />
+        <PricingSection />
 
-        <section className="section lead-companies">
-          <div className="container">
-            <div className="section-header aos" data-aos="fade-up">
-              <div className="section-sub-head feature-head text-center">
-                <span>Trusted By</span>
-                <h2>&quot;We work with some of the best brands, Globally</h2>
-              </div>
-            </div>
-
-            <div className="container">
-  <div className="row justify-content-center align-items-center text-center">
-    <div className="col-6 col-sm-4 col-md-3 mb-4">
-      <img
-        src={ultraaura}
-        alt="Ultraaura"
-        className="img-fluid"
-        style={{ objectFit: "contain" }}
-      />
-    </div>
-    <div className="col-6 col-sm-4 col-md-3 mb-4">
-      <img
-        src={novajobs}
-        alt="Novajobs"
-        className="img-fluid"
-        style={{ objectFit: "contain" }}
-      />
-    </div>
-    <div className="col-6 col-sm-4 col-md-3 mb-4">
-      <img
-        src={homecare}
-        alt="Homecare"
-        className="img-fluid"
-        style={{ objectFit: "contain" }}
-      />
-    </div>
-    <div className="col-6 col-sm-4 col-md-3 mb-4">
-      <img
-        src={paradigmshift}
-        alt="Paradigmshift"
-        className="img-fluid"
-        style={{ objectFit: "contain" }}
-      />
-    </div>
-  </div>
-</div>
-
-            <div className="lead-group aos" data-aos="fade-up">
-              <Companies />
-            </div>
-          </div>
-        </section>
+        <TrustedLogo />
 
         <Footer />
       </div>
