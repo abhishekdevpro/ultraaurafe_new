@@ -22,7 +22,7 @@ export const plans = [
       <span className="flex items-center gap-1" key="novajobs">
         Access to{" "}
         <a
-          href="https://ultraaura.education/"
+          href="https://novajobs.us/"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -64,7 +64,7 @@ export const plans = [
       <span className="flex items-center gap-1" key="novajobs">
         Access to{" "}
         <a
-          href="https://ultraaura.education/"
+          href="https://novajobs.us/"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -102,7 +102,7 @@ export const plans = [
       <span className="flex items-center gap-1" key="novajobs">
         Access to{" "}
         <a
-          href="https://ultraaura.education/"
+          href="https://novajobs.us/"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -140,7 +140,7 @@ export const plans = [
       <span className="flex items-center gap-1" key="novajobs">
         Priority access to{" "}
         <a
-          href="https://ultraaura.education/"
+          href="https://novajobs.us/"
           target="_blank"
           rel="noopener noreferrer"
         >
