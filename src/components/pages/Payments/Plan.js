@@ -17,9 +17,10 @@ export const plans = [
       "Chat with Recruiters",
 
       "Earn Rewards via Referrals",
+      "Access to all courses",
       // "Access to Free C "Profile Listing",
       <span className="flex items-center gap-1" key="novajobs">
-        Access to Edtech{" "}
+        Access to{" "}
         <a
           href="https://ultraaura.education/"
           target="_blank"
@@ -59,8 +60,9 @@ export const plans = [
       "Resume Feedback (AI)",
 
       "Enhanced Notifications & Alerts",
+      "Access to all courses",
       <span className="flex items-center gap-1" key="novajobs">
-        Access to Edtech{" "}
+        Access to{" "}
         <a
           href="https://ultraaura.education/"
           target="_blank"
@@ -96,9 +98,9 @@ export const plans = [
       "Certification Access via UltraAura",
       "Career Progress Tracker",
       "Shareable Digital Badges",
-
+      "Access to all courses with certification",
       <span className="flex items-center gap-1" key="novajobs">
-        Access to Edtech{" "}
+        Access to{" "}
         <a
           href="https://ultraaura.education/"
           target="_blank"
@@ -134,8 +136,9 @@ export const plans = [
       "Priority Job Matching + Employer Alerts",
       "Beta Access to Exclusive Tools & Pilots",
       "Enterprise-Grade Career Dashboard",
+      "Access to all courses with personal trainer & verified certification",
       <span className="flex items-center gap-1" key="novajobs">
-        Access to Edtech{" "}
+        Priority access to{" "}
         <a
           href="https://ultraaura.education/"
           target="_blank"
