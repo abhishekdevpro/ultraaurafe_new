@@ -7,6 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import SupportPopup from "./SupportPopup";
 import { Button } from "react-bootstrap";
+import ConsultancyPopup from "./ConsultancyPopUp";
 
 // Styled Components
 const FooterWrapper = styled.footer`
@@ -244,6 +245,7 @@ const CopyrightText = styled.p`
 const Footer = () => {
   const [email, setEmail] = useState("");
   const [isSupportOpen, setIsSupportOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -350,7 +352,12 @@ const Footer = () => {
                     </Link>
                   </li>
                   <li>
-                    <Button>Book free Consultation</Button>
+                    <Button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsModalOpen(true);
+                      }}
+                    >Book free Consultation</Button>
                   </li>
                 </FooterMenuList>
               </FooterWidget>
@@ -422,6 +429,10 @@ const Footer = () => {
       <SupportPopup
         isOpen={isSupportOpen}
         onClose={() => setIsSupportOpen(false)}
+      />
+      <ConsultancyPopup 
+       isOpen={isModalOpen}
+       onClose={()=>setIsModalOpen(false)}
       />
     </FooterWrapper>
   );
