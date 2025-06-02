@@ -6,17 +6,14 @@ export const plans = [
     isPopular: false,
     isDark: false,
     features: [
-      "Create & Update Profile",
-      "1-Click Apply to Jobs",
       "AI Resume + Cover Letter Builder",
-      "AI Skill Tests & Career Suggestions",
-      "Save Multiple Resumes",
+      "Profile Listing",
+      "Search & Apply to Jobs",
+      "All-in-One Career Dashboard",
+      "AI Skill Tests",
 
-      "Real-Time Application Tracking",
+      "Community Access",
 
-      "Chat with Recruiters",
-
-      "Earn Rewards via Referrals",
       "Access to all courses",
       // "Access to Free C "Profile Listing",
       <span className="flex items-center gap-1" key="novajobs">
@@ -49,17 +46,20 @@ export const plans = [
     isDark: false,
     features: [
       "Everything in Launch, plus:",
-      "AI Interview Prep (Basic Q&A)",
-      "Job Fit Score & Smart Recommendations",
+      "Job Suggestions",
+      "Resume Score",
       // "Access to Advanced Courses",
-      "Auto-Fill Applications",
-      "Skill Match & Goal Path",
+      "ATS & Resume Score",
+      "Priority Job alerts",
 
-      "AI Application Tracker",
+      "Access to UltraAura+",
 
-      "Resume Feedback (AI)",
+      "Resume writeup By Experts",
 
-      "Enhanced Notifications & Alerts",
+      "Connect to Career Coach",
+      "Profile Analytics*",
+      "Certifications by UltraAura",
+      "Unlimited Access to UltraAura",
       "Access to all courses",
       <span className="flex items-center gap-1" key="novajobs">
         Access to{" "}
@@ -90,15 +90,14 @@ export const plans = [
     isPopular: false,
     isDark: false,
     features: [
-      "Everything in Lift, plus:",
-      "Monthly Career Coach Interactions / Monitoring",
-      "Resume Review (Human-verified)",
-      "Job Strategy & LinkedIn Branding Toolkit",
+      "Connect to Trainer",
+      "More connects with Career Coach",
+      "More AI Credits",
+      "Chat with HR’s*",
 
-      "Certification Access via UltraAura",
-      "Career Progress Tracker",
-      "Shareable Digital Badges",
-      "Access to all courses with certification",
+      "Verified Certifications by UltraAura",
+      "Unlimited Access to UltraAura",
+
       <span className="flex items-center gap-1" key="novajobs">
         Access to{" "}
         <a

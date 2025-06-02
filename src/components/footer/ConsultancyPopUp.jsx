@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
@@ -41,7 +40,7 @@ const CloseButtonStyled = styled.button`
 const Title = styled.h2`
   margin-bottom: 1.5rem;
   font-size: 1.5rem;
-  color: #1C2957;
+  color: #1c2957;
   text-align: center;
 `;
 const Form = styled.form`
@@ -56,7 +55,7 @@ const Form = styled.form`
 // `;
 const SelectStyled = styled.select`
   padding: 0.75rem;
-  width :100%;
+  width: 100%;
   border: 1px solid #ccd0d5;
   border-radius: 6px;
   font-size: 1rem;
@@ -68,7 +67,7 @@ const SelectStyled = styled.select`
 `;
 const SubmitButtonStyled = styled.button`
   padding: 0.75rem 1.5rem;
-  width :100%;
+  width: 100%;
   background: linear-gradient(135deg, #6e8efb, #a777e3);
   color: white;
   border: none;
@@ -93,9 +92,11 @@ const ConsultancyPopup = ({ isOpen, onClose }) => {
     setLoading(true);
 
     try {
-      const response = await axios.get(`https://api.novajobs.us/api/jobseeker/calendly-link?meeting-time=${duration}`);
-      if(response.data.data){
-        window.location.href = response.data.data.calendly_link
+      const response = await axios.get(
+        `https://api.novajobs.us/api/students/calendly-link?meeting-time=${duration}`
+      );
+      if (response.data.data) {
+        window.location.href = response.data.data.calendly_link;
       }
       toast.success("Meeting created successfully!");
       onClose();
@@ -116,14 +117,21 @@ const ConsultancyPopup = ({ isOpen, onClose }) => {
         <Form onSubmit={handleSubmit}>
           <div className="d-flex gap-2 justify-content-center align-items-center">
             {/* <LabelStyled>Duration (in minutes)</LabelStyled> */}
-            <SelectStyled value={duration} onChange={(e) => setDuration(e.target.value)}>
+            <SelectStyled
+              value={duration}
+              onChange={(e) => setDuration(e.target.value)}
+            >
               <option value="15">15 minutes</option>
               <option value="30">30 minutes</option>
               <option value="45">45 minutes</option>
               <option value="60">60 minutes</option>
             </SelectStyled>
           </div>
-          <SubmitButtonStyled className="site-button" type="submit" disabled={loading}>
+          <SubmitButtonStyled
+            className="site-button"
+            type="submit"
+            disabled={loading}
+          >
             {loading ? "Booking..." : "Create Meeting"}
           </SubmitButtonStyled>
         </Form>
@@ -138,4 +146,3 @@ ConsultancyPopup.propTypes = {
 };
 
 export default ConsultancyPopup;
-
