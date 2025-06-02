@@ -347,9 +347,7 @@ const Footer = () => {
                     <Link to="/trainers">Trainers</Link>
                   </li>
                   <li>
-                    <Link to="https://novajobs.us/user/community">
-                      Community
-                    </Link>
+                    <Link to="https://novajobs.us/community">Community</Link>
                   </li>
                   <li>
                     <Button
@@ -357,7 +355,9 @@ const Footer = () => {
                         e.preventDefault();
                         setIsModalOpen(true);
                       }}
-                    >Book free Consultation</Button>
+                    >
+                      Book free Consultation
+                    </Button>
                   </li>
                 </FooterMenuList>
               </FooterWidget>
@@ -430,9 +430,9 @@ const Footer = () => {
         isOpen={isSupportOpen}
         onClose={() => setIsSupportOpen(false)}
       />
-      <ConsultancyPopup 
-       isOpen={isModalOpen}
-       onClose={()=>setIsModalOpen(false)}
+      <ConsultancyPopup
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
       />
     </FooterWrapper>
   );
