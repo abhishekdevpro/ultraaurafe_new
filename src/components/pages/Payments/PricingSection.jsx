@@ -196,7 +196,7 @@ const PricingSection = () => {
   const handleClick = () => {
     if (!token) {
       toast.error("Please Login First");
-      navigate("/user/login");
+      navigate("/login");
     } else {
       navigate("/user/subscription");
       // window.location.href  = (`https://airesume.novajobs.us/settings/subscription/?tokenbyurl=${token}`)
