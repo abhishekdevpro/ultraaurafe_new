@@ -7,8 +7,7 @@ const Support = () => {
   return (
     <>
       <div className="main-wrapper">
-
-        <PageHeader activeMenu="Support"/>
+        <PageHeader activeMenu="Support" />
 
         <div className="breadcrumb-bar">
           <div className="container">
@@ -52,7 +51,15 @@ const Support = () => {
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Enter your first Name"
+                        placeholder="First Name"
+                      />
+                    </div>
+                    <div className="input-block">
+                      <label>Last Name</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Last Name"
                       />
                     </div>
                     <div className="input-block">
@@ -60,27 +67,40 @@ const Support = () => {
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Enter your email address"
+                        placeholder="you@domain.com"
                       />
                     </div>
+                    <div className="input-block position-relative">
+                      <label htmlFor="category">Category</label>
+                      <select id="category" className="form-select pe-5">
+                        <option value="">- Select a category -</option>
+                        <option value="technical">Technical Support</option>
+                        <option value="billing">Billing</option>
+                        <option value="account">Account Issues</option>
+                        <option value="feedback">General Inquiry</option>
+                        <option value="other">Other</option>
+                      </select>
+                      {/*  */}
+                    </div>
+
                     <div className="input-block">
                       <label>Subject</label>
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Enter your Subject"
+                        placeholder="Subject"
                       />
                     </div>
                     <div className="input-block">
                       <label>Description</label>
                       <textarea
                         className="form-control"
-                        placeholder="Write down here"
+                        placeholder="Describe your issue"
                         rows={4}
                         defaultValue={""}
                       />
                     </div>
-                    <button className="btn-submit">Submit</button>
+                    <button className="btn-submit">Submit Form</button>
                   </form>
                 </div>
               </div>
@@ -88,7 +108,7 @@ const Support = () => {
           </div>
         </div>
 
-        <Footer/>
+        <Footer />
       </div>
     </>
   );

@@ -228,22 +228,33 @@ const StudentDashboard = () => {
         <div className="container">
           <div className="row">
             <div className="col-xl-3 col-lg-3">
-            <StudentSidebar />
+              <StudentSidebar />
             </div>
             <div className="col-xl-9 col-lg-9">
               <div className="row justify-content-center">
                 <div className="col-lg-4 col-md-6 d-flex">
-                  <div className="card dash-info flex-fill"  style={{ background: "linear-gradient(135deg, #ffe6f0, #e6f0ff)",color: "#007bff"  }}>
+                  <div
+                    className="card dash-info flex-fill"
+                    style={{
+                      background: "linear-gradient(135deg, #ffe6f0, #e6f0ff)",
+                      color: "#007bff",
+                    }}
+                  >
                     <div className="card-body">
-                      <h5 style={{color: "#007bff"  }}>Enrolled Courses</h5>
+                      <h5 style={{ color: "#007bff" }}>Enrolled Courses</h5>
                       <h2>{courses.length}</h2>
                     </div>
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-6 d-flex">
-                  <div className="card dash-info flex-fill"  style={{ background: "linear-gradient(135deg, #ffe6f0, #e6f0ff)" }}>
+                  <div
+                    className="card dash-info flex-fill"
+                    style={{
+                      background: "linear-gradient(135deg, #ffe6f0, #e6f0ff)",
+                    }}
+                  >
                     <div className="card-body">
-                      <h5 style={{color: "#007bff"  }}>Active Courses</h5>
+                      <h5 style={{ color: "#007bff" }}>Active Courses</h5>
                       <h2>
                         {
                           courses.filter((course) => course.status === "active")
@@ -254,9 +265,14 @@ const StudentDashboard = () => {
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-6 d-flex">
-                  <div className="card dash-info flex-fill"  style={{ background: "linear-gradient(135deg, #ffe6f0, #e6f0ff)" }}>
+                  <div
+                    className="card dash-info flex-fill"
+                    style={{
+                      background: "linear-gradient(135deg, #ffe6f0, #e6f0ff)",
+                    }}
+                  >
                     <div className="card-body">
-                      <h5 style={{color: "#007bff"  }}>Completed Courses</h5>
+                      <h5 style={{ color: "#007bff" }}>Completed Courses</h5>
                       <h2>
                         {
                           courses.filter(
@@ -270,87 +286,111 @@ const StudentDashboard = () => {
               </div>
 
               <div>
-              <DashboardGrid>
-    <DashboardCard>
-      <i className="fas fa-tachometer-alt fa-2x"></i>
-      <h3>Dashboard</h3>
-      <p>Overview of your activity</p>
-      <CardButton onClick={() => navigate("/student/student-dashboard")}>
-        Go to Dashboard
-      </CardButton>
-    </DashboardCard>
+                <DashboardGrid>
+                  <DashboardCard>
+                    <i className="fas fa-tachometer-alt fa-2x"></i>
+                    <h3>Dashboard</h3>
+                    <p>Overview of your activity</p>
+                    <CardButton
+                      onClick={() => navigate("/student/student-dashboard")}
+                    >
+                      Go to Dashboard
+                    </CardButton>
+                  </DashboardCard>
 
-    <DashboardCard>
-      <i className="fas fa-user fa-2x"></i>
-      <h3>My Profile</h3>
-      <p>View and update your profile</p>
-      <CardButton onClick={() => navigate("/student/student-profile")}>
-        Go to Profile
-      </CardButton>
-    </DashboardCard>
+                  <DashboardCard>
+                    <i className="fas fa-user fa-2x"></i>
+                    <h3>My Profile</h3>
+                    <p>View and update your profile</p>
+                    <CardButton
+                      onClick={() => navigate("/student/student-profile")}
+                    >
+                      Go to Profile
+                    </CardButton>
+                  </DashboardCard>
 
-    <DashboardCard>
-      <i className="fas fa-file-alt fa-2x"></i>
-      <h3>AI Resume Builder</h3>
-      <p>Create smart resumes </p>
-      <CardButton onClick={() => window.open("https://novajobs.us/novajobs#tab2", "_blank")}>
-        Build Resume
-      </CardButton>
-    </DashboardCard>
+                  <DashboardCard>
+                    <i className="fas fa-file-alt fa-2x"></i>
+                    <h3>AI Resume Builder</h3>
+                    <p>Create smart resumes </p>
+                    <CardButton
+                      onClick={() =>
+                        window.open(
+                          "https://novajobs.us/novajobs#tab2",
+                          "_blank"
+                        )
+                      }
+                    >
+                      Build Resume
+                    </CardButton>
+                  </DashboardCard>
 
-    <DashboardCard>
-      <i className="fas fa-briefcase fa-2x"></i>
-      <h3>Novajobs</h3>
-      <p>Explore job opportunities</p>
-      <CardButton onClick={() => window.open("https://novajobs.us/user/job/1", "_blank")}>
-        Visit NovaJobs
-      </CardButton>
-    </DashboardCard>
+                  <DashboardCard>
+                    <i className="fas fa-briefcase fa-2x"></i>
+                    <h3>Novajobs</h3>
+                    <p>Explore job opportunities</p>
+                    <CardButton
+                      onClick={() =>
+                        window.open("https://novajobs.us/user/jobs", "_blank")
+                      }
+                    >
+                      Visit NovaJobs
+                    </CardButton>
+                  </DashboardCard>
 
-    <DashboardCard>
-      <i className="fas fa-book fa-2x"></i>
-      <h3>My Courses</h3>
-      <p>Access all your enrolled courses</p>
-      <CardButton onClick={() => navigate("/student/student-courses")}>
-        View Courses
-      </CardButton>
-    </DashboardCard>
+                  <DashboardCard>
+                    <i className="fas fa-book fa-2x"></i>
+                    <h3>My Courses</h3>
+                    <p>Access all your enrolled courses</p>
+                    <CardButton
+                      onClick={() => navigate("/student/student-courses")}
+                    >
+                      View Courses
+                    </CardButton>
+                  </DashboardCard>
 
-    <DashboardCard>
-      <i className="fas fa-heart fa-2x"></i>
-      <h3>Wishlist</h3>
-      <p>Your favorite saved courses</p>
-      <CardButton onClick={() => navigate("/student/student-wishlist")}>
-        Go to Wishlist
-      </CardButton>
-    </DashboardCard>
+                  <DashboardCard>
+                    <i className="fas fa-heart fa-2x"></i>
+                    <h3>Wishlist</h3>
+                    <p>Your favorite saved courses</p>
+                    <CardButton
+                      onClick={() => navigate("/student/student-wishlist")}
+                    >
+                      Go to Wishlist
+                    </CardButton>
+                  </DashboardCard>
 
-    <DashboardCard>
-      <i className="fas fa-cog fa-2x"></i>
-      <h3>Settings</h3>
-      <p>Customize your account settings</p>
-      <CardButton onClick={() => navigate("/settings")}>
-        Update Settings
-      </CardButton>
-    </DashboardCard>
+                  <DashboardCard>
+                    <i className="fas fa-cog fa-2x"></i>
+                    <h3>Settings</h3>
+                    <p>Customize your account settings</p>
+                    <CardButton
+                      onClick={() => navigate("/student/student-setting")}
+                    >
+                      Update Settings
+                    </CardButton>
+                  </DashboardCard>
 
-    <DashboardCard>
-      <i className="fas fa-headset fa-2x"></i>
-      <h3>Support</h3>
-      <p>Need help? Contact our team</p>
-      <CardButton onClick={() => navigate("/support")}>
-        Get Support
-      </CardButton>
-    </DashboardCard>
-  </DashboardGrid>
-
-
-</div>
+                  <DashboardCard>
+                    <i className="fas fa-headset fa-2x"></i>
+                    <h3>Support</h3>
+                    <p>Need help? Contact our team</p>
+                    <CardButton onClick={() => navigate("/support")}>
+                      Get Support
+                    </CardButton>
+                  </DashboardCard>
+                </DashboardGrid>
+              </div>
 
               <div className="d-flex justify-content-between align-items-center mb-4">
                 <h4 className="mb-0">Recently Enrolled Courses</h4>
-                <ExploreButton className="btn btn-primary "  style={{ background: "linear-gradient(135deg, #ffe6f0, #e6f0ff)",color: "#007bff"  }}
-                 onClick={()=>navigate('/course-list')}
+                <ExploreButton
+                  className="btn btn-primary "
+                  style={{
+                    background: "linear-gradient(135deg, #ffe6f0, #e6f0ff)",
+                    color: "#007bff",
+                  }}
+                  onClick={() => navigate("/course-list")}
                 >
                   Explore Courses
                 </ExploreButton>
@@ -367,7 +407,15 @@ const StudentDashboard = () => {
                           You have not enrolled in any courses yet.
                         </AlertText>
                         <Link to={"/course-list"}>
-                          <ExploreButton  style={{ background: "linear-gradient(135deg, #ffe6f0, #e6f0ff)", color: "#007bff" }}>Explore Courses</ExploreButton>
+                          <ExploreButton
+                            style={{
+                              background:
+                                "linear-gradient(135deg, #ffe6f0, #e6f0ff)",
+                              color: "#007bff",
+                            }}
+                          >
+                            Explore Courses
+                          </ExploreButton>
                         </Link>
                       </div>
                     </AlertWrapper>
@@ -489,9 +537,6 @@ const StudentDashboard = () => {
                 </div>
               )}
             </div>
-
-
-
           </div>
         </div>
       </div>

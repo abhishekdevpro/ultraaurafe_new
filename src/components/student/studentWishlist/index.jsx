@@ -267,7 +267,6 @@ const StudentWishlist = () => {
     }
   };
 
-  
   if (error) return <div>{error}</div>;
 
   return (
@@ -312,114 +311,121 @@ const StudentWishlist = () => {
                   <div className="profile-heading">
                     <h3>Wishlist</h3>
                   </div>
-                  {isLoading?<FullPageLoader /> :<div className="checkout-form pb-0">
-                    {wishlistCourses.length === 0 ? (
-                      <div className="text-center py-5">
-                        <h4>No courses in the wishlist</h4>
-                      </div>
-                    ) : (
-                      <div className="row">
-                        {wishlistCourses.map((course) => (
-                          <div
-                            key={course.id}
-                            className="col-xxl-4 col-md-6 d-flex"
-                          >
-                            <div className="course-box flex-fill">
-                              <div className="product">
-                                <div className="product-img">
-                                  <Link to={`/course-info/${course.id}`}>
-                                    <img
-                                      className="img-fluid"
-                                      alt={course.title}
-                                      // src={`https://api.novajobs.us${course.course_banner_image}`}
-                                      src={
-                                        course.course_banner_image.startsWith(
-                                          "https"
-                                        )
-                                          ? course.course_banner_image
-                                          : `https://api.novajobs.us${course.course_banner_image}`
-                                      }
-                                    />
-                                  </Link>
-                                  <div className="price">
-                                    <h3>
-                                      ${course.discounted_price}{" "}
-                                      <span>${course.original_price}</span>
-                                    </h3>
-                                  </div>
-                                </div>
-                                <div className="product-content">
-                                  <div className="course-group d-flex">
-                                    <div className="course-group-img d-flex">
-                                      <Link
-                                        to={`/instructor/instructor-profile/${course.instructor_id}`}
-                                      >
-                                        <img
-                                          src={`https://api.novajobs.us${course.trainer_photo}`}
-                                          alt={course.trainer_first_name}
-                                          className="img-fluid"
-                                        />
-                                      </Link>
-                                      <div className="course-name">
-                                        <h4>
-                                          <Link
-                                            to={`/instructor/instructor-profile/${course.instructor_id}`}
-                                          >
-                                            {course.trainer_first_name}{" "}
-                                            {course.trainer_last_name}
-                                          </Link>
-                                        </h4>
-                                        <p>Instructor</p>
-                                      </div>
-                                    </div>
-                                    <div className="course-share d-flex align-items-center justify-content-center">
-                                      <div
-                                        onClick={() =>
-                                          toggleWishlist(course.id)
-                                        }
-                                      >
-                                        <i className="fa-solid fa-heart " />
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <h3 className="title instructor-text">
+                  {isLoading ? (
+                    <FullPageLoader />
+                  ) : (
+                    <div className="checkout-form pb-0">
+                      {wishlistCourses.length === 0 ? (
+                        <div className="text-center py-5">
+                          <h4>No courses in the wishlist</h4>
+                        </div>
+                      ) : (
+                        <div className="row">
+                          {wishlistCourses.map((course) => (
+                            <div
+                              key={course.id}
+                              className="col-xxl-4 col-md-6 d-flex"
+                            >
+                              <div className="course-box flex-fill">
+                                <div className="product">
+                                  <div className="product-img">
                                     <Link to={`/course-info/${course.id}`}>
-                                      {course.course_title}
+                                      <img
+                                        className="img-fluid"
+                                        alt={course.title}
+                                        // src={`https://api.novajobs.us${course.course_banner_image}`}
+                                        src={
+                                          course.course_banner_image.startsWith(
+                                            "https"
+                                          )
+                                            ? course.course_banner_image
+                                            : `https://api.novajobs.us${course.course_banner_image}`
+                                        }
+                                      />
                                     </Link>
-                                  </h3>
-                                  <div className="course-info d-flex align-items-center">
-                                    <div className="rating-img d-flex align-items-center">
-                                      <img src={Icon01} alt="Lesson" />
-                                      <p>{course.total_lectures} Lesson</p>
-                                    </div>
-                                    <div className="course-view d-flex align-items-center">
-                                      <img src={Icon2} alt="Duration" />
-                                      <p>{course.time_spent_on_course}</p>
+                                    <div className="price">
+                                      <h3>
+                                        ${course.discounted_price}{" "}
+                                        <span>${course.original_price}</span>
+                                      </h3>
                                     </div>
                                   </div>
-                                  <div className="rating mb-0">
-                                    {[...Array(5)].map((_, index) => (
-                                      <i
-                                        key={index}
-                                        className={`fas fa-star ${
-                                          index < Math.floor(course.rating)
-                                            ? "filled"
-                                            : ""
-                                        } me-1`}
-                                      />
-                                    ))}
-                                    <span className="d-inline-block average-rating">
-                                      <span>{course.rating.toFixed(1)}</span>
-                                    </span>
+                                  <div className="product-content">
+                                    <div className="course-group d-flex">
+                                      <div className="course-group-img d-flex">
+                                        <Link
+                                          to={`/instructor/instructor-profile/${course.instructor_id}`}
+                                        >
+                                          <img
+                                            src={`https://api.novajobs.us${course.trainer_photo}`}
+                                            alt={course.trainer_first_name}
+                                            className="img-fluid"
+                                          />
+                                        </Link>
+                                        <div className="course-name">
+                                          <h4>
+                                            <Link
+                                              to={`/instructor/instructor-profile/${course.instructor_id}`}
+                                            >
+                                              {course.trainer_first_name}{" "}
+                                              {course.trainer_last_name}
+                                            </Link>
+                                          </h4>
+                                          <p>Instructor</p>
+                                        </div>
+                                      </div>
+                                      <div
+                                        className="course-share d-flex align-items-center justify-content-center "
+                                        style={{ cursor: "pointer" }}
+                                      >
+                                        <div
+                                          onClick={() =>
+                                            toggleWishlist(course.id)
+                                          }
+                                        >
+                                          <i className="fa-solid fa-heart " />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <h3 className="title instructor-text">
+                                      <Link to={`/course-info/${course.id}`}>
+                                        {course.course_title}
+                                      </Link>
+                                    </h3>
+                                    <div className="course-info d-flex align-items-center">
+                                      <div className="rating-img d-flex align-items-center">
+                                        <img src={Icon01} alt="Lesson" />
+                                        <p>{course.total_lectures} Lesson</p>
+                                      </div>
+                                      <div className="course-view d-flex align-items-center">
+                                        <img src={Icon2} alt="Duration" />
+                                        <p>{course.time_spent_on_course}</p>
+                                      </div>
+                                    </div>
+                                    <div className="rating mb-0">
+                                      {[...Array(5)].map((_, index) => (
+                                        <i
+                                          key={index}
+                                          className={`fas fa-star ${
+                                            index < Math.floor(course.rating)
+                                              ? "filled"
+                                              : ""
+                                          } me-1`}
+                                        />
+                                      ))}
+                                      <span className="d-inline-block average-rating">
+                                        <span>{course.rating.toFixed(1)}</span>
+                                      </span>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>}
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
