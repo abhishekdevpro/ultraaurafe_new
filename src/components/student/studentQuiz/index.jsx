@@ -90,7 +90,7 @@ const StudentQuiz = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {quizAttempts.map((attempt, index) => (
+                          {quizAttempts?.map((attempt, index) => (
                             <tr key={index}>
                               <td>
                                 <div className="quiz-table">
