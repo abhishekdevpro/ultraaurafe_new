@@ -8,6 +8,9 @@ import { toast } from "react-toastify";
 import SupportPopup from "./SupportPopup";
 import { Button } from "react-bootstrap";
 import ConsultancyPopup from "./ConsultancyPopUp";
+import logo1 from "./Duns-Logo1.png"
+import logo2 from "./Logo-2.png"
+import logo3 from "./Logo-3.png"
 
 // Styled Components
 const FooterWrapper = styled.footer`
@@ -298,10 +301,22 @@ const Footer = () => {
                 </FooterContactInfo>
                 <FooterLogo2>
                   <img
-                    src="https://abhishekdevpro-nova-home-care-fe.vercel.app/assets/logo2-06lVAt2c.png"
+                    src={logo1}
                     alt=""
+                    style={{ width: "60px", height: "60px", objectFit: "contain" }}
+                  />
+                  <img
+                    src={logo2}
+                    alt=""
+                    style={{ width: "60px", height: "60px", objectFit: "contain" }}
+                  />
+                  <img
+                    src={logo3}
+                    alt=""
+                    style={{ width: "60px", height: "60px", objectFit: "contain" }}
                   />
                 </FooterLogo2>
+                
               </FooterWidget>
               <FooterWidget>
                 <FooterTitle>Newsletter</FooterTitle>

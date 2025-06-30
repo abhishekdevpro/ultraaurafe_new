@@ -1,11 +1,17 @@
-import React, { useEffect, useState, useRef } from 'react';
-import styled from 'styled-components';
-import { Play, ChevronDown, ChevronUp, FileText, Link as LinkIcon } from 'lucide-react';
-import PropTypes from 'prop-types';
-import { toast } from 'react-toastify';
-import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
-import { Button, Modal, Spinner } from 'react-bootstrap';
+import React, { useEffect, useState, useRef } from "react";
+import styled from "styled-components";
+import {
+  Play,
+  ChevronDown,
+  ChevronUp,
+  FileText,
+  Link as LinkIcon,
+} from "lucide-react";
+import PropTypes from "prop-types";
+import { toast } from "react-toastify";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { Button, Modal, Spinner } from "react-bootstrap";
 
 const LectureList = styled.ul`
   list-style-type: none;
@@ -205,12 +211,18 @@ const LectureContent = styled.div`
 `;
 
 const ExpandableContent = styled.div`
-  max-height: ${props => (props.expanded ? '1000px' : '0')};
+  max-height: ${(props) => (props.expanded ? "1000px" : "0")};
   overflow: hidden;
   transition: max-height 1s cubic-bezier(0.4, 0, 0.2, 1);
 `;
 
-const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loadingStates, is_active_take_test }) => {
+const LectureListComponent = ({
+  section,
+  handlePreviewClick,
+  handlePDFClick,
+  loadingStates,
+  is_active_take_test,
+}) => {
   const [expandedLectures, setExpandedLectures] = useState({});
   const timersRef = useRef({});
   const { courseid } = useParams();
@@ -220,14 +232,14 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
   const [loadingTest, setLoadingTest] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
   }, []);
 
   const toggleLecture = (lectureId) => {
     if (!isLoggedIn) {
       toast.error("Please log in to access lecture content and resources");
-      navigate('/login');
+      navigate("/login");
       return;
     }
     const isExpandedBefore = !!expandedLectures[lectureId];
@@ -262,7 +274,7 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
   const handleTakeTest = () => {
     if (!isLoggedIn) {
       toast.error("Please log in to take the test");
-      navigate('/login');
+      navigate("/login");
       return;
     }
     setShowTestModal(false);
@@ -288,7 +300,10 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
                   <StyledPlay size={20} />
                   {lecture.lecture_name}
                   {lecture.content_viewed && (
-                    <i className="fas fa-check-circle text-success" style={{ fontSize: '1rem' }}></i>
+                    <i
+                      className="fas fa-check-circle text-success"
+                      style={{ fontSize: "1rem" }}
+                    ></i>
                   )}
                 </LectureName>
 
@@ -300,28 +315,45 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
                         handlePreviewClick(lecture, section.id);
                       } else {
                         toast.error("Please log in to preview this lecture.");
-                        navigate('/login');
+                        navigate("/login");
                       }
                     }}
-                    disabled={!lecture.lecture_videos || loadingStates[lecture.id] || !isLoggedIn}
+                    disabled={
+                      !lecture.lecture_videos ||
+                      loadingStates[lecture.id] ||
+                      !isLoggedIn
+                    }
                   >
-                    {loadingStates[lecture.id] ? 'Loading...' : 'Preview'}
+                    {loadingStates[lecture.id] ? "Loading..." : "Preview"}
                   </PreviewButton>
                   <ExpandButton>
-                    {expandedLectures[lecture.id] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                    {expandedLectures[lecture.id] ? (
+                      <ChevronUp size={20} />
+                    ) : (
+                      <ChevronDown size={20} />
+                    )}
                   </ExpandButton>
                 </div>
               </LectureHeader>
               <ExpandableContent expanded={expandedLectures[lecture.id]}>
                 {lecture.lecture_content && (
-                  <LectureContent dangerouslySetInnerHTML={renderLectureContent(lecture.lecture_content)} />
+                  <LectureContent
+                    dangerouslySetInnerHTML={renderLectureContent(
+                      lecture.lecture_content
+                    )}
+                  />
                 )}
-                {(lecture.lecture_resources_pdf || lecture.lecture_resources_link) && (
+                {(lecture.lecture_resources_pdf ||
+                  lecture.lecture_resources_link) && (
                   <ResourceList>
                     {lecture.lecture_resources_pdf &&
                       lecture.lecture_resources_pdf.map((pdf, index) => (
                         <ResourceItem key={`pdf-${index}`}>
-                          <ResourceLink onClick={() => handlePDFClick(`https://api.novajobs.us/${pdf}`)}>
+                          <ResourceLink
+                            onClick={() =>
+                              handlePDFClick(`https://api.novajobs.us/${pdf}`)
+                            }
+                          >
                             <FileText size={16} />
                             PDF Resource {index + 1}
                           </ResourceLink>
@@ -330,7 +362,11 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
                     {lecture.lecture_resources_link &&
                       lecture.lecture_resources_link.map((link, index) => (
                         <ResourceItem key={`link-${index}`}>
-                          <ResourceLink href={link} target="_blank" rel="noopener noreferrer">
+                          <ResourceLink
+                            href={link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
                             <LinkIcon size={16} />
                             External Resource {index + 1}
                           </ResourceLink>
@@ -343,8 +379,13 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
           ))}
           <button
             className="btn-enroll w-100 mt-3"
-            onClick={() => setShowTestModal(true)}
-            disabled={!is_active_take_test}
+            onClick={() => {
+              if (!is_active_take_test) {
+                toast.error("You are not eligible to take the test right now.");
+                return;
+              }
+              setShowTestModal(true);
+            }}
           >
             Take Test
           </button>
@@ -356,11 +397,18 @@ const LectureListComponent = ({ section, handlePreviewClick, handlePDFClick, loa
               <p>Are you sure you want to take the test for this section?</p>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={() => setShowTestModal(false)}>
+              <Button
+                variant="secondary"
+                onClick={() => setShowTestModal(false)}
+              >
                 Cancel
               </Button>
               <Button variant="primary" onClick={handleTakeTest}>
-                {loadingTest ? <Spinner as="span" animation="border" size="sm" /> : 'Confirm and Take Test'}
+                {loadingTest ? (
+                  <Spinner as="span" animation="border" size="sm" />
+                ) : (
+                  "Confirm and Take Test"
+                )}
               </Button>
             </Modal.Footer>
           </Modal>

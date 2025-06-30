@@ -180,6 +180,9 @@ const LoginCode = () => {
 
           // Save the token in localStorage
           localStorage.setItem("token", token);
+          localStorage.removeItem("trainerToken")
+          localStorage.removeItem("vendorToken")
+          localStorage.removeItem("adminToken")
         // Add navigation logic here after successful verification
         // For example: navigate("/dashboard");
         navigate("/student/student-dashboard");
