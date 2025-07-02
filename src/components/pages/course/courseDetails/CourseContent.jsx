@@ -7,6 +7,10 @@ import styled from "styled-components";
 import LectureListComponent from "./LectureListComponents";
 import { ChevronDown } from "lucide-react";
 import { toast } from "react-toastify";
+import { Button } from "react-bootstrap";
+import CreateNoteModal from "./createNoteModal";
+import { FaEye, FaPlusCircle } from "react-icons/fa";
+import ViewNoteModal from "./viewNoteModal";
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -432,6 +436,76 @@ const CourseContent = ({ courseData }) => {
   const [error, setError] = useState(null);
   const [currentSectionId, setCurrentSectionId] = useState(null);
   const [isEnrolled, setIsEnrolled] = useState(false);
+  const [showNoteModal, setShowNoteModal] = useState(false);
+  const [showViewNoteModal, setShowViewNoteModal] = useState(false);
+  const [viewNoteText, setViewNoteText] = useState("");
+  const [viewNoteImageUrl, setViewNoteImageUrl] = useState("");
+  const [existingNote, setExistingNote] = useState(null);
+
+  const handleOpenNoteModal = async (
+    courseId,
+    sectionId,
+    // lectureId,
+    mode = "view"
+  ) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        `https://api.novajobs.us/api/students/course-notes/${courseId}`,
+        { headers: { Authorization: token } }
+      );
+
+      const notes = response.data?.data || [];
+      const matchedNote = notes.find(
+        (note) => note.section_id === sectionId
+        // && note.lecture_id === lectureId
+      );
+
+      if (matchedNote) {
+        if (mode === "view") {
+          setViewNoteText(matchedNote.text);
+          setViewNoteImageUrl(
+            matchedNote.photo_upload
+              ? `https://api.novajobs.us/${matchedNote.photo_upload}`
+              : ""
+          );
+          setShowViewNoteModal(true);
+        } else {
+          setExistingNote(matchedNote.text);
+          // setSelectedLecture({ id: lectureId });
+          setCurrentSectionId(sectionId);
+          setShowNoteModal(true);
+        }
+      } else {
+        toast.info("No note found for this lecture.");
+      }
+    } catch (error) {
+      console.error("Error fetching note:", error);
+      toast.error("Failed to load note.");
+    }
+  };
+
+  const handleNoteSubmit = async (formData) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+        `https://api.novajobs.us/api/students/add-course-note`,
+        formData,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      toast.success("Note added successfully");
+      console.log(response);
+    } catch (err) {
+      console.error("Error creating note:", err);
+      toast.error("Failed to create note");
+    }
+  };
+
   useEffect(() => {
     if (showVideoModal) {
       document.body.style.overflow = "hidden";
@@ -531,12 +605,39 @@ const CourseContent = ({ courseData }) => {
           {courseData.section_response.length} Sections
         </SectionCount>
       </CourseContentHeader>
-     
+
       {courseData?.section_response?.length > 0 ? (
         courseData.section_response.map((section) => (
           <CourseSection key={section.id}>
             <SectionHeader onClick={() => toggleOpen(section.id)}>
               <SectionTitle>{section.section_name}</SectionTitle>
+              <div>
+                <Button
+                  variant="outline-primary"
+                  className="mt-2"
+                  onClick={() => {
+                    // setSelectedLecture(lecture);
+                    setCurrentSectionId(section.id);
+                    setShowNoteModal(true);
+                  }}
+                >
+                  <FaPlusCircle />
+                </Button>
+                <Button
+                  variant="outline-secondary"
+                  className="mt-2 d-flex align-items-center gap-2"
+                  onClick={() =>
+                    handleOpenNoteModal(
+                      courseData.course_id,
+                      section.id,
+
+                      "view"
+                    )
+                  }
+                >
+                  <FaEye />
+                </Button>
+              </div>
               <ChevronIcon size={20} isOpen={open[section.id]} />
             </SectionHeader>
             <SectionContent isOpen={open[section.id]}>
@@ -547,6 +648,7 @@ const CourseContent = ({ courseData }) => {
                   handlePDFClick={handlePDFClick}
                   loadingStates={loadingStates}
                   courseData={courseData}
+                  handleOpenNoteModal={handleOpenNoteModal}
                 />
               ) : (
                 <p className="text-muted text-center m-2">
@@ -559,7 +661,21 @@ const CourseContent = ({ courseData }) => {
       ) : (
         <p>No sections found for this course.</p>
       )}
-
+      <CreateNoteModal
+        show={showNoteModal}
+        handleClose={() => setShowNoteModal(false)}
+        onSubmit={handleNoteSubmit}
+        courseId={courseData.course_id}
+        sectionId={currentSectionId}
+        existingNote={existingNote} // <-- use her
+        lectureId={selectedLecture?.id}
+      />
+      <ViewNoteModal
+        show={showViewNoteModal}
+        handleClose={() => setShowViewNoteModal(false)}
+        noteText={viewNoteText}
+        imageUrl={viewNoteImageUrl}
+      />
       <VideoModal
         isOpen={showVideoModal}
         onClose={closePreview}
