@@ -395,13 +395,14 @@ const CourseSection = styled.div`
 
 const SectionHeader = styled.h6`
   margin: 0;
-  padding: 15px;
+  padding: 20px;
   background-color: #f5f5f5;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
   transition: background-color 0.3s ease;
+  min-height: 60px;
 
   &:hover {
     background-color: #e0e0e0;
@@ -438,57 +439,60 @@ const CourseContent = ({ courseData }) => {
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [showNoteModal, setShowNoteModal] = useState(false);
   const [showViewNoteModal, setShowViewNoteModal] = useState(false);
-  const [viewNoteText, setViewNoteText] = useState("");
-  const [viewNoteImageUrl, setViewNoteImageUrl] = useState("");
+  const [viewNotes, setViewNotes] = useState([]);
   const [existingNote, setExistingNote] = useState(null);
 
   const handleOpenNoteModal = async (
     courseId,
     sectionId,
-    // lectureId,
+    lectureId = null,
     mode = "view"
   ) => {
     try {
       const token = localStorage.getItem("token");
+
+      // Build query parameters
+      const params = new URLSearchParams();
+      params.append("section_id", sectionId);
+      if (lectureId) {
+        params.append("lecture_id", lectureId);
+      }
+
       const response = await axios.get(
-        `https://api.novajobs.us/api/students/course-notes/${courseId}`,
+        `https://api.novajobs.us/api/students/course-notes/${courseId}?${params.toString()}`,
         { headers: { Authorization: token } }
       );
 
       const notes = response.data?.data || [];
-      const matchedNote = notes.find(
-        (note) => note.section_id === sectionId
-        // && note.lecture_id === lectureId
-      );
 
-      if (matchedNote) {
+      if (notes.length > 0) {
         if (mode === "view") {
-          setViewNoteText(matchedNote.text);
-          setViewNoteImageUrl(
-            matchedNote.photo_upload
-              ? `https://api.novajobs.us/${matchedNote.photo_upload}`
-              : ""
-          );
+          setViewNotes(notes);
           setShowViewNoteModal(true);
         } else {
-          setExistingNote(matchedNote.text);
-          // setSelectedLecture({ id: lectureId });
+          // For edit mode, use the latest note
+          const latestNote = notes[notes.length - 1];
+          setExistingNote(latestNote.text);
+          setSelectedLecture({ id: lectureId });
           setCurrentSectionId(sectionId);
           setShowNoteModal(true);
         }
       } else {
-        toast.info("No note found for this lecture.");
+        toast.info(
+          "No notes found for this " + (lectureId ? "lecture" : "section") + "."
+        );
       }
     } catch (error) {
-      console.error("Error fetching note:", error);
-      toast.error("Failed to load note.");
+      console.error("Error fetching notes:", error);
+      toast.error("Failed to load notes.");
     }
   };
 
   const handleNoteSubmit = async (formData) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.post(
+
+      await axios.post(
         `https://api.novajobs.us/api/students/add-course-note`,
         formData,
         {
@@ -499,9 +503,9 @@ const CourseContent = ({ courseData }) => {
         }
       );
       toast.success("Note added successfully");
-      console.log(response);
     } catch (err) {
       console.error("Error creating note:", err);
+      console.error("Error response:", err.response?.data);
       toast.error("Failed to create note");
     }
   };
@@ -611,12 +615,20 @@ const CourseContent = ({ courseData }) => {
           <CourseSection key={section.id}>
             <SectionHeader onClick={() => toggleOpen(section.id)}>
               <SectionTitle>{section.section_name}</SectionTitle>
-              <div>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "12px",
+                  alignItems: "center",
+                  marginLeft: "auto",
+                  paddingLeft: "20px",
+                }}
+              >
                 <Button
                   variant="outline-primary"
-                  className="mt-2"
+                  size="sm"
                   onClick={() => {
-                    // setSelectedLecture(lecture);
+                    setSelectedLecture(null);
                     setCurrentSectionId(section.id);
                     setShowNoteModal(true);
                   }}
@@ -625,12 +637,12 @@ const CourseContent = ({ courseData }) => {
                 </Button>
                 <Button
                   variant="outline-secondary"
-                  className="mt-2 d-flex align-items-center gap-2"
+                  size="sm"
                   onClick={() =>
                     handleOpenNoteModal(
                       courseData.course_id,
                       section.id,
-
+                      null,
                       "view"
                     )
                   }
@@ -649,6 +661,7 @@ const CourseContent = ({ courseData }) => {
                   loadingStates={loadingStates}
                   courseData={courseData}
                   handleOpenNoteModal={handleOpenNoteModal}
+                  is_active_take_test={courseData.is_active_take_test || false}
                 />
               ) : (
                 <p className="text-muted text-center m-2">
@@ -667,14 +680,13 @@ const CourseContent = ({ courseData }) => {
         onSubmit={handleNoteSubmit}
         courseId={courseData.course_id}
         sectionId={currentSectionId}
-        existingNote={existingNote} // <-- use her
-        lectureId={selectedLecture?.id}
+        existingNote={existingNote}
+        lectureId={selectedLecture?.id || 0}
       />
       <ViewNoteModal
         show={showViewNoteModal}
         handleClose={() => setShowViewNoteModal(false)}
-        noteText={viewNoteText}
-        imageUrl={viewNoteImageUrl}
+        notes={viewNotes}
       />
       <VideoModal
         isOpen={showVideoModal}
@@ -722,6 +734,7 @@ CourseContent.propTypes = {
 CourseContent.propTypes = {
   courseData: PropTypes.shape({
     is_student_enroll: PropTypes.bool,
+    is_active_take_test: PropTypes.bool,
     course_id: PropTypes.number.isRequired,
     section_response: PropTypes.arrayOf(
       PropTypes.shape({

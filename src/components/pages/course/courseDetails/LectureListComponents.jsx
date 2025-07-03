@@ -12,6 +12,8 @@ import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Button, Modal, Spinner } from "react-bootstrap";
+import { FaEye, FaPlusCircle } from "react-icons/fa";
+import CreateNoteModal from "./createNoteModal";
 
 const LectureList = styled.ul`
   list-style-type: none;
@@ -51,46 +53,48 @@ const LectureHeader = styled.div`
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.5rem;
+  padding: 1.25rem 1.5rem;
   cursor: pointer;
   background-color: #ffffff;
   border-bottom: 1px solid #e9ecef;
   transition: background-color 0.3s ease;
+  min-height: 70px;
 
   &:hover {
     background-color: #f8f9fa;
   }
 
   @media (max-width: 768px) {
-    padding: 0.75rem 1rem;
+    padding: 1rem 1.25rem;
+    min-height: 60px;
   }
 `;
 
 const LectureName = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
 `;
 
 const StyledPlay = styled(Play)`
-  margin-right: 0.75rem;
+  margin-right: 0;
   color: #007bff;
-
-  @media (max-width: 768px) {
-    margin-right: 0.5rem;
-  }
+  flex-shrink: 0;
 `;
 
 const PreviewButton = styled.button`
   background-color: #007bff;
   color: white;
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 600;
   font-size: 0.9rem;
+  min-width: 80px;
 
   &:hover {
     background-color: #0056b3;
@@ -104,8 +108,9 @@ const PreviewButton = styled.button`
   }
 
   @media (max-width: 768px) {
-    padding: 0.4rem 0.8rem;
+    padding: 0.5rem 1rem;
     font-size: 0.8rem;
+    min-width: 70px;
   }
 `;
 
@@ -113,18 +118,20 @@ const ExpandButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
-  margin-left: 1rem;
+  padding: 8px;
+  margin-left: 0;
   color: #6c757d;
-  transition: all 1s ease;
+  transition: all 0.3s ease;
+  border-radius: 4px;
 
   &:hover {
     color: #007bff;
+    background-color: #f8f9fa;
     transform: translateY(-1px);
   }
 
   @media (max-width: 768px) {
-    margin-left: 0.5rem;
+    padding: 6px;
   }
 `;
 
@@ -222,6 +229,8 @@ const LectureListComponent = ({
   handlePDFClick,
   loadingStates,
   is_active_take_test,
+  courseData,
+  handleOpenNoteModal,
 }) => {
   const [expandedLectures, setExpandedLectures] = useState({});
   const timersRef = useRef({});
@@ -230,6 +239,9 @@ const LectureListComponent = ({
   const navigate = useNavigate();
   const [showTestModal, setShowTestModal] = useState(false);
   const [loadingTest, setLoadingTest] = useState(false);
+  const [selectedLecture, setSelectedLecture] = useState(null);
+  const [currentSectionId, setCurrentSectionId] = useState(null);
+  const [showNoteModal, setShowNoteModal] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -285,6 +297,27 @@ const LectureListComponent = ({
     }, 2000);
   };
 
+  const handleNoteSubmit = async (formData) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+        `https://api.novajobs.us/api/students/add-course-note`,
+        formData,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      toast.success("Note added successfully");
+      console.log(response);
+    } catch (err) {
+      console.error("Error creating note:", err);
+      toast.error("Failed to create note");
+    }
+  };
+
   const renderLectureContent = (content) => {
     return { __html: content };
   };
@@ -307,7 +340,15 @@ const LectureListComponent = ({
                   )}
                 </LectureName>
 
-                <div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "12px",
+                    alignItems: "center",
+                    marginLeft: "auto",
+                    paddingLeft: "20px",
+                  }}
+                >
                   <PreviewButton
                     onClick={(e) => {
                       e.stopPropagation();
@@ -326,6 +367,47 @@ const LectureListComponent = ({
                   >
                     {loadingStates[lecture.id] ? "Loading..." : "Preview"}
                   </PreviewButton>
+
+                  {/* Note Buttons */}
+                  <Button
+                    variant="outline-primary"
+                    size="sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (isLoggedIn) {
+                        setSelectedLecture(lecture);
+                        setCurrentSectionId(section.id);
+                        setShowNoteModal(true);
+                      } else {
+                        toast.error("Please log in to add notes.");
+                        navigate("/login");
+                      }
+                    }}
+                  >
+                    <FaPlusCircle size={14} />
+                  </Button>
+
+                  <Button
+                    variant="outline-secondary"
+                    size="sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (isLoggedIn) {
+                        handleOpenNoteModal(
+                          courseData.course_id,
+                          section.id,
+                          lecture.id,
+                          "view"
+                        );
+                      } else {
+                        toast.error("Please log in to view notes.");
+                        navigate("/login");
+                      }
+                    }}
+                  >
+                    <FaEye size={14} />
+                  </Button>
+
                   <ExpandButton>
                     {expandedLectures[lecture.id] ? (
                       <ChevronUp size={20} />
@@ -418,6 +500,16 @@ const LectureListComponent = ({
           <LectureHeader>No lectures available for this section.</LectureHeader>
         </LectureItem>
       )}
+
+      <CreateNoteModal
+        show={showNoteModal}
+        handleClose={() => setShowNoteModal(false)}
+        onSubmit={handleNoteSubmit}
+        courseId={courseData.course_id}
+        sectionId={currentSectionId}
+        existingNote={null}
+        lectureId={selectedLecture?.id || 0}
+      />
     </LectureList>
   );
 };
@@ -438,7 +530,9 @@ LectureListComponent.propTypes = {
   handlePreviewClick: PropTypes.func.isRequired,
   handlePDFClick: PropTypes.func.isRequired,
   loadingStates: PropTypes.objectOf(PropTypes.bool).isRequired,
-  is_active_take_test: PropTypes.bool.isRequired, // Added prop type
+  is_active_take_test: PropTypes.bool.isRequired,
+  courseData: PropTypes.object.isRequired,
+  handleOpenNoteModal: PropTypes.func.isRequired,
 };
 
 export default LectureListComponent;
