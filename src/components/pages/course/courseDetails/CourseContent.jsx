@@ -7,6 +7,10 @@ import styled from "styled-components";
 import LectureListComponent from "./LectureListComponents";
 import { ChevronDown } from "lucide-react";
 import { toast } from "react-toastify";
+import { Button } from "react-bootstrap";
+import CreateNoteModal from "./createNoteModal";
+import { FaEye, FaPlusCircle } from "react-icons/fa";
+import ViewNoteModal from "./viewNoteModal";
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -391,13 +395,14 @@ const CourseSection = styled.div`
 
 const SectionHeader = styled.h6`
   margin: 0;
-  padding: 15px;
+  padding: 20px;
   background-color: #f5f5f5;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
   transition: background-color 0.3s ease;
+  min-height: 60px;
 
   &:hover {
     background-color: #e0e0e0;
@@ -432,6 +437,79 @@ const CourseContent = ({ courseData }) => {
   const [error, setError] = useState(null);
   const [currentSectionId, setCurrentSectionId] = useState(null);
   const [isEnrolled, setIsEnrolled] = useState(false);
+  const [showNoteModal, setShowNoteModal] = useState(false);
+  const [showViewNoteModal, setShowViewNoteModal] = useState(false);
+  const [viewNotes, setViewNotes] = useState([]);
+  const [existingNote, setExistingNote] = useState(null);
+
+  const handleOpenNoteModal = async (
+    courseId,
+    sectionId,
+    lectureId = null,
+    mode = "view"
+  ) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      // Build query parameters
+      const params = new URLSearchParams();
+      params.append("section_id", sectionId);
+      if (lectureId) {
+        params.append("lecture_id", lectureId);
+      }
+
+      const response = await axios.get(
+        `https://api.novajobs.us/api/students/course-notes/${courseId}?${params.toString()}`,
+        { headers: { Authorization: token } }
+      );
+
+      const notes = response.data?.data || [];
+
+      if (notes.length > 0) {
+        if (mode === "view") {
+          setViewNotes(notes);
+          setShowViewNoteModal(true);
+        } else {
+          // For edit mode, use the latest note
+          const latestNote = notes[notes.length - 1];
+          setExistingNote(latestNote.text);
+          setSelectedLecture({ id: lectureId });
+          setCurrentSectionId(sectionId);
+          setShowNoteModal(true);
+        }
+      } else {
+        toast.info(
+          "No notes found for this " + (lectureId ? "lecture" : "section") + "."
+        );
+      }
+    } catch (error) {
+      console.error("Error fetching notes:", error);
+      toast.error("Failed to load notes.");
+    }
+  };
+
+  const handleNoteSubmit = async (formData) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      await axios.post(
+        `https://api.novajobs.us/api/students/add-course-note`,
+        formData,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      toast.success("Note added successfully");
+    } catch (err) {
+      console.error("Error creating note:", err);
+      console.error("Error response:", err.response?.data);
+      toast.error("Failed to create note");
+    }
+  };
+
   useEffect(() => {
     if (showVideoModal) {
       document.body.style.overflow = "hidden";
@@ -531,12 +609,47 @@ const CourseContent = ({ courseData }) => {
           {courseData.section_response.length} Sections
         </SectionCount>
       </CourseContentHeader>
-     
+
       {courseData?.section_response?.length > 0 ? (
         courseData.section_response.map((section) => (
           <CourseSection key={section.id}>
             <SectionHeader onClick={() => toggleOpen(section.id)}>
               <SectionTitle>{section.section_name}</SectionTitle>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "12px",
+                  alignItems: "center",
+                  marginLeft: "auto",
+                  paddingLeft: "20px",
+                }}
+              >
+                <Button
+                  variant="outline-primary"
+                  size="sm"
+                  onClick={() => {
+                    setSelectedLecture(null);
+                    setCurrentSectionId(section.id);
+                    setShowNoteModal(true);
+                  }}
+                >
+                  <FaPlusCircle />
+                </Button>
+                <Button
+                  variant="outline-secondary"
+                  size="sm"
+                  onClick={() =>
+                    handleOpenNoteModal(
+                      courseData.course_id,
+                      section.id,
+                      null,
+                      "view"
+                    )
+                  }
+                >
+                  <FaEye />
+                </Button>
+              </div>
               <ChevronIcon size={20} isOpen={open[section.id]} />
             </SectionHeader>
             <SectionContent isOpen={open[section.id]}>
@@ -547,6 +660,8 @@ const CourseContent = ({ courseData }) => {
                   handlePDFClick={handlePDFClick}
                   loadingStates={loadingStates}
                   courseData={courseData}
+                  handleOpenNoteModal={handleOpenNoteModal}
+                  is_active_take_test={courseData.is_active_take_test || false}
                 />
               ) : (
                 <p className="text-muted text-center m-2">
@@ -559,7 +674,20 @@ const CourseContent = ({ courseData }) => {
       ) : (
         <p>No sections found for this course.</p>
       )}
-
+      <CreateNoteModal
+        show={showNoteModal}
+        handleClose={() => setShowNoteModal(false)}
+        onSubmit={handleNoteSubmit}
+        courseId={courseData.course_id}
+        sectionId={currentSectionId}
+        existingNote={existingNote}
+        lectureId={selectedLecture?.id || 0}
+      />
+      <ViewNoteModal
+        show={showViewNoteModal}
+        handleClose={() => setShowViewNoteModal(false)}
+        notes={viewNotes}
+      />
       <VideoModal
         isOpen={showVideoModal}
         onClose={closePreview}
@@ -606,6 +734,7 @@ CourseContent.propTypes = {
 CourseContent.propTypes = {
   courseData: PropTypes.shape({
     is_student_enroll: PropTypes.bool,
+    is_active_take_test: PropTypes.bool,
     course_id: PropTypes.number.isRequired,
     section_response: PropTypes.arrayOf(
       PropTypes.shape({

@@ -8,12 +8,21 @@ import AdminSidebar from "./AdminSidebar";
 import Footer from "../footer";
 import FullPageLoader from "../home/FullPageLoader";
 
-import { Trash } from "react-feather";
+import {
+  Trash,
+  Eye,
+  Edit,
+  Trash2,
+  Copy,
+  Users,
+  ToggleLeft,
+  ToggleRight,
+} from "react-feather";
 
 <link
   href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
   rel="stylesheet"
-/>
+/>;
 
 const AdminCourseList = () => {
   const [allCourses, setAllCourses] = useState([]);
@@ -29,6 +38,9 @@ const AdminCourseList = () => {
   const [expandedSections, setExpandedSections] = useState({});
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null); // Stores the target (section or lecture) to delete
+  const [showCourseNotesModal, setShowCourseNotesModal] = useState(false);
+  const [courseNotes, setCourseNotes] = useState(null);
+  const [loadingCourseNotes, setLoadingCourseNotes] = useState(false);
   const token = localStorage.getItem("adminToken");
   const coursesPerPage = 15;
   const navigate = useNavigate();
@@ -41,12 +53,12 @@ const AdminCourseList = () => {
     setLoading(true);
     try {
       let url = `https://api.novajobs.us/api/trainers/courses-info?order_by=${order}`;
-      
+
       // Add status filter parameter if not "all"
       if (statusFilter !== "all") {
         url += `&is_active=${statusFilter === "active" ? 1 : 0}`;
       }
-      
+
       const response = await axios.get(url, {
         headers: {
           Authorization: `${token}`,
@@ -79,6 +91,27 @@ const AdminCourseList = () => {
       toast.error("Error fetching course details. Please try again.");
     } finally {
       setLoadingCourseDetails(false);
+    }
+  };
+
+  const fetchCourseNotes = async (courseId) => {
+    setLoadingCourseNotes(true);
+    try {
+      const response = await axios.get(
+        `https://api.novajobs.us/api/uaadmin/course-note/${courseId}`,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+      setCourseNotes(response.data);
+      setShowCourseNotesModal(true);
+    } catch (error) {
+      console.error("Error fetching course notes:", error);
+      toast.error("Error fetching course notes. Please try again.");
+    } finally {
+      setLoadingCourseNotes(false);
     }
   };
 
@@ -146,6 +179,11 @@ const AdminCourseList = () => {
   const closeCourseModal = () => {
     setShowCourseModal(false);
     setSelectedCourseDetails(null);
+  };
+
+  const closeCourseNotesModal = () => {
+    setShowCourseNotesModal(false);
+    setCourseNotes(null);
   };
 
   const handleSortChange = (e) => {
@@ -374,7 +412,12 @@ const AdminCourseList = () => {
     }));
   };
 
-  const openDeleteConfirmModal = (type, courseId, sectionId, lectureId = null) => {
+  const openDeleteConfirmModal = (
+    type,
+    courseId,
+    sectionId,
+    lectureId = null
+  ) => {
     setDeleteTarget({ type, courseId, sectionId, lectureId });
     setShowDeleteConfirmModal(true);
   };
@@ -396,9 +439,9 @@ const AdminCourseList = () => {
       </div>
       <div className="page-content">
         <div className="container">
-        <div className="row">
+          <div className="row">
             <div className="col-xl-3 col-lg-3">
-            <AdminSidebar />
+              <AdminSidebar />
             </div>
             <div className="col-xl-9 col-lg-9">
               <div className="card">
@@ -434,11 +477,23 @@ const AdminCourseList = () => {
                   <FullPageLoader />
                 ) : (
                   <div className="card-body">
-                    <div className="table-responsive" style={{ position: 'relative', overflowX: 'auto' }}>
+                    <div
+                      className="table-responsive"
+                      style={{ position: "relative", overflowX: "auto" }}
+                    >
                       <table className="table table-hover table-center mb-0">
                         <thead>
                           <tr>
-                            <th style={{ position: 'sticky', left: 0, background: '#fff', zIndex: 100 }}>Course Title</th>
+                            <th
+                              style={{
+                                position: "sticky",
+                                left: 0,
+                                background: "#fff",
+                                zIndex: 100,
+                              }}
+                            >
+                              Course Title
+                            </th>
                             <th>Trainer Name</th>
                             <th>Price</th>
                             <th>Created At</th>
@@ -449,14 +504,24 @@ const AdminCourseList = () => {
                         <tbody>
                           {currentCourses.map((course) => (
                             <tr key={course.id}>
-                              <td className="border" style={{ position: 'sticky', left: 0, background: '#fff', zIndex: 99 }}>
+                              <td
+                                className="border"
+                                style={{
+                                  position: "sticky",
+                                  left: 0,
+                                  background: "#fff",
+                                  zIndex: 99,
+                                }}
+                              >
                                 <div className="d-flex align-items-center justify-content-between">
                                   <Link to={`/course-info/${course.id}`}>
                                     {course.course_title}
                                   </Link>
                                   <button
                                     className="btn btn-sm btn-info ms-2"
-                                    onClick={() => fetchCourseDetails(course.id)}
+                                    onClick={() =>
+                                      fetchCourseDetails(course.id)
+                                    }
                                   >
                                     View
                                   </button>
@@ -491,16 +556,18 @@ const AdminCourseList = () => {
                                       handleActivateDeactivate(course)
                                     }
                                   >
-                                    {course.is_active
-                                      ? "Deactivate"
-                                      : "Activate"}
+                                    {course.is_active ? (
+                                      <ToggleLeft size={16} />
+                                    ) : (
+                                      <ToggleRight size={16} />
+                                    )}
                                   </button>
                                   <button
                                     className="btn btn-sm btn-secondary"
                                     style={{ minWidth: "60px" }}
                                     onClick={() => handleEditClick(course.id)}
                                   >
-                                    Edit
+                                    <Edit size={16} />
                                   </button>
                                   <button
                                     disabled={course.is_active}
@@ -508,14 +575,14 @@ const AdminCourseList = () => {
                                     style={{ minWidth: "70px" }}
                                     onClick={() => handleDelete(course.id)}
                                   >
-                                    Delete
+                                    <Trash2 size={16} />
                                   </button>
                                   <button
                                     onClick={() => handleDuplicate(course.id)}
                                     className="btn btn-sm btn-dark"
                                     style={{ minWidth: "85px" }}
                                   >
-                                    Duplicate
+                                    <Copy size={16} />
                                   </button>
                                   <button
                                     className="btn btn-sm btn-secondary"
@@ -531,7 +598,15 @@ const AdminCourseList = () => {
                                     }
                                     disabled={!course.is_active}
                                   >
-                                    Allot
+                                    <Users size={16} />
+                                  </button>
+                                  <button
+                                    className="btn btn-sm btn-info"
+                                    style={{ minWidth: "60px" }}
+                                    onClick={() => fetchCourseNotes(course.id)}
+                                    title="View Course Notes"
+                                  >
+                                    <Eye size={16} />
                                   </button>
 
                                   {/* Modal */}
@@ -797,17 +872,24 @@ const AdminCourseList = () => {
             </div>
           ) : selectedCourseDetails ? (
             <div>
-              <h5 className="text-dark">{selectedCourseDetails.course_title}</h5>
-            
+              <h5 className="text-dark">
+                {selectedCourseDetails.course_title}
+              </h5>
+
               <h6 className="text-primary mt-4">Sections</h6>
               {selectedCourseDetails.section_response &&
               selectedCourseDetails.section_response.length > 0 ? (
                 <div className="accordion" id="sectionsAccordion">
                   {selectedCourseDetails.section_response.map((section) => (
                     <div className="accordion-item" key={section.id}>
-                      <h2 className="accordion-header d-flex justify-content-between align-items-center" id={`heading-${section.id}`}>
+                      <h2
+                        className="accordion-header d-flex justify-content-between align-items-center"
+                        id={`heading-${section.id}`}
+                      >
                         <button
-                          className={`accordion-button ${expandedSections[section.id] ? "" : "collapsed"}`}
+                          className={`accordion-button ${
+                            expandedSections[section.id] ? "" : "collapsed"
+                          }`}
                           type="button"
                           onClick={() => toggleSection(section.id)}
                         >
@@ -823,12 +905,14 @@ const AdminCourseList = () => {
                             )
                           }
                         >
-                          <Trash size={16} /> 
+                          <Trash size={16} />
                         </button>
                       </h2>
                       <div
                         id={`collapse-${section.id}`}
-                        className={`accordion-collapse collapse ${expandedSections[section.id] ? "show" : ""}`}
+                        className={`accordion-collapse collapse ${
+                          expandedSections[section.id] ? "show" : ""
+                        }`}
                         data-bs-parent="#sectionsAccordion"
                       >
                         <div className="accordion-body">
@@ -857,7 +941,7 @@ const AdminCourseList = () => {
                                     )
                                   }
                                 >
-                                 <Trash/>
+                                  <Trash />
                                 </button>
                               </li>
                             ))}
@@ -868,7 +952,9 @@ const AdminCourseList = () => {
                   ))}
                 </div>
               ) : (
-                <p className="text-muted">No sections available for this course.</p>
+                <p className="text-muted">
+                  No sections available for this course.
+                </p>
               )}
             </div>
           ) : (
@@ -904,6 +990,100 @@ const AdminCourseList = () => {
           </button>
           <button className="btn btn-danger" onClick={handleDeleteConfirm}>
             Confirm
+          </button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal for Course Notes */}
+      <Modal
+        show={showCourseNotesModal}
+        onHide={closeCourseNotesModal}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title className="text-primary">Trainer Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {loadingCourseNotes ? (
+            <div className="text-center">
+              <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+              <p className="mt-2">Loading notes...</p>
+            </div>
+          ) : courseNotes ? (
+            <div>
+              {courseNotes.status === "success" &&
+              courseNotes.data &&
+              courseNotes.data.length > 0 ? (
+                <div>
+                  <h6 className="text-primary mb-3">Trainer Note Details</h6>
+
+                  <div className="table-responsive">
+                    <table className="table table-bordered table-striped">
+                      <tbody>
+                        <tr>
+                          <th style={{ width: "30%" }}>Note Text</th>
+                          <td>{courseNotes.data[0].text || "N/A"}</td>
+                        </tr>
+                        <tr>
+                          <th>Trainer Name</th>
+                          <td>
+                            {courseNotes.data[0].trainer_first_name}{" "}
+                            {courseNotes.data[0].trainer_last_name}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>Trainer Email</th>
+                          <td>{courseNotes.data[0].trainer_email || "N/A"}</td>
+                        </tr>
+                        <tr>
+                          <th>Trainer Phone</th>
+                          <td>{courseNotes.data[0].trainer_phone || "N/A"}</td>
+                        </tr>
+                        <tr>
+                          <th>Created At</th>
+                          <td>
+                            {courseNotes.data[0].created_at
+                              ? new Date(
+                                  courseNotes.data[0].created_at
+                                ).toLocaleString()
+                              : "N/A"}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>Updated At</th>
+                          <td>
+                            {courseNotes.data[0].updated_at
+                              ? new Date(
+                                  courseNotes.data[0].updated_at
+                                ).toLocaleString()
+                              : "N/A"}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>Links</th>
+                          <td>{courseNotes.data[0].links || "N/A"}</td>
+                        </tr>
+                        <tr>
+                          <th>Photos</th>
+                          <td>{courseNotes.data[0].photos || "N/A"}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              ) : (
+                <p className="text-muted">No Trainer notes available.</p>
+              )}
+            </div>
+          ) : (
+            <p className="text-muted">No Trainer notes available.</p>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <button className="btn btn-secondary" onClick={closeCourseNotesModal}>
+            Close
           </button>
         </Modal.Footer>
       </Modal>
