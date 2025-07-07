@@ -10,7 +10,7 @@ import FullPageLoader from "../home/FullPageLoader";
 
 import {
   Trash,
-  Eye,
+  // Eye,
   Edit,
   Trash2,
   Copy,
@@ -38,9 +38,9 @@ const AdminCourseList = () => {
   const [expandedSections, setExpandedSections] = useState({});
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null); // Stores the target (section or lecture) to delete
-  const [showCourseNotesModal, setShowCourseNotesModal] = useState(false);
-  const [courseNotes, setCourseNotes] = useState(null);
-  const [loadingCourseNotes, setLoadingCourseNotes] = useState(false);
+  // const [showCourseNotesModal, setShowCourseNotesModal] = useState(false);
+  // const [courseNotes, setCourseNotes] = useState(null);
+  // const [loadingCourseNotes, setLoadingCourseNotes] = useState(false);
   const token = localStorage.getItem("adminToken");
   const coursesPerPage = 15;
   const navigate = useNavigate();
@@ -94,26 +94,26 @@ const AdminCourseList = () => {
     }
   };
 
-  const fetchCourseNotes = async (courseId) => {
-    setLoadingCourseNotes(true);
-    try {
-      const response = await axios.get(
-        `https://api.novajobs.us/api/uaadmin/course-note/${courseId}`,
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      );
-      setCourseNotes(response.data);
-      setShowCourseNotesModal(true);
-    } catch (error) {
-      console.error("Error fetching course notes:", error);
-      toast.error("Error fetching course notes. Please try again.");
-    } finally {
-      setLoadingCourseNotes(false);
-    }
-  };
+  // const fetchCourseNotes = async (courseId) => {
+  //   setLoadingCourseNotes(true);
+  //   try {
+  //     const response = await axios.get(
+  //       `https://api.novajobs.us/api/uaadmin/course-note/${courseId}`,
+  //       {
+  //         headers: {
+  //           Authorization: `${token}`,
+  //         },
+  //       }
+  //     );
+  //     setCourseNotes(response.data);
+  //     setShowCourseNotesModal(true);
+  //   } catch (error) {
+  //     console.error("Error fetching course notes:", error);
+  //     toast.error("Error fetching course notes. Please try again.");
+  //   } finally {
+  //     setLoadingCourseNotes(false);
+  //   }
+  // };
 
   const deleteSection = async (courseId, sectionId) => {
     try {
@@ -181,10 +181,10 @@ const AdminCourseList = () => {
     setSelectedCourseDetails(null);
   };
 
-  const closeCourseNotesModal = () => {
-    setShowCourseNotesModal(false);
-    setCourseNotes(null);
-  };
+  // const closeCourseNotesModal = () => {
+  //   setShowCourseNotesModal(false);
+  //   setCourseNotes(null);
+  // };
 
   const handleSortChange = (e) => {
     setSortOrder(e.target.value);
@@ -600,14 +600,14 @@ const AdminCourseList = () => {
                                   >
                                     <Users size={16} />
                                   </button>
-                                  <button
+                                  {/* <button
                                     className="btn btn-sm btn-info"
                                     style={{ minWidth: "60px" }}
                                     onClick={() => fetchCourseNotes(course.id)}
                                     title="View Course Notes"
                                   >
                                     <Eye size={16} />
-                                  </button>
+                                  </button> */}
 
                                   {/* Modal */}
                                   <Modal
@@ -995,7 +995,7 @@ const AdminCourseList = () => {
       </Modal>
 
       {/* Modal for Course Notes */}
-      <Modal
+      {/* <Modal
         show={showCourseNotesModal}
         onHide={closeCourseNotesModal}
         centered
@@ -1086,7 +1086,7 @@ const AdminCourseList = () => {
             Close
           </button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
     </div>
   );
 };

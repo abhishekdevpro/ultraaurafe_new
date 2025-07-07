@@ -183,11 +183,13 @@ import Certificate from "./components/pages/course/courseDetails/certificationDe
 import VerifyCertificate from "./components/footer/VerifyCertificate.jsx";
 import TestLogin from "./components/pages/login/testlogin.jsx";
 import ConnectTrainer from "./components/Admin/ConnectTrainer.jsx";
-import Subscription from "./components/pages/Payments/Subscription.jsx"
-import PaymentPlans from "./components/pages/Payments/PaymentPlans.jsx"
-import PaymentDetails from "./components/pages/Payments/PaymentDetails.jsx"
-import PaymentSuccess from "./components/pages/Payments/Payment-success.jsx"
-import PaymentFailed from "./components/pages/Payments/payment-failed.jsx"
+import Subscription from "./components/pages/Payments/Subscription.jsx";
+import PaymentPlans from "./components/pages/Payments/PaymentPlans.jsx";
+import PaymentDetails from "./components/pages/Payments/PaymentDetails.jsx";
+import PaymentSuccess from "./components/pages/Payments/Payment-success.jsx";
+import PaymentFailed from "./components/pages/Payments/payment-failed.jsx";
+
+import NotesList from "./components/Admin/NotesList.jsx";
 
 const Approuter = () => {
   return (
@@ -229,12 +231,11 @@ const Approuter = () => {
         <Route path="/blog-details" element={<BlogDetails />} />
 
         {/* Payments and subscription routes */}
-        <Route path="/subscription" element={<Subscription/>} />
-        <Route path="/payment-plans" element={<PaymentPlans/>} />
-        <Route path="/plan-details" element={<PaymentDetails/>} />
-        <Route path="/payment-success" element={<PaymentSuccess/>} />
-        <Route path="/payment-failed" element={<PaymentFailed/>} />
-        
+        <Route path="/subscription" element={<Subscription />} />
+        <Route path="/payment-plans" element={<PaymentPlans />} />
+        <Route path="/plan-details" element={<PaymentDetails />} />
+        <Route path="/payment-success" element={<PaymentSuccess />} />
+        <Route path="/payment-failed" element={<PaymentFailed />} />
 
         {/* Pages */}
         <Route path="/page-notification" element={<Notification />} />
@@ -657,6 +658,8 @@ const Approuter = () => {
           <Route path="/admin/partner-list" element={<PartnerList />} />
           <Route path="/admin/student-list" element={<StudentList />} />
           <Route path="/admin/course-list" element={<AdminCourseList />} />
+          <Route path="/admin/notes-list" element={<NotesList />} />
+
           <Route path="/admin/connect-trainer" element={<ConnectTrainer />} />
           <Route path="/admin/add-student" element={<AddStudentForm />} />
           <Route path="/admin/add-trainer" element={<AddTrainerForm />} />
