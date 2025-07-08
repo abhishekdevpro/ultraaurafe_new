@@ -624,7 +624,7 @@ const CourseContent = ({ courseData }) => {
                   paddingLeft: "20px",
                 }}
               >
-                <Button
+                {isEnrolled && <Button
                   variant="outline-primary"
                   size="sm"
                   onClick={() => {
@@ -634,7 +634,7 @@ const CourseContent = ({ courseData }) => {
                   }}
                 >
                   <FaPlusCircle />
-                </Button>
+                </Button>}
                 <Button
                   variant="outline-secondary"
                   size="sm"
