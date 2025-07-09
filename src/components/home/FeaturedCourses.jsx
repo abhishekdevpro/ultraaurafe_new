@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -348,7 +347,6 @@ const DynamicCourseGrid = () => {
 
   const limitedCourses = filteredCourses.slice(0, displayCount);
 
-  
   const toggleClass = async (courseId) => {
     if (!localStorage.getItem("token")) {
       toast.error("You need to login first.");
@@ -453,8 +451,12 @@ const DynamicCourseGrid = () => {
               <span className="courses">Our Popular Online Courses</span>
             </Title>
             <div className="d-flex justify-content-end items-center gap-2">
-              <AllCoursesButton to={"/course-list"}>All Courses</AllCoursesButton>
-            <AllCoursesButton to={"/course-list"}>Partner Courses</AllCoursesButton>
+              <AllCoursesButton to={"/course-list"}>
+                All Courses
+              </AllCoursesButton>
+              <AllCoursesButton to={"/partners-course-list"}>
+                Partner Courses
+              </AllCoursesButton>
             </div>
           </Header>
 

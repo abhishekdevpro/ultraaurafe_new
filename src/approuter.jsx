@@ -190,6 +190,7 @@ import PaymentSuccess from "./components/pages/Payments/Payment-success.jsx";
 import PaymentFailed from "./components/pages/Payments/payment-failed.jsx";
 
 import NotesList from "./components/Admin/NotesList.jsx";
+import PartnersCourseList from "./components/pages/course/partnerscourseList./index.jsx";
 
 const Approuter = () => {
   return (
@@ -244,6 +245,7 @@ const Approuter = () => {
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/add-course" element={<AddCourse />} />
         <Route path="/course-list" element={<CourseList />} />
+        <Route path="/partners-course-list" element={<PartnersCourseList />} />
         <Route path="/course-grid" element={<CourseGrid />} />
         <Route path="/course-info/:courseid" element={<CourseDetails />} />
         <Route path="/course-details1" element={<CourseDetails1 />} />
