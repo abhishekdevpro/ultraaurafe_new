@@ -2,108 +2,80 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ZoomMeetingModal from "../ZoomMeetingModal";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const StudentLiveClassTable = () => {
+  const navigate = useNavigate();
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showMeetingModal, setShowMeetingModal] = useState(false);
   const [activeMeetingUrl, setActiveMeetingUrl] = useState("");
-  const [passcode,setPasscode] = useState(" ");
+  // const [passcode, setPasscode] = useState(" ");
 
   const studentToken = localStorage.getItem("token");
-const adminToken = localStorage.getItem("adminToken");
+  const adminToken = localStorage.getItem("adminToken");
 
-useEffect(() => {
-  fetchClasses();
-}, [studentToken, adminToken]);
+  useEffect(() => {
+    fetchClasses();
+  }, [studentToken, adminToken]);
 
-const fetchClasses = async () => {
-  setLoading(true);
-  
-  const url = adminToken
-    ? "https://api.novajobs.us/api/trainers/all-live-class"
-    : "https://api.novajobs.us/api/students/my-live-classes";
-  
-  const tokenToUse = adminToken || studentToken;
-  console.log(tokenToUse,"ttuuu");
+  const fetchClasses = async () => {
+    setLoading(true);
 
-  try {
-    const response = await axios.get(url, {
-      headers: {
-        Authorization: `${tokenToUse}`, 
-      },
-    });
+    const url = adminToken
+      ? "https://api.novajobs.us/api/trainers/all-live-class"
+      : "https://api.novajobs.us/api/students/my-live-classes";
 
-    if (response.data && response.data.data) {
-      setClasses(response.data.data);
-      setError(null);
-    } else {
-      setError("No scheduled classes available");
-    }
-  } catch (error) {
-    // Log the actual error for debugging
-    console.error("Fetch classes error:", error);
-    setError("Failed to fetch data. Please try again.");
-  } finally {
-    setLoading(false);
-  }
-};
+    const tokenToUse = adminToken || studentToken;
+    console.log(tokenToUse, "ttuuu");
 
-
-//   const handleJoin = (liveClass) => {
-//     console.log(liveClass,"lc");
-//     setActiveMeetingUrl(`https://zoom.us/wc/join/${liveClass.meeting_id}`);
-//     setShowMeetingModal(true);
-//     const meetingInfoString = liveClass.meeting_info;
-// const meetingInfo = JSON.parse(meetingInfoString);
-
-// const passcode = meetingInfo.password || "No passcode available";
-// const topic = meetingInfo.topic || "No topic available"; 
-// console.log(meetingInfo);
-// console.log("Passcode:", passcode);
-// console.log("Topic:", topic);
-
-//   };
-const handleJoin = (liveClass) => {
-    console.log(liveClass, "lc");
-  
-    // Parse meeting information
-    const meetingInfoString = liveClass.meeting_info;
-    let meetingInfo;
     try {
-      meetingInfo = JSON.parse(meetingInfoString);
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `${tokenToUse}`,
+        },
+      });
+
+      if (response.data && response.data.data) {
+        setClasses(response.data.data);
+        setError(null);
+      } else {
+        setError("No scheduled classes available");
+      }
     } catch (error) {
-      console.error("Invalid meeting info format", error);
-      alert("Invalid meeting info format. Please try again.");
-      return;
+      // Log the actual error for debugging
+      console.error("Fetch classes error:", error);
+      setError("Failed to fetch data. Please try again.");
+    } finally {
+      setLoading(false);
     }
-  
-    const meetingId = liveClass.meeting_id;
-    const passcode = meetingInfo.password || "";
-
-  
-    if (!meetingId) {
-
-      toast.error("Meeting ID is missing. Please check the meeting details.");
-      return;
-    }
-  
-    if (!passcode) {
-      console.log(passcode);
-        toast.error("Invalid user or missing password for the meeting. Please check the credentials.");
-      return;
-    }
-  
-    // Construct the Zoom meeting URL
-    const zoomUrl = `https://zoom.us/wc/${meetingId}/join?pwd=${encodeURIComponent(passcode)}`;
-    // setActiveMeetingUrl(zoomUrl);
-    // setShowMeetingModal(true);
-    window.open(zoomUrl, "_blank");
-    setPasscode(passcode)
-  
   };
-  
+
+  //   const handleJoin = (liveClass) => {
+  //     console.log(liveClass,"lc");
+  //     setActiveMeetingUrl(`https://zoom.us/wc/join/${liveClass.meeting_id}`);
+  //     setShowMeetingModal(true);
+  //     const meetingInfoString = liveClass.meeting_info;
+  // const meetingInfo = JSON.parse(meetingInfoString);
+
+  // const passcode = meetingInfo.password || "No passcode available";
+  // const topic = meetingInfo.topic || "No topic available";
+  // console.log(meetingInfo);
+  // console.log("Passcode:", passcode);
+  // console.log("Topic:", topic);
+
+  //   };
+  const handleJoin = (liveClass) => {
+    if (liveClass.meeting_join_url) {
+      // Navigate to ScheduleMeeting page with the meeting URL
+      navigate("/student/schedule-meeting", {
+        state: { meetingUrl: liveClass.meeting_join_url },
+      });
+    } else {
+      toast.error("Meeting URL not available");
+    }
+  };
 
   const handleMeetingClose = () => {
     setShowMeetingModal(false);
@@ -144,7 +116,9 @@ const handleJoin = (liveClass) => {
                       {classes.map((liveClass) => (
                         <tr key={liveClass.id}>
                           <td>{liveClass.title}</td>
-                          <td>{new Date(liveClass.start_time).toLocaleString()}</td>
+                          <td>
+                            {new Date(liveClass.start_time).toLocaleString()}
+                          </td>
                           <td>{liveClass.duration} minutes</td>
                           <td>
                             <button
@@ -169,7 +143,7 @@ const handleJoin = (liveClass) => {
         showMeetingModal={showMeetingModal}
         handleMeetingClose={handleMeetingClose}
         activeMeetingUrl={activeMeetingUrl}
-        passcode={passcode}
+        // passcode={passcode}
       />
     </div>
   );
