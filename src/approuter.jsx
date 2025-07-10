@@ -191,6 +191,7 @@ import PaymentFailed from "./components/pages/Payments/payment-failed.jsx";
 
 import NotesList from "./components/Admin/NotesList.jsx";
 import PartnersCourseList from "./components/pages/course/partnerscourseList./index.jsx";
+import ScheduleMeeting from "./components/instructor/LiveClasses/ForStudent/ScheduleMeeting.jsx";
 
 const Approuter = () => {
   return (
@@ -552,6 +553,10 @@ const Approuter = () => {
           <Route
             path="/student/join-live-classes"
             element={<JoinLiveClass />}
+          />
+          <Route
+            path="/student/schedule-meeting"
+            element={<ScheduleMeeting />}
           />
           <Route
             path="/student/student-order-history"
