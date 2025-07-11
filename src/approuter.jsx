@@ -192,10 +192,13 @@ import PaymentFailed from "./components/pages/Payments/payment-failed.jsx";
 import NotesList from "./components/Admin/NotesList.jsx";
 import PartnersCourseList from "./components/pages/course/partnerscourseList./index.jsx";
 import ScheduleMeeting from "./components/instructor/LiveClasses/ForStudent/ScheduleMeeting.jsx";
+import GoogleOneTapLogin from "./components/GoogleOneTapLogin.jsx";
 
 const Approuter = () => {
   return (
     <BrowserRouter>
+      <GoogleOneTapLogin />
+
       <Routes>
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/home" element={<Home />} />
