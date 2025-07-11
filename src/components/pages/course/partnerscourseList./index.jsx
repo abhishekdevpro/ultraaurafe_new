@@ -11,76 +11,60 @@ const PartnersCourseList = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalRecords, setTotalRecords] = useState(0);
+  const [pageSize] = useState(8);
   const location = useLocation();
   const navigate = useNavigate();
-  const token = localStorage.getItem("trainerToken");
-  const [partnerCourses, setPartnerCourses] = useState([]);
 
-  const fetchPartnerCourses = async () => {
+  const fetchPartnerCourses = async (page = 1, searchKeywords = "") => {
     try {
+      setLoading(true);
+      console.log("Fetching partner courses:", { page, searchKeywords });
+
+      const params = {
+        page_no: page,
+        page_size: pageSize,
+      };
+
+      if (searchKeywords) {
+        params.title_keywords = searchKeywords;
+      }
+
       const response = await axios.get(
-        "https://api.novajobs.us/api/students/course-partner"
+        "https://api.novajobs.us/api/students/course-partner",
+        { params }
       );
-      setPartnerCourses(response.data.data);
-    } catch (error) {
-      console.error("Failed to fetch partner courses", error);
-    }
-  };
-  useEffect(() => {
-    if (partnerCourses.length) {
-      console.log("Fetched partner courses:", partnerCourses);
-      // Set courses immediately when partner courses are loaded
-      setCourses(partnerCourses);
-    }
-  }, [partnerCourses]);
 
-  useEffect(() => {
-    fetchPartnerCourses();
-  }, [token]);
+      console.log("API Response:", response.data);
 
-  const fetchFilteredCourses = async () => {
-    setLoading(true);
-    try {
-      // Use partner courses data instead of fetching from all-courses
-      if (partnerCourses.length > 0) {
-        setCourses(partnerCourses);
+      // Only update if we have data
+      if (response.data.data && response.data.data.length > 0) {
+        setCourses(response.data.data);
+        setTotalRecords(response.data.total_records);
+        setCurrentPage(page);
+        console.log("Courses set:", response.data.data.length);
       } else {
-        // Fallback to original API if partner courses are not available
-        const {
-          title_keywords,
-          course_category_id,
-          trainer_id,
-          course_level_id,
-        } = parseQueryParams();
-        console.log("Fetching courses with params:", {
-          title_keywords,
-          course_category_id,
-          trainer_id,
-          course_level_id,
-        });
-
-        const response = await axios.get(
-          "https://api.novajobs.us/api/trainers/all-courses",
-          {
-            params: {
-              title_keywords,
-              course_category_id: course_category_id.join("+"),
-              trainer_id: trainer_id.join("+"),
-              course_level_id: course_level_id.join("+"),
-            },
-            headers: { Authorization: token },
-          }
-        );
-
-        setCourses(response.data.data || []);
+        console.log("No data received from API");
       }
     } catch (error) {
-      console.error("Error fetching filtered courses:", error);
-      setError("Failed to load courses.");
+      console.error("Failed to fetch partner courses", error);
+      setError("Failed to load partner courses");
     } finally {
       setLoading(false);
     }
   };
+  // Initial load
+  useEffect(() => {
+    fetchPartnerCourses(1, "");
+  }, []);
+
+  // Handle search and pagination changes
+  useEffect(() => {
+    if (currentPage > 1 || searchTerm) {
+      fetchPartnerCourses(currentPage, searchTerm);
+    }
+  }, [currentPage, searchTerm]);
 
   const parseQueryParams = () => {
     const searchParams = new URLSearchParams(location.search);
@@ -99,24 +83,19 @@ const PartnersCourseList = () => {
   };
 
   useEffect(() => {
-    fetchFilteredCourses();
-  }, [location.search, token, partnerCourses]);
-
-  useEffect(() => {
     const { title_keywords } = parseQueryParams();
-    setSearchTerm(title_keywords || "");
+    if (title_keywords !== searchTerm) {
+      setSearchTerm(title_keywords || "");
+    }
   }, [location.search]);
 
   const handleClearFilters = () => {
     setSearchTerm("");
+    setCurrentPage(1);
     navigate("", { replace: true });
 
     // Reset to show all partner courses
-    if (partnerCourses.length > 0) {
-      setCourses(partnerCourses);
-    } else {
-      fetchFilteredCourses();
-    }
+    fetchPartnerCourses(1, "");
   };
 
   const handleSearchClick = () => {
@@ -128,20 +107,11 @@ const PartnersCourseList = () => {
     }
     navigate(`?${searchParams.toString()}`, { replace: true });
 
-    // Filter partner courses based on search term
-    if (partnerCourses.length > 0) {
-      const filtered = partnerCourses.filter(
-        (course) =>
-          course.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          course.description
-            ?.toLowerCase()
-            .includes(searchTerm.toLowerCase()) ||
-          course.level?.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setCourses(filtered);
-    } else {
-      fetchFilteredCourses();
-    }
+    // Reset to first page when searching
+    setCurrentPage(1);
+
+    // Fetch courses with search term
+    fetchPartnerCourses(1, searchTerm);
   };
 
   if (error) return <p>{error}</p>;
@@ -171,7 +141,9 @@ const PartnersCourseList = () => {
                     <div className="d-flex align-items-center">
                       <div className="show-result">
                         <h4>
-                          Showing 1-{courses.length} of {courses.length} results
+                          Showing {(currentPage - 1) * pageSize + 1}-
+                          {Math.min(currentPage * pageSize, totalRecords)} of{" "}
+                          {totalRecords} results
                         </h4>
                       </div>
                     </div>
@@ -211,7 +183,17 @@ const PartnersCourseList = () => {
                 </div>
               </div>
 
-              {loading ? <FullPageLoader /> : <InnerPage courses={courses} />}
+              {loading ? (
+                <FullPageLoader />
+              ) : (
+                <InnerPage
+                  courses={courses}
+                  currentPage={currentPage}
+                  totalRecords={totalRecords}
+                  pageSize={pageSize}
+                  onPageChange={setCurrentPage}
+                />
+              )}
 
               <div className="text-center pt-4">
                 <button

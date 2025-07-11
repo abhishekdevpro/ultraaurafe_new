@@ -1,40 +1,44 @@
-
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import InnerPage from './innerPage';
-import Footer from '../../../footer';
-import Header from '../../../header';
-import FullPageLoader from '../../../home/FullPageLoader';
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import InnerPage from "./innerPage";
+import Footer from "../../../footer";
+import Header from "../../../header";
+import FullPageLoader from "../../../home/FullPageLoader";
 
 const CourseList = () => {
   const [courses, setCourses] = useState([]);
   const [error, setError] = useState(null);
   const [categoryOptions, setCategoryOptions] = useState([]);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   // const [trainerOptions, setTrainerOptions] = useState([]);
   const [levelOptions, setLevelOptions] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedTrainers, setSelectedTrainers] = useState([]);
   const [selectedLevels, setSelectedLevels] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalRecords, setTotalRecords] = useState(0);
+  const [pageSize] = useState(8);
   const location = useLocation();
   const navigate = useNavigate();
-  const token = localStorage.getItem('trainerToken');
+  const token = localStorage.getItem("trainerToken");
 
   const fetchOptions = async () => {
     try {
       const [categoriesResponse, levelsResponse] = await Promise.all([
-        axios.get('https://api.novajobs.us/api/trainers/course-categories', {
-          headers: { Authorization: token }
+        axios.get("https://api.novajobs.us/api/trainers/course-categories", {
+          headers: { Authorization: token },
         }),
-        fetch('https://api.novajobs.us/api/trainers/course-level')
+        fetch("https://api.novajobs.us/api/trainers/course-level"),
       ]);
 
-      setCategoryOptions(categoriesResponse.data.data.map(category => ({
-        label: category.name,
-        value: category.id.toString()
-      })));
+      setCategoryOptions(
+        categoriesResponse.data.data.map((category) => ({
+          label: category.name,
+          value: category.id.toString(),
+        }))
+      );
 
       // setTrainerOptions(trainersResponse.data.data.map(trainer => ({
       //   label: `${trainer.trainer.first_name} ${trainer.trainer.last_name}`,
@@ -42,54 +46,86 @@ const CourseList = () => {
       // })));
 
       const levelsData = await levelsResponse.json();
-      setLevelOptions(levelsData.data.map(level => ({
-        label: level.name,
-        value: level.id.toString()
-      })));
-
+      setLevelOptions(
+        levelsData.data.map((level) => ({
+          label: level.name,
+          value: level.id.toString(),
+        }))
+      );
     } catch (error) {
-      console.error('Error fetching options:', error);
+      console.error("Error fetching options:", error);
     }
   };
 
   const fetchFilteredCourses = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const { title_keywords, course_category_id, trainer_id, course_level_id } = parseQueryParams();
-      console.log('Fetching courses with params:', {
+      const {
         title_keywords,
         course_category_id,
         trainer_id,
-        course_level_id
+        course_level_id,
+        page_no,
+        page_size,
+      } = parseQueryParams();
+      console.log("Fetching courses with params:", {
+        title_keywords,
+        course_category_id,
+        trainer_id,
+        course_level_id,
+        page_no,
+        page_size,
       });
 
-      const response = await axios.get('https://api.novajobs.us/api/trainers/all-courses', {
-        params: {
-          title_keywords,
-          course_category_id: course_category_id.join('+'),
-          trainer_id: trainer_id.join('+'),
-          course_level_id: course_level_id.join('+')
-        },
-        headers: { Authorization: token }
-      });
+      const response = await axios.get(
+        "https://api.novajobs.us/api/trainers/all-courses",
+        {
+          params: {
+            title_keywords,
+            course_category_id: course_category_id.join("+"),
+            trainer_id: trainer_id.join("+"),
+            course_level_id: course_level_id.join("+"),
+            page_no: page_no,
+            page_size: page_size,
+          },
+          headers: { Authorization: token },
+        }
+      );
 
       setCourses(response.data.data || []);
+
+      // Update total records from API response
+      if (response.data.total_records) {
+        setTotalRecords(response.data.total_records);
+      }
+
+      // Update current page from URL
+      setCurrentPage(page_no);
+
+      console.log("API Response:", response.data);
     } catch (error) {
-      console.error('Error fetching filtered courses:', error);
-      setError('Failed to load courses.');
-    }
-    finally{
-      setLoading(false)
+      console.error("Error fetching filtered courses:", error);
+      setError("Failed to load courses.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const parseQueryParams = () => {
     const searchParams = new URLSearchParams(location.search);
     return {
-      title_keywords: searchParams.get('title_keywords') || searchTerm,
-      course_category_id: (searchParams.get('course_category_id') || '').split('+').filter(Boolean),
-      trainer_id: (searchParams.get('trainer_id') || '').split('+').filter(Boolean),
-      course_level_id: (searchParams.get('course_level_id') || '').split('+').filter(Boolean)
+      title_keywords: searchParams.get("title_keywords") || searchTerm,
+      course_category_id: (searchParams.get("course_category_id") || "")
+        .split("+")
+        .filter(Boolean),
+      trainer_id: (searchParams.get("trainer_id") || "")
+        .split("+")
+        .filter(Boolean),
+      course_level_id: (searchParams.get("course_level_id") || "")
+        .split("+")
+        .filter(Boolean),
+      page_no: parseInt(searchParams.get("page_no")) || 1,
+      page_size: parseInt(searchParams.get("page_size")) || pageSize,
     };
   };
 
@@ -102,31 +138,32 @@ const CourseList = () => {
   }, [location.search, token]);
 
   useEffect(() => {
-    const { course_category_id, trainer_id, course_level_id, title_keywords } = parseQueryParams();
+    const { course_category_id, trainer_id, course_level_id, title_keywords } =
+      parseQueryParams();
     setSelectedCategories(course_category_id);
     setSelectedTrainers(trainer_id);
     setSelectedLevels(course_level_id);
-    setSearchTerm(title_keywords || '');
+    setSearchTerm(title_keywords || "");
   }, [location.search]);
 
   const handleCheckboxChange = (e, filterType) => {
     const value = e.target.value;
     let updatedFilters;
 
-    if (filterType === 'course_category_id') {
+    if (filterType === "course_category_id") {
       updatedFilters = e.target.checked
         ? [...selectedCategories, value]
-        : selectedCategories.filter(id => id !== value);
+        : selectedCategories.filter((id) => id !== value);
       setSelectedCategories(updatedFilters);
-    } else if (filterType === 'trainer_id') {
+    } else if (filterType === "trainer_id") {
       updatedFilters = e.target.checked
         ? [...selectedTrainers, value]
-        : selectedTrainers.filter(id => id !== value);
+        : selectedTrainers.filter((id) => id !== value);
       setSelectedTrainers(updatedFilters);
-    } else if (filterType === 'course_level_id') {
+    } else if (filterType === "course_level_id") {
       updatedFilters = e.target.checked
         ? [...selectedLevels, value]
-        : selectedLevels.filter(id => id !== value);
+        : selectedLevels.filter((id) => id !== value);
       setSelectedLevels(updatedFilters);
     }
 
@@ -136,7 +173,7 @@ const CourseList = () => {
   const updateURL = (filterType, filters) => {
     const searchParams = new URLSearchParams(location.search);
     if (filters.length > 0) {
-      searchParams.set(filterType, filters.join('+'));
+      searchParams.set(filterType, filters.join("+"));
     } else {
       searchParams.delete(filterType);
     }
@@ -147,20 +184,28 @@ const CourseList = () => {
     setSelectedCategories([]);
     setSelectedTrainers([]);
     setSelectedLevels([]);
-    setSearchTerm('');
-    navigate('', { replace: true });
+    setSearchTerm("");
+    navigate("", { replace: true });
     fetchFilteredCourses();
   };
 
   const handleSearchClick = () => {
     const searchParams = new URLSearchParams(location.search);
     if (searchTerm) {
-      searchParams.set('title_keywords', searchTerm);
+      searchParams.set("title_keywords", searchTerm);
     } else {
-      searchParams.delete('title_keywords');
+      searchParams.delete("title_keywords");
     }
+    // Reset to page 1 when searching
+    searchParams.set("page_no", "1");
     navigate(`?${searchParams.toString()}`, { replace: true });
     fetchFilteredCourses();
+  };
+
+  const handlePageChange = (pageNumber) => {
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set("page_no", pageNumber.toString());
+    navigate(`?${searchParams.toString()}`, { replace: true });
   };
 
   if (error) return <p>{error}</p>;
@@ -189,7 +234,11 @@ const CourseList = () => {
                   <div className="col-lg-6">
                     <div className="d-flex align-items-center">
                       <div className="show-result">
-                        <h4>Showing 1-{courses.length} of {courses.length} results</h4>
+                        <h4>
+                          Showing {(currentPage - 1) * pageSize + 1}-
+                          {Math.min(currentPage * pageSize, totalRecords)} of{" "}
+                          {totalRecords} results
+                        </h4>
                       </div>
                     </div>
                   </div>
@@ -228,7 +277,16 @@ const CourseList = () => {
                 </div>
               </div>
 
-              {loading? <FullPageLoader /> : <InnerPage courses={courses} />}
+              {loading ? (
+                <FullPageLoader />
+              ) : (
+                <InnerPage
+                  courses={courses}
+                  currentPage={currentPage}
+                  totalPages={Math.ceil(totalRecords / pageSize)}
+                  onPageChange={handlePageChange}
+                />
+              )}
 
               <div className="text-center pt-4">
                 <button
@@ -254,9 +312,14 @@ const CourseList = () => {
                         id={`category-${category.value}`}
                         value={category.value}
                         checked={selectedCategories.includes(category.value)}
-                        onChange={(e) => handleCheckboxChange(e, 'course_category_id')}
+                        onChange={(e) =>
+                          handleCheckboxChange(e, "course_category_id")
+                        }
                       />
-                      <label className="form-check-label" htmlFor={`category-${category.value}`}>
+                      <label
+                        className="form-check-label"
+                        htmlFor={`category-${category.value}`}
+                      >
                         {category.label}
                       </label>
                     </div>
@@ -292,9 +355,14 @@ const CourseList = () => {
                         id={`level-${level.value}`}
                         value={level.value}
                         checked={selectedLevels.includes(level.value)}
-                        onChange={(e) => handleCheckboxChange(e, 'course_level_id')}
+                        onChange={(e) =>
+                          handleCheckboxChange(e, "course_level_id")
+                        }
                       />
-                      <label className="form-check-label" htmlFor={`level-${level.value}`}>
+                      <label
+                        className="form-check-label"
+                        htmlFor={`level-${level.value}`}
+                      >
                         {level.label}
                       </label>
                     </div>

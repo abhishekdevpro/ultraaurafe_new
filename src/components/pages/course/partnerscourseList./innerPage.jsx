@@ -216,19 +216,20 @@ const ModalDescription = styled.div`
   font-size: 1rem;
 `;
 
-const InnerPage = ({ courses = [] }) => {
+const InnerPage = ({
+  courses = [],
+  currentPage = 1,
+  totalRecords = 0,
+  pageSize = 8,
+  onPageChange,
+}) => {
   const [isClassAdded, setIsClassAdded] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const coursesPerPage = 8;
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const indexOfLastCourse = currentPage * coursesPerPage;
-  const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
-  const currentCourses = courses.slice(indexOfFirstCourse, indexOfLastCourse);
-  const totalPages = Math.ceil(courses.length / coursesPerPage);
+  const totalPages = Math.ceil(totalRecords / pageSize);
 
   const toggleClass = async (courseId) => {
     const updatedClasses = [...isClassAdded];
@@ -260,7 +261,7 @@ const InnerPage = ({ courses = [] }) => {
   };
 
   const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+    onPageChange(pageNumber);
     window.scrollTo(0, 0);
   };
 
@@ -278,8 +279,8 @@ const InnerPage = ({ courses = [] }) => {
     <Wrapper>
       <Container>
         <CourseGrid>
-          {currentCourses.length > 0 ? (
-            currentCourses.map((course) => (
+          {courses.length > 0 ? (
+            courses.map((course) => (
               <CourseCard key={course.id}>
                 <Link to={`/course-info/${course.id}`}>
                   <CourseImage
@@ -518,6 +519,10 @@ InnerPage.propTypes = {
       course_level_name: PropTypes.string.isRequired,
     })
   ).isRequired,
+  currentPage: PropTypes.number,
+  totalRecords: PropTypes.number,
+  pageSize: PropTypes.number,
+  onPageChange: PropTypes.func,
 };
 
 export default InnerPage;
