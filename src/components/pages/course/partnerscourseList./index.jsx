@@ -13,7 +13,7 @@ const PartnersCourseList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalRecords, setTotalRecords] = useState(0);
-  const [pageSize] = useState(8);
+  const [pageSize] = useState(9);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -134,7 +134,7 @@ const PartnersCourseList = () => {
       <section className="course-content">
         <div className="container">
           <div className="row">
-            <div className="col-lg-9">
+            <div className="col-lg-12">
               <div className="showing-list">
                 <div className="row">
                   <div className="col-lg-6">
