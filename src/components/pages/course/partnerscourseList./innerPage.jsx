@@ -220,7 +220,7 @@ const InnerPage = ({
   courses = [],
   currentPage = 1,
   totalRecords = 0,
-  pageSize = 8,
+  pageSize = 9,
   onPageChange,
 }) => {
   const [isClassAdded, setIsClassAdded] = useState([]);
