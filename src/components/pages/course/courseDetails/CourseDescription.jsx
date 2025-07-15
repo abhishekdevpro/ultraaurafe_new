@@ -39,34 +39,6 @@ const DescriptionContainer = styled.div`
   }
 `;
 
-// const CourseDescriptionWrapper = styled.div`
-//   font-size: 16px;
-//   line-height: 1.6;
-//   color: white;
-//   margin-bottom: 20px;
-//   max-height: ${({ isExpanded }) => (isExpanded ? "none" : "130px")};
-//   overflow: hidden;
-//   transition: max-height 0.3s ease-in-out;
-
-//   p {
-//     margin-bottom: 15px;
-//   }
-
-//   ul,
-//   ol {
-//     padding-left: 20px;
-//     margin-bottom: 15px;
-//   }
-
-//   li {
-//     margin-bottom: 5px;
-//   }
-
-//   strong {
-//     font-weight: 600;
-//     color: white;
-//   }
-// `;
 const CourseDescriptionWrapper = styled.div`
   font-size: 16px;
   line-height: 1.6;
@@ -112,7 +84,31 @@ const ReadMoreButton = styled.span`
   }
 `;
 
-const CourseDescription = ({ description }) => {
+const ApplyButton = styled.a`
+  display: inline-block;
+  background-color: #28a745;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 15px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #218838;
+    color: white;
+    text-decoration: none;
+  }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+`;
+
+const CourseDescription = ({ description, slug }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpand = () => {
@@ -126,15 +122,23 @@ const CourseDescription = ({ description }) => {
           <div dangerouslySetInnerHTML={{ __html: description }} />
         </CourseDescriptionWrapper>
       </DescriptionContainer>
-      <ReadMoreButton onClick={toggleExpand}>
-        {isExpanded ? "Read Less" : "Read More"}
-      </ReadMoreButton>
+      <ButtonContainer>
+        <ReadMoreButton onClick={toggleExpand}>
+          {isExpanded ? "Read Less" : "Read More"}
+        </ReadMoreButton>
+        {slug && (
+          <ApplyButton href={slug} target="_blank" rel="noopener noreferrer">
+            Apply
+          </ApplyButton>
+        )}
+      </ButtonContainer>
     </>
   );
 };
 
 CourseDescription.propTypes = {
   description: PropTypes.string.isRequired,
+  slug: PropTypes.string,
 };
 
 export default CourseDescription;

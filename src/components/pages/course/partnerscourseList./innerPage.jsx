@@ -282,7 +282,7 @@ const InnerPage = ({
           {courses.length > 0 ? (
             courses.map((course) => (
               <CourseCard key={course.id}>
-                <Link to={`/course-info/${course.id}`}>
+                <Link to={`/partnercourse-info/${course.id}`}>
                   <CourseImage
                     src={
                       course.photo_url ||
@@ -314,11 +314,7 @@ const InnerPage = ({
                     </div>
                   </InstructorInfo>
 
-                  <Link
-                    to={course.slug || "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <Link to={`/partnercourse-info/${course.id}`}>
                     <CourseTitle>
                       {course.name || "Untitled Course"}
                     </CourseTitle>
