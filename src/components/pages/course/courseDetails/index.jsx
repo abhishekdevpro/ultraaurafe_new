@@ -89,7 +89,6 @@ const CourseDetails = () => {
         ) : (
           <Header />
         )}
-      
 
         <div className="inner-banner">
           <div className="container">
@@ -133,7 +132,7 @@ const CourseDetails = () => {
                           "Instructor Title"}
                       </p>
                     </div>
-                   
+
                     <div className="rating mb-0">
                       {Array.from({ length: 5 }).map((_, index) => (
                         <i
@@ -171,7 +170,10 @@ const CourseDetails = () => {
                   </ReadMoreButton>
                 )}
               </CourseDescriptionWrapper> */}
-                <CourseDescription description={courseDescription} />
+                <CourseDescription
+                  description={courseDescription}
+                  slug={courseData.data?.slug}
+                />
 
                 <div className="course-info d-flex align-items-center border-bottom-0 m-0 p-0">
                   <div className="cou-info">
