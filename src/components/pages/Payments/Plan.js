@@ -1,11 +1,12 @@
 export const plans = [
   {
     id: "freemium",
-    name: "Launch Plan",
+    name: "Explore",
     price: "18.95",
     isPopular: false,
     isDark: false,
     features: [
+      // "Discover your potential",
       "AI Resume + Cover Letter Builder",
       "Profile Listing",
       "Search & Apply to Jobs",
@@ -14,10 +15,9 @@ export const plans = [
 
       "Community Access",
 
-      "Access to all courses",
       // "Access to Free C "Profile Listing",
       <span className="flex items-center gap-1" key="novajobs">
-        Access to{" "}
+        Unlimited Access to{" "}
         <a
           href="https://novajobs.us/"
           target="_blank"
@@ -25,7 +25,7 @@ export const plans = [
         >
           <img
             src="https://apiwl.novajobs.us/novaJobs/226/logo/NovaUS.649f79957e5090a75022.png"
-            alt="UltraAura"
+            alt="Novajobs"
             className="h-2 w-5 inline-block"
             style={{
               height: "2rem",
@@ -40,29 +40,26 @@ export const plans = [
   },
   {
     id: "elevate",
-    name: "Lift Plan",
+    name: "Elevate",
     price: "38.95",
-    isPopular: true,
+    isPopular: false,
     isDark: false,
     features: [
-      "Everything in Launch, plus:",
+      // "Rise with purpose and power",
+      "Everything in Explore, plus",
       "Job Suggestions",
-      "Resume Score",
-      // "Access to Advanced Courses",
+      // "Resume Score",
       "ATS & Resume Score",
       "Priority Job alerts",
-
-      "Access to UltraAura+",
-
-      "Resume writeup By Experts",
-
-      "Connect to Career Coach",
-      "Profile Analytics*",
+      // "Access to UltraAura+",
+      // "Resume writeup By Experts",
+      // "Connect to Career Coach",
+      // "Profile Analytics*",
       "Certifications by UltraAura",
-      "Unlimited Access to UltraAura",
-      "Access to all courses",
+      // "Unlimited Access to UltraAura",
+      // "Access to all courses",
       <span className="flex items-center gap-1" key="novajobs">
-        Access to{" "}
+        Unlimited Access to{" "}
         <a
           href="https://novajobs.us/"
           target="_blank"
@@ -70,7 +67,7 @@ export const plans = [
         >
           <img
             src="https://apiwl.novajobs.us/novaJobs/226/logo/NovaUS.649f79957e5090a75022.png"
-            alt="UltraAura"
+            alt="NovaJobs"
             className="h-2 w-5 inline-block"
             style={{
               height: "2rem",
@@ -85,21 +82,23 @@ export const plans = [
   },
   {
     id: "promax",
-    name: "Thrive Plan",
+    name: "Excel",
     price: "78.95",
-    isPopular: false,
+    isPopular: true,
     isDark: false,
     features: [
+      // "Master your skills. Dominate your field",
+      "Everything in Elevate, plus",
       "Connect to Trainer",
-      "More connects with Career Coach",
+      "Connect to Career Coach / Trainer",
+      "Manage Documents",
       "More AI Credits",
       "Chat with HR’s*",
-
       "Verified Certifications by UltraAura",
-      "Unlimited Access to UltraAura",
+      // "Unlimited Access to UltraAura"
 
       <span className="flex items-center gap-1" key="novajobs">
-        Access to{" "}
+        Unlimited Access to{" "}
         <a
           href="https://novajobs.us/"
           target="_blank"
@@ -121,23 +120,36 @@ export const plans = [
   },
   {
     id: "ultraelite",
-    name: "Ascend Plan ",
+    name: "Elite",
     price: "148.95",
-    isPopular: false,
+    isPopular: true,
     isDark: true,
     features: [
-      "Everything in Thrive, plus:",
-      "Career Coaching & Trainer Monitoring",
-      "Dedicated Personal Career Mentor",
-      "AI Branding & Executive Resume Enhancement",
-      "Unlimited Access UltraAura",
-      "Verified & physical Certifications",
-      "Priority Job Matching + Employer Alerts",
-      "Beta Access to Exclusive Tools & Pilots",
-      "Enterprise-Grade Career Dashboard",
-      "Access to all courses with personal trainer & verified certification",
+      "Excel Plus Unlimited",
+      <span
+        key="Elite"
+        style={{ display: "flex", alignItems: "center", gap: "4px" }}
+      >
+        Centralized HyperVSolutions ID
+        <i
+          className="fa fa-info"
+          style={{
+            fontSize: "0.875rem",
+            color: "#ed8936",
+            cursor: "pointer",
+            marginLeft: "4px",
+          }}
+          title="Single Sign-On for all services"
+        ></i>
+      </span>,
+      "Expert Resume & Cover Letter Creation",
+      "AI Credits",
+      "Physical & Verified Certification Copies",
+      "Job Placement Assistance",
+      "Personalized Career Guidance",
+      "Priority Job Applies",
       <span className="flex items-center gap-1" key="novajobs">
-        Priority access to{" "}
+        Unlimited Access to{" "}
         <a
           href="https://novajobs.us/"
           target="_blank"

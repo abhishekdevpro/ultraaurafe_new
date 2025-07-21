@@ -191,14 +191,14 @@ const PopularBadge = styled.div`
 const PricingSection = () => {
   const navigate = useNavigate();
 
-  const token = localStorage.getItem("jobSeekerLoginToken");
+  const token = localStorage.getItem("token");
 
   const handleClick = () => {
     if (!token) {
       toast.error("Please Login First");
       navigate("/login");
     } else {
-      navigate("/user/subscription");
+      navigate("/subscription");
       // window.location.href  = (`https://airesume.novajobs.us/settings/subscription/?tokenbyurl=${token}`)
       // window.location.href = (`http://localhost:3001/settings/subscription/?tokenbyurl=${token}`)
     }
@@ -223,7 +223,11 @@ const PricingSection = () => {
             <PricingCol key={plan.id}>
               <PricingCard isDark={plan.isDark} isPopular={plan.isPopular}>
                 {/* Popular Badge (if applicable) */}
-                {plan.isPopular && <PopularBadge>Most Popular</PopularBadge>}
+                {plan.isPopular && (
+                  <PopularBadge>
+                    {plan.id === "ultraelite" ? "Unlimited" : "Most Popular"}
+                  </PopularBadge>
+                )}
 
                 {/* Plan Header */}
                 <CardHeader>
