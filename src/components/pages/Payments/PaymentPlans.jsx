@@ -373,7 +373,12 @@ export default function PaymentPlans() {
                     dark={plan.isDark}
                   >
                     {plan.isPopular && (
-                      <BestValueTag>Most Popular</BestValueTag>
+                      <BestValueTag>
+                        {" "}
+                        {plan.id === "ultraelite"
+                          ? "Unlimited"
+                          : "Most Popular"}
+                      </BestValueTag>
                     )}
                     <PlanHeader>
                       <PlanTitle>{plan.name}</PlanTitle>
