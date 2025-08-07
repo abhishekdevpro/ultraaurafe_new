@@ -20,6 +20,7 @@ const CourseList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalRecords, setTotalRecords] = useState(0);
   const [pageSize] = useState(8);
+  const [mediaFilter, setMediaFilter] = useState("all"); // "all", "with-media", "without-media"
   const location = useLocation();
   const navigate = useNavigate();
   const token = localStorage.getItem("trainerToken");
@@ -92,7 +93,47 @@ const CourseList = () => {
         }
       );
 
-      setCourses(response.data.data || []);
+      let filteredCourses = response.data.data || [];
+
+      // Apply media filter
+      if (mediaFilter !== "all") {
+        // Fetch detailed course information for each course to check media content
+        const coursesWithMediaInfo = await Promise.all(
+          filteredCourses.map(async (course) => {
+            try {
+              const detailResponse = await axios.get(
+                `https://api.novajobs.us/api/students/course-details/${course.id}`,
+                { headers: { Authorization: token } }
+              );
+
+              const hasMedia =
+                detailResponse.data.data?.section_response?.some((section) =>
+                  section.lectures?.some(
+                    (lecture) =>
+                      lecture.lecture_videos?.length > 0 ||
+                      lecture.lecture_location
+                  )
+                ) || false;
+
+              return { ...course, hasMedia };
+            } catch (error) {
+              console.error(
+                `Error fetching details for course ${course.id}:`,
+                error
+              );
+              return { ...course, hasMedia: false };
+            }
+          })
+        );
+
+        filteredCourses = coursesWithMediaInfo.filter((course) => {
+          return mediaFilter === "with-media"
+            ? course.hasMedia
+            : !course.hasMedia;
+        });
+      }
+
+      setCourses(filteredCourses);
 
       // Update total records from API response
       if (response.data.total_records) {
@@ -135,7 +176,7 @@ const CourseList = () => {
 
   useEffect(() => {
     fetchFilteredCourses();
-  }, [location.search, token]);
+  }, [location.search, token, mediaFilter]);
 
   useEffect(() => {
     const { course_category_id, trainer_id, course_level_id, title_keywords } =
@@ -185,6 +226,7 @@ const CourseList = () => {
     setSelectedTrainers([]);
     setSelectedLevels([]);
     setSearchTerm("");
+    setMediaFilter("all");
     navigate("", { replace: true });
     fetchFilteredCourses();
   };
@@ -206,6 +248,10 @@ const CourseList = () => {
     const searchParams = new URLSearchParams(location.search);
     searchParams.set("page_no", pageNumber.toString());
     navigate(`?${searchParams.toString()}`, { replace: true });
+  };
+
+  const handleMediaFilterChange = (filter) => {
+    setMediaFilter(filter);
   };
 
   if (error) return <p>{error}</p>;
@@ -239,6 +285,62 @@ const CourseList = () => {
                           {Math.min(currentPage * pageSize, totalRecords)} of{" "}
                           {totalRecords} results
                         </h4>
+                      </div>
+                      <div className="media-filter-buttons ms-3">
+                        <div
+                          className="btn-group"
+                          role="group"
+                          style={{ boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }}
+                        >
+                          <button
+                            type="button"
+                            className={`btn btn-sm ${
+                              mediaFilter === "all"
+                                ? "btn-primary"
+                                : "btn-outline-primary"
+                            }`}
+                            onClick={() => handleMediaFilterChange("all")}
+                            style={{
+                              borderTopLeftRadius: "4px",
+                              borderBottomLeftRadius: "4px",
+                              fontWeight: "500",
+                            }}
+                          >
+                            All
+                          </button>
+                          <button
+                            type="button"
+                            className={`btn btn-sm ${
+                              mediaFilter === "with-media"
+                                ? "btn-primary"
+                                : "btn-outline-primary"
+                            }`}
+                            onClick={() =>
+                              handleMediaFilterChange("with-media")
+                            }
+                            style={{ fontWeight: "500" }}
+                          >
+                            With Media
+                          </button>
+                          <button
+                            type="button"
+                            className={`btn btn-sm ${
+                              mediaFilter === "without-media"
+                                ? "btn-primary"
+                                : "btn-outline-primary"
+                            }`}
+                            onClick={() =>
+                              handleMediaFilterChange("without-media")
+                            }
+                            style={{
+                              borderTopRightRadius: "4px",
+                              borderBottomRightRadius: "4px",
+                              fontWeight: "500",
+                            }}
+                          >
+                            Without Media
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
