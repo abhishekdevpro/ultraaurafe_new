@@ -544,19 +544,19 @@ const DynamicCourseGrid = () => {
                         </StatItem>
                       </CourseStats>
                       <CoursePrice>
-                        <div>
+                        {/* <div>
                           <span className="discounted-price">
                             ${course.after_discount_price}
                           </span>
                           <span className="original-price">
                             ${course.course_price}
                           </span>
-                        </div>
-                        {course.discount_percent > 0 && (
+                        </div> */}
+                        {/* {course.discount_percent > 0 && (
                           <span className="course-discount">
                             {course.discount_percent}% OFF
                           </span>
-                        )}
+                        )} */}
                       </CoursePrice>
                     </CourseContent>
                   </CourseCard>
