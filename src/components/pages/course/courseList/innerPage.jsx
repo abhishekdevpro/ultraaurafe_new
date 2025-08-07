@@ -411,7 +411,7 @@ const InnerPage = ({
                     )}
                   </CoursePrice> */}
                   <CoursePrice>
-                    <div>
+                    {/* <div>
                       <span className="discounted-price">
                         ${course.after_discount_price}
                       </span>
@@ -423,7 +423,7 @@ const InnerPage = ({
                       <span className="course-discount">
                         {course.discount_percent}% OFF
                       </span>
-                    )}
+                    )} */}
                   </CoursePrice>
                 </CourseContent>
               </CourseCard>
