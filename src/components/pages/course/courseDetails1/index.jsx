@@ -25,10 +25,11 @@ import Footer from "../../../footer";
 
 const CourseDetails1 = () => {
   const handleShare = () => {
-    console.log("You clicked Share button")
-    const shareLink = `${window.location.origin}${window.location.pathname}`; 
+    console.log("You clicked Share button");
+    const shareLink = `${window.location.origin}${window.location.pathname}`;
 
-    navigator.clipboard.writeText(shareLink)
+    navigator.clipboard
+      .writeText(shareLink)
       .then(() => {
         alert("Link copied to clipboard!");
       })
@@ -142,7 +143,12 @@ const CourseDetails1 = () => {
                         <div className="play-icon">
                           <i className="fa-solid fa-play" />
                         </div>
-                        <video className="img-fluid" src={Video} alt="" autoPlay/>
+                        <video
+                          className="img-fluid"
+                          src={Video}
+                          alt=""
+                          autoPlay
+                        />
                         {/* <img className="img-fluid" src={Video} alt="" /> */}
                       </Link>
                     </div>
@@ -158,12 +164,12 @@ const CourseDetails1 = () => {
                   <div className="card">
                     <div className="card-body">
                       <div className="video-details">
-                        <div className="course-fee">
+                        {/* <div className="course-fee">
                           <h2>$200</h2>
                           <p>
                             <span>$99.00</span> 50% off
                           </p>
-                        </div>
+                        </div> */}
                         <div className="row gx-2">
                           <div className="col-sm-6">
                             <Link
@@ -176,10 +182,13 @@ const CourseDetails1 = () => {
                             </Link>
                           </div>
                           <div className="col-sm-6">
-                            <button  className="btn btn-wish w-100" onClick={()=>handleShare()}>
+                            <button
+                              className="btn btn-wish w-100"
+                              onClick={() => handleShare()}
+                            >
                               {/* <i className="feather-share-2" />  */}
                               <FeatherIcon icon="share-2" />
-                              Share 
+                              Share
                             </button>
                           </div>
                           <div className="col-sm-6">
