@@ -2,17 +2,33 @@ import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import React from "react";
 import { Link } from "react-router-dom";
 import Footer from "../../../footer";
-import { Chapter,Chart,Cloud,Icon1,Import,Key,Mobile,People,Play,Teacher,Timer,Timer2,User1,Users,Video2,VideoBg,
+import {
+  Chapter,
+  Chart,
+  Cloud,
+  Icon1,
+  Import,
+  Key,
+  Mobile,
+  People,
+  Play,
+  Teacher,
+  Timer,
+  Timer2,
+  User1,
+  Users,
+  Video2,
+  VideoBg,
 } from "../../../imagepath";
 import CourseHeader from "../header";
 import Instructor from "./instructor";
 import Overview from "./overview";
 const CourseDetails2 = () => {
   const handleShare = () => {
-    
-    const shareLink = `${window.location.origin}${window.location.pathname}`; 
+    const shareLink = `${window.location.origin}${window.location.pathname}`;
 
-    navigator.clipboard.writeText(shareLink)
+    navigator.clipboard
+      .writeText(shareLink)
       .then(() => {
         alert("Link copied to clipboard!");
       })
@@ -70,7 +86,12 @@ const CourseDetails2 = () => {
                         <div className="play-icon">
                           <i className="fa-solid fa-play" />
                         </div>
-                        <video className="img-fluid" src={VideoBg} alt="" autoPlay />
+                        <video
+                          className="img-fluid"
+                          src={VideoBg}
+                          alt=""
+                          autoPlay
+                        />
                       </Link>
                     </div>
 
@@ -139,12 +160,12 @@ const CourseDetails2 = () => {
                         <div className="col-lg-4 bb-1">
                           <div className="no-video">
                             <div className="card-body video-details">
-                              <div className="course-fee">
+                              {/* <div className="course-fee">
                                 <h2>$200</h2>
                                 <p>
                                   <span>$99.00</span> 50% off
                                 </p>
-                              </div>
+                              </div> */}
                               <div className="row gx-1">
                                 <div className="col-sm-6">
                                   <Link
@@ -157,9 +178,12 @@ const CourseDetails2 = () => {
                                   </Link>
                                 </div>
                                 <div className="col-sm-6">
-                                  <button onClick={()=>handleShare()} className="btn btn-wish w-100" >
+                                  <button
+                                    onClick={() => handleShare()}
+                                    className="btn btn-wish w-100"
+                                  >
                                     {/* <i className="feather-share-2" />  */}
-                                    <FeatherIcon icon="share-2"  />
+                                    <FeatherIcon icon="share-2" />
                                     Share
                                   </button>
                                 </div>
@@ -344,7 +368,7 @@ const CourseDetails2 = () => {
             </div>
           </div>
         </section>
-        <Footer/>
+        <Footer />
       </div>
     </>
   );
