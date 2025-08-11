@@ -336,7 +336,7 @@ const Cart = () => {
                                 }
                               />
                             </Link>
-                            <div className="price">
+                            {/* <div className="price">
                               <h3
                                 className={
                                   item.after_discount_price === 0
@@ -348,7 +348,7 @@ const Cart = () => {
                                   ? "FREE"
                                   : `${item.after_discount_price}`}
                               </h3>
-                            </div>
+                            </div> */}
                           </div>
                           <div>
                             <div>
@@ -382,7 +382,12 @@ const Cart = () => {
                               <div>
                                 <button
                                   className="btn btn-secondary btn-sm"
-                                  onClick={() => handleDecrease(item.course_id, item.quantity)}
+                                  onClick={() =>
+                                    handleDecrease(
+                                      item.course_id,
+                                      item.quantity
+                                    )
+                                  }
                                   disabled={loading || item.quantity <= 1}
                                 >
                                   -
@@ -390,7 +395,12 @@ const Cart = () => {
                                 <span className="mx-2">{item.quantity}</span>
                                 <button
                                   className="btn btn-secondary btn-sm"
-                                  onClick={() => handleIncrease(item.course_id, item.quantity)}
+                                  onClick={() =>
+                                    handleIncrease(
+                                      item.course_id,
+                                      item.quantity
+                                    )
+                                  }
                                   disabled={loading}
                                 >
                                   +
@@ -437,7 +447,7 @@ const Cart = () => {
                       </p>
 
                     </div> */}
-                    <div className="card border-0 shadow-sm">
+                    {/* <div className="card border-0 shadow-sm">
                       <div className="card-body">
                         <h5 className="card-title">Order Summary</h5>
                         <div className="d-flex justify-content-between align-items-center mb-3">
@@ -447,7 +457,7 @@ const Cart = () => {
                               <>
                                 <span className="text-muted text-decoration-line-through me-2">
                                   ${totalPrice}
-                                  {/* {cartData.item.after_discount_price} */}
+                                  {cartData.item.after_discount_price}
                                 </span>
                                 <span className="text-danger">
                                   ${cartData.discount}/- OFF
@@ -469,7 +479,7 @@ const Cart = () => {
                           <></>
                         )}
                       </div>
-                    </div>
+                    </div> */}
                   </div>
 
                   {/* <div className="col-lg-4 col-md-6">
@@ -544,7 +554,7 @@ const Cart = () => {
                             Processing...
                           </>
                         ) : (
-                          "Checkout"
+                          "Subscribe"
                         )}
                       </button>
                     </div>

@@ -276,7 +276,71 @@ const CourseList = () => {
           <div className="row">
             <div className="col-lg-9">
               <div className="showing-list">
-                <div className="row">
+                <div className="media-filter-buttons mb-6 ms-4 m-4 d-flex justify-content-center">
+                  <div
+                    className="btn-group"
+                    role="group"
+                    style={{ boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }}
+                  >
+                    <button
+                      type="button"
+                      className={`btn btn-sm ${
+                        mediaFilter === "all"
+                          ? "btn-primary"
+                          : "btn-outline-primary"
+                      }`}
+                      style={{
+                        borderTopLeftRadius: "4px",
+                        borderBottomLeftRadius: "4px",
+                        fontWeight: "500",
+                      }}
+                    >
+                      Free
+                    </button>
+                    <button
+                      type="button"
+                      className={`btn btn-sm ${
+                        mediaFilter === "with-media"
+                          ? "btn-primary"
+                          : "btn-outline-primary"
+                      }`}
+                      style={{ fontWeight: "500" }}
+                    >
+                      Subscription
+                    </button>
+                    <button
+                      type="button"
+                      className={`btn btn-sm ${
+                        mediaFilter === "without-media"
+                          ? "btn-primary"
+                          : "btn-outline-primary"
+                      }`}
+                      style={{
+                        borderTopRightRadius: "4px",
+                        borderBottomRightRadius: "4px",
+                        fontWeight: "500",
+                      }}
+                    >
+                      Premimum
+                    </button>
+                    <button
+                      type="button"
+                      className={`btn btn-sm ${
+                        mediaFilter === "without-media"
+                          ? "btn-primary"
+                          : "btn-outline-primary"
+                      }`}
+                      style={{
+                        borderTopRightRadius: "4px",
+                        borderBottomRightRadius: "4px",
+                        fontWeight: "500",
+                      }}
+                    >
+                      Sponsored
+                    </button>
+                  </div>
+                </div>
+                <div className="row ">
                   <div className="col-lg-6">
                     <div className="d-flex align-items-center">
                       <div className="show-result">
