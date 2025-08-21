@@ -42,6 +42,7 @@ const EditCourse2 = () => {
     learning_objectives: "",
     target_audience: "",
     time_spent_on_course: "",
+    course_plan_type_id:""
   })
   const [categoryOptions, setCategoryOptions] = useState([])
   const [levelOptions, setLevelOptions] = useState([])
