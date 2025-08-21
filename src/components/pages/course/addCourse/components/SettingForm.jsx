@@ -116,12 +116,33 @@
 
 // export default SettingsForm
 
-"use client"
+"use client";
 // import { Link } from "react-router-dom"
-import ReactQuill from "react-quill"
-import PropTypes from "prop-types"
+import ReactQuill from "react-quill";
+import PropTypes from "prop-types";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-const SettingsTab = ({ courseData, handleInputChange, handleQuillChange, onPrevious, onSave }) => {
+const SettingsTab = ({
+  courseData,
+  handleInputChange,
+  handleQuillChange,
+  onPrevious,
+  onSave,
+}) => {
+
+  const [bilingCategory, setBilingCategory] = useState([]);
+  const fetchBilingCategory = async () => {
+    try {
+      const response = await axios.get("https://api.novajobs.us/api/trainers/course-plan-type");
+      setBilingCategory(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchBilingCategory();
+  }, []);
   return (
     <div className="add-course-info">
       <div className="add-course-inner-header">
@@ -201,6 +222,22 @@ const SettingsTab = ({ courseData, handleInputChange, handleQuillChange, onPrevi
               onChange={handleInputChange}
             />
           </div>
+          <div className="input-block">
+            <label className="add-course-label">Billing Category Options</label>
+            <select
+              className="form-control"
+              name="course_plan_type_id"
+              value={courseData.course_plan_type_id}
+              onChange={handleInputChange}
+            >
+              <option value="">Select Billing Category</option>
+              {bilingCategory?.map((option) => (
+                <option key={option.id} value={option.id}>
+                  {option.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </form>
       </div>
 
@@ -214,8 +251,8 @@ const SettingsTab = ({ courseData, handleInputChange, handleQuillChange, onPrevi
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
 // Prop Validation
 SettingsTab.propTypes = {
@@ -223,13 +260,17 @@ SettingsTab.propTypes = {
     requirements: PropTypes.string,
     course_price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     discount_percent: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    after_discount_price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    after_discount_price: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
     coupon_code: PropTypes.string,
+    course_plan_type_id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }).isRequired,
   handleInputChange: PropTypes.func.isRequired,
   handleQuillChange: PropTypes.func.isRequired,
   onPrevious: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
-}
+};
 
-export default SettingsTab
+export default SettingsTab;
