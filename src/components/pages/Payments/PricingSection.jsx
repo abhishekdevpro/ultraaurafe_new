@@ -104,6 +104,7 @@ const PricingSection = () => {
                 {/* Popular Badge (if applicable) 
                 {plan.isPopular && <PopularBadge>Most Popular</PopularBadge>}
 
+
                 {/* Plan Header
                 <CardHeader>
                   <CardTitle isDark={plan.isDark}>{plan.name}</CardTitle>

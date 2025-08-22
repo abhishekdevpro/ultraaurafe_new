@@ -190,11 +190,20 @@ import PaymentSuccess from "./components/pages/Payments/Payment-success.jsx";
 import PaymentFailed from "./components/pages/Payments/payment-failed.jsx";
 
 import NotesList from "./components/Admin/NotesList.jsx";
+
 import StudentPlan from "./components/student/StudentPlan/index.jsx";
+
+import PartnersCourseList from "./components/pages/course/partnerscourseList./index.jsx";
+import PartnerCourseDetails from "./components/pages/course/partnerCourseDetails/index.jsx";
+import ScheduleMeeting from "./components/instructor/LiveClasses/ForStudent/ScheduleMeeting.jsx";
+import GoogleOneTapLogin from "./components/GoogleOneTapLogin.jsx";
+
 
 const Approuter = () => {
   return (
     <BrowserRouter>
+      <GoogleOneTapLogin />
+
       <Routes>
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/home" element={<Home />} />
@@ -245,8 +254,13 @@ const Approuter = () => {
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/add-course" element={<AddCourse />} />
         <Route path="/course-list" element={<CourseList />} />
+        <Route path="/partners-course-list" element={<PartnersCourseList />} />
         <Route path="/course-grid" element={<CourseGrid />} />
         <Route path="/course-info/:courseid" element={<CourseDetails />} />
+        <Route
+          path="/partnercourse-info/:courseid"
+          element={<PartnerCourseDetails />}
+        />
         <Route path="/course-details1" element={<CourseDetails1 />} />
         <Route path="/course-details2" element={<CourseDetails2 />} />
         <Route path="/course-lesson" element={<CourseLesson />} />
@@ -552,6 +566,10 @@ const Approuter = () => {
           <Route
             path="/student/join-live-classes"
             element={<JoinLiveClass />}
+          />
+          <Route
+            path="/student/schedule-meeting"
+            element={<ScheduleMeeting />}
           />
           <Route
             path="/student/student-order-history"

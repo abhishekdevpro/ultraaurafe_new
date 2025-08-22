@@ -624,17 +624,19 @@ const CourseContent = ({ courseData }) => {
                   paddingLeft: "20px",
                 }}
               >
-                {isEnrolled && <Button
-                  variant="outline-primary"
-                  size="sm"
-                  onClick={() => {
-                    setSelectedLecture(null);
-                    setCurrentSectionId(section.id);
-                    setShowNoteModal(true);
-                  }}
-                >
-                  <FaPlusCircle />
-                </Button>}
+                {isEnrolled && (
+                  <Button
+                    variant="outline-primary"
+                    size="sm"
+                    onClick={() => {
+                      setSelectedLecture(null);
+                      setCurrentSectionId(section.id);
+                      setShowNoteModal(true);
+                    }}
+                  >
+                    <FaPlusCircle />
+                  </Button>
+                )}
                 <Button
                   variant="outline-secondary"
                   size="sm"

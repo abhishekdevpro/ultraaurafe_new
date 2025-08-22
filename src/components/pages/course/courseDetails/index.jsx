@@ -90,7 +90,6 @@ const CourseDetails = () => {
         ) : (
           <Header />
         )}
-      
 
         <div className="inner-banner">
           <div className="container">
@@ -134,7 +133,7 @@ const CourseDetails = () => {
                           "Instructor Title"}
                       </p>
                     </div>
-                   
+
                     <div className="rating mb-0">
                       {Array.from({ length: 5 }).map((_, index) => (
                         <i
@@ -159,6 +158,7 @@ const CourseDetails = () => {
                       : "Under Graduates"}
                   </span>
                 </div>
+
                <div className="d-flex align-items-center justify-content-between gap-4">
                  <h2>{courseData.data.course_title || "Course Title"}</h2>
                  <p className="web-badge mb-3" style={{backgroundColor:"#e63975"}}>
