@@ -25,15 +25,21 @@ const Gauth = () => {
             `https://api.novajobs.us/api/students/auth/callback?code=${code}`
           );
           const token = response.data.data.token;
-
-          // Save the token in localStorage
+          localStorage.removeItem("authToken");
           localStorage.setItem("token", token);
-          console.log(response);
-          // navigate('/dashboard')
-          toast.success(response.data.message);
-          // Redirect to the success URL with the token
-          navigate("/student/student-dashboard");
+          // console.log(response);
+          if(response.data.code === 200 || response.data.status === "success"){
+            toast.success(response.data.message);
+             navigate("/student/student-dashboard");
+          }
+          else{
+            toast.error(response.data.message || "Authentication failed. Please try again.");
+            navigate("/login");
+          }
+          
+          
         } catch (error) {
+          toast.error(error.response.data.message || "Authentication failed. Please try again.");
           console.error("Error while sending auth code:", error);
 
           // Redirect to the login page on error

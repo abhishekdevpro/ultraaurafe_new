@@ -222,7 +222,7 @@ const SettingsTab = ({
               onChange={handleInputChange}
             />
           </div>
-          <div className="input-block">
+          {localStorage.getItem("adminToken") && <div className="input-block">
             <label className="add-course-label">Billing Category Options</label>
             <select
               className="form-control"
@@ -237,7 +237,7 @@ const SettingsTab = ({
                 </option>
               ))}
             </select>
-          </div>
+          </div>}
         </form>
       </div>
 

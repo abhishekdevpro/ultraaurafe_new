@@ -1,9 +1,10 @@
 export const plans = [
   {
+    plan_id: "2",
     id: "freemium",
-    name: "Launch Plan",
+    name: "Explore",
     price: "18.95",
-    isPopular: false,
+    isPopular: true,
     isDark: false,
     features: [
       "AI Resume + Cover Letter Builder",
@@ -11,148 +12,125 @@ export const plans = [
       "Search & Apply to Jobs",
       "All-in-One Career Dashboard",
       "AI Skill Tests",
-
       "Community Access",
-
-      "Access to all courses",
-      // "Access to Free C "Profile Listing",
-      <span className="flex items-center gap-1" key="novajobs">
-        Access to{" "}
+      "Practice interview Beta (included)",
+      <span key="explore-edtech" className="flex items-center gap-1">
+        Unlimited Access to Edtech{" "}
         <a
-          href="https://novajobs.us/"
+          href="https://ultraaura.education/"
           target="_blank"
           rel="noopener noreferrer"
         >
           <img
-            src="https://apiwl.novajobs.us/novaJobs/226/logo/NovaUS.649f79957e5090a75022.png"
+            src="https://ultraaura.education/static/media/Ultra_Aura.cabb61de498b919d72f4.png"
             alt="UltraAura"
             className="h-2 w-5 inline-block"
-            style={{
-              height: "2rem",
-              width: "auto",
-              display: "inline-block",
-              color: "white",
-            }}
+            style={{ height: "2rem", width: "auto", display: "inline-block", color: "white" }}
           />
         </a>
       </span>,
     ],
   },
   {
+    plan_id: "3",
     id: "elevate",
-    name: "Lift Plan",
+    name: "Elevate",
     price: "38.95",
-    isPopular: true,
+    isPopular: false,
     isDark: false,
     features: [
-      "Everything in Launch, plus:",
+      "Everything in Explore, plus",
       "Job Suggestions",
-      "Resume Score",
-      // "Access to Advanced Courses",
       "ATS & Resume Score",
       "Priority Job alerts",
-
-      "Access to UltraAura+",
-
-      "Resume writeup By Experts",
-
-      "Connect to Career Coach",
-      "Profile Analytics*",
       "Certifications by UltraAura",
-      "Unlimited Access to UltraAura",
-      "Access to all courses",
-      <span className="flex items-center gap-1" key="novajobs">
-        Access to{" "}
+      "Practice interview Beta (included)",
+      <span key="elevate-edtech" className="d-inline-flex align-items-center gap-11">
+        Unlimited Access to Edtech{" "}
         <a
-          href="https://novajobs.us/"
+          href="https://ultraaura.education/"
           target="_blank"
           rel="noopener noreferrer"
         >
           <img
-            src="https://apiwl.novajobs.us/novaJobs/226/logo/NovaUS.649f79957e5090a75022.png"
+            src="https://ultraaura.education/static/media/Ultra_Aura.cabb61de498b919d72f4.png"
             alt="UltraAura"
             className="h-2 w-5 inline-block"
-            style={{
-              height: "2rem",
-              width: "auto",
-              display: "inline-block",
-              color: "white",
-            }}
+            style={{ height: "2rem", width: "auto", display: "inline-block" }}
           />
         </a>
       </span>,
     ],
   },
   {
+    plan_id: "4",
     id: "promax",
-    name: "Thrive Plan",
+    name: "Excel",
     price: "78.95",
     isPopular: false,
     isDark: false,
     features: [
+      "Everything in Elevate, plus",
       "Connect to Trainer",
-      "More connects with Career Coach",
+      "Connect to Career Coach / Trainer",
+      "Manage Documents",
       "More AI Credits",
       "Chat with HR’s*",
-
       "Verified Certifications by UltraAura",
-      "Unlimited Access to UltraAura",
-
-      <span className="flex items-center gap-1" key="novajobs">
-        Access to{" "}
+      "Practice interview Beta (included)",
+      <span key="excel-edtech" className="flex items-center gap-1">
+        Unlimited Access to Edtech{" "}
         <a
-          href="https://novajobs.us/"
+          href="https://ultraaura.education/"
           target="_blank"
           rel="noopener noreferrer"
         >
           <img
-            src="https://apiwl.novajobs.us/novaJobs/226/logo/NovaUS.649f79957e5090a75022.png"
+            src="https://ultraaura.education/static/media/Ultra_Aura.cabb61de498b919d72f4.png"
             alt="UltraAura"
             className="h-2 w-5 inline-block"
-            style={{
-              height: "2rem",
-              width: "auto",
-              display: "inline-block",
-            }}
+            style={{ height: "2rem", width: "auto", display: "inline-block" }}
           />
         </a>
       </span>,
     ],
   },
   {
+    plan_id: "5",
     id: "ultraelite",
-    name: "Ascend Plan ",
+    name: "Elite ",
     price: "148.95",
-    isPopular: false,
+    isPopular: true,
     isDark: true,
     features: [
-      "Everything in Thrive, plus:",
-      "Career Coaching & Trainer Monitoring",
-      "Dedicated Personal Career Mentor",
-      "AI Branding & Executive Resume Enhancement",
-      "Unlimited Access UltraAura",
-      "Verified & physical Certifications",
-      "Priority Job Matching + Employer Alerts",
-      "Beta Access to Exclusive Tools & Pilots",
-      "Enterprise-Grade Career Dashboard",
-      "Access to all courses with personal trainer & verified certification",
-      <span className="flex items-center gap-1" key="novajobs">
-        Priority access to{" "}
+      "Excel Plus Unlimited",
+      <span key="elite-id" style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+        Centralized HyperVSolutions ID
+        <i
+          className="fa fa-info"
+          style={{ fontSize: "0.875rem", color: "yellow", cursor: "pointer", marginLeft: "4px" }}
+          title="Single Sign-On for all services"
+        ></i>
+      </span>,
+      "Expert Resume & Cover Letter Creation",
+      "AI Credits",
+      "Physical & Verified Certification Copies",
+      "Job Placement Assistance",
+      "Personalized Career Guidance",
+      "Priority Job Applies",
+      "Practice interview Beta (included)",
+      <span key="elite-edtech" className="flex items-center gap-1">
+        Unlimited Access to Edtech{" "}
         <a
-          href="https://novajobs.us/"
+          href="https://ultraaura.education/"
           target="_blank"
           rel="noopener noreferrer"
         >
           <img
-            src="https://apiwl.novajobs.us/novaJobs/226/logo/NovaUS.649f79957e5090a75022.png"
+            src="https://ultraaura.education/static/media/Ultra_Aura.cabb61de498b919d72f4.png"
             alt="UltraAura"
             className="h-2 w-5 inline-block"
-            style={{
-              height: "2rem",
-              width: "auto",
-              display: "inline-block",
-              color: "white",
-            }}
+            style={{ height: "2rem", width: "auto", display: "inline-block", color: "white" }}
           />
         </a>
       </span>,

@@ -9,6 +9,7 @@ import Header from "../../../header";
 import { Target } from "react-feather";
 import CourseDescription from "./CourseDescription";
 import MetaComponent from "../../../../Common/MetaComponent";
+// import { Trophy } from "lucide-react";
 
 // Styled Components
 
@@ -158,19 +159,13 @@ const CourseDetails = () => {
                       : "Under Graduates"}
                   </span>
                 </div>
-                <h2>{courseData.data.course_title || "Course Title"}</h2>
-
-                {/* <CourseDescriptionWrapper>
-                <div
-                  dangerouslySetInnerHTML={{ __html: displayedDescription }}
-                />
-                {courseDescription.length >
-                  truncateDescription(courseDescription).length && (
-                  <ReadMoreButton onClick={toggleDescription}>
-                    {isExpanded ? "Show Less" : "Read More"}
-                  </ReadMoreButton>
-                )}
-              </CourseDescriptionWrapper> */}
+               <div className="d-flex align-items-center justify-content-between gap-4">
+                 <h2>{courseData.data.course_title || "Course Title"}</h2>
+                 <p className="web-badge mb-3" style={{backgroundColor:"#e63975"}}>
+                      {`${courseData.data.course_plan_type_name} `}
+                    </p>
+               </div>
+               
                 <CourseDescription description={courseDescription} />
 
                 <div className="course-info d-flex align-items-center border-bottom-0 m-0 p-0">
@@ -189,6 +184,12 @@ const CourseDetails = () => {
                         "32 students enrolled"}
                     </p>
                   </div>
+                  {/* <div className="cou-info">
+                    <Trophy size={24} color="#e63975" />
+                    <p>
+                      {`${courseData.data.course_plan_type_name} `}
+                    </p>
+                  </div> */}
                   <div className="cou-info">
                     <Target size={24} color="#000" />{" "}
                     {/* Adjust size and color */}
