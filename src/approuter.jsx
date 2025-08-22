@@ -190,10 +190,14 @@ import PaymentSuccess from "./components/pages/Payments/Payment-success.jsx";
 import PaymentFailed from "./components/pages/Payments/payment-failed.jsx";
 
 import NotesList from "./components/Admin/NotesList.jsx";
+
+import StudentPlan from "./components/student/StudentPlan/index.jsx";
+
 import PartnersCourseList from "./components/pages/course/partnerscourseList./index.jsx";
 import PartnerCourseDetails from "./components/pages/course/partnerCourseDetails/index.jsx";
 import ScheduleMeeting from "./components/instructor/LiveClasses/ForStudent/ScheduleMeeting.jsx";
 import GoogleOneTapLogin from "./components/GoogleOneTapLogin.jsx";
+
 
 const Approuter = () => {
   return (
@@ -548,6 +552,7 @@ const Approuter = () => {
             element={<StudentDashboard />}
           />
           <Route path="/student/student-profile" element={<StudentProfile />} />
+          <Route path="/student/student-plan" element={<StudentPlan />} />
           <Route
             path="/student/student-wishlist"
             element={<StudentWishlist />}

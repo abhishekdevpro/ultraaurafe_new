@@ -5,6 +5,8 @@ import InnerPage from "./innerPage";
 import Footer from "../../../footer";
 import Header from "../../../header";
 import FullPageLoader from "../../../home/FullPageLoader";
+import Pagination from "../../../common/Pagination";
+import FilterSidebar from "./FilterSidebar";
 
 const CourseList = () => {
   const [courses, setCourses] = useState([]);
@@ -18,9 +20,8 @@ const CourseList = () => {
   const [selectedTrainers, setSelectedTrainers] = useState([]);
   const [selectedLevels, setSelectedLevels] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalRecords, setTotalRecords] = useState(0);
-  const [pageSize] = useState(8);
-  const [mediaFilter, setMediaFilter] = useState("all"); // "all", "with-media", "without-media"
+  const [totalPages, setTotalPages] = useState(1);
+  const Page_size = 10;
   const location = useLocation();
   const navigate = useNavigate();
   const token = localStorage.getItem("trainerToken");
@@ -58,7 +59,7 @@ const CourseList = () => {
     }
   };
 
-  const fetchFilteredCourses = async () => {
+  const fetchFilteredCourses = async (page = 1) => {
     setLoading(true);
     try {
       const {
@@ -66,84 +67,23 @@ const CourseList = () => {
         course_category_id,
         trainer_id,
         course_level_id,
-        page_no,
-        page_size,
       } = parseQueryParams();
-      console.log("Fetching courses with params:", {
-        title_keywords,
-        course_category_id,
-        trainer_id,
-        course_level_id,
-        page_no,
-        page_size,
-      });
 
       const response = await axios.get(
-        "https://api.novajobs.us/api/trainers/all-courses",
+        `https://api.novajobs.us/api/trainers/all-courses?page_no=${page}&page_size=${Page_size}`,
         {
           params: {
             title_keywords,
             course_category_id: course_category_id.join("+"),
             trainer_id: trainer_id.join("+"),
             course_level_id: course_level_id.join("+"),
-            page_no: page_no,
-            page_size: page_size,
           },
           headers: { Authorization: token },
         }
       );
-
-      let filteredCourses = response.data.data || [];
-
-      // Apply media filter
-      if (mediaFilter !== "all") {
-        // Fetch detailed course information for each course to check media content
-        const coursesWithMediaInfo = await Promise.all(
-          filteredCourses.map(async (course) => {
-            try {
-              const detailResponse = await axios.get(
-                `https://api.novajobs.us/api/students/course-details/${course.id}`,
-                { headers: { Authorization: token } }
-              );
-
-              const hasMedia =
-                detailResponse.data.data?.section_response?.some((section) =>
-                  section.lectures?.some(
-                    (lecture) =>
-                      lecture.lecture_videos?.length > 0 ||
-                      lecture.lecture_location
-                  )
-                ) || false;
-
-              return { ...course, hasMedia };
-            } catch (error) {
-              console.error(
-                `Error fetching details for course ${course.id}:`,
-                error
-              );
-              return { ...course, hasMedia: false };
-            }
-          })
-        );
-
-        filteredCourses = coursesWithMediaInfo.filter((course) => {
-          return mediaFilter === "with-media"
-            ? course.hasMedia
-            : !course.hasMedia;
-        });
-      }
-
-      setCourses(filteredCourses);
-
-      // Update total records from API response
-      if (response.data.total_records) {
-        setTotalRecords(response.data.total_records);
-      }
-
-      // Update current page from URL
-      setCurrentPage(page_no);
-
-      console.log("API Response:", response.data);
+      //  console.log(response.data ,"alll")
+      setCourses(response.data.data || []);
+      setTotalPages(Math.ceil(response.data.total_records / Page_size || 0));
     } catch (error) {
       console.error("Error fetching filtered courses:", error);
       setError("Failed to load courses.");
@@ -165,8 +105,6 @@ const CourseList = () => {
       course_level_id: (searchParams.get("course_level_id") || "")
         .split("+")
         .filter(Boolean),
-      page_no: parseInt(searchParams.get("page_no")) || 1,
-      page_size: parseInt(searchParams.get("page_size")) || pageSize,
     };
   };
 
@@ -175,8 +113,8 @@ const CourseList = () => {
   }, [token]);
 
   useEffect(() => {
-    fetchFilteredCourses();
-  }, [location.search, token, mediaFilter]);
+    fetchFilteredCourses(currentPage);
+  }, [location.search, token, currentPage]);
 
   useEffect(() => {
     const { course_category_id, trainer_id, course_level_id, title_keywords } =
@@ -226,7 +164,6 @@ const CourseList = () => {
     setSelectedTrainers([]);
     setSelectedLevels([]);
     setSearchTerm("");
-    setMediaFilter("all");
     navigate("", { replace: true });
     fetchFilteredCourses();
   };
@@ -238,20 +175,8 @@ const CourseList = () => {
     } else {
       searchParams.delete("title_keywords");
     }
-    // Reset to page 1 when searching
-    searchParams.set("page_no", "1");
     navigate(`?${searchParams.toString()}`, { replace: true });
     fetchFilteredCourses();
-  };
-
-  const handlePageChange = (pageNumber) => {
-    const searchParams = new URLSearchParams(location.search);
-    searchParams.set("page_no", pageNumber.toString());
-    navigate(`?${searchParams.toString()}`, { replace: true });
-  };
-
-  const handleMediaFilterChange = (filter) => {
-    setMediaFilter(filter);
   };
 
   if (error) return <p>{error}</p>;
@@ -259,152 +184,31 @@ const CourseList = () => {
   return (
     <div className="main-wrapper">
       <Header activeMenu={"CourseList"} />
-      <div className="breadcrumb-bar">
+      {/* <div className="breadcrumb-bar">
         <div className="container">
           <div className="row">
             <div className="col-md-12 col-12">
               <div className="breadcrumb-list">
-                {/* Add breadcrumb content here if needed */}
+                {/* Add breadcrumb content here if needed 
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <section className="course-content">
+      <section className=" ">
         <div className="container">
           <div className="row">
             <div className="col-lg-9">
               <div className="showing-list">
-                <div className="media-filter-buttons mb-6 ms-4 m-4 d-flex justify-content-center">
-                  <div
-                    className="btn-group"
-                    role="group"
-                    style={{ boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }}
-                  >
-                    <button
-                      type="button"
-                      className={`btn btn-sm ${
-                        mediaFilter === "all"
-                          ? "btn-primary"
-                          : "btn-outline-primary"
-                      }`}
-                      style={{
-                        borderTopLeftRadius: "4px",
-                        borderBottomLeftRadius: "4px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      Free
-                    </button>
-                    <button
-                      type="button"
-                      className={`btn btn-sm ${
-                        mediaFilter === "with-media"
-                          ? "btn-primary"
-                          : "btn-outline-primary"
-                      }`}
-                      style={{ fontWeight: "500" }}
-                    >
-                      Subscription
-                    </button>
-                    <button
-                      type="button"
-                      className={`btn btn-sm ${
-                        mediaFilter === "without-media"
-                          ? "btn-primary"
-                          : "btn-outline-primary"
-                      }`}
-                      style={{
-                        borderTopRightRadius: "4px",
-                        borderBottomRightRadius: "4px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      Premimum
-                    </button>
-                    <button
-                      type="button"
-                      className={`btn btn-sm ${
-                        mediaFilter === "without-media"
-                          ? "btn-primary"
-                          : "btn-outline-primary"
-                      }`}
-                      style={{
-                        borderTopRightRadius: "4px",
-                        borderBottomRightRadius: "4px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      Sponsored
-                    </button>
-                  </div>
-                </div>
-                <div className="row ">
+                <div className="row">
                   <div className="col-lg-6">
                     <div className="d-flex align-items-center">
                       <div className="show-result">
+                        <h2 className="fw-semibold ">COURSE LIST</h2>
                         <h4>
-                          Showing {(currentPage - 1) * pageSize + 1}-
-                          {Math.min(currentPage * pageSize, totalRecords)} of{" "}
-                          {totalRecords} results
+                          Showing 1-{courses.length} of {courses.length} results
                         </h4>
-                      </div>
-                      <div className="media-filter-buttons ms-3">
-                        <div
-                          className="btn-group"
-                          role="group"
-                          style={{ boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }}
-                        >
-                          <button
-                            type="button"
-                            className={`btn btn-sm ${
-                              mediaFilter === "all"
-                                ? "btn-primary"
-                                : "btn-outline-primary"
-                            }`}
-                            onClick={() => handleMediaFilterChange("all")}
-                            style={{
-                              borderTopLeftRadius: "4px",
-                              borderBottomLeftRadius: "4px",
-                              fontWeight: "500",
-                            }}
-                          >
-                            All
-                          </button>
-                          <button
-                            type="button"
-                            className={`btn btn-sm ${
-                              mediaFilter === "with-media"
-                                ? "btn-primary"
-                                : "btn-outline-primary"
-                            }`}
-                            onClick={() =>
-                              handleMediaFilterChange("with-media")
-                            }
-                            style={{ fontWeight: "500" }}
-                          >
-                            With Media
-                          </button>
-                          <button
-                            type="button"
-                            className={`btn btn-sm ${
-                              mediaFilter === "without-media"
-                                ? "btn-primary"
-                                : "btn-outline-primary"
-                            }`}
-                            onClick={() =>
-                              handleMediaFilterChange("without-media")
-                            }
-                            style={{
-                              borderTopRightRadius: "4px",
-                              borderBottomRightRadius: "4px",
-                              fontWeight: "500",
-                            }}
-                          >
-                            Without Media
-                          </button>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -443,99 +247,99 @@ const CourseList = () => {
                 </div>
               </div>
 
-              {loading ? (
-                <FullPageLoader />
-              ) : (
-                <InnerPage
-                  courses={courses}
+              {loading ? <FullPageLoader /> : <InnerPage courses={courses} />}
+              <div className="pt-4">
+                <Pagination
                   currentPage={currentPage}
-                  totalPages={Math.ceil(totalRecords / pageSize)}
-                  onPageChange={handlePageChange}
+                  totalPages={totalPages}
+                  onPageChange={(page) => setCurrentPage(page)}
                 />
-              )}
-
-              <div className="text-center pt-4">
-                <button
-                  className="btn btn-primary"
-                  onClick={handleClearFilters}
-                >
-                  Clear All Filters
-                </button>
               </div>
+
+              
             </div>
 
-            <div className="col-lg-3">
+            {/* <div className="col-lg-3">
               <div className="filter-widget">
                 <h4 className="filter-title">Filter By</h4>
 
                 <div className="filter-group">
-                  <h5>Category</h5>
-                  {categoryOptions.map((category) => (
-                    <div className="form-check" key={category.value}>
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id={`category-${category.value}`}
-                        value={category.value}
-                        checked={selectedCategories.includes(category.value)}
-                        onChange={(e) =>
-                          handleCheckboxChange(e, "course_category_id")
-                        }
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor={`category-${category.value}`}
-                      >
-                        {category.label}
-                      </label>
-                    </div>
-                  ))}
+                  <h5>
+                    <button
+                      className="btn btn-link collapsed"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#category-filters"
+                    >
+                      Category
+                    </button>
+                  </h5>
+                  <div id="category-filters" className="collapse">
+                    {categoryOptions.map((category) => (
+                      <div className="form-check" key={category.value}>
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          id={`category-${category.value}`}
+                          value={category.value}
+                          checked={selectedCategories.includes(category.value)}
+                          onChange={(e) =>
+                            handleCheckboxChange(e, "course_category_id")
+                          }
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor={`category-${category.value}`}
+                        >
+                          {category.label}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-
-                {/* <div className="filter-group">
-                  <h5>Trainer</h5>
-                  {trainerOptions.map((trainer) => (
-                    <div className="form-check" key={trainer.value}>
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id={`trainer-${trainer.value}`}
-                        value={trainer.value}
-                        checked={selectedTrainers.includes(trainer.value)}
-                        onChange={(e) => handleCheckboxChange(e, 'trainer_id')}
-                      />
-                      <label className="form-check-label" htmlFor={`trainer-${trainer.value}`}>
-                        {trainer.label}
-                      </label>
-                    </div>
-                  ))}
-                </div> */}
 
                 <div className="filter-group">
-                  <h5>Level</h5>
-                  {levelOptions.map((level) => (
-                    <div className="form-check" key={level.value}>
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id={`level-${level.value}`}
-                        value={level.value}
-                        checked={selectedLevels.includes(level.value)}
-                        onChange={(e) =>
-                          handleCheckboxChange(e, "course_level_id")
-                        }
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor={`level-${level.value}`}
-                      >
-                        {level.label}
-                      </label>
-                    </div>
-                  ))}
+                  <h5>
+                    <button
+                      className="btn btn-link collapsed"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#level-filters"
+                    >
+                      Level
+                    </button>
+                  </h5>
+                  <div id="level-filters" className="collapse">
+                    {levelOptions.map((level) => (
+                      <div className="form-check" key={level.value}>
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          id={`level-${level.value}`}
+                          value={level.value}
+                          checked={selectedLevels.includes(level.value)}
+                          onChange={(e) =>
+                            handleCheckboxChange(e, "course_level_id")
+                          }
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor={`level-${level.value}`}
+                        >
+                          {level.label}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            </div> */}
+            <FilterSidebar
+              categoryOptions={categoryOptions}
+              levelOptions={levelOptions}
+              selectedCategories={selectedCategories}
+              selectedLevels={selectedLevels}
+              handleCheckboxChange={handleCheckboxChange}
+              handleClearFilters={handleClearFilters}
+            />
           </div>
         </div>
       </section>

@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import StudentHeader from "../header";
 import StudentSidebar from "../sidebar";
-import { Icon1, Icon2 } from "../../imagepath";
+// import { Icon1, Icon2 } from "../../imagepath";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 import FullPageLoader from "../../home/FullPageLoader";
+import CourseCard from "../../common/CourseCard/CourseCard";
 
 // Styled components
 const AlertWrapper = styled.div`
@@ -44,31 +45,7 @@ const ExploreButton = styled.button`
     background-color: #0056b3;
   }
 `;
-const StartLessonButton = styled.button`
-  background-color: #4caf50;
-  color: white;
-  padding: 12px 20px;
-  text-align: center;
-  font-size: 16px;
-  font-weight: bold;
-  margin: 12px 0;
-  cursor: pointer;
-  border-radius: 8px;
-  border: 2px solid transparent;
-  width: 100%;
-  transition: background-color 0.3s ease-in-out, transform 0.2s ease;
 
-  &:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
-  }
-
-  &:focus {
-    outline: none;
-    border: 2px solid #2e7d32;
-    background-color: #45a049;
-  }
-`;
 const DashboardGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -116,6 +93,36 @@ const CardButton = styled.button`
 
   &:hover {
     background-color:rgb(171, 32, 32);
+  }
+`;
+
+const CourseGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(280px, 1fr));
+  gap: 2rem;
+  // max-height: 600px;
+  overflow-y: auto;
+
+  /* Scrollbar styling */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #f8f9fa;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 576px) {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
   }
 `;
 const StudentDashboard = () => {
@@ -402,137 +409,44 @@ const StudentDashboard = () => {
                 <div className="row">
                   {error ? (
                     <AlertWrapper>
-                      <div>
-                        <AlertText>
-                          You have not enrolled in any courses yet.
-                        </AlertText>
-                        <Link to={"/course-list"}>
-                          <ExploreButton
-                            style={{
-                              background:
-                                "linear-gradient(135deg, #ffe6f0, #e6f0ff)",
-                              color: "#007bff",
-                            }}
-                          >
-                            Explore Courses
-                          </ExploreButton>
-                        </Link>
-                      </div>
+                      <AlertText>
+                        You have not enrolled in any courses yet.
+                      </AlertText>
+                      <Link to="/course-list">
+                        <ExploreButton
+                          style={{
+                            background:
+                              "linear-gradient(135deg, #ffe6f0, #e6f0ff)",
+                            color: "#007bff",
+                          }}
+                        >
+                          Explore Courses
+                        </ExploreButton>
+                      </Link>
                     </AlertWrapper>
-                  ) : courses.length > 0 ? (
-                    courses.map((course, index) => (
-                      <div key={course.id} className="col-xl-4 col-md-6 d-flex">
-                        <div className="course-box flex-fill">
-                          <div className="product">
-                            <div className="product-img">
-                              <Link to={`/course-info/${course.id}`}>
-                                <img
-                                  className="img-fluid"
-                                  alt={course.course_title}
-                                  // src={`https://api.novajobs.us${course.course_banner_image}`}
-                                  src={
-                                    course.course_banner_image.startsWith(
-                                      "https"
-                                    )
-                                      ? course.course_banner_image
-                                      : `https://api.novajobs.us${course.course_banner_image}`
-                                  }
-                                />
-                              </Link>
-                              <div className="price">
-                                <h3>
-                                  ${course.price}{" "}
-                                  <span>${course.original_price}</span>
-                                </h3>
-                              </div>
-                            </div>
-                            <div className="product-content">
-                              <div className="course-group d-flex">
-                                <div className="course-group-img d-flex">
-                                  <Link
-                                    to={`/instructor/instructor-profile/${course.trainer_id}`}
-                                  >
-                                    <img
-                                      src={`https://api.novajobs.us/${course.trainer_photo}`}
-                                      alt="Instructor"
-                                      className="img-fluid"
-                                    />
-                                  </Link>
-                                  <div className="course-name">
-                                    <h4>
-                                      <Link
-                                        to={`/instructor/instructor-profile/${course.trainer_id}`}
-                                      >
-                                        {course.trainer_first_name}{" "}
-                                        {course.trainer_last_name}
-                                      </Link>
-                                    </h4>
-                                    <p>Instructor</p>
-                                  </div>
-                                </div>
-                                <div className="course-share d-flex align-items-center justify-content-center">
-                                  <Link
-                                    to="#"
-                                    onClick={() =>
-                                      toggleClass(index, course.id)
-                                    }
-                                  >
-                                    <i
-                                      className={`fa-regular fa-heart ${
-                                        isClassAdded[index]
-                                          ? "color-active"
-                                          : ""
-                                      }`}
-                                    />
-                                  </Link>
-                                </div>
-                              </div>
-                              <h3 className="title instructor-text">
-                                <Link to={`/course-info/${course.id}`}>
-                                  {course.course_title}
-                                </Link>
-                              </h3>
-                              <div className="course-info d-flex align-items-center">
-                                <div className="rating-img d-flex align-items-center">
-                                  <img src={Icon1} alt="Icon" />
-                                  <p>{course.total_lectures} Lesson</p>
-                                </div>
-                                <div className="course-view d-flex align-items-center">
-                                  <img src={Icon2} alt="Icon" />
-                                  <p>{course.course_level_name}</p>
-                                </div>
-                              </div>
-                              <div className="rating mb-0">
-                                {[...Array(5)].map((star, index) => (
-                                  <i
-                                    key={index}
-                                    className={`fas fa-star ${
-                                      index < course.rating ? "filled" : ""
-                                    }`}
-                                  />
-                                ))}
-                                <span className="d-inline-block average-rating">
-                                  <span>{course.rating}</span>
-                                </span>
-                              </div>
-                              <div>
-                                <Link to={`/course-info/${course.id}`}>
-                                  <StartLessonButton>
-                                    Start the Lesson
-                                  </StartLessonButton>
-                                </Link>
-                              </div>
-                            </div>
+                  ) : (
+                    <CourseGrid>
+                      {courses && courses.length > 0 ? (
+                        courses.map((course, index) => (
+                          <CourseCard
+                            key={course.id || index} // ✅ fallback key if id missing
+                            course={course}
+                            onFavoriteToggle={() =>
+                              toggleClass(index, course.id)
+                            }
+                            isFavorite={isClassAdded[index]}
+                            token={localStorage.getItem("token")}
+                            isStartButton={true}
+                          />
+                        ))
+                      ) : (
+                        <div className="col-12 text-center">
+                          <div className="alert alert-info">
+                            You have not enrolled in any courses yet.
                           </div>
                         </div>
-                      </div>
-                    ))
-                  ) : (
-                    <div className="col-12 text-center">
-                      <div className="alert alert-info">
-                        You have not enrolled in any courses yet.
-                      </div>
-                    </div>
+                      )}
+                    </CourseGrid>
                   )}
                 </div>
               )}

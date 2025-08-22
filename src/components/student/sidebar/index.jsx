@@ -269,6 +269,18 @@ export default function StudentSidebar() {
                       My Profile
                     </Link>
                   </li>
+                   <li
+                    className={`nav-item ${
+                      location.pathname === "/student/student-plan"
+                        ? "active"
+                        : ""
+                    }`}
+                  >
+                    <Link to="/student/student-plan" className="nav-link">
+                      <i className="bx bxs-graduation" />
+                      My Plans
+                    </Link>
+                  </li>
                   <li
                     className={`nav-item ${
                       location.pathname === "" ? "active" : ""
