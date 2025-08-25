@@ -69,8 +69,14 @@ const PricingSubtitle = styled.p`
 `;
 
 const PricingIntro = styled.p`
+   max-width: 800px;
+   margin:0 auto;
   color: #6b7280;
   margin-top: 0.25rem;
+  background-color: #ED8936;
+  padding : 2rem 3rem;
+  color:white;
+  border-radius : 0.5rem;
 `;
 
 const FlexContainer = styled.div`
@@ -308,7 +314,9 @@ export default function PaymentPlans() {
             Find the perfect fit for your career journey
           </PricingSubtitle>
           <PricingIntro>
-            All plans include our core job search features
+            Try Nova Premium Tools Free for 7 Days! Enjoy a limited free trial
+            with a set number of credits to explore resumes, jobs, and skill
+            tests before you decide on a plan.
           </PricingIntro>
         </PricingHeader>
 
@@ -373,12 +381,7 @@ export default function PaymentPlans() {
                     dark={plan.isDark}
                   >
                     {plan.isPopular && (
-                      <BestValueTag>
-                        {" "}
-                        {plan.id === "ultraelite"
-                          ? "Unlimited"
-                          : "Most Popular"}
-                      </BestValueTag>
+                      <BestValueTag>Most Popular</BestValueTag>
                     )}
                     <PlanHeader>
                       <PlanTitle>{plan.name}</PlanTitle>

@@ -4,8 +4,6 @@ import { plans } from "./Plan";
 import styled from "styled-components";
 import PricingCard from "../../common/PricingCard/PricingCard";
 
-
-
 // Styled Components
 const Section = styled.section`
   padding: 80px 0;
@@ -46,9 +44,11 @@ const TitleLine = styled.span`
 `;
 
 const Subtitle = styled.p`
+  max-width: 800px;
   color: #0064e4;
   font-size: 18px;
   margin-bottom: 0;
+  margin:auto;
   opacity: 0.8;
 `;
 
@@ -92,7 +92,11 @@ const PricingSection = () => {
             Choose Your Perfect Plan
             <TitleLine />
           </Title>
-          <Subtitle>Select the plan that best fits your needs</Subtitle>
+          <Subtitle>
+            Try Nova Premium Tools Free for 7 Days! Enjoy a limited free trial
+            with a set number of credits to explore resumes, jobs, and skill
+            tests before you decide on a plan.
+          </Subtitle>
         </SectionHead>
 
         {/* Pricing Cards Row */}
@@ -100,49 +104,8 @@ const PricingSection = () => {
           {/* Map through plans array to create pricing cards */}
           {plans.map((plan) => (
             <PricingCol key={plan.id}>
-              {/* <PricingCard isDark={plan.isDark} isPopular={plan.isPopular}>
-                {/* Popular Badge (if applicable) 
-                {plan.isPopular && <PopularBadge>Most Popular</PopularBadge>}
-
-
-                {/* Plan Header
-                <CardHeader>
-                  <CardTitle isDark={plan.isDark}>{plan.name}</CardTitle>
-                  <PriceWrap isDark={plan.isDark}>
-                    <PriceAmount isDark={plan.isDark}>
-                      ${plan.price}
-                    </PriceAmount>
-                    <PricePeriod isDark={plan.isDark}>/mo</PricePeriod>
-                  </PriceWrap>
-                </CardHeader>
-
-                {/* Plan Features
-                <CardBody>
-                  <FeatureList isDark={plan.isDark}>
-                    {plan.features.map((feature, index) => (
-                      <FeatureItem key={index} isDark={plan.isDark}>
-                        <CheckIcon
-                          className="fa fa-check"
-                          isDark={plan.isDark}
-                        />
-                        <span>{feature}</span>
-                      </FeatureItem>
-                    ))}
-                  </FeatureList>
-                </CardBody>
-
-                {/* CTA Button 
-                <CardFooter>
-                  <Button
-                    onClick={()=>handleClick(plan)}
-                    isDark={plan.isDark}
-                    isPopular={plan.isPopular}
-                  >
-                    Get Started
-                  </Button>
-                </CardFooter>
-              </PricingCard> */}
-              <PricingCard 
+             
+              <PricingCard
                 plan={plan}
                 isDark={plan.isDark}
                 isPopular={plan.isPopular}

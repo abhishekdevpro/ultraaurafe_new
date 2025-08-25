@@ -193,7 +193,7 @@ import NotesList from "./components/Admin/NotesList.jsx";
 
 import StudentPlan from "./components/student/StudentPlan/index.jsx";
 
-import PartnersCourseList from "./components/pages/course/partnerscourseList./index.jsx";
+import PartnersCourseList from "./components/pages/course/partnerscourseList/index.jsx";
 import PartnerCourseDetails from "./components/pages/course/partnerCourseDetails/index.jsx";
 import ScheduleMeeting from "./components/instructor/LiveClasses/ForStudent/ScheduleMeeting.jsx";
 import GoogleOneTapLogin from "./components/GoogleOneTapLogin.jsx";

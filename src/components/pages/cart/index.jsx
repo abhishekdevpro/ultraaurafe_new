@@ -176,38 +176,7 @@ const Cart = () => {
   };
 
   const handleCheckout = async (cartId) => {
-    //  console.log(cartData)
-    // console.log("It is the total price"+totalPrice)
-    // console.log("It is the net total of cart"+cartData.net_total)
-
-    //   if(cartData.net_total==0){
-    //     try {
-    //       const response = await axios.post(
-    //         "https://api.novajobs.us/api/students/buy",
-    //         {
-    //           amount: 1,
-    //           course_id: Number(cartData.items.course_id),
-    //           net_amount: 1,
-    //         },
-    //         {
-    //           headers: {
-    //             Authorization: Token,
-    //           },
-    //         }
-    //       );
-
-    //       toast.success("Purchase Successful ");
-    //       console.log("Purchase successful:", response.data);
-
-    //       setTimeout(function() {
-    //         window.location.reload();
-    //     }, 3000);
-    //         } catch (error) {
-    //       console.error("Error during purchase:", error);
-    //       toast.error("There was an issue with the purchase. Please try again.");
-    //     }
-    //   }
-    //  else
+   
     try {
       const response = await axios.post(
         "https://api.novajobs.us/api/students/payment/checkout",
@@ -482,29 +451,7 @@ const Cart = () => {
                     </div> */}
                   </div>
 
-                  {/* <div className="col-lg-4 col-md-6">
-                    <div className="check-outs">
-                      {totalPrice > 0 ? (
-                        <button
-                          className="btn btn-primary"
-                          onClick={() => setIsModalOpen(true)}
-                        >
-                          Apply Coupon
-                        </button>
-                      ) : (
-                        <button className="btn btn-primary" disabled>
-                          Apply Coupon
-                        </button>
-                      )}
-                    </div>
-                  </div> */}
-                  {/* <div className="col-lg-4 col-md-6">
-                    <div className="check-outs">
-                      <Link to="/course-list" className="btn btn-primary">
-                        Continue Shopping
-                      </Link>
-                    </div>
-                  </div> */}
+                 
                   <div className="col-lg-4 col-md-6">
                     <div className="check-outs">
                       <Link
@@ -554,7 +501,7 @@ const Cart = () => {
                             Processing...
                           </>
                         ) : (
-                          "Subscribe"
+                          "CheckOut"
                         )}
                       </button>
                     </div>

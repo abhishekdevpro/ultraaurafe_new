@@ -412,6 +412,30 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
     fetchProfile();
   }, [userInfo.id]);
 
+  const handleEnrollNowCheck = async (courseId) => {
+    try {
+      const res = await axios.get(
+        `https://api.novajobs.us/api/students/enroll-course/${courseId}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      if (res.data.code === 200 || res.data.status === "success") {
+        if (res.data.data.is_processed === false) {
+          toast.success(res.data.message || "Course enrolles Successfully");
+          setIsEnrolled(true)
+        } else {
+          handleBuyNow();
+        }
+      }
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+      toast.error(error.message || "Error to add the course in the cart");
+    }
+  };
+
   const handleBuyNow = async () => {
     if (token) {
       try {
@@ -715,13 +739,12 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
 
                   <div className="video-details">
                     {courseFeatureData.course_price == 0 ? (
-                      // <div className="course-fee">
-                      //   <h2>FREE</h2>
-                      //   <p>
-                      //     <span>$99.00</span> 50% off
-                      //   </p>
-                      // </div>
-                      <></>
+                      <div className="course-fee">
+                        <h2>FREE</h2>
+                        <p>
+                          <span>$99.00</span> 50% off
+                        </p>
+                      </div>
                     ) : (
                       " "
                     )}
@@ -759,7 +782,9 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                       {
                         <button
                           className="btn-enroll w-100 buynow"
-                          onClick={handleBuyNow}
+                          onClick={() =>
+                            handleEnrollNowCheck(courseData.course_id)
+                          }
                           disabled={isEnrolled} // Disable button after enrollment
                         >
                           {isEnrolled ? "Enrolled" : "Enroll Now"}
