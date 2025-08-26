@@ -7,7 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CourseHeader from "../course/header";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Trash2 } from "lucide-react";
 
 const EmptyCartMessage = styled.div`
   text-align: center;
@@ -176,7 +176,6 @@ const Cart = () => {
   };
 
   const handleCheckout = async (cartId) => {
-   
     try {
       const response = await axios.post(
         "https://api.novajobs.us/api/students/payment/checkout",
@@ -344,11 +343,8 @@ const Cart = () => {
                                 }}
                               />
                             </div>
-                            <div
-                              className="container"
-                              style={{ display: "flex", alignItems: "center" }}
-                            >
-                              <div>
+                            <div className="d-flex justify-content-between align-items-center mt-3 gap-4">
+                              <div className="">
                                 <button
                                   className="btn btn-secondary btn-sm"
                                   onClick={() =>
@@ -391,7 +387,10 @@ const Cart = () => {
                                       Loading...
                                     </span>
                                   ) : (
-                                    "Remove"
+                                    <>
+                                      <Trash2 size={16} />
+                                      {/* "Remove" */}
+                                    </>
                                   )}
                                 </button>
                               </div>
@@ -406,104 +405,111 @@ const Cart = () => {
               <div className="cart-total">
                 <div className="row">
                   <div className="col-lg-12 col-md-12">
-                    {/* <div className="cart-subtotal">
-                      <p>
-                        Sub-Total
-                         <span className="text-muted text-decoration-line-through me-2 fs-5">${totalPrice}</span>{cartData.discount}
-                      </p>
-                      <p>
-                       Net Price<span className="text-success fw-bold fs-4">${cartData.net_total}</span>
-                      </p>
+                    
+                    <div className="card border-0 rounded-3">
+                      <div className="card-body p-4">
+                        {/* Title */}
+                        <h5 className="card-title mb-4 text-center fw-bold border-bottom pb-2">
+                          Order Summary
+                        </h5>
 
-                    </div> */}
-                    {/* <div className="card border-0 shadow-sm">
-                      <div className="card-body">
-                        <h5 className="card-title">Order Summary</h5>
+                        {/* Sub Total */}
                         <div className="d-flex justify-content-between align-items-center mb-3">
                           <span className="text-muted">Sub-Total</span>
-                          <div>
-                            {cartData.discount ? (
+                          <div className="text-end">
+                            {cartData.discount_percent ? (
                               <>
-                                <span className="text-muted text-decoration-line-through me-2">
-                                  ${totalPrice}
-                                  {cartData.item.after_discount_price}
-                                </span>
-                                <span className="text-danger">
-                                  ${cartData.discount}/- OFF
-                                </span>
+                                <div>
+                                  <span className="text-muted text-decoration-line-through me-2">
+                                    ${totalPrice}
+                                  </span>
+                                  <span className="fw-semibold">
+                                    ${cartData.item.after_discount_price}
+                                  </span>
+                                </div>
+                                <small className="text-danger d-block">
+                                  {cartData.discount_percent}% OFF
+                                </small>
                               </>
                             ) : (
-                              <span>${totalPrice}</span>
+                              <span className="fw-semibold">${totalPrice}</span>
                             )}
                           </div>
                         </div>
-                        {cartData.net_total ? (
-                          <div className="d-flex justify-content-between align-items-center">
-                            <span className="fw-bold">Net Price</span>
-                            <span className="text-success fw-bold fs-4">
-                              ${cartData.net_total}
-                            </span>
-                          </div>
+
+                        {/* Discount */}
+                        {cartData.is_coupon && <div className="d-flex justify-content-between align-items-center mb-3">
+                          <span className="text-muted">Discount</span>
+                          <span className="text-danger fw-semibold">
+                            - ${cartData.discount}
+                          </span>
+                        </div>}
+
+                        {/* Net Total */}
+                        <div className="d-flex justify-content-between align-items-center border-top pt-3">
+                          <span className="fw-bold fs-5">Net Price</span>
+                          <span className="text-success fw-bold fs-4">
+                            ${cartData.net_total}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-2">
+                    <div className="col-lg-4 col-12">
+                      <div className="check-outs">
+                        <Link
+                          to="/course-list"
+                          className="d-inline-flex align-items-center gap-1 text-primary fw-semibold"
+                        >
+                          Continue Shopping
+                          <ArrowRight size={18} />
+                        </Link>
+                      </div>
+                    </div>
+                    <div className="col-lg-4 col-12">
+                      <div className="check-outs">
+                        {cartData.is_coupon ? (
+                          <button
+                            className="btn btn-primary"
+                            onClick={handleRemoveCoupon}
+                          >
+                            Remove Coupon
+                          </button>
                         ) : (
-                          <></>
+                          <button
+                            className="btn btn-primary"
+                            onClick={() => setIsModalOpen(true)}
+                            disabled={totalPrice <= 0}
+                          >
+                            Apply Coupon
+                          </button>
                         )}
                       </div>
-                    </div> */}
-                  </div>
-
-                 
-                  <div className="col-lg-4 col-md-6">
-                    <div className="check-outs">
-                      <Link
-                        to="/course-list"
-                        className="d-inline-flex align-items-center gap-1 text-primary fw-semibold"
-                      >
-                        Continue Shopping
-                        <ArrowRight size={18} />
-                      </Link>
                     </div>
-                  </div>
-                  <div className="col-lg-4 col-md-6">
-                    <div className="check-outs">
-                      {cartData.is_coupon ? (
+
+                    <div className="col-lg-4 col-12">
+                      <div className="check-outs">
                         <button
                           className="btn btn-primary"
-                          onClick={handleRemoveCoupon}
+                          onClick={() => handleCheckout(cartData.cart_id)}
+                          disabled={checkoutLoading}
                         >
-                          Remove Coupon
+                          {checkoutLoading ? (
+                            <>
+                              <span
+                                className="spinner-border spinner-border-sm me-2"
+                                role="status"
+                                aria-hidden="true"
+                              ></span>
+                              Processing...
+                            </>
+                          ) : (
+                            "CheckOut"
+                          )}
                         </button>
-                      ) : (
-                        <button
-                          className="btn btn-primary"
-                          onClick={() => setIsModalOpen(true)}
-                          disabled={totalPrice <= 0}
-                        >
-                          Apply Coupon
-                        </button>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="col-lg-4 col-md-6">
-                    <div className="check-outs">
-                      <button
-                        className="btn btn-primary"
-                        onClick={() => handleCheckout(cartData.cart_id)}
-                        disabled={checkoutLoading}
-                      >
-                        {checkoutLoading ? (
-                          <>
-                            <span
-                              className="spinner-border spinner-border-sm me-2"
-                              role="status"
-                              aria-hidden="true"
-                            ></span>
-                            Processing...
-                          </>
-                        ) : (
-                          "CheckOut"
-                        )}
-                      </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -552,6 +558,7 @@ const Cart = () => {
                   onChange={(e) => setCouponCode(e.target.value)}
                   placeholder="Enter coupon code"
                   required
+                  maxLength={8}
                 />
                 <button type="submit" className="btn btn-primary mt-3">
                   Apply
