@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { plans } from "./Plan";
 import styled from "styled-components";
 import PricingCard from "../../common/PricingCard/PricingCard";
+import { FaCheckCircle } from "react-icons/fa";
 
 // Styled Components
 const Section = styled.section`
@@ -48,7 +49,7 @@ const Subtitle = styled.p`
   color: #0064e4;
   font-size: 18px;
   margin-bottom: 0;
-  margin:auto;
+  margin: auto;
   opacity: 0.8;
 `;
 
@@ -77,7 +78,7 @@ const PricingSection = () => {
       toast.error("Please Login First");
       navigate("/login");
     } else {
-      navigate(`/plan-details?selectedPlan=${plan.id}`);
+      window.location.href = `https://novajobs.us/user/plan-details?selectedPlan=${plan.id}`;
       // window.location.href  = (`https://airesume.novajobs.us/settings/subscription/?tokenbyurl=${token}`)
       // window.location.href = (`http://localhost:3001/settings/subscription/?tokenbyurl=${token}`)
     }
@@ -89,14 +90,82 @@ const PricingSection = () => {
         {/* Section Heading */}
         <SectionHead>
           <Title>
-            Choose Your Perfect Plan
+            Start Your 7-Day Free Trial with Nova Premium
             <TitleLine />
           </Title>
           <Subtitle>
-            Try Nova Premium Tools Free for 7 Days! Enjoy a limited free trial
-            with a set number of credits to explore resumes, jobs, and skill
-            tests before you decide on a plan.
+            Try Nova’s exclusivetools free for 7 days — no upfront payment.
           </Subtitle>
+          {/* <div className="row">
+            <div className="col-md-6">
+              <li>
+                {" "}
+                 Experience AI-powered pre-interviews that employers review
+              </li>
+            </div>
+            <div className="col-md-6">
+              <li>• Join our prescreened resume list for priority visibility</li>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <li> Explore skill tests, job listings, and more</li>
+            </div>
+            <div className="col-md-6">
+              <li>
+                {" "}
+                Connect your education-to-career journey through Ultra Get
+                started today.
+              </li>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              <li>
+                Once you see the difference, keep going with a
+                simple subscription.
+              </li>
+            </div>
+          </div> */}
+          <div className="container my-5"
+          style={{margin:"auto"}}
+          >
+            <ul className="row list-unstyled g-4">
+              <li className="col-md-6 d-flex align-items-start gap-2 p-3 ">
+                <FaCheckCircle className="text-success mt-1" />
+                <span>
+                  Experience AI-powered pre-interviews that employers review
+                </span>
+              </li>
+
+              <li className="col-md-6 d-flex align-items-start gap-2 p-3 ">
+                <FaCheckCircle className="text-success mt-1" />
+                <span>
+                  Join our prescreened resume list for priority visibility
+                </span>
+              </li>
+
+              <li className="col-md-6 d-flex align-items-start gap-2 p-3 ">
+                <FaCheckCircle className="text-success mt-1" />
+                <span>Explore skill tests, job listings, and more</span>
+              </li>
+
+              <li className="col-md-6 d-flex align-items-start gap-2 p-3 ">
+                <FaCheckCircle className="text-success mt-1" />
+                <span>
+                  Connect your education-to-career journey through Ultra
+                </span>
+              </li>
+
+              {/* <li className="col-12 d-flex align-items-start gap-2 p-3 ">
+                <FaCheckCircle className="text-primary mt-1" />
+                <span>
+                  Once you see the difference, keep going with a simple
+                  subscription.
+                </span>
+              </li> */}
+            </ul>
+          </div>
         </SectionHead>
 
         {/* Pricing Cards Row */}
@@ -104,11 +173,11 @@ const PricingSection = () => {
           {/* Map through plans array to create pricing cards */}
           {plans.map((plan) => (
             <PricingCol key={plan.id}>
-             
               <PricingCard
                 plan={plan}
                 isDark={plan.isDark}
                 isPopular={plan.isPopular}
+                isUnlimited={plan.isUnlimited}
                 onSubscribe={handleClick}
               />
             </PricingCol>

@@ -135,12 +135,23 @@ const PricingCard = ({
   isDark = false, 
   isPopular = false,
   isUpgrade =false,
+  isUnlimited = false,
   onSubscribe 
 }) => {
     console.log(plan,"plan")
   return (
-    <Card isDark={isDark} isPopular={isPopular}>
+    <Card isDark={isDark} isPopular={isPopular} isUnlimited={isUnlimited}>
       {isPopular && <PopularBadge>Most Popular</PopularBadge>}
+      {isUnlimited && (
+        <PopularBadge
+          style={{
+            backgroundColor: "#ED8936",
+            color: "#ffffff",
+          }}
+        >
+          Unlimited
+        </PopularBadge>
+      )}
       <CardHeader>
         <CardTitle isDark={isDark}>{plan.name}</CardTitle>
         <PriceWrap isDark={isDark}>
@@ -162,6 +173,7 @@ const PricingCard = ({
         <Button 
           isDark={isDark} 
           isPopular={isPopular}
+          // isUnlimited={isUnlimited}
           onClick={() => onSubscribe(plan)}
         >
           {isUpgrade ? "Upgrade Your Plan" : "Get Started"}
@@ -180,6 +192,7 @@ PricingCard.propTypes = {
   }).isRequired,
   isDark: PropTypes.bool,
   isPopular: PropTypes.bool,
+  isUnlimited: PropTypes.bool,
     isUpgrade: PropTypes.bool,
   onSubscribe: PropTypes.func.isRequired,
 };

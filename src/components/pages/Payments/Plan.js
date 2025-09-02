@@ -100,7 +100,8 @@ export const plans = [
     id: "ultraelite",
     name: "Elite ",
     price: "148.95",
-    isPopular: true,
+    isUnlimited:true,
+    isPopular: false,
     isDark: true,
     features: [
       "Excel Plus Unlimited",

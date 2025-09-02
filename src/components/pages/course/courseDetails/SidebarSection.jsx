@@ -738,7 +738,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                   )}
 
                   <div className="video-details">
-                    {courseFeatureData.course_price == 0 ? (
+                    {/* {courseFeatureData.course_price == 0 ? (
                       <div className="course-fee">
                         <h2>FREE</h2>
                         <p>
@@ -747,7 +747,7 @@ const SidebarSection = ({ courseId, courseData, courseFeatureData }) => {
                       </div>
                     ) : (
                       " "
-                    )}
+                    )} */}
                     <div className="row gx-2">
                       <div className="col-md-6 addHeart">
                         {isFavorite && localStorage.getItem("token") ? (
