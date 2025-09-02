@@ -1,14 +1,13 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { CheckCircle, Lock } from 'lucide-react';
-import styled from 'styled-components';
-import { plans } from './Plan';
-import Header from '../../header';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+// import axios from "axios";
+import { toast } from "react-toastify";
+import { CheckCircle, Lock } from "lucide-react";
+import styled from "styled-components";
+import { plans } from "./Plan";
+import Header from "../../header";
 // import UserHeader2 from '../../Layout/Header2';
 // New plans array structure
-
 
 // Styled components (assumed to exist in original code)
 const PageContainer = styled.div`
@@ -137,7 +136,7 @@ const planBillingCycles = {
   freemium: "month",
   elevate: "month",
   promax: "month",
-  ultraelite: "month"
+  ultraelite: "month",
 };
 
 export default function PaymentPage() {
@@ -151,7 +150,7 @@ export default function PaymentPage() {
     acc[plan.id] = {
       ...plan,
       billingCycle: planBillingCycles[plan.id] || "month",
-      title: plan.name
+      title: plan.name,
     };
     return acc;
   }, {});
@@ -209,60 +208,61 @@ export default function PaymentPage() {
       toast.success("Please select a plan before proceeding.");
       return;
     }
-    
+
     const token = localStorage.getItem("token");
     if (!token) {
       toast.error("Authentication required. Please log in.");
       navigate("/login2"); // Redirect to login page if token is missing
       return;
+    } else {
+      navigate(`${BASE_URL}`);
     }
-    
     // Map selectedPlan to the correct plan_id for API
-    const planMapping = {
-      freemium: 1,
-      elevate: 2,
-      promax: 3,
-      ultraelite: 4,
-    };
+    // const planMapping = {
+    //   freemium: 1,
+    //   elevate: 2,
+    //   promax: 3,
+    //   ultraelite: 4,
+    // };
 
-    const planId = planMapping[selectedPlanId];
+    // const planId = planMapping[selectedPlanId];
 
-    try {
-      const response = await axios.post(
-        `${BASE_URL}/api/students/payment/checkout`,
-        {
-          plan_id: planId,
-        },
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+    // try {
+    //   const response = await axios.post(
+    //     `${BASE_URL}/api/students/payment/checkout`,
+    //     {
+    //       plan_id: planId,
+    //     },
+    //     {
+    //       headers: {
+    //         Authorization: token,
+    //       },
+    //     }
+    //   );
 
-      console.log("API Response:", response.data);
+    //   console.log("API Response:", response.data);
 
-      if (response.status === 200) {
-        if (response.data?.url) {
-          toast.success("Payment successful! Redirecting...");
-          window.location.href = response.data.url;
-        } else {
-          console.error("No URL found in response:", response.data);
-          toast.error("Unexpected response from the server. No URL returned.");
-        }
-      } else {
-        throw new Error("Unexpected response from the server.");
-      }
-    } catch (error) {
-      console.error("Payment Error:", error);
-      toast.error(error.response?.data?.message || "Error processing payment.");
-    }
+    //   if (response.status === 200) {
+    //     if (response.data?.url) {
+    //       toast.success("Payment successful! Redirecting...");
+    //       window.location.href = response.data.url;
+    //     } else {
+    //       console.error("No URL found in response:", response.data);
+    //       toast.error("Unexpected response from the server. No URL returned.");
+    //     }
+    //   } else {
+    //     throw new Error("Unexpected response from the server.");
+    //   }
+    // } catch (error) {
+    //   console.error("Payment Error:", error);
+    //   toast.error(error.response?.data?.message || "Error processing payment.");
+    // }
   };
 
   return (
     <>
-    {/* <UserHeader2 /> */}
-    <Header />
+      {/* <UserHeader2 /> */}
+      <Header />
       <PageContainer>
         <CardContainer>
           <ContentSection>
@@ -271,7 +271,7 @@ export default function PaymentPage() {
               <PlanName>
                 <strong>Plan:</strong> {selectedPlan ? selectedPlan.name : ""}
               </PlanName>
-              
+
               <FeaturesList>
                 {selectedPlan &&
                   selectedPlan.features.map((feature, index) => (
@@ -281,14 +281,15 @@ export default function PaymentPage() {
                     </FeatureItem>
                   ))}
 
-                {selectedPlan && planBillingCycles[selectedPlan.id] !== "single" && (
-                  <FeatureItem>
-                    <CheckCircle color="#2563eb" size={18} />
-                    <FeatureText>
-                      Automatically renews {getRenewalText(selectedPlan)}.
-                    </FeatureText>
-                  </FeatureItem>
-                )}
+                {selectedPlan &&
+                  planBillingCycles[selectedPlan.id] !== "single" && (
+                    <FeatureItem>
+                      <CheckCircle color="#2563eb" size={18} />
+                      <FeatureText>
+                        Automatically renews {getRenewalText(selectedPlan)}.
+                      </FeatureText>
+                    </FeatureItem>
+                  )}
               </FeaturesList>
 
               <PriceBox>
@@ -301,19 +302,22 @@ export default function PaymentPage() {
 
             {/* Terms and Conditions */}
             <TermsText>
-              By clicking <strong>Start applying</strong> below, you agree to our
+              By clicking <strong>Start applying</strong> below, you agree to
+              our
               <TermsLink href="#">Terms of Use</TermsLink>
               and
-              <TermsLink href="#">Privacy Policy</TermsLink>
-              . You also understand that you will be billed
+              <TermsLink href="#">Privacy Policy</TermsLink>. You also
+              understand that you will be billed
               <strong> {selectedPlan ? formatPrice(selectedPlan) : ""}</strong>,
               which will automatically renew
-              {selectedPlan && selectedPlan.id !== "freemium" ? " " + getRenewalText(selectedPlan) : ""}.
-              <strong> You can cancel at any time.</strong>
+              {selectedPlan && selectedPlan.id !== "freemium"
+                ? " " + getRenewalText(selectedPlan)
+                : ""}
+              .<strong> You can cancel at any time.</strong>
             </TermsText>
 
             {/* Start Applying Button */}
-            <ActionButton 
+            <ActionButton
               onClick={handleCheckout}
               disabled={selectedPlanId === "freemium"}
             >

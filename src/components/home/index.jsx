@@ -45,6 +45,7 @@ import home from "./home-bg2.png";
 
 import PricingSection from "../pages/Payments/PricingSection.jsx";
 import TrustedLogo from "./trustedby.jsx";
+import NovaJobsSection from "./NovaJobsSection.jsx";
 const Container = styled.div`
   margin-bottom: 1rem;
   display: flex;
@@ -862,6 +863,7 @@ export const Home = () => {
           }
         `}</style>
 
+        <NovaJobsSection />
         <FeaturedCourses />
 
         {/* Master Skills Section */}

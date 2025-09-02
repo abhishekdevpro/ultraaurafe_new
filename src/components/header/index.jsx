@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
 import logo5 from "../../assets/Ultra_Aura.png";
 import { jwtDecode } from "jwt-decode";
-
+import scopeLogo from "./scope-logo.png";
 const StyledHeader = styled.header`
   position: sticky;
   top: 0;
@@ -35,17 +35,37 @@ const StyledHeader = styled.header`
     }
   }
 
+  // .header__logo {
+  //   display: flex;
+  //   align-items: center;
+
+  //   img {
+  //     height: 60px;
+  //     width: auto;
+  //     object-fit: contain;
+
+  //     @media (min-width: 768px) {
+  //       height: 60px;
+  //     }
+  //   }
+  // }
+
   .header__logo {
     display: flex;
     align-items: center;
+   gap: 0.75rem; /* space between logos */
+   flex-shrink: 0;
 
     img {
-      height: 60px;
-      width: auto;
-      object-fit: contain;
+     height: 45px;
+     width: auto;
+     object-fit: contain;
+     max-width: 120px;
 
       @media (min-width: 768px) {
-        height: 60px;
+
+      height: 60px;
+      max-width: 160px;
       }
     }
   }
@@ -210,7 +230,6 @@ const ProfileImage = styled.div`
     display: none;
   }
 `;
-
 
 const Header = () => {
   const [navbar, setNavbar] = useState(false);
@@ -429,9 +448,11 @@ const Header = () => {
       /> */}
         <div className="header__main-header">
           <div className="header__container">
-            <Link to="/home" className="header__logo">
-              <img src={logo5} alt="Logo" />
-            </Link>
+           <Link to="/home" className="header__logo">
+  <img src={logo5} alt="Ultra Aura Logo" />
+  <div className="vr mx-2"></div>
+  <img src={scopeLogo} alt="Scope Logo" />
+</Link>
             <div className="header__nav-links">
               <NavLinks />
             </div>
